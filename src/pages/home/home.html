@@ -1,14 +1,22 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Ketsuyō
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  What do you want to practise?
+  <ion-list>
+      <ion-item>
+          <ion-label>て form</ion-label>
+          <ion-checkbox checked="true"></ion-checkbox>
+      </ion-item>
+      <ion-item>
+          <button ion-button full
+                  (click)="startReview()">
+              Begin</button>
+      </ion-item>
+  </ion-list>
 </ion-content>
