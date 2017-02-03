@@ -6,10 +6,13 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-list>
-        <ion-item *ngFor="let word of words">
+<ion-content>
+    <ion-slides>
+        <ion-slide *ngFor="let word of words">
             {{word}}
-        </ion-item>
-    </ion-list>
+            <ion-item>
+            <ion-input type="text"></ion-input>
+            </ion-item>
+        </ion-slide>
+    </ion-slides>
 </ion-content>
