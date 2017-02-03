@@ -7,9 +7,12 @@
 </ion-header>
 
 <ion-content>
-    <ion-slides>
-        <ion-slide *ngFor="let word of words">
-            {{word}}
+    <ion-slides [options]="slideOptions">
+        <ion-slide *ngFor="let question of questions">
+            <ruby>
+                {{question.dictionary}}
+                <rt>{{question.furigana}}</rt>
+            </ruby>
             <ion-item>
                 <ion-input class="answer" type="text" placeholder="answer"></ion-input>
             </ion-item>

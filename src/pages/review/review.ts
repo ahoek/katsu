@@ -10,21 +10,44 @@ declare var wanakana: any;
 })
 export class ReviewPage {
 
-    public words: Array<String>;
+    public questions: Array<any>;
+
     wanakana: any;
+    slideOptions: any;
 
     constructor(public navCtrl: NavController) {
+        this.slideOptions = {
+            onlyExternal: true
+        };
     }
 
     ionViewDidLoad() {
-        this.words = [
-            '行く',
-            '遊ぶ',
-            '貸す',
+        // Simple data model for te-form
+        // The data will come from the Jisho api eventually
+        this.questions = [
+            {
+                dictionary: '行く',
+                furigana: 'いく',
+                meaning: 'to go',
+                answer: 'いって',
+            },
+            {
+                dictionary: '遊ぶ',
+                furigana: 'あそぶ',
+                meaning: 'to play',
+                answer: 'あそんで',
+            },
+            {
+                dictionary: '貸す',
+                furigana: 'かす',
+                meaning: 'to lend',
+                answer: 'かして',
+            },
         ]
     }
 
     ionViewDidEnter() {
+        // Add IME to answer fields
         var answers = document.getElementsByClassName("answer")
         for (var i = 0; i < answers.length; i++) {
             wanakana.bind(answers[i])
