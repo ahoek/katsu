@@ -7,87 +7,107 @@
 </ion-header>
 
 <ion-content>
-    <ion-list>
-        <ion-list-header>
-            Form
-        </ion-list-header>        
-        <ion-item>
-            <ion-label>て form</ion-label>
-            <ion-checkbox checked="true"></ion-checkbox>
-        </ion-item>
-        <ion-item>
-            <ion-label>aansporend</ion-label>
-            <ion-checkbox></ion-checkbox>
-        </ion-item>
-        <ion-item>
-            <ion-label>たい form</ion-label>
-            <ion-checkbox checked="false"></ion-checkbox>
-        </ion-item>         
-        <ion-item>
-            <ion-label>い adjective</ion-label>
-            <ion-checkbox checked="false"></ion-checkbox>
-        </ion-item>
-        <ion-item>
-            <ion-label>な adjective</ion-label>
-            <ion-checkbox checked="false"></ion-checkbox>
-        </ion-item>
-    </ion-list>        
+    <form (submit)="doSubmit($event)" [formGroup]="settingsForm">
+        <ion-list>
+            <ion-list-header>
+                Form
+            </ion-list-header>        
+            <ion-item>
+                <ion-label>て form</ion-label>
+                <ion-checkbox checked="true"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+                <ion-label>aansporend</ion-label>
+                <ion-checkbox></ion-checkbox>
+            </ion-item>
+            <ion-item>
+                <ion-label>たい form</ion-label>
+                <ion-checkbox checked="false"></ion-checkbox>
+            </ion-item>         
+            <ion-item>
+                <ion-label>い adjective</ion-label>
+                <ion-checkbox checked="false"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+                <ion-label>な adjective</ion-label>
+                <ion-checkbox checked="false"></ion-checkbox>
+            </ion-item>
+        </ion-list>        
 
-    <ion-list>
-        <ion-list-header>
-            Politeness level
-        </ion-list-header>
-        <ion-item>
-            <ion-label>Neutral</ion-label>
-            <ion-checkbox></ion-checkbox>
-            <ion-icon name="bowtie" item-right></ion-icon>
-        </ion-item>  
-        <ion-item>
-            <ion-label>Colloquial</ion-label>
-            <ion-checkbox></ion-checkbox>
-            <ion-icon name="shirt" item-right></ion-icon>
-        </ion-item>
-    </ion-list>        
+        <ion-list>
+            <ion-list-header>
+                Politeness level
+            </ion-list-header>
+            <ion-item>
+                <ion-label>Neutral</ion-label>
+                <ion-checkbox></ion-checkbox>
+                <ion-icon name="bowtie" item-right></ion-icon>
+            </ion-item>  
+            <ion-item>
+                <ion-label>Colloquial</ion-label>
+                <ion-checkbox></ion-checkbox>
+                <ion-icon name="shirt" item-right></ion-icon>
+            </ion-item>
+        </ion-list>        
 
-    <ion-list>
-        <ion-list-header>
-            Tense
-            <ion-icon name="clock" item-right></ion-icon>
-        </ion-list-header>
-        <ion-item>
-            <ion-label>Non-past tense</ion-label>
-            <ion-checkbox></ion-checkbox>
-            <ion-icon name="fastforward" item-right></ion-icon>
-        </ion-item>  
-        <ion-item>
-            <ion-label>Past tense</ion-label>
-            <ion-checkbox></ion-checkbox>
-            <ion-icon name="rewind" item-right></ion-icon>
+        <ion-list>
+            <ion-list-header>
+                Tense
+                <ion-icon name="clock" item-right></ion-icon>
+            </ion-list-header>
+            <ion-item>
+                <ion-label>Non-past tense</ion-label>
+                <ion-checkbox></ion-checkbox>
+                <ion-icon name="fastforward" item-right></ion-icon>
+            </ion-item>  
+            <ion-item>
+                <ion-label>Past tense</ion-label>
+                <ion-checkbox></ion-checkbox>
+                <ion-icon name="rewind" item-right></ion-icon>
 
-        </ion-item>
-    </ion-list> 
-    
-    <ion-list>
-        <ion-list-header>
-            Affirmative/negative
-        </ion-list-header>
-        <ion-item>
-            <ion-label>Affirmative</ion-label>
-            <ion-checkbox></ion-checkbox>
-            <ion-icon name="happy" item-right></ion-icon>
-        </ion-item>  
-        <ion-item>
-            <ion-label>Negative</ion-label>
-            <ion-checkbox></ion-checkbox>
-            <ion-icon name="sad" item-right></ion-icon>
-        </ion-item>
-    </ion-list>  
-    
-    <ion-list>
-        <ion-item>
-            <button ion-button full
-                    (click)="startReview()">
-                    Begin</button>
-        </ion-item>
-    </ion-list>
+            </ion-item>
+        </ion-list> 
+
+        <ion-list>
+            <ion-list-header>
+                Affirmative/negative
+            </ion-list-header>
+            <ion-item>
+                <ion-label>Affirmative</ion-label>
+                <ion-checkbox></ion-checkbox>
+                <ion-icon name="happy" item-right></ion-icon>
+            </ion-item>  
+            <ion-item>
+                <ion-label>Negative</ion-label>
+                <ion-checkbox></ion-checkbox>
+                <ion-icon name="sad" item-right></ion-icon>
+            </ion-item>
+        </ion-list>  
+
+        <ion-list radio-group formControlName="jlptLevel">
+            <ion-list-header>
+                JLPT level
+            </ion-list-header>
+            <ion-item>
+                <ion-label>N5</ion-label>
+                <ion-radio value="N5"></ion-radio>
+            </ion-item>  
+            <ion-item>
+                <ion-label>N4</ion-label>
+                <ion-radio value="N4"></ion-radio>
+            </ion-item>
+            <ion-item>
+                <ion-label>N3</ion-label>
+                <ion-radio value="N3"></ion-radio>
+            </ion-item>
+        </ion-list>  
+
+        <ion-list>
+            <ion-item>
+                <button ion-button full
+                        (click)="startReview()">
+                        Begin</button>
+            </ion-item>
+        </ion-list>
+    </form>
 </ion-content>
