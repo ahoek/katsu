@@ -8,17 +8,33 @@
 
 <ion-content>
     <ion-slides #slides [options]="slideOptions">
-        <ion-slide *ngFor="let question of questions">
+        <ion-slide *ngFor="let question of questions; let i = index;">
+            <h3>Question {{i+1}}</h3>
+            
             <ruby>
                 {{question.dictionary}}
                 <rt>{{question.furigana}}</rt>
             </ruby>
-            {{question.meaning}}
+
             <ion-item>
-                <ion-input class="answer" type="text" placeholder="answer" 
+                {{question.meaning}}
+            </ion-item>
+            
+            <ion-item>
+                <ion-input name="answer"
+                           class="answer" type="text" placeholder="answer" 
                            autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                 </ion-input>
+                <button ion-button icon-only item-right
+                        (click)="checkAnswer()">
+                        <ion-icon name="arrow-forward"></ion-icon>
+                </button>
             </ion-item>
+        </ion-slide>
+
+        <ion-slide>
+            <h3>Summary</h3>
+
         </ion-slide>
     </ion-slides>
 </ion-content>

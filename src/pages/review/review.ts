@@ -42,4 +42,18 @@ export class ReviewPage {
             wanakana.bind(answers[i])
         }
     }
+
+    nextSlide() {
+        this.slides.slideNext();
+    }
+
+    /**
+     * Check the given answer
+     * 
+     * If correct, give good styling, and go to next question after 1 sec.
+     * If incorrect, give 'bad' styling and show the correct answer
+     */
+    checkAnswer() {
+        this.nextSlide();
+    }
 }
