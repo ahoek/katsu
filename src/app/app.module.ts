@@ -5,6 +5,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ReviewPage } from '../pages/review/review';
 
+import { QuestionData } from '../providers/question-data';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -20,6 +22,9 @@ import { ReviewPage } from '../pages/review/review';
     HomePage,
     ReviewPage,
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    QuestionData
+  ]
 })
 export class AppModule {}

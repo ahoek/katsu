@@ -1,0 +1,22 @@
+{
+    "questions": [
+        {
+            "dictionary": "行く",
+            "furigana": "いく",
+            "meaning": "to go",
+            "answer": "いって"
+        },
+        {
+            "dictionary": "遊ぶ",
+            "furigana": "あそぶ",
+            "meaning": "to play",
+            "answer": "あそんで"
+        },
+        {
+            "dictionary": "貸す",
+            "furigana": "かす",
+            "meaning": "to lend",
+            "answer": "かして"
+        }
+    ]
+}

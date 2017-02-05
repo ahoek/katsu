@@ -1,6 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 
 import {NavController} from 'ionic-angular';
+
+import {QuestionData} from '../../providers/question-data';
 
 declare var wanakana: any;
 
@@ -10,40 +12,27 @@ declare var wanakana: any;
 })
 export class ReviewPage {
 
+    @ViewChild('slides') slides: any;
+
+    hasAnswered: boolean = false;
+    score: number = 0;
+
+    slideOptions: any;
     public questions: Array<any>;
 
     wanakana: any;
-    slideOptions: any;
 
-    constructor(public navCtrl: NavController) {
+    constructor(public navCtrl: NavController, public dataService: QuestionData) {
         this.slideOptions = {
             onlyExternal: true
         };
     }
 
     ionViewDidLoad() {
-        // Simple data model for te-form
-        // The data will come from the Jisho api eventually
-        this.questions = [
-            {
-                dictionary: '行く',
-                furigana: 'いく',
-                meaning: 'to go',
-                answer: 'いって',
-            },
-            {
-                dictionary: '遊ぶ',
-                furigana: 'あそぶ',
-                meaning: 'to play',
-                answer: 'あそんで',
-            },
-            {
-                dictionary: '貸す',
-                furigana: 'かす',
-                meaning: 'to lend',
-                answer: 'かして',
-            },
-        ]
+        this.dataService.load().then((data) => {
+            console.log(data)
+            this.questions = data;
+        });
     }
 
     ionViewDidEnter() {

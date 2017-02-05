@@ -7,14 +7,17 @@
 </ion-header>
 
 <ion-content>
-    <ion-slides [options]="slideOptions">
+    <ion-slides #slides [options]="slideOptions">
         <ion-slide *ngFor="let question of questions">
             <ruby>
                 {{question.dictionary}}
                 <rt>{{question.furigana}}</rt>
             </ruby>
+            {{question.meaning}}
             <ion-item>
-                <ion-input class="answer" type="text" placeholder="answer"></ion-input>
+                <ion-input class="answer" type="text" placeholder="answer" 
+                           autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                </ion-input>
             </ion-item>
         </ion-slide>
     </ion-slides>
