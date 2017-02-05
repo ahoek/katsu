@@ -14,18 +14,16 @@ export class ReviewPage {
 
     @ViewChild('slides') slides: any;
 
-    hasAnswered: boolean = false;
-    score: number = 0;
-
-    slideOptions: any;
     public questions: Array<any>;
+
+    public style: String;
+    
+    public showAnswer: boolean = false;
 
     wanakana: any;
 
     constructor(public navCtrl: NavController, public dataService: QuestionData) {
-        this.slideOptions = {
-            onlyExternal: true
-        };
+
     }
 
     ionViewDidLoad() {
@@ -53,7 +51,23 @@ export class ReviewPage {
      * If correct, give good styling, and go to next question after 1 sec.
      * If incorrect, give 'bad' styling and show the correct answer
      */
-    checkAnswer() {
-        this.nextSlide();
+    checkAnswer(question: any) {
+        if (question.answer == wanakana.toKana(question.givenAnswer)) {
+            this.style = 'correct';
+            
+            setTimeout(() => {
+                this.style = '';
+                this.nextSlide();
+            }, 1000);
+        } else {
+            this.style = 'incorrect';
+            this.showAnswer = true;
+            // @todo Wait for user input to go on
+            setTimeout(() => {
+                this.style = '';
+                this.showAnswer = false;
+                this.nextSlide();
+            }, 5000);
+        }
     }
 }

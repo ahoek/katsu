@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-    <form (submit)="doSubmit($event)" [formGroup]="settingsForm">
+    <form (submit)="startReview($event)" [formGroup]="settingsForm">
         <ion-list>
             <ion-list-header>
                 Form
@@ -104,9 +104,8 @@
 
         <ion-list>
             <ion-item>
-                <button ion-button full
-                        (click)="startReview()">
-                        Begin</button>
+                <button ion-button full type="submit">
+                    Begin</button>
             </ion-item>
         </ion-list>
     </form>
