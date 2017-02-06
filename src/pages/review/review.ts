@@ -27,7 +27,9 @@ export class ReviewPage {
     }
 
     ionViewDidLoad() {
-        this.dataService.load().then((data) => {
+        var settings = {};
+        
+        this.dataService.load(settings).then((data) => {
             console.log(data)
             this.questions = data;
         });
@@ -52,7 +54,14 @@ export class ReviewPage {
      * If incorrect, give 'bad' styling and show the correct answer
      */
     checkAnswer(question: any) {
-        if (question.answer == wanakana.toKana(question.givenAnswer)) {
+        // @todo check for multiple correct answers
+        console.log(wanakana.toHiragana(question.answer), wanakana.toKana(question.givenAnswer), wanakana.toHiragana(wanakana.toRomaji(question.answer)));
+        if (
+            wanakana.toHiragana(question.answer) == wanakana.toKana(question.givenAnswer)
+            ||
+            wanakana.toHiragana(wanakana.toRomaji(question.answer)) == wanakana.toKana(question.givenAnswer)
+            
+        ) {
             this.style = 'correct';
             
             setTimeout(() => {

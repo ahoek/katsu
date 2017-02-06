@@ -17,3 +17,11 @@ http://jisho.org/api/v1/search/words?keyword=%E9%A3%9F%E3%81%B9%E3%82%8B%20%23jl
 http://jisho.org/api/v1/search/words?keyword=%23jlpt-n5%20%23verb
 JLPT n5 werkwoorden (incl. する werkwoorden)
 
+http://jisho.org/api/v1/search/words?keyword=%23jlpt-n5%20%23verb?page=8
+
+data
+
+japanese.word
+japanese.reading
+senses.parts_of_speech[] != "suru verb"
+    Ichidan verb
