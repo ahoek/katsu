@@ -16,10 +16,6 @@ export class ReviewPage {
 
     public questions: Array<any>;
 
-    public style: String;
-    
-    public showAnswer: boolean = false;
-
     wanakana: any;
 
     constructor(public navCtrl: NavController, public dataService: QuestionData) {
@@ -30,16 +26,16 @@ export class ReviewPage {
         var settings = {};
         
         this.dataService.load(settings).then((data) => {
-            console.log(data)
+            console.log(data);
             this.questions = data;
         });
     }
 
     ionViewDidEnter() {
         // Add IME to answer fields
-        var answers = document.getElementsByClassName("answer")
+        var answers = document.getElementsByClassName("answerInput")
         for (var i = 0; i < answers.length; i++) {
-            wanakana.bind(answers[i])
+            wanakana.bind(answers[i]);
         }
     }
 
@@ -60,21 +56,15 @@ export class ReviewPage {
             wanakana.toHiragana(question.answer) == wanakana.toKana(question.givenAnswer)
             ||
             wanakana.toHiragana(wanakana.toRomaji(question.answer)) == wanakana.toKana(question.givenAnswer)
-            
         ) {
-            this.style = 'correct';
-            
+            question.style = 'correct';
             setTimeout(() => {
-                this.style = '';
                 this.nextSlide();
             }, 1000);
         } else {
-            this.style = 'incorrect';
-            this.showAnswer = true;
+            question.style = 'incorrect';
             // @todo Wait for user input to go on
             setTimeout(() => {
-                this.style = '';
-                this.showAnswer = false;
                 this.nextSlide();
             }, 5000);
         }

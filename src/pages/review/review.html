@@ -9,8 +9,8 @@
 <ion-content>
     <ion-slides #slides>
         <ion-slide *ngFor="let question of questions; let i = index;" 
-            [class.correct]="style == 'correct'"
-            [class.incorrect]="style == 'incorrect'"
+            [class.correct]="question.style == 'correct'"
+            [class.incorrect]="question.style == 'incorrect'"
             >
             <h3>Question {{i+1}}</h3>
 
@@ -19,27 +19,42 @@
                 <rt>{{question.furigana}}</rt>
             </ruby>
 
-            <div>
+            <div class="meaning">
                 {{question.meaning}}
             </div>
 
             <form (submit)="checkAnswer(question)">
                 <ion-item>
                     <ion-input name="answer" [(ngModel)]="question.givenAnswer"
-                               class="answer" type="text" placeholder="answer" 
+                               class="answerInput" type="text" placeholder="answer" 
                                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                     </ion-input>
-                    <button ion-button icon-only item-right
+                    <button ion-button icon-only item-right clear
                             type="submit"
                             >
-                            <ion-icon name="arrow-forward"></ion-icon>
+                        <ion-icon name="arrow-forward"></ion-icon>
                     </button>
                 </ion-item>
             </form>
+
+            <div class="answer" *ngIf="question.style == 'incorrect'">
+                Answer: 
+                <span>{{question.answer}}</span>
+            </div>
         </ion-slide>
 
-        <ion-slide>
+        <ion-slide ngClass="summary">
             <h3>Summary</h3>
+            <ion-list>
+                <ion-item *ngFor="let question of questions"  ngClass="{{question.style}}">
+                    <div>
+                        Answer: {{question.answer}}
+                    </div>
+                    <div> 
+                        Given: {{question.givenAnswer}}
+                    </div>
+                </ion-item>
+            </ion-list>
         </ion-slide>
     </ion-slides>
 </ion-content>

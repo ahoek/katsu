@@ -10,10 +10,26 @@ page-review {
     }
     
     .correct {
-        background-color: green;
+        .answerInput {
+            background-color: #6f6;
+            color: white;
+        }
     }
+    
     .incorrect {
-        background-color: red;
+        .answerInput {
+            background-color: #f66;
+            color: white;
+        }
     }
 
+    .summary {
+        .correct {
+            background-color: #cfc;
+        }
+        
+        .incorrect {
+            background-color: #fcc;
+        }
+    }
 }
