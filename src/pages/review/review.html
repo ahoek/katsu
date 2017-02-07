@@ -25,7 +25,10 @@
 
             <form (submit)="checkAnswer(question)">
                 <ion-item>
-                    <ion-input name="answer" [(ngModel)]="question.givenAnswer"
+                    <ion-input #answer{{i}}
+                        
+                               [(ngModel)]="question.givenAnswer"
+                               [ngModelOptions]="{standalone: true}"
                                class="answerInput" type="text" placeholder="answer" 
                                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                     </ion-input>

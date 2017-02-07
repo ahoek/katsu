@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, Renderer, ElementRef} from '@angular/core';
 
 import {NavController} from 'ionic-angular';
 
@@ -17,7 +17,7 @@ export class ReviewPage {
     public questions: Array<any>;
 
     wanakana: any;
-
+    
     constructor(public navCtrl: NavController, public dataService: QuestionData) {
 
     }
@@ -50,12 +50,14 @@ export class ReviewPage {
      * If incorrect, give 'bad' styling and show the correct answer
      */
     checkAnswer(question: any) {
+        question.givenAnswer = wanakana.toKana(question.givenAnswer);
+        
         // @todo check for multiple correct answers
-        console.log(wanakana.toHiragana(question.answer), wanakana.toKana(question.givenAnswer), wanakana.toHiragana(wanakana.toRomaji(question.answer)));
+        console.log(wanakana.toHiragana(question.answer), question.givenAnswer, wanakana.toHiragana(wanakana.toRomaji(question.answer)));
         if (
-            wanakana.toHiragana(question.answer) == wanakana.toKana(question.givenAnswer)
+            wanakana.toHiragana(question.answer) == question.givenAnswer
             ||
-            wanakana.toHiragana(wanakana.toRomaji(question.answer)) == wanakana.toKana(question.givenAnswer)
+            wanakana.toHiragana(wanakana.toRomaji(question.answer)) == question.givenAnswer
         ) {
             question.style = 'correct';
             setTimeout(() => {
