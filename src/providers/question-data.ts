@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
+import {Verb} from '../models/verb';
 
 /*
   Generated class for the QuestionData provider.
@@ -34,27 +35,19 @@ export class QuestionData {
                 var questions: Array<any> = [];
                 var word: any;
 
-                for (var i = 0; i < 10; i++) {
+                for (var i = 0; i < 15; i++) {
                     word = this.getRandomItem(allWords);
                     var question;
-                    console.log(word)
+                    let verb = new Verb(word);
 
                     question = {
-                        dictionary: word.japanese[0].word,
-                        furigana: word.japanese[0].reading,
-                        meaning: word.senses[0].english_definitions[0],
+                        word: verb.word,
+                        reading: verb.reading,
+                        meaning: verb.englishDefinition,
                         answer: ''
                     };
 
-                    // Suru verb
-                    if (word.senses[0].parts_of_speech[0] == 'Noun') {
-
-                        question.dictionary = word.japanese[0].reading + 'する';
-                        question.furigana = null;
-
-                    }
-
-                    question.answer = this.getTeForm(word);
+                    question.answer = verb.getTeForm();
 
                     questions.push(question);
                 }
@@ -63,58 +56,6 @@ export class QuestionData {
                 resolve(this.data);
             });
         });
-    }
-
-    getTeForm(word) {
-        var teForm;
-
-        var partOfSpeech = word.senses[0].parts_of_speech[0];
-        var reading = word.japanese[0].reading;
-        var verbWithoutEnd = reading.slice(0, -1);
-        console.log(partOfSpeech);
-        var teEnding;
-        switch (partOfSpeech) {
-            case "Ichidan verb":
-                teEnding = 'て'
-                break;
-            case "Godan verb with u ending":
-            case "Godan verb with tsu ending":
-            case "Godan verb with ru ending":
-            case "Godan verb - Iku/Yuku special class":
-                teEnding = 'って';
-                break;
-            case "Godan verb with ku ending":
-                teEnding = 'いて';
-                break;
-            case "Godan verb with gu ending":
-                teEnding = 'いで';
-                break;
-            case "Godan verb with bu ending":
-            case "Godan verb with mu ending":
-            case "Godan verb with nu ending":
-                teEnding = 'んで';
-                break;
-            case "Godan verb with su ending":
-                teEnding = 'して';
-                break;
-            case "Noun": // suru verb
-                verbWithoutEnd = reading + 'し';
-                teEnding = 'て';
-                break;
-            case "Kuru verb - special class":
-                verbWithoutEnd = 'き';
-                teEnding = 'て';
-                break;
-            case "Suru verb - irregular":
-                verbWithoutEnd = 'し';
-                teEnding = 'て';
-                break;
-
-        }
-
-        teForm = verbWithoutEnd + teEnding;
-        console.log(reading, teForm)
-        return teForm;
     }
 
     /**
