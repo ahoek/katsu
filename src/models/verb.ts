@@ -9,7 +9,7 @@ export class Verb {
     public reading: String;
     public partOfSpeech: String;
     public englishDefinition: String;
-    
+
     private endChar: String;
     private secondCharToEnd: String;
     private withoutEnd: String;
@@ -21,6 +21,7 @@ export class Verb {
         "Godan verb with u ending",
         "Godan verb with tsu ending",
         "Godan verb with ru ending",
+        "Godan verb - aru special class",
         "Godan verb - Iku/Yuku special class",
         "Godan verb with ku ending",
         "Godan verb with gu ending",
@@ -31,36 +32,41 @@ export class Verb {
         "Ichidan verb",
         "Suru verb",
         "Kuru verb - special class",
-        "Suru verb - irregular",        
+        "Suru verb - irregular",
     ];
-    
+
     /**
      * Create a verb from a Jisho api-like object
      */
     constructor(public definition: any) {
-        this.word = definition.japanese[0].word;
+        this.word = definition.japanese[0].word 
+            ? definition.japanese[0].word 
+            : definition.japanese[0].reading;
         this.reading = wanakana.toHiragana(definition.japanese[0].reading);
-        
-        // @todo CHeck all senses for part of speech and only allow verbs
-        definition.senses.forEach((sense: any) => {
-            
+
+        // Check all senses for part of speech and only allow verbs
+        definition.senses.some((sense: any) => {
             if (sense.parts_of_speech.length > 0) {
                 //console.log(sense.parts_of_speech)
-                sense.parts_of_speech.forEach((partOfSpeech: string) => {
+                sense.parts_of_speech.some((partOfSpeech: string) => {
                     if (Verb.verbPartOfSpeech.indexOf(partOfSpeech) !== -1) {
                         this.englishDefinition = sense.english_definitions[0];
                         this.partOfSpeech = partOfSpeech;
-                        //console.log('yeah', partOfSpeech);
+                        return true;
                     }
                 });
+
+                if (this.englishDefinition) {
+                    return true;
+                }
             }
         });
 
-
         // Suru verb
         if (this.partOfSpeech == 'Suru verb') {
-            this.word = this.reading + 'する';
+            this.word = this.word + 'する';
             this.reading = this.reading + 'する';
+            this.englishDefinition = '(to do) ' + this.englishDefinition;
         }
 
         // Find slices
@@ -74,11 +80,12 @@ export class Verb {
      */
     group() {
         var group: String;
-        
+
         switch (this.partOfSpeech) {
             case "Godan verb with u ending":
             case "Godan verb with tsu ending":
             case "Godan verb with ru ending":
+            case "Godan verb - aru special class":
             case "Godan verb - Iku/Yuku special class":
             case "Godan verb with ku ending":
             case "Godan verb with gu ending":
@@ -87,7 +94,7 @@ export class Verb {
             case "Godan verb with nu ending":
             case "Godan verb with su ending":
                 group = "1"
-                break;            
+                break;
             case "Ichidan verb":
                 group = "2"
                 break;
@@ -100,7 +107,7 @@ export class Verb {
                 // Not a verb
                 break;
         }
-        
+
         return group;
     }
 
@@ -110,7 +117,7 @@ export class Verb {
             let preMasu = HiraganaColumnHelper.change(this.endChar, "U", "I");
             stem = this.withoutEnd + preMasu;
         }
-        
+
         if (this.group() === "2") {
             stem = this.withoutEnd;
         }
@@ -122,13 +129,13 @@ export class Verb {
                 stem = this.reading.slice(0, -2) + HiraganaColumnHelper.change(this.secondCharToEnd, "U", "I");
             }
         }
-        
+
         return stem;
     }
 
     getTeForm() {
         var teForm;
-        let stem = this.withoutEnd;      
+        let stem = this.withoutEnd;
         var ending;
         switch (this.partOfSpeech) {
             case "Ichidan verb":
@@ -137,6 +144,7 @@ export class Verb {
             case "Godan verb with u ending":
             case "Godan verb with tsu ending":
             case "Godan verb with ru ending":
+            case "Godan verb - aru special class":
             case "Godan verb - Iku/Yuku special class":
                 ending = 'って';
                 break;

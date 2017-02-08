@@ -18,14 +18,20 @@ import {ReviewPage} from '../review/review';
 export class HomePage {
     
     settingsForm: any;
+    
+    settings: any;
 
     constructor(public navCtrl: NavController) {
+        this.settings = {
+            jlptLevel: 'n5'
+        }
+        
         this.settingsForm = new FormGroup({
-            "jlptLevel": new FormControl({value: 'N5', disabled: false})
+            "jlptLevel": new FormControl({value: this.settings.jlptLevel, disabled: false})
         });
     }
 
     startReview() {
-        this.navCtrl.push(ReviewPage, {});
+        this.navCtrl.push(ReviewPage, this.settings);
     }
 }

@@ -88,21 +88,21 @@
             </ion-item>
         </ion-list>  
 
-        <ion-list radio-group formControlName="jlptLevel">
+        <ion-list radio-group formControlName="jlptLevel" [(ngModel)]="settings.jlptLevel">
             <ion-list-header>
                 JLPT level
             </ion-list-header>
             <ion-item>
                 <ion-label>N5</ion-label>
-                <ion-radio value="N5"></ion-radio>
+                <ion-radio value="n5"></ion-radio>
             </ion-item>  
             <ion-item>
                 <ion-label>N4</ion-label>
-                <ion-radio value="N4"></ion-radio>
+                <ion-radio value="n4"></ion-radio>
             </ion-item>
             <ion-item>
                 <ion-label>N3</ion-label>
-                <ion-radio value="N3"></ion-radio>
+                <ion-radio value="n3"></ion-radio>
             </ion-item>
         </ion-list>  
 

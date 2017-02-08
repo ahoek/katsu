@@ -23,15 +23,14 @@ export class QuestionData {
      * 
      * Settings to create the answers
      */
-    load(settings: any) {
+    load(jlptLevel: String) {
         if (this.data) {
             return Promise.resolve(this.data);
         }
 
         return new Promise(resolve => {
-            this.http.get('assets/data/questions/words.json').map(res => res.json()).subscribe(data => {
+            this.http.get('assets/data/questions/words-' + jlptLevel + '.json').map(res => res.json()).subscribe(data => {
                 var allWords: Array<any> = data.data;
-
                 var questions: Array<any> = [];
                 var word: any;
 
@@ -44,11 +43,8 @@ export class QuestionData {
                         word: verb.word,
                         reading: verb.reading,
                         meaning: verb.englishDefinition,
-                        answer: ''
+                        answer: verb.getTeForm()
                     };
-
-                    question.answer = verb.getTeForm();
-
                     questions.push(question);
                 }
 

@@ -1,6 +1,6 @@
 import {Component, ViewChild, Renderer, ElementRef} from '@angular/core';
 
-import {NavController} from 'ionic-angular';
+import {NavController, NavParams} from 'ionic-angular';
 
 import {QuestionData} from '../../providers/question-data';
 
@@ -15,19 +15,21 @@ export class ReviewPage {
     @ViewChild('slides') slides: any;
 
     public questions: Array<any>;
+    
+    public jlptLevel: String;
 
     wanakana: any;
     
-    constructor(public navCtrl: NavController, public dataService: QuestionData) {
-
+    constructor(public navCtrl: NavController, public dataService: QuestionData, private navParams: NavParams) {
+        this.jlptLevel = navParams.get('jlptLevel');
+        console.log(this.jlptLevel)
     }
 
     ionViewDidLoad() {
-        var settings = {};
-        
-        this.dataService.load(settings).then((data) => {
-            console.log(data);
+        console.log("Loading questions of level " + this.jlptLevel + ".")
+        this.dataService.load(this.jlptLevel).then(data => {
             this.questions = data;
+            console.log("Loaded", this.questions);
         });
     }
 
