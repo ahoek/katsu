@@ -11,9 +11,6 @@ import {Verb} from '../models/verb';
 */
 @Injectable()
 export class QuestionData {
-
-    data: any;
-
     constructor(public http: Http) {
 
     }
@@ -24,10 +21,6 @@ export class QuestionData {
      * Settings to create the answers
      */
     load(jlptLevel: String) {
-        if (this.data) {
-            return Promise.resolve(this.data);
-        }
-
         return new Promise(resolve => {
             this.http.get('assets/data/questions/words-' + jlptLevel + '.json').map(res => res.json()).subscribe(data => {
                 var allWords: Array<any> = data.data;
@@ -47,9 +40,7 @@ export class QuestionData {
                     };
                     questions.push(question);
                 }
-
-                this.data = questions;
-                resolve(this.data);
+                resolve(questions);
             });
         });
     }

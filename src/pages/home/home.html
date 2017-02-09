@@ -8,6 +8,9 @@
 
 <ion-content>
     <form (submit)="startReview($event)" [formGroup]="settingsForm">
+        <button ion-button full type="submit">
+            Begin</button>
+
         <ion-list>
             <ion-list-header>
                 Form
@@ -105,12 +108,5 @@
                 <ion-radio value="n3"></ion-radio>
             </ion-item>
         </ion-list>  
-
-        <ion-list>
-            <ion-item>
-                <button ion-button full type="submit">
-                    Begin</button>
-            </ion-item>
-        </ion-list>
     </form>
 </ion-content>

@@ -12,7 +12,7 @@
             [class.correct]="question.style == 'correct'"
             [class.incorrect]="question.style == 'incorrect'"
             >
-            <h3>Question {{i+1}}</h3>
+            <h3>{{i+1}} / {{questions.length}}</h3>
 
             <ruby>
                 {{question.word}}
@@ -24,7 +24,7 @@
             </div>
 
             <form (submit)="checkAnswer(question)">
-                <ion-item>
+                <ion-item ngClass="answer-item">
                     <ion-input #answer{{i}}
                         
                                [(ngModel)]="question.givenAnswer"
