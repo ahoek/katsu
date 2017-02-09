@@ -21,6 +21,7 @@ export class Verb {
         "Godan verb with u ending",
         "Godan verb with tsu ending",
         "Godan verb with ru ending",
+        "Godan verb with ru ending (irregular verb)",
         "Godan verb - aru special class",
         "Godan verb - Iku/Yuku special class",
         "Godan verb with ku ending",
@@ -33,14 +34,15 @@ export class Verb {
         "Suru verb",
         "Kuru verb - special class",
         "Suru verb - irregular",
+        "Suru verb - special class",
     ];
 
     /**
      * Create a verb from a Jisho api-like object
      */
     constructor(public definition: any) {
-        this.word = definition.japanese[0].word 
-            ? definition.japanese[0].word 
+        this.word = definition.japanese[0].word
+            ? definition.japanese[0].word
             : definition.japanese[0].reading;
         this.reading = wanakana.toHiragana(definition.japanese[0].reading);
 
@@ -85,6 +87,7 @@ export class Verb {
             case "Godan verb with u ending":
             case "Godan verb with tsu ending":
             case "Godan verb with ru ending":
+            case "Godan verb with ru ending (irregular verb)":
             case "Godan verb - aru special class":
             case "Godan verb - Iku/Yuku special class":
             case "Godan verb with ku ending":
@@ -101,6 +104,7 @@ export class Verb {
             case "Suru verb":
             case "Kuru verb - special class":
             case "Suru verb - irregular":
+            case "Suru verb - special class":
                 group = "3"
                 break;
             default:
@@ -133,6 +137,9 @@ export class Verb {
         return stem;
     }
 
+    /**
+     * Fix test case: 罰する
+     */
     getTeForm() {
         var teForm;
         let stem = this.withoutEnd;
@@ -144,6 +151,7 @@ export class Verb {
             case "Godan verb with u ending":
             case "Godan verb with tsu ending":
             case "Godan verb with ru ending":
+            case "Godan verb with ru ending (irregular verb)":
             case "Godan verb - aru special class":
             case "Godan verb - Iku/Yuku special class":
                 ending = 'って';
@@ -163,6 +171,7 @@ export class Verb {
             case "Suru verb":
             case "Kuru verb - special class":
             case "Suru verb - irregular":
+            case "Suru verb - special class":
                 stem = this.masuStem();
                 ending = 'て';
                 break;
