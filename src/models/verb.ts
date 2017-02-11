@@ -17,6 +17,8 @@ export class Verb {
     //private GROUP_ONE_EXCEPTIONS = ["はいる", "はしる", "かえる", "かぎる", "きる", "しゃべる", "しる"];
     //private GROUP_THREE = ["くる", "する"];
     //private GROUP_FOUR = [["いる", "ある"], ["です"]]
+    
+    // @todo Check setting for suru
     public static verbPartOfSpeech = [
         "Godan verb with u ending",
         "Godan verb with tsu ending",
@@ -31,7 +33,7 @@ export class Verb {
         "Godan verb with nu ending",
         "Godan verb with su ending",
         "Ichidan verb",
-        "Suru verb",
+        //"Suru verb",
         "Kuru verb - special class",
         "Suru verb - irregular",
         "Suru verb - special class",
@@ -41,11 +43,6 @@ export class Verb {
      * Create a verb from a Jisho api-like object
      */
     constructor(public definition: any) {
-        this.word = definition.japanese[0].word
-            ? definition.japanese[0].word
-            : definition.japanese[0].reading;
-        this.reading = wanakana.toHiragana(definition.japanese[0].reading);
-
         // Check all senses for part of speech and only allow verbs
         definition.senses.some((sense: any) => {
             if (sense.parts_of_speech.length > 0) {
@@ -63,9 +60,19 @@ export class Verb {
                 }
             }
         });
+        
+        if (!this.partOfSpeech) {
+            return null;
+        }
+
+        this.word = definition.japanese[0].word
+            ? definition.japanese[0].word
+            : definition.japanese[0].reading;
+        this.reading = wanakana.toHiragana(definition.japanese[0].reading);
 
         // Suru verb
         if (this.partOfSpeech == 'Suru verb') {
+            
             this.word = this.word + 'する';
             this.reading = this.reading + 'する';
             this.englishDefinition = '(to do) ' + this.englishDefinition;
@@ -114,27 +121,64 @@ export class Verb {
 
         return group;
     }
+    
+    isSuruVerb() {
+        
+    }
 
+    /**
+     * Get the masu stem (ren'youkei)
+     */
     masuStem() {
         var stem: String;
-        if (this.group() === "1") {
-            let preMasu = HiraganaColumnHelper.change(this.endChar, "U", "I");
+        if (this.group() === '1') {
+            let preMasu = HiraganaColumnHelper.change(this.endChar, 'U', 'I');
             stem = this.withoutEnd + preMasu;
         }
 
-        if (this.group() === "2") {
+        if (this.group() === '2') {
             stem = this.withoutEnd;
         }
 
-        if (this.group() === "3") {
+        if (this.group() === '3') {
             if (this.partOfSpeech != 'Suru verb') {
-                stem = HiraganaColumnHelper.change(this.withoutEnd, "U", "I");
+                stem = HiraganaColumnHelper.change(this.withoutEnd, 'U', 'I');
             } else {
-                stem = this.reading.slice(0, -2) + HiraganaColumnHelper.change(this.secondCharToEnd, "U", "I");
+                stem = this.reading.slice(0, -2) + HiraganaColumnHelper.change(this.secondCharToEnd, 'U', 'I');
             }
         }
 
         return stem;
+    }
+
+    /**
+     * Get the normal verb ending
+     */
+    getNormalForm(speechLevel: string, nonPast: boolean, positive: boolean) {
+        
+        let ending = '';
+        switch (speechLevel) {
+            case 'polite':
+                if (nonPast) {
+                    if (positive) {
+                        ending = 'ます';
+                    } else {
+                        ending = 'ません';
+                    }
+                } else {
+                    if (positive) {
+                        ending = 'ました';
+                    } else {
+                        ending = 'ませんでした';
+                    }                    
+                }
+                break;
+            case 'casual':
+                // Not yet implemented
+                break;
+        }
+        
+        return this.masuStem + ending;
     }
 
     /**

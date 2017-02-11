@@ -27,16 +27,21 @@ export class QuestionData {
                 var questions: Array<any> = [];
                 var word: any;
 
-                for (var i = 0; i < 15; i++) {
+                for (var i = 0; i < 10; i++) {
                     word = this.getRandomItem(allWords);
-                    var question;
                     let verb = new Verb(word);
-
-                    question = {
+                    
+                    if (!verb.word) {
+                        i--;
+                        continue;
+                    }
+                    
+                    let question = {
                         word: verb.word,
                         reading: verb.reading,
                         meaning: verb.englishDefinition,
-                        answer: verb.getTeForm()
+                        answer: verb.getTeForm(),
+                        givenAnswer: '',
                     };
                     questions.push(question);
                 }

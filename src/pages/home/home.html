@@ -17,28 +17,32 @@
             </ion-list-header>  
             <ion-item>
                 <ion-label>Verb (normal)</ion-label>
-                <ion-checkbox item-right></ion-checkbox>
+                <ion-checkbox item-right disabled></ion-checkbox>
             </ion-item>
             <ion-item>
                 <ion-label>い adjective</ion-label>
-                <ion-checkbox item-right></ion-checkbox>
+                <ion-checkbox item-right disabled></ion-checkbox>
             </ion-item>
             <ion-item>
                 <ion-label>な adjective</ion-label>
-                <ion-checkbox item-right></ion-checkbox>
+                <ion-checkbox item-right disabled></ion-checkbox>
             </ion-item>
             <ion-item>
                 <ion-label>て form</ion-label>
-                <ion-checkbox item-right checked="true"></ion-checkbox>
+                <ion-checkbox item-right checked></ion-checkbox>
             </ion-item>
             <ion-item>
                 <ion-label>Presumptive</ion-label>
-                <ion-checkbox item-right></ion-checkbox>
+                <ion-checkbox item-right disabled></ion-checkbox>
             </ion-item>
             <ion-item>
                 <ion-label>たい form</ion-label>
-                <ion-checkbox  item-right></ion-checkbox>
-            </ion-item>         
+                <ion-checkbox item-right disabled></ion-checkbox>
+            </ion-item>
+            <ion-item>
+                <ion-label>Leave out Suru verbs</ion-label>
+                <ion-checkbox item-right checked></ion-checkbox>
+            </ion-item> 
         </ion-list>        
 
         <ion-list>
@@ -47,12 +51,12 @@
             </ion-list-header>
             <ion-item>
                 <ion-label>Polite/Neutral</ion-label>
-                <ion-checkbox item-right checked="true"></ion-checkbox>
+                <ion-checkbox item-right checked></ion-checkbox>
                 <ion-icon name="bowtie" item-left></ion-icon>
             </ion-item>  
             <ion-item>
                 <ion-label>Plain/Colloquial</ion-label>
-                <ion-checkbox item-right></ion-checkbox>
+                <ion-checkbox item-right disabled></ion-checkbox>
                 <ion-icon name="shirt" item-left></ion-icon>
             </ion-item>
         </ion-list>        
@@ -60,18 +64,16 @@
         <ion-list>
             <ion-list-header>
                 Tense
-                <!--<ion-icon name="clock" item-left></ion-icon>-->
             </ion-list-header>
             <ion-item>
                 <ion-label>Non-past tense</ion-label>
-                <ion-checkbox item-right checked="true"></ion-checkbox>
+                <ion-checkbox item-right disabled checked></ion-checkbox>
                 <ion-icon name="fastforward" item-left></ion-icon>
             </ion-item>  
             <ion-item>
                 <ion-label>Past tense</ion-label>
-                <ion-checkbox item-right checked="true"></ion-checkbox>
+                <ion-checkbox item-right disabled checked></ion-checkbox>
                 <ion-icon name="rewind" item-left></ion-icon>
-
             </ion-item>
         </ion-list> 
 
@@ -81,12 +83,12 @@
             </ion-list-header>
             <ion-item>
                 <ion-label>Affirmative</ion-label>
-                <ion-checkbox item-right checked="true"></ion-checkbox>
+                <ion-checkbox item-right disabled checked></ion-checkbox>
                 <ion-icon name="happy" item-left></ion-icon>
             </ion-item>  
             <ion-item>
                 <ion-label>Negative</ion-label>
-                <ion-checkbox item-right checked="true"></ion-checkbox>
+                <ion-checkbox item-right disabled checked></ion-checkbox>
                 <ion-icon name="sad" item-left></ion-icon>
             </ion-item>
         </ion-list>  
