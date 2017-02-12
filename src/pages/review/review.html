@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar>
         <ion-title>
-            Review
+            {{slides.getActiveIndex() + 1}} / {{questions.length}}
         </ion-title>
     </ion-navbar>
 </ion-header>
@@ -12,52 +12,55 @@
             [class.correct]="question.style == 'correct'"
             [class.incorrect]="question.style == 'incorrect'"
             >
-            <h3>{{i+1}} / {{questions.length}}</h3>
+            <ion-item>
+                <ruby>
+                    {{question.word}}
+                    <rt>{{question.reading}}</rt>
+                </ruby>
+            </ion-item>
 
-            <ruby>
-                {{question.word}}
-                <rt>{{question.reading}}</rt>
-            </ruby>
-
-            <div class="meaning">
-                {{question.meaning}}
-            </div>
-
+            <ion-item>
+                <div class="meaning">
+                    {{question.meaning}}
+                </div>
+            </ion-item>
+            
             <form (submit)="checkAnswer(question)">
                 <ion-item ngClass="answer-item">
                     <ion-input #answer{{i}}
-                        
-                               [(ngModel)]="question.givenAnswer"
-                               [ngModelOptions]="{standalone: true}"
-                               class="answerInput" type="text" placeholder="answer" 
-                               autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                    </ion-input>
-                    <button ion-button icon-only item-right clear
-                            type="submit"
-                            >
-                        <ion-icon name="arrow-forward"></ion-icon>
-                    </button>
-                </ion-item>
-            </form>
 
-            <div class="answer" *ngIf="question.style == 'incorrect'">
-                Answer: 
-                <span>{{question.answer}}</span>
-            </div>
-        </ion-slide>
+                        [attr.id]="'answer' + (i+1)"
+                        [(ngModel)]="question.givenAnswer"
+                        [ngModelOptions]="{standalone: true}"
+                        class="answerInput" type="text" placeholder="answer" 
+                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                </ion-input>
+                <button ion-button icon-only item-right clear
+                        type="submit"
+                        >
+                    <ion-icon name="arrow-forward"></ion-icon>
+                </button>
+            </ion-item>
+        </form>
 
-        <ion-slide ngClass="summary">
-            <h3>Summary</h3>
-            <ion-list>
-                <ion-item *ngFor="let question of questions"  ngClass="{{question.style}}">
-                    <div>
-                        Answer: {{question.answer}}
-                    </div>
-                    <div> 
-                        Given: {{question.givenAnswer}}
-                    </div>
-                </ion-item>
-            </ion-list>
-        </ion-slide>
-    </ion-slides>
+        <div class="answer" *ngIf="question.style == 'incorrect'">
+            Answer: 
+            <span>{{question.answer}}</span>
+        </div>
+    </ion-slide>
+
+    <ion-slide ngClass="summary">
+        <h3>Summary</h3>
+        <ion-list>
+            <ion-item *ngFor="let question of questions"  ngClass="{{question.style}}">
+                <div>
+                    Answer: {{question.answer}}
+                </div>
+                <div> 
+                    Given: {{question.givenAnswer}}
+                </div>
+            </ion-item>
+        </ion-list>
+    </ion-slide>
+</ion-slides>
 </ion-content>

@@ -1,4 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
+import {Keyboard} from 'ionic-native';
 
 import {NavController, NavParams} from 'ionic-angular';
 
@@ -15,7 +16,7 @@ export class ReviewPage {
 
     @ViewChild('slides') slides: any;
 
-    public questions?: any;
+    public questions: any = [];
 
     public jlptLevel: String;
 
@@ -40,11 +41,27 @@ export class ReviewPage {
         for (let i = 0; i < answers.length; i++) {
             wanakana.bind(answers[i]);
         }
+        
+        // Focus on the first slide
+        this.focusSlide(0);
+    }
+
+    focusSlide(index) {
+        const answer = document.getElementById('answer' + (index + 1));
+        if (answer) {
+            const element = answer.querySelector('input');
+            setTimeout(() => {
+                console.log('focusss', index)
+                element.focus();
+                //Keyboard.show();
+            }, 0);
+        }
     }
 
     nextSlide() {
         // @todo Focus on the next input field
-        this.slides.slideNext();
+        this.slides.slideNext(150);
+        this.focusSlide(this.slides.getActiveIndex());
     }
 
     /**
@@ -76,7 +93,7 @@ export class ReviewPage {
         } else {
             question.style = 'incorrect';
         }
-        
+
         if (questionAnsweredEarlier) {
             this.nextSlide();
         }
