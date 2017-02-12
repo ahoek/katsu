@@ -72,7 +72,6 @@ export class Verb {
 
         // Suru verb
         if (this.partOfSpeech == 'Suru verb') {
-            
             this.word = this.word + 'する';
             this.reading = this.reading + 'する';
             this.englishDefinition = '(to do) ' + this.englishDefinition;
@@ -88,7 +87,7 @@ export class Verb {
      * Get the verb group (1, 2 or 3)
      */
     group() {
-        var group: String;
+        let group: String;
 
         switch (this.partOfSpeech) {
             case "Godan verb with u ending":
@@ -130,7 +129,7 @@ export class Verb {
      * Get the masu stem (ren'youkei)
      */
     masuStem() {
-        var stem: String;
+        let stem: String;
         if (this.group() === '1') {
             let preMasu = HiraganaColumnHelper.change(this.endChar, 'U', 'I');
             stem = this.withoutEnd + preMasu;
@@ -185,9 +184,9 @@ export class Verb {
      * Fix test case: 罰する
      */
     getTeForm() {
-        var teForm;
+        let teForm;
         let stem = this.withoutEnd;
-        var ending;
+        let ending;
         switch (this.partOfSpeech) {
             case "Ichidan verb":
                 ending = 'て'

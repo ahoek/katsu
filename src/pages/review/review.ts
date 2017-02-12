@@ -3,6 +3,7 @@ import {Component, ViewChild} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 
 import {QuestionData} from '../../providers/question-data';
+import {Question} from '../../models/question';
 
 declare var wanakana: any;
 
@@ -14,12 +15,12 @@ export class ReviewPage {
 
     @ViewChild('slides') slides: any;
 
-    public questions: any;
-    
+    public questions?: any;
+
     public jlptLevel: String;
 
     wanakana: any;
-    
+
     constructor(public navCtrl: NavController, public dataService: QuestionData, private navParams: NavParams) {
         this.jlptLevel = this.navParams.get('jlptLevel');
         console.log(this.jlptLevel)
@@ -35,13 +36,14 @@ export class ReviewPage {
 
     ionViewDidEnter() {
         // Add IME to answer fields
-        var answers = document.getElementsByClassName("answerInput")
-        for (var i = 0; i < answers.length; i++) {
+        let answers = document.getElementsByClassName("answerInput")
+        for (let i = 0; i < answers.length; i++) {
             wanakana.bind(answers[i]);
         }
     }
-    
+
     nextSlide() {
+        // @todo Focus on the next input field
         this.slides.slideNext();
     }
 
@@ -49,28 +51,34 @@ export class ReviewPage {
      * Check the given answer
      * 
      * If correct, give good styling, and go to next question after 1 sec.
-     * If incorrect, give 'bad' styling and show the correct answer
+     * If incorrect, give 'bad' styling and show the correct answer.
      */
-    checkAnswer(question: any) {
-        question.givenAnswer = wanakana.toKana(question.givenAnswer);
-        
+    checkAnswer(question: Question) {
+        let questionAnsweredEarlier = false;
+
+        // If an answer is already given, go to the next slide directly.
+        if (question.style) {
+            questionAnsweredEarlier = true;
+        }
+
+        if (question.givenAnswer) {
+            // Convert romaji to kana
+            question.givenAnswer = wanakana.toKana(question.givenAnswer);
+        }
+
         // @todo check for multiple correct answers
-        console.log(wanakana.toHiragana(question.answer), question.givenAnswer, wanakana.toHiragana(wanakana.toRomaji(question.answer)));
         if (
             wanakana.toHiragana(question.answer) == question.givenAnswer
             ||
             wanakana.toHiragana(wanakana.toRomaji(question.answer)) == question.givenAnswer
         ) {
             question.style = 'correct';
-            setTimeout(() => {
-                this.nextSlide();
-            }, 1000);
         } else {
             question.style = 'incorrect';
-            // @todo Wait for user input to go on
-            setTimeout(() => {
-                this.nextSlide();
-            }, 5000);
+        }
+        
+        if (questionAnsweredEarlier) {
+            this.nextSlide();
         }
     }
 }
