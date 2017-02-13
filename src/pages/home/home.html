@@ -7,108 +7,106 @@
 </ion-header>
 
 <ion-content>
-    <form (submit)="startReview($event)" [formGroup]="settingsForm">
-        <button ion-button full type="submit">
-            Begin</button>
+    <button (click)="startReview($event)" ion-button full>
+        Begin</button>
 
-        <ion-list>
-            <ion-list-header>
-                Form
-            </ion-list-header>  
-            <ion-item>
-                <ion-label>Verb (normal)</ion-label>
-                <ion-checkbox item-right disabled></ion-checkbox>
-            </ion-item>
-            <ion-item>
-                <ion-label>い adjective</ion-label>
-                <ion-checkbox item-right disabled></ion-checkbox>
-            </ion-item>
-            <ion-item>
-                <ion-label>な adjective</ion-label>
-                <ion-checkbox item-right disabled></ion-checkbox>
-            </ion-item>
-            <ion-item>
-                <ion-label>て form</ion-label>
-                <ion-checkbox item-right checked></ion-checkbox>
-            </ion-item>
-            <ion-item>
-                <ion-label>Presumptive</ion-label>
-                <ion-checkbox item-right disabled></ion-checkbox>
-            </ion-item>
-            <ion-item>
-                <ion-label>たい form</ion-label>
-                <ion-checkbox item-right disabled></ion-checkbox>
-            </ion-item>
-            <ion-item>
-                <ion-label>Leave out Suru verbs</ion-label>
-                <ion-checkbox item-right checked></ion-checkbox>
-            </ion-item> 
-        </ion-list>        
+    <ion-list>
+        <ion-list-header>
+            Form
+        </ion-list-header>  
+        <ion-item>
+            <ion-label>Verb (normal)</ion-label>
+            <ion-checkbox [(ngModel)]="settings.normal" item-right></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>い adjective</ion-label>
+            <ion-checkbox item-right disabled></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>な adjective</ion-label>
+            <ion-checkbox item-right disabled></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>て form</ion-label>
+            <ion-checkbox item-right checked></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>Presumptive</ion-label>
+            <ion-checkbox item-right disabled></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>たい form</ion-label>
+            <ion-checkbox item-right disabled></ion-checkbox>
+        </ion-item>
+        <ion-item>
+            <ion-label>Leave out Suru verbs</ion-label>
+            <ion-checkbox [(ngModel)]="settings.leaveOutSuru" item-right></ion-checkbox>
+        </ion-item> 
+    </ion-list>        
 
-        <ion-list>
-            <ion-list-header>
-                Politeness level
-            </ion-list-header>
-            <ion-item>
-                <ion-label>Polite/Neutral</ion-label>
-                <ion-checkbox item-right checked></ion-checkbox>
-                <ion-icon name="bowtie" item-left></ion-icon>
-            </ion-item>  
-            <ion-item>
-                <ion-label>Plain/Colloquial</ion-label>
-                <ion-checkbox item-right disabled></ion-checkbox>
-                <ion-icon name="shirt" item-left></ion-icon>
-            </ion-item>
-        </ion-list>        
+    <ion-list>
+        <ion-list-header>
+            Politeness level
+        </ion-list-header>
+        <ion-item>
+            <ion-label>Polite</ion-label>
+            <ion-checkbox [(ngModel)]="settings.politeness.polite" item-right></ion-checkbox>
+            <ion-icon name="bowtie" item-left></ion-icon>
+        </ion-item>  
+        <ion-item>
+            <ion-label>Plain</ion-label>
+            <ion-checkbox [(ngModel)]="settings.politeness.plain" item-right></ion-checkbox>
+            <ion-icon name="shirt" item-left></ion-icon>
+        </ion-item>
+    </ion-list>        
 
-        <ion-list>
-            <ion-list-header>
-                Tense
-            </ion-list-header>
-            <ion-item>
-                <ion-label>Non-past tense</ion-label>
-                <ion-checkbox item-right disabled checked></ion-checkbox>
-                <ion-icon name="fastforward" item-left></ion-icon>
-            </ion-item>  
-            <ion-item>
-                <ion-label>Past tense</ion-label>
-                <ion-checkbox item-right disabled checked></ion-checkbox>
-                <ion-icon name="rewind" item-left></ion-icon>
-            </ion-item>
-        </ion-list> 
+    <ion-list>
+        <ion-list-header>
+            Tense
+        </ion-list-header>
+        <ion-item>
+            <ion-label>Non-past tense</ion-label>
+            <ion-checkbox item-right disabled checked></ion-checkbox>
+            <ion-icon name="fastforward" item-left></ion-icon>
+        </ion-item>  
+        <ion-item>
+            <ion-label>Past tense</ion-label>
+            <ion-checkbox item-right checked></ion-checkbox>
+            <ion-icon name="rewind" item-left></ion-icon>
+        </ion-item>
+    </ion-list> 
 
-        <ion-list>
-            <ion-list-header>
-                Affirmative/negative
-            </ion-list-header>
-            <ion-item>
-                <ion-label>Affirmative</ion-label>
-                <ion-checkbox item-right disabled checked></ion-checkbox>
-                <ion-icon name="happy" item-left></ion-icon>
-            </ion-item>  
-            <ion-item>
-                <ion-label>Negative</ion-label>
-                <ion-checkbox item-right disabled checked></ion-checkbox>
-                <ion-icon name="sad" item-left></ion-icon>
-            </ion-item>
-        </ion-list>  
+    <ion-list>
+        <ion-list-header>
+            Affirmative/negative
+        </ion-list-header>
+        <ion-item>
+            <ion-label>Affirmative</ion-label>
+            <ion-checkbox [(ngModel)]="settings.politeness.polite" item-right></ion-checkbox>
+            <ion-icon name="happy" item-left></ion-icon>
+        </ion-item>  
+        <ion-item>
+            <ion-label>Negative</ion-label>
+            <ion-checkbox [(ngModel)]="settings.politeness.polite" item-right></ion-checkbox>
+            <ion-icon name="sad" item-left></ion-icon>
+        </ion-item>
+    </ion-list>  
 
-        <ion-list radio-group formControlName="jlptLevel" [(ngModel)]="settings.jlptLevel">
-            <ion-list-header>
-                JLPT level
-            </ion-list-header>
-            <ion-item>
-                <ion-label>N5</ion-label>
-                <ion-radio value="n5"></ion-radio>
-            </ion-item>  
-            <ion-item>
-                <ion-label>N4</ion-label>
-                <ion-radio value="n4"></ion-radio>
-            </ion-item>
-            <ion-item>
-                <ion-label>N3</ion-label>
-                <ion-radio value="n3"></ion-radio>
-            </ion-item>
-        </ion-list>  
-    </form>
+    <ion-list radio-group [(ngModel)]="settings.jlptLevel">
+              <ion-list-header>
+            JLPT level
+        </ion-list-header>
+        <ion-item>
+            <ion-label>N5</ion-label>
+            <ion-radio value="n5"></ion-radio>
+        </ion-item>  
+        <ion-item>
+            <ion-label>N4</ion-label>
+            <ion-radio value="n4"></ion-radio>
+        </ion-item>
+        <ion-item>
+            <ion-label>N3</ion-label>
+            <ion-radio value="n3"></ion-radio>
+        </ion-item>
+    </ion-list>  
 </ion-content>

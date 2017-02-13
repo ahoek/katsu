@@ -18,18 +18,17 @@ export class ReviewPage {
 
     public questions: any = [];
 
-    public jlptLevel: String;
+    public settings: any;
 
     wanakana: any;
 
     constructor(public navCtrl: NavController, public dataService: QuestionData, private navParams: NavParams) {
-        this.jlptLevel = this.navParams.get('jlptLevel');
-        console.log(this.jlptLevel)
+        this.settings = this.navParams.get('settings');
+        console.log(this.settings.jlptLevel)
     }
 
     ionViewDidLoad() {
-        console.log("Loading questions of level " + this.jlptLevel + ".")
-        this.dataService.load(this.jlptLevel).then(questions => {
+        this.dataService.load(this.settings).then(questions => {
             this.questions = questions;
             console.log("Loaded", this.questions);
         });
@@ -51,7 +50,6 @@ export class ReviewPage {
         if (answer) {
             const element = answer.querySelector('input');
             setTimeout(() => {
-                console.log('focusss', index)
                 element.focus();
                 //Keyboard.show();
             }, 0);

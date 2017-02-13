@@ -1,12 +1,5 @@
 import {Component} from '@angular/core';
-
 import {NavController} from 'ionic-angular';
-
-import {
-  FormGroup,
-  FormControl
-
-} from '@angular/forms';
 
 import {ReviewPage} from '../review/review';
 
@@ -23,15 +16,21 @@ export class HomePage {
 
     constructor(public navCtrl: NavController) {
         this.settings = {
-            jlptLevel: 'n5'
+            jlptLevel: 'n5',
+            normal: true,
+            leaveOutSuru: true,
+            politeness: {
+                polite: true,
+                plain: true
+            },
+            posNeg: {
+                positive: true,
+                negative: true,
+            }
         }
-        
-        this.settingsForm = new FormGroup({
-            "jlptLevel": new FormControl({value: this.settings.jlptLevel, disabled: false})
-        });
     }
 
     startReview() {
-        this.navCtrl.push(ReviewPage, this.settings);
+        this.navCtrl.push(ReviewPage, { settings: this.settings} );
     }
 }

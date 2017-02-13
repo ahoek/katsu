@@ -17,18 +17,30 @@
                     {{question.word}}
                     <rt>{{question.reading}}</rt>
                 </ruby>
+                <ion-note item-right>
+                    {{question.meaning}}
+                </ion-note>
             </ion-item>
 
-            <ion-item>
-                <div class="meaning">
-                    {{question.meaning}}
-                </div>
-            </ion-item>
-            
+            <ion-list>
+                <ion-item *ngIf="question.type == 'te-form'">
+                    て form
+                </ion-item>
+                <ion-item *ngIf="question.type == 'plain-negative'">
+                    <ion-icon name="bowtie" item-left></ion-icon>
+                    Plain</ion-item>
+                <ion-item *ngIf="question.type == 'plain-negative'">
+                    <ion-icon name="sad" item-left></ion-icon>
+                    Negative</ion-item>
+                <ion-item *ngIf="question.type == 'plain-negative'">
+                    <ion-icon name="fastforward" item-left></ion-icon>
+                    Non-past</ion-item>
+
+            </ion-list>
+
             <form (submit)="checkAnswer(question)">
                 <ion-item ngClass="answer-item">
-                    <ion-input #answer{{i}}
-
+                    <ion-input
                         [attr.id]="'answer' + (i+1)"
                         [(ngModel)]="question.givenAnswer"
                         [ngModelOptions]="{standalone: true}"

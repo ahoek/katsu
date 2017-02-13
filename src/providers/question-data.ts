@@ -18,9 +18,9 @@ export class QuestionData {
      * 
      * Settings to create the answers
      */
-    load(jlptLevel: String) {
+    load(settings: any) {
         return new Promise(resolve => {
-            this.http.get('assets/data/questions/words-' + jlptLevel + '.json').map(res => res.json()).subscribe(data => {
+            this.http.get('assets/data/questions/words-' + settings.jlptLevel + '.json').map(res => res.json()).subscribe(data => {
                 let allWords: Array<any> = data.data;
                 let questions: Array<Question> = [];
                 let word: any;
@@ -28,18 +28,27 @@ export class QuestionData {
                 for (let i = 0; i < 10; i++) {
                     word = this.getRandomItem(allWords);
                     let verb = new Verb(word);
-                    
+
                     if (!verb.word) {
                         i--;
                         continue;
                     }
-                    
-                    let question: Question = {
-                        word: verb.word,
-                        reading: verb.reading,
-                        meaning: verb.englishDefinition,
-                        answer: verb.getTeForm(),
-                    };
+
+                    let question = Question.createFromVerb(verb);
+
+                    // Set the type of question
+                    // @todo get random distribution from settings
+                    question.type = 'plain-negative';
+
+                    switch (question.type) {
+                        case 'te-form':
+                            question.answer = verb.teForm()
+                            break;
+                        case 'plain-negative':
+                            question.answer = verb.plainNegative()
+                            break;
+                    }
+
                     questions.push(question);
                 }
                 resolve(questions);

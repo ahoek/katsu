@@ -2,6 +2,8 @@ import {HiraganaColumnHelper} from './hiragana-column-helper';
 declare var wanakana: any;
 /**
  * This class helps in conjungating verbs
+ * 
+ * @to do extend for adjectives
  */
 export class Verb {
 
@@ -17,7 +19,7 @@ export class Verb {
     //private GROUP_ONE_EXCEPTIONS = ["はいる", "はしる", "かえる", "かぎる", "きる", "しゃべる", "しる"];
     //private GROUP_THREE = ["くる", "する"];
     //private GROUP_FOUR = [["いる", "ある"], ["です"]]
-    
+
     // @todo Check setting for suru
     public static verbPartOfSpeech = [
         "Godan verb with u ending",
@@ -60,7 +62,7 @@ export class Verb {
                 }
             }
         });
-        
+
         if (!this.partOfSpeech) {
             return null;
         }
@@ -120,9 +122,9 @@ export class Verb {
 
         return group;
     }
-    
+
     isSuruVerb() {
-        
+
     }
 
     /**
@@ -154,7 +156,7 @@ export class Verb {
      * Get the normal verb ending
      */
     getNormalForm(speechLevel: string, nonPast: boolean, positive: boolean) {
-        
+
         let ending = '';
         switch (speechLevel) {
             case 'polite':
@@ -169,21 +171,27 @@ export class Verb {
                         ending = 'ました';
                     } else {
                         ending = 'ませんでした';
-                    }                    
+                    }
                 }
                 break;
             case 'casual':
-                // Not yet implemented
+                if (nonPast) {
+                    if (positive) {
+                        return this.reading;
+                    } else {
+                        return this.plainNegative();
+                    }
+                }
                 break;
         }
-        
+
         return this.masuStem + ending;
     }
 
     /**
      * Fix test case: 罰する
      */
-    getTeForm() {
+    teForm() {
         let teForm;
         let stem = this.withoutEnd;
         let ending;
@@ -223,5 +231,46 @@ export class Verb {
         teForm = stem + ending;
         console.log(this.partOfSpeech, this.reading, this.withoutEnd, stem, teForm)
         return teForm;
+    }
+
+    /**
+     * Get the plain negative form
+     */
+    plainNegative() {
+        const nai = 'ない';
+        let plainNegative, stem, ending = '';
+        
+        switch (this.group()) {
+            case '1':
+                if (this.endChar === 'う') {
+                    stem = this.withoutEnd + 'わ';
+                } else {
+                    stem = this.withoutEnd + HiraganaColumnHelper.change(this.endChar, 'U', 'A');
+                }
+                break;
+            case '2':
+                stem = this.masuStem() ;
+                break;
+            case '3':
+                switch (this.partOfSpeech) {
+                    case 'Suru verb':
+                        // @todo Replace suru with shi
+                        break;
+                    case 'Suru verb - irregular':
+                        // @todo Check exceptions
+                        break;
+                    case 'Kuru verb - special class':
+                        stem = 'こ';
+                        break;
+                    case 'Suru verb - special class':
+                        stem = 'し';
+                        break;
+                }
+                break;
+        }
+        
+        plainNegative = stem + nai;
+        console.log(this.partOfSpeech, this.reading, plainNegative);
+        return plainNegative;
     }
 }
