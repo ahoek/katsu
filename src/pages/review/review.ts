@@ -1,6 +1,4 @@
 import {Component, ViewChild} from '@angular/core';
-import {Keyboard} from 'ionic-native';
-
 import {NavController, NavParams} from 'ionic-angular';
 
 import {QuestionData} from '../../providers/question-data';
@@ -24,7 +22,6 @@ export class ReviewPage {
 
     constructor(public navCtrl: NavController, public dataService: QuestionData, private navParams: NavParams) {
         this.settings = this.navParams.get('settings');
-        console.log(this.settings.jlptLevel)
     }
 
     ionViewDidLoad() {
@@ -45,14 +42,13 @@ export class ReviewPage {
         this.focusSlide(0);
     }
 
-    focusSlide(index) {
+    focusSlide(index: number) {
         const answer = document.getElementById('answer' + (index + 1));
         if (answer) {
             const element = answer.querySelector('input');
             setTimeout(() => {
                 element.focus();
-                //Keyboard.show();
-            }, 0);
+            }, 200);
         }
     }
 

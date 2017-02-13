@@ -27,7 +27,7 @@
                     て form
                 </ion-item>
                 <ion-item *ngIf="question.type == 'plain-negative'">
-                    <ion-icon name="bowtie" item-left></ion-icon>
+                    <ion-icon name="shirt" item-left></ion-icon>
                     Plain</ion-item>
                 <ion-item *ngIf="question.type == 'plain-negative'">
                     <ion-icon name="sad" item-left></ion-icon>
@@ -44,7 +44,7 @@
                         [attr.id]="'answer' + (i+1)"
                         [(ngModel)]="question.givenAnswer"
                         [ngModelOptions]="{standalone: true}"
-                        class="answerInput" type="text" placeholder="answer" 
+                        class="answerInput" type="text" placeholder="答え" 
                         autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
                 </ion-input>
                 <button ion-button icon-only item-right clear

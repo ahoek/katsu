@@ -238,8 +238,8 @@ export class Verb {
      */
     plainNegative() {
         const nai = 'ない';
-        let plainNegative, stem, ending = '';
-        
+        let plainNegative: String, stem: String = '';
+
         switch (this.group()) {
             case '1':
                 if (this.endChar === 'う') {
@@ -249,15 +249,17 @@ export class Verb {
                 }
                 break;
             case '2':
-                stem = this.masuStem() ;
+                stem = this.masuStem();
                 break;
             case '3':
                 switch (this.partOfSpeech) {
                     case 'Suru verb':
                         // @todo Replace suru with shi
+                        stem = 'し';
                         break;
                     case 'Suru verb - irregular':
                         // @todo Check exceptions
+                        stem = 'し';
                         break;
                     case 'Kuru verb - special class':
                         stem = 'こ';
@@ -268,7 +270,7 @@ export class Verb {
                 }
                 break;
         }
-        
+
         plainNegative = stem + nai;
         console.log(this.partOfSpeech, this.reading, plainNegative);
         return plainNegative;

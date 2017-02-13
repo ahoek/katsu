@@ -15,6 +15,10 @@ page-review {
     
     .answer-item {
         font-size: 1.6em;
+        
+        input::placeholder {
+            color: rgba(#999, .5);
+        }
     }
 
     .correct {

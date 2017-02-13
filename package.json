@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "ketsu",
+  "author": "Arthur Hoek",
+  "homepage": "http://arthurhoek.nl/",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -29,7 +29,7 @@
     "zone.js": "0.6.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "1.0.0",
+    "@ionic/app-scripts": "^1.0.0",
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [
