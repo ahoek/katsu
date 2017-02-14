@@ -7,6 +7,7 @@
 </ion-header>
 
 <ion-content>
+    <form #settings [formGroup]="settingsForm">
     <button (click)="startReview($event)" ion-button full>
         Begin</button>
 
@@ -16,7 +17,7 @@
         </ion-list-header>  
         <ion-item>
             <ion-label>Verb (normal)</ion-label>
-            <ion-checkbox [(ngModel)]="settings.normal" item-right></ion-checkbox>
+            <ion-checkbox formControlName="normal" item-right></ion-checkbox>
         </ion-item>
         <ion-item>
             <ion-label>い adjective</ion-label>
@@ -40,7 +41,7 @@
         </ion-item>
         <ion-item>
             <ion-label>Leave out Suru verbs</ion-label>
-            <ion-checkbox [(ngModel)]="settings.leaveOutSuru" item-right></ion-checkbox>
+            <ion-checkbox formControlName="leaveOutSuru" item-right></ion-checkbox>
         </ion-item> 
     </ion-list>        
 
@@ -50,12 +51,12 @@
         </ion-list-header>
         <ion-item>
             <ion-label>Polite</ion-label>
-            <ion-checkbox [(ngModel)]="settings.politeness.polite" item-right></ion-checkbox>
+            <ion-checkbox formControlName="polite" item-right></ion-checkbox>
             <ion-icon name="bowtie" item-left></ion-icon>
         </ion-item>  
         <ion-item>
             <ion-label>Plain</ion-label>
-            <ion-checkbox [(ngModel)]="settings.politeness.plain" item-right></ion-checkbox>
+            <ion-checkbox formControlName="plain" item-right></ion-checkbox>
             <ion-icon name="shirt" item-left></ion-icon>
         </ion-item>
     </ion-list>        
@@ -82,17 +83,17 @@
         </ion-list-header>
         <ion-item>
             <ion-label>Affirmative</ion-label>
-            <ion-checkbox [(ngModel)]="settings.politeness.polite" item-right></ion-checkbox>
+            <ion-checkbox formControlName="affirmative" item-right></ion-checkbox>
             <ion-icon name="happy" item-left></ion-icon>
         </ion-item>  
         <ion-item>
             <ion-label>Negative</ion-label>
-            <ion-checkbox [(ngModel)]="settings.politeness.polite" item-right></ion-checkbox>
+            <ion-checkbox formControlName="negative" item-right></ion-checkbox>
             <ion-icon name="sad" item-left></ion-icon>
         </ion-item>
     </ion-list>  
 
-    <ion-list radio-group [(ngModel)]="settings.jlptLevel">
+    <ion-list radio-group formControlName="jlptLevel">
               <ion-list-header>
             JLPT level
         </ion-list-header>
@@ -112,4 +113,5 @@
     
     <button (click)="startReview($event)" ion-button full>
         Begin</button>
+    </form>
 </ion-content>
