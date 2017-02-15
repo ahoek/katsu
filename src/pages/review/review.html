@@ -1,8 +1,11 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>
+        <ion-title *ngIf="slides.getActiveIndex() < questions.length">
             {{slides.getActiveIndex() + 1}} / {{questions.length}}
         </ion-title>
+        <ion-title *ngIf="slides.getActiveIndex() >= questions.length">
+            Summary
+        </ion-title>    
     </ion-navbar>
 </ion-header>
 
@@ -62,15 +65,16 @@
     </ion-slide>
 
     <ion-slide ngClass="summary">
-        <h3>Summary</h3>
         <ion-list>
             <ion-item *ngFor="let question of questions"  ngClass="{{question.style}}">
+                <div *ngIf="question.style == 'incorrect'"> 
+                    Given: {{question.givenAnswer}}
+                </div>
                 <div>
                     Answer: {{question.answer}}
                 </div>
-                <div> 
-                    Given: {{question.givenAnswer}}
-                </div>
+                <ion-icon *ngIf="question.style == 'correct'" name="radio-button-off" item-right></ion-icon>
+                <ion-icon *ngIf="question.style == 'incorrect'" name="close" item-right></ion-icon>
             </ion-item>
         </ion-list>
     </ion-slide>
