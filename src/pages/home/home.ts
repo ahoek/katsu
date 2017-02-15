@@ -9,9 +9,9 @@ import {ReviewPage} from '../review/review';
 })
 
 export class HomePage {
-    
+
     settingsForm: any;
-    
+
     settings: any;
 
     constructor(public navCtrl: NavController) {
@@ -19,18 +19,14 @@ export class HomePage {
             jlptLevel: 'n5',
             normal: true,
             leaveOutSuru: true,
-            politeness: {
-                polite: true,
-                plain: true
-            },
-            posNeg: {
-                positive: true,
-                negative: true,
-            }
-        }
+            polite: true,
+            plain: true,
+            positive: true,
+            negative: true,
+        };
     }
 
     startReview() {
-        this.navCtrl.push(ReviewPage, { settings: this.settings} );
+        this.navCtrl.push(ReviewPage, {settings: this.settings});
     }
 }

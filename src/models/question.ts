@@ -5,15 +5,15 @@ import {Verb} from '../models/verb';
  */
 export class Question {
 
-    public word: String;
-    public reading: String;
-    public meaning: String;
+    public word: string;
+    public reading: string;
+    public meaning: string;
 
-    public answer?: String = '';
-    public style?: String = '';
+    public answer?: string = '';
+    public style?: string = '';
     public givenAnswer?: string = '';
     
-    public type: String;
+    public type: string;
 
     /**
      * Question
@@ -21,7 +21,7 @@ export class Question {
     constructor() {
     }
     
-    static createFromVerb(verb: Verb) {
+    static createFromVerb(verb: Verb): Question {
         let question = new Question();                        
         question.word = verb.word;
         question.reading = verb.reading;

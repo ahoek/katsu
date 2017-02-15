@@ -7,18 +7,16 @@ declare var wanakana: any;
  */
 export class Verb {
 
-    public word: String;
-    public reading: String;
-    public partOfSpeech: String;
-    public englishDefinition: String;
+    public word: string;
+    public reading: string;
+    public partOfSpeech: string;
+    public englishDefinition: string;
 
-    private endChar: String;
-    private secondCharToEnd: String;
-    private withoutEnd: String;
-
-    //private GROUP_ONE_EXCEPTIONS = ["はいる", "はしる", "かえる", "かぎる", "きる", "しゃべる", "しる"];
-    //private GROUP_THREE = ["くる", "する"];
-    //private GROUP_FOUR = [["いる", "ある"], ["です"]]
+    private endChar: string;
+    private secondCharToEnd: string;
+    private withoutEnd: string;
+    
+    public notAVerb: boolean = false;
 
     // @todo Check setting for suru
     public static verbPartOfSpeech = [
@@ -44,9 +42,9 @@ export class Verb {
     /**
      * Create a verb from a Jisho api-like object
      */
-    constructor(public definition: any) {
+    constructor(public definition: {senses: Array<any>, japanese: Array<{word, reading}>}) {
         // Check all senses for part of speech and only allow verbs
-        definition.senses.some((sense: any) => {
+        definition.senses.some((sense: {parts_of_speech: any[], english_definitions: any[]}) => {
             if (sense.parts_of_speech.length > 0) {
                 //console.log(sense.parts_of_speech)
                 sense.parts_of_speech.some((partOfSpeech: string) => {
@@ -64,6 +62,7 @@ export class Verb {
         });
 
         if (!this.partOfSpeech) {
+            this.notAVerb = true;
             return null;
         }
 
@@ -88,8 +87,8 @@ export class Verb {
     /**
      * Get the verb group (1, 2 or 3)
      */
-    group() {
-        let group: String;
+    group(): string {
+        let group: string;
 
         switch (this.partOfSpeech) {
             case "Godan verb with u ending":
@@ -130,8 +129,8 @@ export class Verb {
     /**
      * Get the masu stem (ren'youkei)
      */
-    masuStem() {
-        let stem: String;
+    masuStem(): string {
+        let stem: string;
         if (this.group() === '1') {
             let preMasu = HiraganaColumnHelper.change(this.endChar, 'U', 'I');
             stem = this.withoutEnd + preMasu;
@@ -155,8 +154,7 @@ export class Verb {
     /**
      * Get the normal verb ending
      */
-    getNormalForm(speechLevel: string, nonPast: boolean, positive: boolean) {
-
+    normalForm(speechLevel: string, nonPast: boolean, positive: boolean): string {
         let ending = '';
         switch (speechLevel) {
             case 'polite':
@@ -191,7 +189,7 @@ export class Verb {
     /**
      * Fix test case: 罰する
      */
-    teForm() {
+    teForm(): string {
         let teForm;
         let stem = this.withoutEnd;
         let ending;
@@ -236,9 +234,9 @@ export class Verb {
     /**
      * Get the plain negative form
      */
-    plainNegative() {
+    plainNegative(): string {
         const nai = 'ない';
-        let plainNegative: String, stem: String = '';
+        let plainNegative: string, stem: string = '';
 
         switch (this.group()) {
             case '1':

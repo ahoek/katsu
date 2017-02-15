@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {NavController, NavParams, Slides} from 'ionic-angular';
 
 import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';
@@ -12,7 +12,7 @@ declare var wanakana: any;
 })
 export class ReviewPage {
 
-    @ViewChild('slides') slides: any;
+    @ViewChild('slides') slides: Slides;
 
     public questions: any = [];
 
@@ -48,12 +48,11 @@ export class ReviewPage {
             const element = answer.querySelector('input');
             setTimeout(() => {
                 element.focus();
-            }, 200);
+            }, 160);
         }
     }
 
     nextSlide() {
-        // @todo Focus on the next input field
         this.slides.slideNext(150);
         this.focusSlide(this.slides.getActiveIndex());
     }

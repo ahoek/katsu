@@ -50,12 +50,12 @@
         </ion-list-header>
         <ion-item>
             <ion-label>Polite</ion-label>
-            <ion-checkbox [(ngModel)]="settings.politeness.polite" item-right></ion-checkbox>
+            <ion-checkbox [(ngModel)]="settings.polite" item-right></ion-checkbox>
             <ion-icon name="bowtie" item-left></ion-icon>
         </ion-item>  
         <ion-item>
             <ion-label>Plain</ion-label>
-            <ion-checkbox [(ngModel)]="settings.politeness.plain" item-right></ion-checkbox>
+            <ion-checkbox [(ngModel)]="settings.plain" item-right></ion-checkbox>
             <ion-icon name="shirt" item-left></ion-icon>
         </ion-item>
     </ion-list>        
@@ -78,16 +78,16 @@
 
     <ion-list>
         <ion-list-header>
-            Affirmative/negative
+            Positive/negative
         </ion-list-header>
         <ion-item>
-            <ion-label>Affirmative</ion-label>
-            <ion-checkbox [(ngModel)]="settings.politeness.polite" item-right></ion-checkbox>
+            <ion-label>Positive</ion-label>
+            <ion-checkbox [(ngModel)]="settings.positive" item-right></ion-checkbox>
             <ion-icon name="happy" item-left></ion-icon>
         </ion-item>  
         <ion-item>
             <ion-label>Negative</ion-label>
-            <ion-checkbox [(ngModel)]="settings.politeness.polite" item-right></ion-checkbox>
+            <ion-checkbox [(ngModel)]="settings.negative" item-right></ion-checkbox>
             <ion-icon name="sad" item-left></ion-icon>
         </ion-item>
     </ion-list>  
