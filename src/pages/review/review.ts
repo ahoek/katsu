@@ -48,12 +48,12 @@ export class ReviewPage {
             const element = answer.querySelector('input');
             setTimeout(() => {
                 element.focus();
-            }, 160);
+            }, 120);
         }
     }
 
     nextSlide() {
-        this.slides.slideNext(150);
+        this.slides.slideNext(90);
         this.focusSlide(this.slides.getActiveIndex());
     }
 
