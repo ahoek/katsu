@@ -10,7 +10,10 @@
 </ion-header>
 
 <ion-content>
-    <ion-slides #slides>
+    <ion-slides #slides 
+        (ionSlideNextEnd)="slideChanged()"
+        (ionSlidePrevEnd)="slideChanged()"
+        >
         <ion-slide *ngFor="let question of questions; let i = index;" 
             [class.correct]="question.style == 'correct'"
             [class.incorrect]="question.style == 'incorrect'"
@@ -57,15 +60,15 @@
             </ion-item>
         </form>
 
-        <div class="answer" *ngIf="question.style == 'incorrect'">
+        <ion-item class="answer" *ngIf="question.style == 'incorrect'">
             Answer: 
             <span>{{question.answer}}</span>
-        </div>
+        </ion-item>
     </ion-slide>
 
     <ion-slide ngClass="summary">
         <ion-list>
-            <ion-item *ngFor="let question of questions"  ngClass="{{question.style}}">
+            <ion-item *ngFor="let question of questions" ngClass="{{question.style}}">
                 <div *ngIf="question.style == 'incorrect'"> 
                     Given: {{question.givenAnswer}}
                 </div>

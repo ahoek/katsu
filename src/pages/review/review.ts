@@ -4,6 +4,7 @@ import {NavController, NavParams, Slides} from 'ionic-angular';
 import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';
 
+
 declare var wanakana: any;
 
 @Component({
@@ -37,24 +38,32 @@ export class ReviewPage {
         for (let i = 0; i < answers.length; i++) {
             wanakana.bind(answers[i]);
         }
-        
+
         // Focus on the first slide
         this.focusSlide(0);
     }
 
     focusSlide(index: number) {
-        const answer = document.getElementById('answer' + (index + 1));
-        if (answer) {
-            const element = answer.querySelector('input');
+        const answerInput = document.getElementById('answer' + (index + 1));
+        if (answerInput) {
+            const input = answerInput.querySelector('input');
+            let delay = index === 1 ? 40 : 0;
             setTimeout(() => {
-                element.focus();
-            }, 120);
+                input.focus();
+            }, delay);
+        }
+    }
+
+    slideChanged() {
+        const index = this.slides.getActiveIndex();
+        console.log('slideChanged', index);
+        if (index < this.questions.length) {
+            this.focusSlide(index);
         }
     }
 
     nextSlide() {
         this.slides.slideNext(90);
-        this.focusSlide(this.slides.getActiveIndex());
     }
 
     /**
