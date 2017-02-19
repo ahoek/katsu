@@ -14,3 +14,14 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+//@import url(//fonts.googleapis.com/earlyaccess/mplus1p.css);
+//@import url(//fonts.googleapis.com/earlyaccess/nicomoji.css);
+//@import url(//fonts.googleapis.com/earlyaccess/notosansjapanese.css);
+/*@import url(//fonts.googleapis.com/earlyaccess/sawarabigothic.css);*/
+/*@import url(//fonts.googleapis.com/earlyaccess/sawarabimincho.css);*/
+
+[lang='jp'] {
+    //font-family: 'Sawarabi Mincho', 'Sawarabi Gothic', 'Noto Sans Japanese', 'Nico Moji', 'Mplus 1p', 'YuKyokasho Yoko', 'Yumin', Hiragino, serif;
+    font-family: 'YuKyokasho Yoko', sans-serif;
+    font-weight: normal;
+}

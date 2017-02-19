@@ -19,7 +19,7 @@
             [class.incorrect]="question.style == 'incorrect'"
             >
             <ion-item>
-                <ruby>
+                <ruby lang="jp">
                     {{question.word}}
                     <rt>{{question.reading}}</rt>
                 </ruby>
@@ -46,6 +46,7 @@
             <form (submit)="checkAnswer(question)">
                 <ion-item ngClass="answer-item">
                     <ion-input
+                         lang="jp"
                         [attr.id]="'answer' + (i+1)"
                         [(ngModel)]="question.givenAnswer"
                         [ngModelOptions]="{standalone: true}"
@@ -62,7 +63,7 @@
 
         <ion-item class="answer" *ngIf="question.style == 'incorrect'">
             Answer: 
-            <span>{{question.answer}}</span>
+            <span lang="jp">{{question.answer}}</span>
         </ion-item>
     </ion-slide>
 
@@ -70,10 +71,10 @@
         <ion-list>
             <ion-item *ngFor="let question of questions" ngClass="{{question.style}}">
                 <div *ngIf="question.style == 'incorrect'"> 
-                    Given: {{question.givenAnswer}}
+                    Given: <span lang="jp">{{question.givenAnswer}}</span>
                 </div>
                 <div>
-                    Answer: {{question.answer}}
+                    Answer: <span lang="jp">{{question.answer}}</span>
                 </div>
                 <ion-icon *ngIf="question.style == 'correct'" name="radio-button-off" item-right></ion-icon>
                 <ion-icon *ngIf="question.style == 'incorrect'" name="close" item-right></ion-icon>

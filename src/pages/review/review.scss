@@ -8,14 +8,14 @@ page-review {
             font-size: 2.4em;
         }
     }
-    
+
     .note {
         max-width: 40%;
     }
-    
+
     .answer-item {
         font-size: 1.6em;
-        
+
         input::placeholder {
             color: rgba(#999, .5);
         }
@@ -37,8 +37,8 @@ page-review {
 
     .summary {
         overflow-y: scroll;
-        displau: block;
-        
+        display: block;
+
         .correct {
             background-color: #cfc;
         }

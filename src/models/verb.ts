@@ -20,23 +20,23 @@ export class Verb {
 
     // @todo Check setting for suru
     public static verbPartOfSpeech = [
-        "Godan verb with u ending",
-        "Godan verb with tsu ending",
-        "Godan verb with ru ending",
-        "Godan verb with ru ending (irregular verb)",
-        "Godan verb - aru special class",
-        "Godan verb - Iku/Yuku special class",
-        "Godan verb with ku ending",
-        "Godan verb with gu ending",
-        "Godan verb with bu ending",
-        "Godan verb with mu ending",
-        "Godan verb with nu ending",
-        "Godan verb with su ending",
-        "Ichidan verb",
-        //"Suru verb",
-        "Kuru verb - special class",
-        "Suru verb - irregular",
-        "Suru verb - special class",
+        'Godan verb with u ending',
+        'Godan verb with tsu ending',
+        'Godan verb with ru ending',
+        'Godan verb with ru ending (irregular verb)',
+        'Godan verb - aru special class',
+        'Godan verb - Iku/Yuku special class',
+        'Godan verb with ku ending',
+        'Godan verb with gu ending',
+        'Godan verb with bu ending',
+        'Godan verb with mu ending',
+        'Godan verb with nu ending',
+        'Godan verb with su ending',
+        'Ichidan verb',
+        //'Suru verb',
+        'Kuru verb - special class',
+        'Suru verb - irregular',
+        'Suru verb - special class',
     ];
 
     /**
@@ -91,28 +91,28 @@ export class Verb {
         let group: string;
 
         switch (this.partOfSpeech) {
-            case "Godan verb with u ending":
-            case "Godan verb with tsu ending":
-            case "Godan verb with ru ending":
-            case "Godan verb with ru ending (irregular verb)":
-            case "Godan verb - aru special class":
-            case "Godan verb - Iku/Yuku special class":
-            case "Godan verb with ku ending":
-            case "Godan verb with gu ending":
-            case "Godan verb with bu ending":
-            case "Godan verb with mu ending":
-            case "Godan verb with nu ending":
-            case "Godan verb with su ending":
-                group = "1"
+            case 'Godan verb with u ending':
+            case 'Godan verb with tsu ending':
+            case 'Godan verb with ru ending':
+            case 'Godan verb with ru ending (irregular verb)':
+            case 'Godan verb - aru special class':
+            case 'Godan verb - Iku/Yuku special class':
+            case 'Godan verb with ku ending':
+            case 'Godan verb with gu ending':
+            case 'Godan verb with bu ending':
+            case 'Godan verb with mu ending':
+            case 'Godan verb with nu ending':
+            case 'Godan verb with su ending':
+                group = '1'
                 break;
-            case "Ichidan verb":
-                group = "2"
+            case 'Ichidan verb':
+                group = '2'
                 break;
-            case "Suru verb":
-            case "Kuru verb - special class":
-            case "Suru verb - irregular":
-            case "Suru verb - special class":
-                group = "3"
+            case 'Suru verb':
+            case 'Kuru verb - special class':
+            case 'Suru verb - irregular':
+            case 'Suru verb - special class':
+                group = '3'
                 break;
             default:
                 // Not a verb
@@ -150,94 +150,9 @@ export class Verb {
 
         return stem;
     }
-
-    /**
-     * Get the normal verb ending
-     */
-    normalForm(speechLevel: string, nonPast: boolean, positive: boolean): string {
-        let ending = '';
-        switch (speechLevel) {
-            case 'polite':
-                if (nonPast) {
-                    if (positive) {
-                        ending = 'ます';
-                    } else {
-                        ending = 'ません';
-                    }
-                } else {
-                    if (positive) {
-                        ending = 'ました';
-                    } else {
-                        ending = 'ませんでした';
-                    }
-                }
-                break;
-            case 'casual':
-                if (nonPast) {
-                    if (positive) {
-                        return this.reading;
-                    } else {
-                        return this.plainNegative();
-                    }
-                }
-                break;
-        }
-
-        return this.masuStem + ending;
-    }
-
-    /**
-     * Fix test case: 罰する
-     */
-    teForm(): string {
-        let teForm;
-        let stem = this.withoutEnd;
-        let ending;
-        switch (this.partOfSpeech) {
-            case "Ichidan verb":
-                ending = 'て'
-                break;
-            case "Godan verb with u ending":
-            case "Godan verb with tsu ending":
-            case "Godan verb with ru ending":
-            case "Godan verb with ru ending (irregular verb)":
-            case "Godan verb - aru special class":
-            case "Godan verb - Iku/Yuku special class":
-                ending = 'って';
-                break;
-            case "Godan verb with ku ending":
-                ending = 'いて';
-                break;
-            case "Godan verb with gu ending":
-                ending = 'いで';
-                break;
-            case "Godan verb with bu ending":
-            case "Godan verb with mu ending":
-            case "Godan verb with nu ending":
-                ending = 'んで';
-                break;
-            case "Godan verb with su ending":
-            case "Suru verb":
-            case "Kuru verb - special class":
-            case "Suru verb - irregular":
-            case "Suru verb - special class":
-                stem = this.masuStem();
-                ending = 'て';
-                break;
-        }
-
-        teForm = stem + ending;
-        console.log(this.partOfSpeech, this.reading, this.withoutEnd, stem, teForm)
-        return teForm;
-    }
-
-    /**
-     * Get the plain negative form
-     */
-    plainNegative(): string {
-        const nai = 'ない';
-        let plainNegative: string, stem: string = '';
-
+    
+    naiStem(): string {
+        let stem: string = '';
         switch (this.group()) {
             case '1':
                 if (this.endChar === 'う') {
@@ -269,8 +184,112 @@ export class Verb {
                 break;
         }
 
-        plainNegative = stem + nai;
+        return stem;
+    }
+
+    /**
+     * Get the normal verb ending
+     */
+    normalForm(speechLevel: string, nonPast: boolean, positive: boolean): string {
+        let ending = '';
+        switch (speechLevel) {
+            case 'polite':
+                if (nonPast) {
+                    if (positive) {
+                        ending = 'ます';
+                    } else {
+                        ending = 'ません';
+                    }
+                } else {
+                    if (positive) {
+                        ending = 'ました';
+                    } else {
+                        ending = 'ませんでした';
+                    }
+                }
+                return this.masuStem + ending;
+            case 'casual':
+                if (nonPast) {
+                    if (positive) {
+                        return this.reading;
+                    } else {
+                        return this.plainNegative();
+                    }
+                } else {
+                    if (positive) {
+                        return '';
+                    } else {
+                        return this.plainNegativePast();
+                    }
+                }
+        }
+    }
+
+    /**
+     * Fix test case: 罰する
+     */
+    teForm(): string {
+        let teForm;
+        let stem = this.withoutEnd;
+        let ending;
+        switch (this.partOfSpeech) {
+            case 'Ichidan verb':
+                ending = 'て'
+                break;
+            case 'Godan verb with u ending':
+            case 'Godan verb with tsu ending':
+            case 'Godan verb with ru ending':
+            case 'Godan verb with ru ending (irregular verb)':
+            case 'Godan verb - aru special class':
+            case 'Godan verb - Iku/Yuku special class':
+                ending = 'って';
+                break;
+            case 'Godan verb with ku ending':
+                ending = 'いて';
+                break;
+            case 'Godan verb with gu ending':
+                ending = 'いで';
+                break;
+            case 'Godan verb with bu ending':
+            case 'Godan verb with mu ending':
+            case 'Godan verb with nu ending':
+                ending = 'んで';
+                break;
+            case 'Godan verb with su ending':
+            case 'Suru verb':
+            case 'Kuru verb - special class':
+            case 'Suru verb - irregular':
+            case 'Suru verb - special class':
+                stem = this.masuStem();
+                ending = 'て';
+                break;
+        }
+
+        teForm = stem + ending;
+        console.log(this.partOfSpeech, this.reading, this.withoutEnd, stem, teForm)
+        return teForm;
+    }
+
+    /**
+     * Get the plain negative form
+     */
+    plainNegative(): string {
+        const nai = 'ない';
+        const plainNegative = this.naiStem() + nai;
         console.log(this.partOfSpeech, this.reading, plainNegative);
         return plainNegative;
+    }
+    
+    /**
+     * Get the plain negative past form
+     */
+    plainNegativePast(): string {
+        const katta = 'かった';
+        
+        // Remove the い and add かった.
+        const plainNegativePast = this.plainNegative().slice(0, -1) + katta;
+        
+        console.log(this.partOfSpeech, this.reading, plainNegativePast);
+        return plainNegativePast;
     }
 }
