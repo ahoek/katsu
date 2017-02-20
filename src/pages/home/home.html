@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar>
         <ion-title>
-            Ketsuyō
+            Review settings
         </ion-title>
     </ion-navbar>
 </ion-header>
@@ -19,16 +19,16 @@
             <ion-checkbox [(ngModel)]="settings.normal" item-right></ion-checkbox>
         </ion-item>
         <ion-item>
+            <ion-label>て form</ion-label>
+            <ion-checkbox [(ngModel)]="settings.teForm" item-right checked></ion-checkbox>
+        </ion-item>
+        <ion-item>
             <ion-label>い adjective</ion-label>
             <ion-checkbox item-right disabled></ion-checkbox>
         </ion-item>
         <ion-item>
             <ion-label>な adjective</ion-label>
             <ion-checkbox item-right disabled></ion-checkbox>
-        </ion-item>
-        <ion-item>
-            <ion-label>て form</ion-label>
-            <ion-checkbox item-right checked></ion-checkbox>
         </ion-item>
         <ion-item>
             <ion-label>Presumptive</ion-label>
@@ -93,7 +93,7 @@
     </ion-list>  
 
     <ion-list radio-group [(ngModel)]="settings.jlptLevel">
-              <ion-list-header>
+        <ion-list-header>
             JLPT level
         </ion-list-header>
         <ion-item>

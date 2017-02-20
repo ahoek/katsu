@@ -1,5 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Validators, FormBuilder, FormGroup} from '@angular/forms';
+
 import {NavController} from 'ionic-angular';
+import {Storage} from '@ionic/storage';
 
 import {ReviewPage} from '../review/review';
 
@@ -10,11 +13,16 @@ import {ReviewPage} from '../review/review';
 
 export class HomePage {
 
-    settingsForm: any;
+    settingsForm: FormGroup;
 
     settings: any;
 
-    constructor(public navCtrl: NavController) {
+    private storage: Storage;
+
+    constructor(public navCtrl: NavController, storage: Storage, public formBuilder: FormBuilder) {
+        this.storage = storage;
+
+        // Default settings
         this.settings = {
             jlptLevel: 'n5',
             normal: true,
@@ -24,15 +32,27 @@ export class HomePage {
             positive: true,
             negative: true,
         };
+
+        this.storage.get('settings').then((settingsJson) => {
+            console.log('Settings', settingsJson);
+            if (settingsJson) {
+                console.log('Settings loaded');
+                this.settings = JSON.parse(settingsJson);
+            } else {
+                console.log('Default settings stored')
+                this.storage.set('settings', JSON.stringify(this.settings));
+            }
+        });
     }
+
 
     /**
      * Start the reviews with the correct settings
      */
     startReview() {
         // Save the settings in storage
-        
-        
+        this.storage.set('settings', JSON.stringify(this.settings))
+            .then((stored) => console.log(stored));
         this.navCtrl.push(ReviewPage, {settings: this.settings});
     }
 }
