@@ -32,26 +32,40 @@
                 <ion-item *ngIf="question.type === 'te-form'">
                     て form
                 </ion-item>
-                <ion-item *ngIf="
-                    question.type === 'plain-negative' 
-                    || question.type === 'plain-negative-past'
-                    ">
+                
+                <!-- polite -->
+                <ion-item *ngIf="question.type.search('polite') !== -1">
+                    <ion-icon name="bowtie" item-left></ion-icon>
+                    Polite</ion-item>
+                
+                <!-- plain -->
+                <ion-item *ngIf="question.type.search('plain') !== -1">
                     <ion-icon name="shirt" item-left></ion-icon>
                     Plain</ion-item>
-                <ion-item *ngIf="
-                    question.type === 'plain-negative' 
-                    || question.type === 'plain-negative-past'
-                    ">                   
-                    <ion-icon name="sad" item-left></ion-icon>
-                    Negative</ion-item>
+                
+                <!-- non-past -->
                 <ion-item *ngIf="
                     question.type === 'plain-negative'">
                     <ion-icon name="fastforward" item-left></ion-icon>
                     Non-past</ion-item>
-                <ion-item *ngIf="
-                    question.type === 'plain-negative-past'">
+                
+                <!-- past -->
+                <ion-item *ngIf="question.type.search('past') !== -1">
                     <ion-icon name="rewind" item-left></ion-icon>
                     Past</ion-item>
+ 
+                <!-- positive -->
+                <ion-item *ngIf="
+                    question.type === 'plain' 
+                    || question.type === 'plain-past'
+                    ">                   
+                    <ion-icon name="happy" item-left></ion-icon>
+                    Positive</ion-item>
+                
+                <!-- negative -->
+                <ion-item *ngIf="question.type.search('negative') !== -1">                   
+                    <ion-icon name="sad" item-left></ion-icon>
+                    Negative</ion-item>
             </ion-list>
 
             <form (submit)="checkAnswer(question)">

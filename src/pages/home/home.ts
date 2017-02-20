@@ -4,6 +4,7 @@ import {NavController} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 
 import {ReviewPage} from '../review/review';
+import {Settings} from '../../models/settings';
 
 @Component({
     selector: 'page-home',
@@ -20,18 +21,7 @@ export class HomePage {
         this.storage = storage;
 
         // Default settings
-        this.settings = {
-            jlptLevel: 'n5',
-            normal: true,
-            teForm: true,
-            leaveOutSuru: true,
-            polite: false,
-            plain: true,
-            past: true,
-            nonPast: true,
-            positive: true,
-            negative: true,
-        };
+        this.settings = Settings.getDefault();
 
         this.storage.get('settings').then((settingsJson) => {
             if (settingsJson) {
