@@ -258,7 +258,7 @@ export class Verb {
         }
 
         teForm = stem + ending;
-        console.log(this.partOfSpeech, this.reading, this.withoutEnd, stem, teForm)
+        //console.log(this.partOfSpeech, this.reading, this.withoutEnd, stem, teForm)
         return teForm;
     }
 
@@ -268,7 +268,7 @@ export class Verb {
     plainNegative(): string {
         const nai = 'ない';
         const plainNegative = this.naiStem() + nai;
-        console.log(this.partOfSpeech, this.reading, plainNegative);
+        //console.log(this.partOfSpeech, this.reading, plainNegative);
         return plainNegative;
     }
     
@@ -281,7 +281,7 @@ export class Verb {
         // Remove the い and add かった.
         const plainNegativePast = this.plainNegative().slice(0, -1) + katta;
         
-        console.log(this.partOfSpeech, this.reading, plainNegativePast);
+        //console.log(this.partOfSpeech, this.reading, plainNegativePast);
         return plainNegativePast;
     }
     

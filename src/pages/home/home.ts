@@ -23,19 +23,20 @@ export class HomePage {
         this.settings = {
             jlptLevel: 'n5',
             normal: true,
+            teForm: true,
             leaveOutSuru: true,
-            polite: true,
+            polite: false,
             plain: true,
+            past: true,
+            nonPast: true,
             positive: true,
             negative: true,
         };
 
         this.storage.get('settings').then((settingsJson) => {
             if (settingsJson) {
-                console.log('Settings loaded');
                 this.settings = JSON.parse(settingsJson);
             } else {
-                console.log('Default settings stored')
                 this.storage.set('settings', JSON.stringify(this.settings));
             }
         });
@@ -46,8 +47,7 @@ export class HomePage {
      */
     startReview() {
         // Save the settings in storage
-        this.storage.set('settings', JSON.stringify(this.settings))
-            .then((stored) => console.log(stored));
+        this.storage.set('settings', JSON.stringify(this.settings));
         this.navCtrl.push(ReviewPage, {settings: this.settings});
     }
 }

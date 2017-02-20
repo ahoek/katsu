@@ -29,18 +29,29 @@
             </ion-item>
 
             <ion-list>
-                <ion-item *ngIf="question.type == 'te-form'">
+                <ion-item *ngIf="question.type === 'te-form'">
                     て form
                 </ion-item>
-                <ion-item *ngIf="question.type == 'plain-negative'">
+                <ion-item *ngIf="
+                    question.type === 'plain-negative' 
+                    || question.type === 'plain-negative-past'
+                    ">
                     <ion-icon name="shirt" item-left></ion-icon>
                     Plain</ion-item>
-                <ion-item *ngIf="question.type == 'plain-negative'">
+                <ion-item *ngIf="
+                    question.type === 'plain-negative' 
+                    || question.type === 'plain-negative-past'
+                    ">                   
                     <ion-icon name="sad" item-left></ion-icon>
                     Negative</ion-item>
-                <ion-item *ngIf="question.type == 'plain-negative'">
+                <ion-item *ngIf="
+                    question.type === 'plain-negative'">
                     <ion-icon name="fastforward" item-left></ion-icon>
                     Non-past</ion-item>
+                <ion-item *ngIf="
+                    question.type === 'plain-negative-past'">
+                    <ion-icon name="rewind" item-left></ion-icon>
+                    Past</ion-item>
             </ion-list>
 
             <form (submit)="checkAnswer(question)">

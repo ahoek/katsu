@@ -25,6 +25,28 @@ export class QuestionData {
                 let questions: Array<Question> = [];
                 let word: any;
 
+                // Find the available question options
+                const options = [];
+                if (settings['teForm'] === true) {
+                    options.push('te-form');
+                }
+                if (settings.normal === true) {
+                    if (settings.plain === true) {
+                        if (settings.nonPast === true) {
+                            // note: do no ask for positive plain, it is the dictionary form
+                            if (settings.negative === true) {
+                                options.push('plain-negative');
+                            }
+                        }
+                        if (settings.past === true) {
+                            if (settings.negative === true) {
+                                options.push('plain-negative-past');
+                            }
+                            
+                        }
+                    }
+                }
+
                 for (let i = 0; i < 10; i++) {
                     word = this.getRandomItem(allWords);
                     let verb = new Verb(word);
@@ -37,16 +59,20 @@ export class QuestionData {
                     let question = Question.createFromVerb(verb);
 
                     // Set the type of question
-                    // @todo get random distribution from settings
-                    question.type = 'plain-negative';
-
+                    question.type = this.getRandomItem(options, false);
                     switch (question.type) {
                         case 'te-form':
-                            question.answer = verb.teForm()
+                            question.answer = verb.teForm();
                             break;
                         case 'plain-negative':
-                            question.answer = verb.plainNegative()
+                            question.answer = verb.plainNegative();
                             break;
+                        case 'plain-negative-past':
+                            question.answer = verb.plainNegativePast();
+                            break;
+                        default:
+                            // unknown question type
+                            question.answer = '';
                     }
 
                     questions.push(question);
@@ -59,9 +85,13 @@ export class QuestionData {
     /**
      * Get a random item from an array and remove it from the array
      */
-    getRandomItem(items: Array<any>) {
+    getRandomItem(items: Array<any>, removeItem: boolean = true) {
         const randomIndex = Math.floor(Math.random() * items.length);
-        const item = items.splice(randomIndex, 1);
-        return item[0];
+        if (removeItem === true) {
+            let item = items.splice(randomIndex, 1);
+            return item[0];
+        } else {
+            return items[randomIndex];
+        }
     }
 }
