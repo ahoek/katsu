@@ -1,5 +1,4 @@
-import {Component, Input} from '@angular/core';
-import {Validators, FormBuilder, FormGroup} from '@angular/forms';
+import {Component} from '@angular/core';
 
 import {NavController} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
@@ -13,13 +12,11 @@ import {ReviewPage} from '../review/review';
 
 export class HomePage {
 
-    settingsForm: FormGroup;
-
     settings: any;
 
     private storage: Storage;
 
-    constructor(public navCtrl: NavController, storage: Storage, public formBuilder: FormBuilder) {
+    constructor(public navCtrl: NavController, storage: Storage) {
         this.storage = storage;
 
         // Default settings
@@ -34,7 +31,6 @@ export class HomePage {
         };
 
         this.storage.get('settings').then((settingsJson) => {
-            console.log('Settings', settingsJson);
             if (settingsJson) {
                 console.log('Settings loaded');
                 this.settings = JSON.parse(settingsJson);
@@ -44,7 +40,6 @@ export class HomePage {
             }
         });
     }
-
 
     /**
      * Start the reviews with the correct settings

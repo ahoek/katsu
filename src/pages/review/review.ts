@@ -4,7 +4,6 @@ import {NavController, NavParams, Slides} from 'ionic-angular';
 import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';
 
-
 declare var wanakana: any;
 
 @Component({
@@ -34,7 +33,7 @@ export class ReviewPage {
 
     ionViewDidEnter() {
         // Add IME to answer fields
-        let answers = document.getElementsByClassName("answerInput")
+        const answers = document.getElementsByClassName("answerInput")
         for (let i = 0; i < answers.length; i++) {
             wanakana.bind(answers[i]);
         }
@@ -56,7 +55,6 @@ export class ReviewPage {
 
     slideChanged() {
         const index = this.slides.getActiveIndex();
-        console.log('slideChanged', index);
         if (index < this.questions.length) {
             this.focusSlide(index);
         }
