@@ -195,19 +195,11 @@ export class Verb {
         switch (speechLevel) {
             case 'polite':
                 if (nonPast) {
-                    if (positive) {
-                        ending = 'ます';
-                    } else {
-                        ending = 'ません';
-                    }
+                    ending = positive ? 'ます' : 'ません';
                 } else {
-                    if (positive) {
-                        ending = 'ました';
-                    } else {
-                        ending = 'ませんでした';
-                    }
+                    ending = positive ? 'ました' : 'ませんでした';
                 }
-                return this.masuStem + ending;
+                return this.masuStem() + ending;
             case 'casual':
                 if (nonPast) {
                     if (positive) {
@@ -217,7 +209,7 @@ export class Verb {
                     }
                 } else {
                     if (positive) {
-                        return '';
+                        return this.plainPast();
                     } else {
                         return this.plainNegativePast();
                     }
@@ -226,7 +218,7 @@ export class Verb {
     }
 
     /**
-     * Fix test case: 罰する
+     * Check test case: 罰する
      */
     teForm(): string {
         let teForm;
@@ -271,7 +263,7 @@ export class Verb {
     }
 
     /**
-     * Get the plain negative form
+     * Get the plain negative form.
      */
     plainNegative(): string {
         const nai = 'ない';
@@ -281,7 +273,7 @@ export class Verb {
     }
     
     /**
-     * Get the plain negative past form
+     * Get the plain negative past form.
      */
     plainNegativePast(): string {
         const katta = 'かった';
@@ -291,5 +283,16 @@ export class Verb {
         
         console.log(this.partOfSpeech, this.reading, plainNegativePast);
         return plainNegativePast;
+    }
+    
+    /**
+     * Plain past is the same as te form, but with an 'a' at the end.
+     */
+    plainPast(): string {
+        const stem = this.teForm().slice(0, -1);
+        const ending = this.teForm().slice(-1);
+        const plainPast = stem + HiraganaColumnHelper.change(ending, 'E', 'A');
+        
+        return plainPast;
     }
 }

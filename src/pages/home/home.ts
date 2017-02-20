@@ -26,7 +26,13 @@ export class HomePage {
         };
     }
 
+    /**
+     * Start the reviews with the correct settings
+     */
     startReview() {
+        // Save the settings in storage
+        
+        
         this.navCtrl.push(ReviewPage, {settings: this.settings});
     }
 }
