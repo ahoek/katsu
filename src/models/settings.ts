@@ -6,6 +6,7 @@ export class Settings {
     jlptLevel: string;
     normal: boolean;
     teForm: boolean;
+    volitional: boolean;
     leaveOutSuru: boolean;
     polite: boolean;
     plain: boolean;
@@ -23,6 +24,7 @@ export class Settings {
         settings.jlptLevel = 'n5';
         settings.normal = true;
         settings.teForm = true;
+        settings.volitional = false;
         settings.leaveOutSuru = true;
         settings.polite = false;
         settings.plain = true;

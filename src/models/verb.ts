@@ -295,4 +295,13 @@ export class Verb {
         
         return plainPast;
     }
+    
+    volitional(speechLevel: string): string {
+        let volitional;
+        if (speechLevel === 'polite') {
+            volitional = this.masuStem() + 'ましょう';
+        }
+        console.log('volitional',volitional);
+        return volitional;
+    }
 }

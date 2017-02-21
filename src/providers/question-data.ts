@@ -64,6 +64,9 @@ export class QuestionData {
                         case 'polite-negative-past':
                             question.answer = verb.normalForm('polite', false, false);
                             break;
+                        case 'volitional-polite':
+                            question.answer = verb.volitional('polite');
+                            break;
                         default:
                             // Unknown question type
                             question.answer = '';
@@ -83,9 +86,11 @@ export class QuestionData {
     questionTypeOptions(settings: Settings): Array<any> {
         // Find the available question options
         const options = [];
+
         if (settings['teForm'] === true) {
             options.push('te-form');
         }
+
         if (settings.normal === true) {
             if (settings.plain === true) {
                 if (settings.nonPast === true) {
@@ -120,6 +125,12 @@ export class QuestionData {
                         options.push('polite-negative-past');
                     }
                 }
+            }
+        }
+
+        if (settings.volitional === true) {
+            if (settings.polite === true) {
+                options.push('volitional-polite');
             }
         }
 
