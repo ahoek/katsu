@@ -1,5 +1,7 @@
 import {Verb} from '../models/verb';
 
+declare var wanakana: any;
+
 /**
  * This class helps in conjungating verbs
  */
@@ -13,7 +15,7 @@ export class Question {
 
     // Answer
     public type: string;
-    public answer?: string = '';
+    public answers: Array<string> = [];
 
     // Result
     public style?: string = '';
@@ -53,7 +55,7 @@ export class Question {
      * Check if this is a valid question
      */
     isValid(): boolean {
-        if (!this.answer) {
+        if (this.answers.length === 0) {
             return false;
         }
         if (!this.type) {
@@ -64,37 +66,79 @@ export class Question {
     }
 
     setAnswer() {
+        let answer: string;
+        
         switch (this.type) {
             case 'te-form':
-                this.answer = this.verb.teForm();
+                answer = this.verb.teForm();
                 break;
             case 'plain-negative':
-                this.answer = this.verb.plainNegative();
+                answer = this.verb.plainNegative();
                 break;
             case 'plain-past':
-                this.answer = this.verb.plainPast();
+                answer = this.verb.plainPast();
                 break;
             case 'plain-negative-past':
-                this.answer = this.verb.plainNegativePast();
+                answer = this.verb.plainNegativePast();
                 break;
             case 'polite':
-                this.answer = this.verb.normalForm('polite', true, true);
+                answer = this.verb.normalForm('polite', true, true);
                 break;
             case 'polite-negative':
-                this.answer = this.verb.normalForm('polite', false, true);
+                answer = this.verb.normalForm('polite', false, true);
                 break;
             case 'polite-past':
-                this.answer = this.verb.normalForm('polite', true, false);
+                answer = this.verb.normalForm('polite', true, false);
                 break;
             case 'polite-negative-past':
-                this.answer = this.verb.normalForm('polite', false, false);
+                answer = this.verb.normalForm('polite', false, false);
                 break;
             case 'volitional-polite':
-                this.answer = this.verb.volitional('polite');
+                answer = this.verb.volitional('polite');
                 break;
-            default:
-                // Unknown verb type
-                this.answer = null;
         }
+        
+        this.answers.push(answer);
+        
+        // Find the answer with romaji or kanji
+        if (this.word !== this.reading) {
+            // Find the okurigana
+            let okurigana = '';
+            for (let i = this.word.length - 1; i >= 0; i--) {
+                if (wanakana.isHiragana(this.word[i])) {
+                    okurigana = this.word[i] + okurigana;
+                } else {
+                    break;
+                }
+            }
+            
+            // Remove the okurigana from the word
+            const readingBase = this.reading.slice(0, -1 * okurigana.length);
+            const wordBase = this.word.slice(0, -1 * okurigana.length);
+            const conjungation = answer.substring(readingBase.length);
+            this.answers.push(wordBase + conjungation);
+        }
+    }
+    
+    checkAnswer() {
+        this.style = 'incorrect';
+        
+        if (this.givenAnswer) {
+            // Convert romaji to kana
+            this.givenAnswer = wanakana.toKana(this.givenAnswer);
+        }
+
+        // Check for multiple correct answers
+        this.answers.some((answer: string) => {
+            if (
+                wanakana.toHiragana(answer) == this.givenAnswer
+                ||
+                wanakana.toHiragana(wanakana.toRomaji(answer)) == this.givenAnswer
+            ) {
+                this.style = 'correct';
+                return true;
+            }    
+        });
+        
     }
 }

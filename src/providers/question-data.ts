@@ -42,7 +42,7 @@ export class QuestionData {
                         i--;
                         continue;
                     }
-                    console.log('answer',question.answer);
+                    console.log('answers',question.answers);
                     questions.push(question);
                 }
                 resolve(questions);

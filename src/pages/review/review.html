@@ -99,8 +99,8 @@
         </form>
 
         <ion-item class="answer" *ngIf="question.style == 'incorrect'">
-            Answer: 
-            <span lang="jp">{{question.answer}}</span>
+            Answers: 
+            <span lang="jp">{{question.answers}}</span>
         </ion-item>
     </ion-slide>
 
@@ -111,7 +111,7 @@
                     Given: <span lang="jp">{{question.givenAnswer}}</span>
                 </div>
                 <div>
-                    Answer: <span lang="jp">{{question.answer}}</span>
+                    Answers: <span lang="jp">{{question.answers}}</span>
                 </div>
                 <ion-icon *ngIf="question.style == 'correct'" name="radio-button-off" item-right></ion-icon>
                 <ion-icon *ngIf="question.style == 'incorrect'" name="close" item-right></ion-icon>

@@ -78,22 +78,8 @@ export class ReviewPage {
             questionAnsweredEarlier = true;
         }
 
-        if (question.givenAnswer) {
-            // Convert romaji to kana
-            question.givenAnswer = wanakana.toKana(question.givenAnswer);
-        }
-
-        // @todo check for multiple correct answers
-        if (
-            wanakana.toHiragana(question.answer) == question.givenAnswer
-            ||
-            wanakana.toHiragana(wanakana.toRomaji(question.answer)) == question.givenAnswer
-        ) {
-            question.style = 'correct';
-        } else {
-            question.style = 'incorrect';
-        }
-
+        question.checkAnswer();
+ 
         if (questionAnsweredEarlier) {
             this.nextSlide();
         }
