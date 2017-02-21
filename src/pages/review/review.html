@@ -28,7 +28,7 @@
                 </ion-note>
             </ion-item>
 
-            <ion-list>
+            <ion-list ngClass="settings-list">
                 <ion-item *ngIf="question.type === 'te-form'">
                     て form
                 </ion-item>
@@ -42,22 +42,13 @@
                 <ion-item *ngIf="question.type.search('plain') !== -1">
                     <ion-icon name="shirt" item-left></ion-icon>
                     Plain</ion-item>
-                
-                <!-- non-past -->
-                <ion-item *ngIf="
-                    question.type === 'plain-negative'">
-                    <ion-icon name="fastforward" item-left></ion-icon>
-                    Non-past</ion-item>
-                
-                <!-- past -->
-                <ion-item *ngIf="question.type.search('past') !== -1">
-                    <ion-icon name="rewind" item-left></ion-icon>
-                    Past</ion-item>
  
                 <!-- positive -->
                 <ion-item *ngIf="
                     question.type === 'plain' 
                     || question.type === 'plain-past'
+                    || question.type === 'polite'
+                    || question.type === 'polite-past'
                     ">                   
                     <ion-icon name="happy" item-left></ion-icon>
                     Positive</ion-item>
@@ -66,6 +57,21 @@
                 <ion-item *ngIf="question.type.search('negative') !== -1">                   
                     <ion-icon name="sad" item-left></ion-icon>
                     Negative</ion-item>
+                
+                <!-- non-past -->
+                <ion-item *ngIf="
+                    question.type === 'plain' 
+                    || question.type === 'plain-negative'
+                    || question.type === 'polite'
+                    || question.type === 'polite-negative'
+                    ">
+                    <ion-icon name="fastforward" item-left></ion-icon>
+                    Non-past</ion-item>
+                
+                <!-- past -->
+                <ion-item *ngIf="question.type.search('past') !== -1">
+                    <ion-icon name="rewind" item-left></ion-icon>
+                    Past</ion-item>
             </ion-list>
 
             <form (submit)="checkAnswer(question)">

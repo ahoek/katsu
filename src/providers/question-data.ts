@@ -46,11 +46,23 @@ export class QuestionData {
                         case 'plain-negative':
                             question.answer = verb.plainNegative();
                             break;
+                        case 'plain-past':
+                            question.answer = verb.plainPast();
+                            break;
                         case 'plain-negative-past':
                             question.answer = verb.plainNegativePast();
                             break;
-                        case 'plain-past':
-                            question.answer = verb.plainPast();
+                        case 'polite':
+                            question.answer = verb.normalForm('polite', true, true);
+                            break;
+                        case 'polite-negative':
+                            question.answer = verb.normalForm('polite', false, true);
+                            break;
+                        case 'polite-past':
+                            question.answer = verb.normalForm('polite', true, false);
+                            break;
+                        case 'polite-negative-past':
+                            question.answer = verb.normalForm('polite', false, false);
                             break;
                         default:
                             // Unknown question type
@@ -60,7 +72,7 @@ export class QuestionData {
                         i--;
                         continue;
                     }
-                    
+                    console.log(question.answer);
                     questions.push(question);
                 }
                 resolve(questions);
@@ -88,6 +100,24 @@ export class QuestionData {
                     }
                     if (settings.negative === true) {
                         options.push('plain-negative-past');
+                    }
+                }
+            }
+            if (settings.polite === true) {
+                if (settings.nonPast === true) {
+                    if (settings.positive === true) {
+                        options.push('polite');
+                    }
+                    if (settings.negative === true) {
+                        options.push('polite-negative');
+                    }
+                }
+                if (settings.past === true) {
+                    if (settings.positive === true) {
+                        options.push('polite-past');
+                    }
+                    if (settings.negative === true) {
+                        options.push('polite-negative-past');
                     }
                 }
             }

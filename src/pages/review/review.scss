@@ -5,16 +5,26 @@ page-review {
 
         ruby {
             max-width: 60%;
-            font-size: 2.4em;
+            font-size: 2.2em;
         }
     }
 
     .note {
         max-width: 40%;
     }
+    
+    .settings-list {
+        margin-bottom: 0;
+        
+        ion-item {
+            font-size: .9em;
+        }
+    }
 
     .answer-item {
-        font-size: 1.6em;
+        margin-top: 0;
+        font-size: 1.4em;
+        line-height: 1;
 
         input::placeholder {
             color: rgba(#999, .5);

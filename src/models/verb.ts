@@ -190,7 +190,7 @@ export class Verb {
     /**
      * Get the normal verb ending
      */
-    normalForm(speechLevel: string, nonPast: boolean, positive: boolean): string {
+    normalForm(speechLevel: string, positive: boolean, nonPast: boolean): string {
         let ending = '';
         switch (speechLevel) {
             case 'polite':
