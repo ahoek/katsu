@@ -2,8 +2,6 @@ import {HiraganaColumnHelper} from './hiragana-column-helper';
 declare var wanakana: any;
 /**
  * This class helps in conjungating verbs
- * 
- * @to do extend for adjectives
  */
 export class Verb {
 

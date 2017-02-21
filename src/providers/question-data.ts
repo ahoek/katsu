@@ -21,8 +21,8 @@ export class QuestionData {
      */
     load(settings: Settings) {
         return new Promise(resolve => {
-            this.http.get('assets/data/questions/words-' + settings.jlptLevel + '.json').map(res => res.json()).subscribe(data => {
-                let allWords: Array<any> = data.data;
+            this.http.get('assets/data/questions/words-' + settings.jlptLevel + '.json').map(res => res.json()).subscribe(dictionary => {
+                let allWords: Array<any> = dictionary.data;
                 let questions: Array<Question> = [];
                 let word: any;
 
@@ -34,48 +34,15 @@ export class QuestionData {
                         i--;
                         continue;
                     }
-
-                    let question = Question.createFromVerb(verb);
-
-                    // Set the type of question
-                    question.type = this.getRandomItem(this.questionTypeOptions(settings), false);
-                    switch (question.type) {
-                        case 'te-form':
-                            question.answer = verb.teForm();
-                            break;
-                        case 'plain-negative':
-                            question.answer = verb.plainNegative();
-                            break;
-                        case 'plain-past':
-                            question.answer = verb.plainPast();
-                            break;
-                        case 'plain-negative-past':
-                            question.answer = verb.plainNegativePast();
-                            break;
-                        case 'polite':
-                            question.answer = verb.normalForm('polite', true, true);
-                            break;
-                        case 'polite-negative':
-                            question.answer = verb.normalForm('polite', false, true);
-                            break;
-                        case 'polite-past':
-                            question.answer = verb.normalForm('polite', true, false);
-                            break;
-                        case 'polite-negative-past':
-                            question.answer = verb.normalForm('polite', false, false);
-                            break;
-                        case 'volitional-polite':
-                            question.answer = verb.volitional('polite');
-                            break;
-                        default:
-                            // Unknown question type
-                            question.answer = '';
-                    }
-                    if (!question.type || !question.answer) {
+                    
+                    let type = this.getRandomItem(this.questionTypeOptions(settings), false);
+                    let question = Question.createFromVerbWithType(verb, type);
+                    
+                    if (!question.isValid()) {
                         i--;
                         continue;
                     }
-                    console.log(question.answer);
+                    console.log('answer',question.answer);
                     questions.push(question);
                 }
                 resolve(questions);
@@ -83,7 +50,7 @@ export class QuestionData {
         });
     }
 
-    questionTypeOptions(settings: Settings): Array<any> {
+    questionTypeOptions(settings: Settings): Array<string> {
         // Find the available question options
         const options = [];
 
