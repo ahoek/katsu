@@ -33,7 +33,16 @@
                     <ion-icon item-left>て</ion-icon>
                     Te form
                 </ion-item>
-                
+ 
+                 <!-- tai -->
+                <ion-item *ngIf="question.type.search('tai-form') !== -1">
+                    <ion-icon name="heart" item-left></ion-icon>
+                    Tai form</ion-item>               
+
+                <ion-item *ngIf="question.type.search('volitional') !== -1">
+                    <ion-icon name="walk" item-left></ion-icon>
+                    Volitional
+                </ion-item>
                 <!-- polite -->
                 <ion-item *ngIf="question.type.search('polite') !== -1">
                     <ion-icon name="bowtie" item-left></ion-icon>
@@ -45,12 +54,7 @@
                     Plain</ion-item>
  
                 <!-- positive -->
-                <ion-item *ngIf="
-                    question.type === 'plain' 
-                    || question.type === 'plain-past'
-                    || question.type === 'polite'
-                    || question.type === 'polite-past'
-                    ">                   
+                <ion-item *ngIf="question.type.search('positive') !== -1">                   
                     <ion-icon name="happy" item-left></ion-icon>
                     Positive</ion-item>
                 
@@ -60,12 +64,7 @@
                     Negative</ion-item>
                 
                 <!-- non-past -->
-                <ion-item *ngIf="
-                    question.type === 'plain' 
-                    || question.type === 'plain-negative'
-                    || question.type === 'polite'
-                    || question.type === 'polite-negative'
-                    ">
+                <ion-item *ngIf="question.type.search('present') !== -1">
                     <ion-icon name="fastforward" item-left></ion-icon>
                     Non-past</ion-item>
                 
@@ -74,10 +73,7 @@
                     <ion-icon name="rewind" item-left></ion-icon>
                     Past</ion-item>
                 
-                <ion-item *ngIf="question.type.search('volitional') !== -1">
-                    <ion-icon name="walk" item-left></ion-icon>
-                    Volitional
-                </ion-item>
+
             </ion-list>
 
             <form (submit)="checkAnswer(question)">

@@ -34,15 +34,15 @@ export class QuestionData {
                         i--;
                         continue;
                     }
-                    
+
                     let type = this.getRandomItem(this.questionTypeOptions(settings), false);
                     let question = Question.createFromVerbWithType(verb, type);
-                    
+
                     if (!question.isValid()) {
                         i--;
                         continue;
                     }
-                    console.log('answers',question.answers);
+                    console.log('answers', question.answers);
                     questions.push(question);
                 }
                 resolve(questions);
@@ -63,12 +63,12 @@ export class QuestionData {
                 if (settings.nonPast === true) {
                     // note: do no ask for positive plain, it is the dictionary form
                     if (settings.negative === true) {
-                        options.push('plain-negative');
+                        options.push('plain-negative-present');
                     }
                 }
                 if (settings.past === true) {
                     if (settings.positive === true) {
-                        options.push('plain-past');
+                        options.push('plain-positive-past');
                     }
                     if (settings.negative === true) {
                         options.push('plain-negative-past');
@@ -78,15 +78,15 @@ export class QuestionData {
             if (settings.polite === true) {
                 if (settings.nonPast === true) {
                     if (settings.positive === true) {
-                        options.push('polite');
+                        options.push('polite-positive-present');
                     }
                     if (settings.negative === true) {
-                        options.push('polite-negative');
+                        options.push('polite-negative-present');
                     }
                 }
                 if (settings.past === true) {
                     if (settings.positive === true) {
-                        options.push('polite-past');
+                        options.push('polite-positive-past');
                     }
                     if (settings.negative === true) {
                         options.push('polite-negative-past');
@@ -98,6 +98,25 @@ export class QuestionData {
         if (settings.volitional === true) {
             if (settings.polite === true) {
                 options.push('volitional-polite');
+            }
+        }
+
+        if (settings.taiForm === true) {
+            if (settings.nonPast === true) {
+                if (settings.positive === true) {
+                    options.push('tai-form-positive-present');
+                }
+                if (settings.negative === true) {
+                    options.push('tai-form-negative-present');
+                }
+            }
+            if (settings.past === true) {
+                if (settings.positive === true) {
+                    options.push('tai-form-positive-past');
+                }
+                if (settings.negative === true) {
+                    options.push('tai-form-negative-past');
+                }
             }
         }
 

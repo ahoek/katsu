@@ -44,7 +44,6 @@ export class Verb {
         // Check all senses for part of speech and only allow verbs
         definition.senses.some((sense: {parts_of_speech: any[], english_definitions: any[]}) => {
             if (sense.parts_of_speech.length > 0) {
-                //console.log(sense.parts_of_speech)
                 sense.parts_of_speech.some((partOfSpeech: string) => {
                     if (Verb.verbPartOfSpeech.indexOf(partOfSpeech) !== -1) {
                         this.englishDefinition = sense.english_definitions[0];
@@ -301,5 +300,20 @@ export class Verb {
         }
         console.log('volitional',volitional);
         return volitional;
+    }
+    
+    /**
+     * @todo Treat as　い adjective
+     */
+    taiForm(positive: boolean, nonPast: boolean): string {
+        let ending;
+        
+        if (nonPast) {
+            ending = positive ? 'たい' : 'たくない';
+        } else {
+            ending = positive ? 'たかった' : 'たくなかった';
+        }     
+        
+        return this.masuStem() + ending;   
     }
 }

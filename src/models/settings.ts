@@ -6,7 +6,9 @@ export class Settings {
     jlptLevel: string;
     normal: boolean;
     teForm: boolean;
+    iAdjective: boolean;
     volitional: boolean;
+    taiForm: boolean;
     leaveOutSuru: boolean;
     polite: boolean;
     plain: boolean;
@@ -16,7 +18,6 @@ export class Settings {
     negative: boolean;
 
     constructor() {
-
     }
 
     static getDefault(): Settings {
@@ -24,7 +25,9 @@ export class Settings {
         settings.jlptLevel = 'n5';
         settings.normal = true;
         settings.teForm = true;
+        settings.iAdjective = false;
         settings.volitional = false;
+        settings.taiForm = false;
         settings.leaveOutSuru = true;
         settings.polite = false;
         settings.plain = true;

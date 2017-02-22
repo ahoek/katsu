@@ -21,12 +21,12 @@
         </ion-item>
         <ion-item>
             <ion-label>Te form</ion-label>
-            <ion-checkbox [(ngModel)]="settings.teForm" item-right checked></ion-checkbox>
+            <ion-checkbox [(ngModel)]="settings.teForm" item-right></ion-checkbox>
             <ion-icon name="" item-left>て</ion-icon>
         </ion-item>
         <ion-item>
             <ion-label>I adjective</ion-label>
-            <ion-checkbox item-right disabled></ion-checkbox>
+            <ion-checkbox [(ngModel)]="settings.iAdjective" item-right disabled></ion-checkbox>
             <ion-icon name="" item-left>い</ion-icon>
         </ion-item>
         <ion-item>
@@ -41,7 +41,7 @@
         </ion-item>
         <ion-item>
             <ion-label>Tai form</ion-label>
-            <ion-checkbox item-right disabled></ion-checkbox>
+            <ion-checkbox [(ngModel)]="settings.taiForm" item-right></ion-checkbox>
             <ion-icon name="heart" item-left></ion-icon>
         </ion-item>
         <ion-item>

@@ -72,22 +72,22 @@ export class Question {
             case 'te-form':
                 answer = this.verb.teForm();
                 break;
-            case 'plain-negative':
+            case 'plain-negative-present':
                 answer = this.verb.plainNegative();
                 break;
-            case 'plain-past':
+            case 'plain-positive-past':
                 answer = this.verb.plainPast();
                 break;
             case 'plain-negative-past':
                 answer = this.verb.plainNegativePast();
                 break;
-            case 'polite':
+            case 'polite-positive-present':
                 answer = this.verb.normalForm('polite', true, true);
                 break;
-            case 'polite-negative':
+            case 'polite-negative-present':
                 answer = this.verb.normalForm('polite', false, true);
                 break;
-            case 'polite-past':
+            case 'polite-positive-past':
                 answer = this.verb.normalForm('polite', true, false);
                 break;
             case 'polite-negative-past':
@@ -95,6 +95,18 @@ export class Question {
                 break;
             case 'volitional-polite':
                 answer = this.verb.volitional('polite');
+                break;
+            case 'tai-form-positive-present':
+                answer = this.verb.taiForm(true, true);
+                break;
+            case 'tai-form-negative-present':
+                answer = this.verb.taiForm(false, true);
+                break;
+            case 'tai-form-positive-past':
+                answer = this.verb.taiForm(true, false);
+                break;
+            case 'tai-form-negative-past':
+                answer = this.verb.taiForm(false, false);
                 break;
         }
         
