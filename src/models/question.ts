@@ -36,8 +36,8 @@ export class Question {
     }
 
     static createFromVerbWithType(verb: Verb, type: string): Question {
-        let question = new Question();
-        question.setVerb(verb);
+        let question = Question.createFromVerb(verb);
+        
         question.type = type;
         question.setAnswer();
 

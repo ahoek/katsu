@@ -30,8 +30,8 @@
 
             <ion-list ngClass="settings-list">
                 <ion-item *ngIf="question.type === 'te-form'">
-                    <ion-icon name="te-form" item-left></ion-icon>
-                    て form
+                    <ion-icon item-left>て</ion-icon>
+                    Te form
                 </ion-item>
                 
                 <!-- polite -->
@@ -75,7 +75,7 @@
                     Past</ion-item>
                 
                 <ion-item *ngIf="question.type.search('volitional') !== -1">
-                    <ion-icon name="volitional" item-left></ion-icon>
+                    <ion-icon name="walk" item-left></ion-icon>
                     Volitional
                 </ion-item>
             </ion-list>
