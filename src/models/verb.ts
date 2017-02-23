@@ -40,7 +40,7 @@ export class Verb {
     /**
      * Create a verb from a Jisho api-like object
      */
-    constructor(public definition: {senses: Array<any>, japanese: Array<{word, reading}>}) {
+    constructor(public definition: {senses: Array<any>, japanese: Array<{word: any, reading: any}>}) {
         // Check all senses for part of speech and only allow verbs
         definition.senses.some((sense: {parts_of_speech: any[], english_definitions: any[]}) => {
             if (sense.parts_of_speech.length > 0) {
@@ -63,16 +63,19 @@ export class Verb {
             return null;
         }
 
-        this.word = definition.japanese[0].word
-            ? definition.japanese[0].word
-            : definition.japanese[0].reading;
-        this.reading = wanakana.toHiragana(definition.japanese[0].reading);
+        const japanese = definition.japanese[0];
+        this.word = japanese.word
+            ? japanese.word
+            : japanese.reading;
+        this.reading = japanese.reading;
+        //wanakana.toHiragana(definition.japanese[0].reading);
 
         // Suru verb
         if (this.partOfSpeech == 'Suru verb') {
+            // Make a verb out of the noun
             this.word = this.word + 'する';
             this.reading = this.reading + 'する';
-            this.englishDefinition = '(to do) ' + this.englishDefinition;
+            this.englishDefinition = '[to do] ' + this.englishDefinition;
         }
 
         // Find slices
