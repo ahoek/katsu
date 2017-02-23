@@ -1,15 +1,12 @@
 <ion-header>
     <ion-navbar>
         <ion-title>
-            Review settings
+            What to practise?
         </ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <button (click)="startReview($event)" ion-button full>
-        Begin</button>
-
     <ion-list>
         <ion-list-header>
             Form
@@ -25,16 +22,6 @@
             <ion-icon name="" item-left>て</ion-icon>
         </ion-item>
         <ion-item>
-            <ion-label>I adjective</ion-label>
-            <ion-checkbox [(ngModel)]="settings.iAdjective" item-right disabled></ion-checkbox>
-            <ion-icon name="" item-left>い</ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>Na adjective</ion-label>
-            <ion-checkbox item-right disabled></ion-checkbox>
-            <ion-icon name="" item-left>な</ion-icon>
-        </ion-item>
-        <ion-item>
             <ion-label>Volitional</ion-label>
             <ion-checkbox [(ngModel)]="settings.volitional" item-right></ion-checkbox>
             <ion-icon name="walk" item-left></ion-icon>
@@ -44,6 +31,18 @@
             <ion-checkbox [(ngModel)]="settings.taiForm" item-right></ion-checkbox>
             <ion-icon name="heart" item-left></ion-icon>
         </ion-item>
+        
+        <ion-item>
+            <ion-label>I adjective</ion-label>
+            <ion-checkbox [(ngModel)]="settings.iAdjective" item-right disabled></ion-checkbox>
+            <ion-icon name="" item-left>い</ion-icon>
+        </ion-item>
+        <ion-item>
+            <ion-label>Na adjective</ion-label>
+            <ion-checkbox  [(ngModel)]="settings.naAdjective" item-right disabled></ion-checkbox>
+            <ion-icon name="" item-left>な</ion-icon>
+        </ion-item>
+
         <ion-item>
             <ion-label>Leave out Suru verbs</ion-label>
             <ion-checkbox [(ngModel)]="settings.leaveOutSuru" item-right></ion-checkbox>
@@ -99,7 +98,7 @@
     </ion-list>  
 
     <ion-list radio-group [(ngModel)]="settings.jlptLevel">
-        <ion-list-header>
+              <ion-list-header>
             JLPT level
         </ion-list-header>
         <ion-item>
@@ -115,7 +114,9 @@
             <ion-radio value="n3"></ion-radio>
         </ion-item>
     </ion-list> 
-    
-    <button (click)="startReview($event)" ion-button full>
-        Begin</button>
 </ion-content>
+
+<ion-footer>
+    <button (click)="startReview($event)" ion-button full>
+        Start practising!</button>
+</ion-footer>
