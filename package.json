@@ -1,5 +1,5 @@
 {
-  "name": "ketsu",
+  "name": "katsu",
   "author": "Arthur Hoek",
   "homepage": "http://arthurhoek.nl/",
   "private": true,
@@ -65,5 +65,5 @@
       "locator": "ios"
     }
   ],
-  "description": "ketsu: An Ionic project"
+  "description": "katsu: An Ionic project"
 }

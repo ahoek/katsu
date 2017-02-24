@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="nl.arthurhoek.ketsu" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>ketsu</name>
+<widget id="nl.arthurhoek.katsu" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>katsu</name>
   <description>A Japanese conjugation practise app</description>
   <author email="arthur@arthurhoek.nl" href="http://arthurhoek.nl/">Arthur Hoek</author>
   <content src="index.html"/>

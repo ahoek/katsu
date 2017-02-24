@@ -8,7 +8,7 @@ import {HomePage} from '../pages/home/home';
 @Component({
     templateUrl: 'app.html'
 })
-export class KetsuApp {
+export class KatsuApp {
     rootPage = HomePage;
 
     constructor(platform: Platform) {

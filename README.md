@@ -1,8 +1,8 @@
-# ketsu 
+# katsu 
 
-Ketsu is a mobile conjugation practise app for Japanese verbs and adjectives.
+Katsu is a mobile conjugation practise app for Japanese verbs and adjectives.
 
-The name is an abbreviation of the Japanese word 結用 (ketsuyō), which means conjugation.
+The name is an abbreviation of the Japanese word 活用 (katsuyō), which means conjugation.
 
 The following forms can be practised:
 
