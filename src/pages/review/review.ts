@@ -63,6 +63,10 @@ export class ReviewPage {
     nextSlide() {
         this.slides.slideNext(90);
     }
+    
+    goToQuestion(index: number) {
+        this.slides.slideTo(index);
+    }
 
     /**
      * Check the given answer
@@ -71,17 +75,14 @@ export class ReviewPage {
      * If incorrect, give 'bad' styling and show the correct answer.
      */
     checkAnswer(question: Question) {
-        let questionAnsweredEarlier = false;
-
-        // If an answer is already given, go to the next slide directly.
-        if (question.style) {
-            questionAnsweredEarlier = true;
-        }
-
         question.checkAnswer();
  
-        if (questionAnsweredEarlier) {
+        // If an answer is already given, go to the next slide directly.
+        if (question.answered === true) {
             this.nextSlide();
+            return;
         }
+        
+        question.answered = true;
     }
 }

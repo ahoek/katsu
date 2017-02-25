@@ -48,13 +48,5 @@ page-review {
     .summary {
         overflow-y: scroll;
         display: block;
-
-        .correct {
-            background-color: #cfc;
-        }
-
-        .incorrect {
-            background-color: #fcc;
-        }
     }
 }

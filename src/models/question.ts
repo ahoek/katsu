@@ -18,8 +18,9 @@ export class Question {
     public answers: Array<string> = [];
 
     // Result
-    public style?: string = '';
+    public correct?: boolean;
     public givenAnswer?: string = '';
+    public answered: boolean = false;
 
 
     /**
@@ -135,7 +136,7 @@ export class Question {
     }
     
     checkAnswer() {
-        this.style = 'incorrect';
+        this.correct = false;
         
         if (this.givenAnswer) {
             // Convert romaji to kana
@@ -149,7 +150,7 @@ export class Question {
                 ||
                 wanakana.toHiragana(wanakana.toRomaji(answer)) == this.givenAnswer
             ) {
-                this.style = 'correct';
+                this.correct = true;
                 return true;
             }    
         });
