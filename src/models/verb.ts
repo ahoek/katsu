@@ -31,7 +31,7 @@ export class Verb {
         'Godan verb with nu ending',
         'Godan verb with su ending',
         'Ichidan verb',
-        //'Suru verb',
+        'Suru verb',
         'Kuru verb - special class',
         'Suru verb - irregular',
         'Suru verb - special class',
@@ -82,6 +82,8 @@ export class Verb {
         this.endChar = this.reading.slice(-1);
         this.secondCharToEnd = this.reading.slice(-2, -1);
         this.withoutEnd = this.reading.slice(0, -1);
+        
+        console.log('verb', this.word, this.reading, this.partOfSpeech)
     }
 
     /**
@@ -120,10 +122,6 @@ export class Verb {
         }
 
         return group;
-    }
-
-    isSuruVerb() {
-
     }
 
     /**
@@ -167,12 +165,11 @@ export class Verb {
             case '3':
                 switch (this.partOfSpeech) {
                     case 'Suru verb':
-                        // @todo Replace suru with shi
-                        stem = 'し';
+                        stem = this.reading.slice(0, -2) + 'し';
                         break;
                     case 'Suru verb - irregular':
                         // @todo Check exceptions
-                        stem = 'し';
+                        stem = this.reading.slice(0, -2) + 'し';
                         break;
                     case 'Kuru verb - special class':
                         stem = 'こ';

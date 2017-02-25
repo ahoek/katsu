@@ -109,7 +109,9 @@ export class Question {
                 answer = this.verb.taiForm(false, false);
                 break;
         }
-        
+        if (!answer) {
+            return;
+        }
         this.answers.push(answer);
         
         // Find the answer with romaji or kanji
@@ -151,6 +153,5 @@ export class Question {
                 return true;
             }    
         });
-        
     }
 }

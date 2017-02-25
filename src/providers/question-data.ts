@@ -25,8 +25,10 @@ export class QuestionData {
                 let allWords: Array<any> = dictionary.data;
                 let questions: Array<Question> = [];
                 let word: any;
+                
+                const numberOfQuestions = 10;
 
-                for (let i = 0; i < 10; i++) {
+                for (let i = 0; i < numberOfQuestions; i++) {
                     word = this.getRandomItem(allWords);
                     let verb = new Verb(word);
 

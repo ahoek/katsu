@@ -34,20 +34,19 @@
                     Te form
                 </ion-item>
  
-                 <!-- tai -->
+                <!-- forms -->
                 <ion-item *ngIf="question.type.search('tai-form') !== -1">
                     <ion-icon name="heart" item-left></ion-icon>
                     Tai form</ion-item>               
-
                 <ion-item *ngIf="question.type.search('volitional') !== -1">
                     <ion-icon name="walk" item-left></ion-icon>
                     Volitional
                 </ion-item>
+                 
                 <!-- polite -->
                 <ion-item *ngIf="question.type.search('polite') !== -1">
                     <ion-icon name="bowtie" item-left></ion-icon>
                     Polite</ion-item>
-                
                 <!-- plain -->
                 <ion-item *ngIf="question.type.search('plain') !== -1">
                     <ion-icon name="shirt" item-left></ion-icon>
@@ -57,7 +56,6 @@
                 <ion-item *ngIf="question.type.search('positive') !== -1">                   
                     <ion-icon name="happy" item-left></ion-icon>
                     Positive</ion-item>
-                
                 <!-- negative -->
                 <ion-item *ngIf="question.type.search('negative') !== -1">                   
                     <ion-icon name="sad" item-left></ion-icon>
@@ -67,13 +65,10 @@
                 <ion-item *ngIf="question.type.search('present') !== -1">
                     <ion-icon name="fastforward" item-left></ion-icon>
                     Non-past</ion-item>
-                
                 <!-- past -->
                 <ion-item *ngIf="question.type.search('past') !== -1">
                     <ion-icon name="rewind" item-left></ion-icon>
                     Past</ion-item>
-                
-
             </ion-list>
 
             <form (submit)="checkAnswer(question)">
