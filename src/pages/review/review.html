@@ -21,7 +21,7 @@
             <ion-item>
                 <ruby lang="jp">
                     {{question.word}}
-                    <rt ng-if="question.word != question.reading">
+                    <rt *ngIf="question.word !== question.reading">
                         {{question.reading}}
                     </rt>
                 </ruby>

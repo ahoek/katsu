@@ -30,9 +30,16 @@ export class QuestionData {
 
                 for (let i = 0; i < numberOfQuestions; i++) {
                     word = this.getRandomItem(allWords);
+                    if (!word) {
+                        break;
+                    }
+                    
                     let verb = new Verb(word);
-
                     if (!verb.word) {
+                        i--;
+                        continue;
+                    }
+                    if (settings.leaveOutSuru && verb.isSuru()) {
                         i--;
                         continue;
                     }

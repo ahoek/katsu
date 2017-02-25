@@ -41,6 +41,10 @@ export class Verb {
      * Create a verb from a Jisho api-like object
      */
     constructor(public definition: {senses: Array<any>, japanese: Array<{word: any, reading: any}>}) {
+        if (!definition) {
+            return;
+        }
+        
         // Check all senses for part of speech and only allow verbs
         definition.senses.some((sense: {parts_of_speech: any[], english_definitions: any[]}) => {
             if (sense.parts_of_speech.length > 0) {
@@ -62,7 +66,7 @@ export class Verb {
             this.notAVerb = true;
             return null;
         }
-
+        
         const japanese = definition.japanese[0];
         this.word = japanese.word
             ? japanese.word
@@ -82,8 +86,17 @@ export class Verb {
         this.endChar = this.reading.slice(-1);
         this.secondCharToEnd = this.reading.slice(-2, -1);
         this.withoutEnd = this.reading.slice(0, -1);
-        
         console.log('verb', this.word, this.reading, this.partOfSpeech)
+    }
+    
+    isSuru(): boolean {
+        if (this.partOfSpeech === 'Suru verb') {
+            return true;
+        }
+        if (this.partOfSpeech === 'Suru verb - irregular') {
+            return true;
+        }        
+        return false;
     }
 
     /**
