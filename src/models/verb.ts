@@ -13,7 +13,7 @@ export class Verb {
     private endChar: string;
     private secondCharToEnd: string;
     private withoutEnd: string;
-    
+
     public notAVerb: boolean = false;
 
     // @todo Check setting for suru
@@ -44,7 +44,7 @@ export class Verb {
         if (!definition) {
             return;
         }
-        
+
         // Check all senses for part of speech and only allow verbs
         definition.senses.some((sense: {parts_of_speech: any[], english_definitions: any[]}) => {
             if (sense.parts_of_speech.length > 0) {
@@ -66,7 +66,7 @@ export class Verb {
             this.notAVerb = true;
             return null;
         }
-        
+
         const japanese = definition.japanese[0];
         this.word = japanese.word
             ? japanese.word
@@ -88,14 +88,14 @@ export class Verb {
         this.withoutEnd = this.reading.slice(0, -1);
         console.log('verb', this.word, this.reading, this.partOfSpeech)
     }
-    
+
     isSuru(): boolean {
         if (this.partOfSpeech === 'Suru verb') {
             return true;
         }
         if (this.partOfSpeech === 'Suru verb - irregular') {
             return true;
-        }        
+        }
         return false;
     }
 
@@ -110,7 +110,7 @@ export class Verb {
             case 'Godan verb with tsu ending':
             case 'Godan verb with ru ending':
             case 'Godan verb with ru ending (irregular verb)':
-            case 'Godan verb - aru special class':
+            case 'Godan verb - aru special class': // @todo conjung. of いらっしゃる etc.
             case 'Godan verb - Iku/Yuku special class':
             case 'Godan verb with ku ending':
             case 'Godan verb with gu ending':
@@ -143,7 +143,12 @@ export class Verb {
     masuStem(): string {
         let stem: string;
         if (this.group() === '1') {
-            let preMasu = HiraganaColumnHelper.change(this.endChar, 'U', 'I');
+            let preMasu;
+            if (this.partOfSpeech === 'Godan verb - aru special class') {
+                preMasu = 'い';
+            } else {
+                preMasu = HiraganaColumnHelper.change(this.endChar, 'U', 'I');
+            }
             stem = this.withoutEnd + preMasu;
         }
 
@@ -161,7 +166,7 @@ export class Verb {
 
         return stem;
     }
-    
+
     naiStem(): string {
         let stem: string = '';
         switch (this.group()) {
@@ -281,20 +286,20 @@ export class Verb {
         //console.log(this.partOfSpeech, this.reading, plainNegative);
         return plainNegative;
     }
-    
+
     /**
      * Get the plain negative past form.
      */
     plainNegativePast(): string {
         const katta = 'かった';
-        
+
         // Remove the い and add かった.
         const plainNegativePast = this.plainNegative().slice(0, -1) + katta;
-        
+
         //console.log(this.partOfSpeech, this.reading, plainNegativePast);
         return plainNegativePast;
     }
-    
+
     /**
      * Plain past is the same as te form, but with an 'a' at the end.
      */
@@ -302,31 +307,31 @@ export class Verb {
         const stem = this.teForm().slice(0, -1);
         const ending = this.teForm().slice(-1);
         const plainPast = stem + HiraganaColumnHelper.change(ending, 'E', 'A');
-        
+
         return plainPast;
     }
-    
+
     volitional(speechLevel: string): string {
         let volitional;
         if (speechLevel === 'polite') {
             volitional = this.masuStem() + 'ましょう';
         }
-        console.log('volitional',volitional);
+        console.log('volitional', volitional);
         return volitional;
     }
-    
+
     /**
      * @todo Treat as　い adjective
      */
     taiForm(positive: boolean, nonPast: boolean): string {
         let ending;
-        
+
         if (nonPast) {
             ending = positive ? 'たい' : 'たくない';
         } else {
             ending = positive ? 'たかった' : 'たくなかった';
-        }     
-        
-        return this.masuStem() + ending;   
+        }
+
+        return this.masuStem() + ending;
     }
 }
