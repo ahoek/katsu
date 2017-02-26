@@ -1,8 +1,19 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar hideBackButton>
+        <button ion-button icon-only clear (click)="showSummary()">
+            <ion-icon name="close"></ion-icon>
+            Stop
+        </button>
+        
         <ion-title>
             {{index + 1}} / {{questions.length}}
-        </ion-title>    
+        </ion-title> 
+
+        <ion-buttons end>
+            <button ion-button clear (click)="nextQuestion()">
+                Skip
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 

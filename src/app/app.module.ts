@@ -17,10 +17,8 @@ import {QuestionData} from '../providers/question-data';
         SummaryPage,
     ],
     imports: [
-        IonicModule.forRoot(KatsuApp, {
-            backButtonText: 'Stop',
-        }, {}
-        )],
+        IonicModule.forRoot(KatsuApp)
+    ],
     bootstrap: [IonicApp],
     entryComponents: [
         KatsuApp,

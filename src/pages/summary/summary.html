@@ -1,5 +1,9 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar hideBackButton>
+        <button ion-button icon-only clear (click)="navCtrl.popToRoot()">
+            <ion-icon name="close"></ion-icon>
+        </button>        
+        
         <ion-title>
             Summary
         </ion-title>    

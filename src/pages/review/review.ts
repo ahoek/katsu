@@ -46,12 +46,16 @@ export class ReviewPage {
         if (this.index < this.questions.length - 1) {  
             this.index++;
         } else {
-            this.navCtrl.push(SummaryPage, {questions: this.questions});
+            this.showSummary();
         }
     }
     
     goToQuestion(index: number) {
         this.index = index;
+    }
+    
+    showSummary() {
+        this.navCtrl.push(SummaryPage, {questions: this.questions});
     }
 
     /**
