@@ -14,7 +14,7 @@ export class Question {
     public meaning: string;
 
     // Answer
-    public type: string;
+    public type: string = "";
     public answers: Array<string> = [];
 
     // Result

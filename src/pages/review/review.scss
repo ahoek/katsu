@@ -1,12 +1,8 @@
 page-review {
 
-    .swiper-slide {
-        align-items: flex-start;
-
-        ruby {
-            max-width: 60%;
-            font-size: 2.2em;
-        }
+    ruby {
+        max-width: 60%;
+        font-size: 2.2em;
     }
 
     .note {
@@ -17,7 +13,7 @@ page-review {
         margin-bottom: 0;
         
         ion-item {
-            font-size: .9em;
+           // font-size: .9em;
         }
     }
 
@@ -43,10 +39,5 @@ page-review {
             background-color: #f33;
             color: white;
         }
-    }
-
-    .summary {
-        overflow-y: scroll;
-        display: block;
     }
 }

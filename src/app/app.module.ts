@@ -5,6 +5,7 @@ import {Storage} from '@ionic/storage';
 import {KatsuApp} from './app.component';
 import {HomePage} from '../pages/home/home';
 import {ReviewPage} from '../pages/review/review';
+import {SummaryPage} from '../pages/summary/summary';
 
 import {QuestionData} from '../providers/question-data';
 
@@ -13,6 +14,7 @@ import {QuestionData} from '../providers/question-data';
         KatsuApp,
         HomePage,
         ReviewPage,
+        SummaryPage,
     ],
     imports: [
         IonicModule.forRoot(KatsuApp, {
@@ -24,6 +26,7 @@ import {QuestionData} from '../providers/question-data';
         KatsuApp,
         HomePage,
         ReviewPage,
+        SummaryPage,
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},

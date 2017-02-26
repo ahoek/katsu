@@ -1,116 +1,89 @@
 <ion-header>
     <ion-navbar>
-        <ion-title *ngIf="slides.getActiveIndex() < questions.length">
-            {{slides.getActiveIndex() + 1}} / {{questions.length}}
-        </ion-title>
-        <ion-title *ngIf="slides.getActiveIndex() >= questions.length">
-            Summary
+        <ion-title>
+            {{index + 1}} / {{questions.length}}
         </ion-title>    
     </ion-navbar>
 </ion-header>
 
-<ion-content>
-    <ion-slides #slides 
-        (ionSlideNextEnd)="slideChanged()"
-        (ionSlidePrevEnd)="slideChanged()"
-        >
-        <ion-slide *ngFor="let question of questions; let i = index;" 
-            [class.correct]="question.correct === true"
-            [class.incorrect]="question.correct === false"
-            >
-            <ion-item>
-                <ruby lang="jp">
-                    {{question.word}}
-                    <rt *ngIf="question.word !== question.reading">
-                        {{question.reading}}
-                    </rt>
-                </ruby>
-                <ion-note item-right>
-                    {{question.meaning}}
-                </ion-note>
-            </ion-item>
+<ion-content
+    [class.correct]="questions[index].correct === true"
+    [class.incorrect]="questions[index].correct === false"
+    >
+    <ion-item>
+        <ruby lang="jp">
+            {{questions[index].word}}
+            <rt *ngIf="questions[index].word !== questions[index].reading">
+                {{questions[index].reading}}
+            </rt>
+        </ruby>
+        <ion-note item-right>
+            {{questions[index].meaning}}
+        </ion-note>
+    </ion-item>
 
-            <ion-list ngClass="settings-list">
-                <ion-item *ngIf="question.type === 'te-form'">
-                    <ion-icon item-left>て</ion-icon>
-                    Te form
-                </ion-item>
- 
-                <!-- forms -->
-                <ion-item *ngIf="question.type.search('tai-form') !== -1">
-                    <ion-icon name="heart" item-left></ion-icon>
-                    Tai form</ion-item>               
-                <ion-item *ngIf="question.type.search('volitional') !== -1">
-                    <ion-icon name="walk" item-left></ion-icon>
-                    Volitional
-                </ion-item>
-                 
-                <!-- polite -->
-                <ion-item *ngIf="question.type.search('polite') !== -1">
-                    <ion-icon name="bowtie" item-left></ion-icon>
-                    Polite</ion-item>
-                <!-- plain -->
-                <ion-item *ngIf="question.type.search('plain') !== -1">
-                    <ion-icon name="shirt" item-left></ion-icon>
-                    Plain</ion-item>
- 
-                <!-- positive -->
-                <ion-item *ngIf="question.type.search('positive') !== -1">                   
-                    <ion-icon name="happy" item-left></ion-icon>
-                    Positive</ion-item>
-                <!-- negative -->
-                <ion-item *ngIf="question.type.search('negative') !== -1">                   
-                    <ion-icon name="sad" item-left></ion-icon>
-                    Negative</ion-item>
-                
-                <!-- non-past -->
-                <ion-item *ngIf="question.type.search('present') !== -1">
-                    <ion-icon name="fastforward" item-left></ion-icon>
-                    Non-past</ion-item>
-                <!-- past -->
-                <ion-item *ngIf="question.type.search('past') !== -1">
-                    <ion-icon name="rewind" item-left></ion-icon>
-                    Past</ion-item>
-            </ion-list>
-
-            <form (submit)="checkAnswer(question)">
-                <ion-item ngClass="answer-item">
-                    <ion-input
-                         lang="jp"
-                        [attr.id]="'answer' + (i+1)"
-                        [(ngModel)]="question.givenAnswer"
-                        [ngModelOptions]="{standalone: true}"
-                        class="answerInput" type="text" placeholder="答え" 
-                        autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-                </ion-input>
-                <button ion-button icon-only item-right clear
-                        type="submit"
-                        >
-                    <ion-icon name="arrow-forward"></ion-icon>
-                </button>
-            </ion-item>
-        </form>
-
-        <ion-item class="answer" *ngIf="question.correct === false"> 
-            <span lang="jp">{{question.answers[0]}}</span>
+    <ion-list ngClass="settings-list">
+        <ion-item *ngIf="questions[index].type === 'te-form'">
+            <ion-icon item-left>て</ion-icon>
+            Te form
         </ion-item>
-    </ion-slide>
 
-    <ion-slide ngClass="summary">
-        <ion-list>
-            <ion-item *ngFor="let question of questions; let i = index;" 
-                (click)="goToQuestion(i)">
-                <div *ngIf="question.correct === false"> 
-                    <span lang="jp">{{question.givenAnswer}}</span>
-                </div>
-                <div>
-                    <span lang="jp">{{question.answers[0]}}</span>
-                </div>
-                
-                <ion-icon *ngIf="question.correct === true" name="checkmark-circle" color="secondary" item-right></ion-icon>
-                <ion-icon *ngIf="question.correct === false" name="close-circle" color="danger" item-right></ion-icon>
-            </ion-item>
-        </ion-list>
-    </ion-slide>
-</ion-slides>
+        <!-- forms -->
+        <ion-item *ngIf="questions[index].type.search('tai-form') !== -1">
+            <ion-icon name="heart" item-left></ion-icon>
+            Tai form</ion-item>               
+        <ion-item *ngIf="questions[index].type.search('volitional') !== -1">
+            <ion-icon name="walk" item-left></ion-icon>
+            Volitional
+        </ion-item>
+
+        <!-- polite -->
+        <ion-item *ngIf="questions[index].type.search('polite') !== -1">
+            <ion-icon name="bowtie" item-left></ion-icon>
+            Polite</ion-item>
+        <!-- plain -->
+        <ion-item *ngIf="questions[index].type.search('plain') !== -1">
+            <ion-icon name="shirt" item-left></ion-icon>
+            Plain</ion-item>
+
+        <!-- positive -->
+        <ion-item *ngIf="questions[index].type.search('positive') !== -1">                   
+            <ion-icon name="happy" item-left></ion-icon>
+            Positive</ion-item>
+        <!-- negative -->
+        <ion-item *ngIf="questions[index].type.search('negative') !== -1">                   
+            <ion-icon name="sad" item-left></ion-icon>
+            Negative</ion-item>
+
+        <!-- non-past -->
+        <ion-item *ngIf="questions[index].type.search('present') !== -1">
+            <ion-icon name="fastforward" item-left></ion-icon>
+            Non-past</ion-item>
+        <!-- past -->
+        <ion-item *ngIf="questions[index].type.search('past') !== -1">
+            <ion-icon name="rewind" item-left></ion-icon>
+            Past</ion-item>
+    </ion-list>
+
+    <form (submit)="checkAnswer(questions[index])">
+        <ion-item ngClass="answer-item">
+            <ion-input
+                lang="jp"
+                [(ngModel)]="questions[index].givenAnswer"
+                [ngModelOptions]="{standalone: true}"
+                class="answerInput" type="text" placeholder="答え" 
+                autofocus
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+        </ion-input>
+            <button ion-button icon-only item-right clear
+                    type="submit"
+                    >
+                <ion-icon name="arrow-forward"></ion-icon>
+            </button>
+        </ion-item>
+    </form>
+
+    <ion-item class="answer" *ngIf="questions[index].correct === false"> 
+        <span lang="jp">{{questions[index].answers[0]}}</span>
+    </ion-item>
 </ion-content>

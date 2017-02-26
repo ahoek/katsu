@@ -1,8 +1,9 @@
-import {Component, ViewChild} from '@angular/core';
-import {NavController, NavParams, Slides} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController, NavParams} from 'ionic-angular';
 
 import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';
+import {SummaryPage} from '../summary/summary';
 
 declare var wanakana: any;
 
@@ -12,19 +13,21 @@ declare var wanakana: any;
 })
 export class ReviewPage {
 
-    @ViewChild('slides') slides: Slides;
-
     public questions: any = [];
 
     public settings: any;
+    
+    public index: number = 0;
 
     wanakana: any;
 
     constructor(public navCtrl: NavController, public dataService: QuestionData, private navParams: NavParams) {
         this.settings = this.navParams.get('settings');
+        this.questions[0] = new Question();
     }
 
     ionViewDidLoad() {
+        console.log('didLoad')
         this.dataService.load(this.settings).then(questions => {
             this.questions = questions;
             console.log("Loaded", this.questions);
@@ -32,40 +35,23 @@ export class ReviewPage {
     }
 
     ionViewDidEnter() {
-        // Add IME to answer fields
+        // Add IME to answer field
         const answers = document.getElementsByClassName("answerInput")
         for (let i = 0; i < answers.length; i++) {
             wanakana.bind(answers[i]);
         }
-
-        // Focus on the first slide
-        this.focusSlide(0);
     }
 
-    focusSlide(index: number) {
-        const answerInput = document.getElementById('answer' + (index + 1));
-        if (answerInput) {
-            const input = answerInput.querySelector('input');
-            let delay = index === 1 ? 40 : 0;
-            setTimeout(() => {
-                input.focus();
-            }, delay);
+    nextQuestion() {
+        if (this.index < this.questions.length - 1) {  
+            this.index++;
+        } else {
+            this.navCtrl.push(SummaryPage, {questions: this.questions});
         }
-    }
-
-    slideChanged() {
-        const index = this.slides.getActiveIndex();
-        if (index < this.questions.length) {
-            this.focusSlide(index);
-        }
-    }
-
-    nextSlide() {
-        this.slides.slideNext(90);
     }
     
     goToQuestion(index: number) {
-        this.slides.slideTo(index);
+        this.index = index;
     }
 
     /**
@@ -79,7 +65,7 @@ export class ReviewPage {
  
         // If an answer is already given, go to the next slide directly.
         if (question.answered === true) {
-            this.nextSlide();
+            this.nextQuestion();
             return;
         }
         
