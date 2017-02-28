@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 
 import {QuestionData} from '../../providers/question-data';
@@ -12,7 +12,7 @@ declare var wanakana: any;
     templateUrl: 'review.html'
 })
 export class ReviewPage {
-    @ViewChild('answerInput') answerInput;
+    @ViewChild('answerInput') answerInput: any;
 
     public questions: any = [];
 
@@ -22,7 +22,11 @@ export class ReviewPage {
 
     wanakana: any;
 
-    constructor(public navCtrl: NavController, public dataService: QuestionData, private navParams: NavParams) {
+    constructor(
+        public navCtrl: NavController, 
+        public dataService: QuestionData, 
+        private navParams: NavParams
+    ) {
         this.settings = this.navParams.get('settings');
         this.questions[0] = new Question();
     }
@@ -46,13 +50,10 @@ export class ReviewPage {
     }
     
     focusAnswerField() {
-        console.log('focus answer field')
         setTimeout(() => {
             this.answerInput.setFocus();
-            console.log('setfocus');
         }, 150);        
     }
-
 
     nextQuestion() {
         if (this.index < this.questions.length - 1) { 
@@ -81,7 +82,7 @@ export class ReviewPage {
     checkAnswer(question: Question) {
         question.checkAnswer();
  
-        // If an answer is already given, go to the next slide directly.
+        // If an answer is already given, go to the next question directly.
         if (question.answered === true) {
             this.nextQuestion();
             return;
