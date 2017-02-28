@@ -1,12 +1,13 @@
 <ion-header>
     <ion-navbar hideBackButton>
-        <button ion-button icon-only clear (click)="navCtrl.popToRoot()">
-            <ion-icon name="close"></ion-icon>
-        </button>        
-        
         <ion-title>
             Summary
-        </ion-title>    
+        </ion-title> 
+        <ion-buttons end>
+            <button ion-button (click)="navCtrl.popToRoot()">
+                Done
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 

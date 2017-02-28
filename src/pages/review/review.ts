@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 
 import {QuestionData} from '../../providers/question-data';
@@ -12,6 +12,7 @@ declare var wanakana: any;
     templateUrl: 'review.html'
 })
 export class ReviewPage {
+    @ViewChild('answerInput') answerInput;
 
     public questions: any = [];
 
@@ -40,11 +41,22 @@ export class ReviewPage {
         for (let i = 0; i < answers.length; i++) {
             wanakana.bind(answers[i]);
         }
+
+        this.focusAnswerField();
+    }
+    
+    focusAnswerField() {
+        console.log('focus answer field')
+        setTimeout(() => {
+            this.answerInput.setFocus();
+            console.log('setfocus');
+        }, 150);        
     }
 
+
     nextQuestion() {
-        if (this.index < this.questions.length - 1) {  
-            this.index++;
+        if (this.index < this.questions.length - 1) { 
+            this.goToQuestion(this.index + 1); 
         } else {
             this.showSummary();
         }
@@ -52,6 +64,8 @@ export class ReviewPage {
     
     goToQuestion(index: number) {
         this.index = index;
+        
+        this.focusAnswerField();
     }
     
     showSummary() {

@@ -31,14 +31,12 @@ export class Question {
 
     static createFromVerb(verb: Verb): Question {
         let question = new Question();
-        question.setVerb(verb);
-
-        return question;
+        return question.setVerb(verb);
     }
 
     static createFromVerbWithType(verb: Verb, type: string): Question {
         let question = Question.createFromVerb(verb);
-        
+
         question.type = type;
         question.setAnswer();
 
@@ -50,6 +48,8 @@ export class Question {
         this.word = verb.word;
         this.reading = verb.reading;
         this.meaning = verb.englishDefinition;
+
+        return this;
     }
 
     /**
@@ -68,7 +68,7 @@ export class Question {
 
     setAnswer() {
         let answer: string;
-        
+
         switch (this.type) {
             case 'te-form':
                 answer = this.verb.teForm();
@@ -114,30 +114,43 @@ export class Question {
             return;
         }
         this.answers.push(answer);
-        
+
         // Find the answer with romaji or kanji
-        if (this.word !== this.reading) {
-            // Find the okurigana
-            let okurigana = '';
-            for (let i = this.word.length - 1; i >= 0; i--) {
-                if (wanakana.isHiragana(this.word[i])) {
-                    okurigana = this.word[i] + okurigana;
-                } else {
-                    break;
-                }
-            }
-            
-            // Remove the okurigana from the word
-            const readingBase = this.reading.slice(0, -1 * okurigana.length);
-            const wordBase = this.word.slice(0, -1 * okurigana.length);
-            const conjungation = answer.substring(readingBase.length);
-            this.answers.push(wordBase + conjungation);
+        const wordAnswer = this.getWordAnswer(answer);
+        if (wordAnswer) {
+            this.answers.push(wordAnswer);
         }
     }
-    
+
+    /**
+     * Get the answer with kanji in it, for words that contain kanji
+     */
+    getWordAnswer(readingAnswer: string): string {
+        if (this.word === this.reading) {
+            return;
+        }
+
+        // Find the okurigana
+        let okurigana = '';
+        for (let i = this.word.length - 1; i >= 0; i--) {
+            if (wanakana.isHiragana(this.word[i])) {
+                okurigana = this.word[i] + okurigana;
+            } else {
+                break;
+            }
+        }
+
+        // Remove the okurigana from the word
+        const readingBase = this.reading.slice(0, -1 * okurigana.length);
+        const wordBase = this.word.slice(0, -1 * okurigana.length);
+        const conjungation = readingAnswer.substring(readingBase.length);
+        this.answers.push(wordBase + conjungation);
+        return wordBase + conjungation;
+    }
+
     checkAnswer() {
         this.correct = false;
-        
+
         if (this.givenAnswer) {
             // Convert romaji to kana
             this.givenAnswer = wanakana.toKana(this.givenAnswer);
@@ -152,7 +165,7 @@ export class Question {
             ) {
                 this.correct = true;
                 return true;
-            }    
+            }
         });
     }
 }

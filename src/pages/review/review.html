@@ -1,17 +1,20 @@
 <ion-header>
     <ion-navbar hideBackButton>
-        <button ion-button icon-only clear (click)="showSummary()">
-            <ion-icon name="close"></ion-icon>
-            Stop
-        </button>
+        <ion-buttons begin>
+            <button ion-button icon-only (click)="showSummary()">
+                <ion-icon name="arrow-back"></ion-icon>
+                Stop
+            </button>
+        </ion-buttons>
         
         <ion-title>
             {{index + 1}} / {{questions.length}}
         </ion-title> 
 
         <ion-buttons end>
-            <button ion-button clear (click)="nextQuestion()">
+            <button ion-button icon-only (click)="nextQuestion()">
                 Skip
+                <ion-icon name="arrow-forward"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -75,15 +78,14 @@
             <ion-icon name="rewind" item-left></ion-icon>
             Past</ion-item>
     </ion-list>
-
+    
     <form (submit)="checkAnswer(questions[index])">
         <ion-item ngClass="answer-item">
-            <ion-input
+            <ion-input #answerInput
                 lang="jp"
                 [(ngModel)]="questions[index].givenAnswer"
                 [ngModelOptions]="{standalone: true}"
                 class="answerInput" type="text" placeholder="答え" 
-                autofocus
                 autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         </ion-input>
             <button ion-button icon-only item-right clear
@@ -95,6 +97,8 @@
     </form>
 
     <ion-item class="answer" *ngIf="questions[index].correct === false"> 
-        <span lang="jp">{{questions[index].answers[0]}}</span>
+        <span lang="jp">
+            {{questions[index].answers[0]}}
+        </span>
     </ion-item>
 </ion-content>
