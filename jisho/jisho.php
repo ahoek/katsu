@@ -4,9 +4,10 @@
  * Get the words via the Jisho api
  */
 $j = new JishoScraper();
-$words = $j->getVerbsOfLevel('n3');
-
-var_dump("#" . count($words));
+//$words = $j->getWordsOfLevel('n5');
+//$words = $j->getWordsOfLevel('n4');
+$words = $j->getWordsOfLevel('n3');
+var_dump("#".count($words));
 
 class JishoScraper
 {
@@ -17,40 +18,49 @@ class JishoScraper
 
     function __construct()
     {
+        
     }
 
-    public function getVerbsOfLevel($level = 'n5')
+    public function getWordsOfLevel($level = 'n5')
     {
-        $page = 1;
-        $this->baseRequest = $this->baseUrl 
-                . '?keyword=' .urlencode('#jlpt-' . $level . ' #verb');
-        $this->recursiveRequest($page);
-
-        //var_dump($this->words);
-        $fileObject = new stdClass();
-        $fileObject->data = $this->words;
-        $json = json_encode($fileObject, JSON_UNESCAPED_UNICODE);
-        file_put_contents('../src/assets/data/questions/words-' . $level . '.json', $json);
+        $types = [
+            'verb',
+            'adj-i',
+            'adj-na',
+        ];
         
-        return $this->words;
+        $words = [];
+        
+        foreach ($types as $type) {
+            $this->baseRequest = $this->baseUrl.'?keyword='.urlencode('#jlpt-'.$level.' #'.$type);
+            var_dump($this->baseRequest);
+            $words = array_merge($words, $this->recursiveRequest(1));
+        }
+
+        $fileObject = new stdClass();
+        $fileObject->data = $words;
+        $json = json_encode($fileObject, JSON_UNESCAPED_UNICODE);
+        file_put_contents('../src/assets/data/questions/words-'.$level.'.json', $json);
+
+        return $words;
     }
 
     public function recursiveRequest($page = 1)
     {
         var_dump("page $page");
-        $response = file_get_contents($this->baseRequest . '&page=' . $page);
+        $response = file_get_contents($this->baseRequest.'&page='.$page);
         $responseDecoded = json_decode($response);
         $words = $responseDecoded->data;
-        echo "w = ".count($words) . "\n";
+        echo "w = ".count($words)."\n";
         if (count($words) > 0 && $page < 30) {
             // Don't spam the server
-            sleep(2);
+            sleep(3);
             $nextWords = $this->recursiveRequest($page + 1);
             if (is_array($nextWords)) {
-                $this->words = array_merge($this->words, $nextWords);
+                $words = array_merge($words, $nextWords);
             }
         }
-        
+
         return $words;
     }
 

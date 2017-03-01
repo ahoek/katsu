@@ -25,7 +25,7 @@ export class QuestionData {
                 let allWords: Array<any> = dictionary.data;
                 let questions: Array<Question> = [];
                 let word: any;
-                
+
                 const numberOfQuestions = 10;
 
                 for (let i = 0; i < numberOfQuestions; i++) {
@@ -33,7 +33,8 @@ export class QuestionData {
                     if (!word) {
                         break;
                     }
-                    
+
+                    let type: string = this.getRandomItem(this.questionTypeOptions(settings), false);
                     let verb = new Verb(word);
                     if (!verb.word) {
                         i--;
@@ -44,7 +45,6 @@ export class QuestionData {
                         continue;
                     }
 
-                    let type = this.getRandomItem(this.questionTypeOptions(settings), false);
                     let question = Question.createFromVerbWithType(verb, type);
 
                     if (!question.isValid()) {
@@ -125,6 +125,25 @@ export class QuestionData {
                 }
                 if (settings.negative === true) {
                     options.push('tai-form-negative-past');
+                }
+            }
+        }
+
+        if (settings.iAdjective === true) {
+            if (settings.nonPast === true) {
+                if (settings.positive === true) {
+                    options.push('i-adjective-positive-present');
+                }
+                if (settings.negative === true) {
+                    options.push('i-adjective-negative-present');
+                }
+            }
+            if (settings.past === true) {
+                if (settings.positive === true) {
+                    options.push('i-adjective-positive-past');
+                }
+                if (settings.negative === true) {
+                    options.push('i-adjective-negative-past');
                 }
             }
         }

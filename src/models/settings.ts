@@ -7,6 +7,7 @@ export class Settings {
     normal: boolean;
     teForm: boolean;
     iAdjective: boolean;
+    naAdjective: boolean;
     volitional: boolean;
     taiForm: boolean;
     leaveOutSuru: boolean;
@@ -26,6 +27,7 @@ export class Settings {
         settings.normal = true;
         settings.teForm = true;
         settings.iAdjective = false;
+        settings.naAdjective = false;
         settings.volitional = false;
         settings.taiForm = false;
         settings.leaveOutSuru = true;

@@ -14,7 +14,7 @@ export class Question {
     public meaning: string;
 
     // Answer
-    public type: string = "";
+    public type: string = '';
     public answers: Array<string> = [];
 
     // Result
@@ -72,6 +72,7 @@ export class Question {
             case 'te-form':
                 answer = this.verb.teForm();
                 break;
+            case 'i-adjective-negative-present':
             case 'plain-negative-present':
                 answer = this.verb.plainNegative();
                 break;

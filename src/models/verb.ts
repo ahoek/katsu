@@ -79,7 +79,6 @@ export class Verb {
             ? japanese.word
             : japanese.reading;
         this.reading = japanese.reading;
-        //wanakana.toHiragana(definition.japanese[0].reading);
 
         // Suru verb
         if (this.partOfSpeech == 'Suru verb') {
