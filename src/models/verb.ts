@@ -5,9 +5,16 @@ declare var wanakana: any;
  */
 export class Verb {
 
+    // Japanese word
     public word: string;
+    
+    // Reading in hiragana / katakana
     public reading: string;
+    
+    // Grammatical part of speech
     public partOfSpeech: string;
+    
+    // Englis meaning
     public englishDefinition: string;
 
     private endChar: string;
@@ -16,7 +23,7 @@ export class Verb {
 
     public notAVerb: boolean = false;
 
-    // @todo Check setting for suru
+    // Allowed parts of speech
     public static verbPartOfSpeech = [
         'Godan verb with u ending',
         'Godan verb with tsu ending',
@@ -89,6 +96,9 @@ export class Verb {
         console.log('verb', this.word, this.reading, this.partOfSpeech)
     }
 
+    /**
+     * Check if this is a 'suru' verb (noun + suru)
+     */
     isSuru(): boolean {
         if (this.partOfSpeech === 'Suru verb') {
             return true;
@@ -167,6 +177,9 @@ export class Verb {
         return stem;
     }
 
+    /**
+     * Get the stem for plain negative forms
+     */
     naiStem(): string {
         let stem: string = '';
         switch (this.group()) {
@@ -233,6 +246,8 @@ export class Verb {
     }
 
     /**
+     * Get the te form
+     * 
      * Check test case: 罰する
      */
     teForm(): string {

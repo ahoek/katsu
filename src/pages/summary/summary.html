@@ -3,6 +3,7 @@
         <ion-title>
             Summary
         </ion-title> 
+        
         <ion-buttons end>
             <button ion-button (click)="navCtrl.popToRoot()">
                 Done
@@ -16,10 +17,18 @@
         <ion-item *ngFor="let question of questions; let i = index;" 
             (click)="goToQuestion(i)">
             <div *ngIf="question.correct === false"> 
-                <span lang="jp">{{question.givenAnswer}}</span>
+                <span lang="jp">
+                    {{question.givenAnswer}}
+                </span>
             </div>
+            
             <div>
-                <span lang="jp">{{question.answers[0]}}</span>
+                <ruby lang="jp">
+                    {{question.answers[0]}}
+                    <rt>
+                        {{question.answers[1]}}
+                    </rt>
+                </ruby>
             </div>
 
             <ion-icon *ngIf="question.correct === true" name="checkmark-circle" color="secondary" item-right></ion-icon>

@@ -22,7 +22,6 @@ export class Question {
     public givenAnswer?: string = '';
     public answered: boolean = false;
 
-
     /**
      * Question
      */
@@ -118,7 +117,7 @@ export class Question {
         // Find the answer with romaji or kanji
         const wordAnswer = this.getWordAnswer(answer);
         if (wordAnswer) {
-            this.answers.push(wordAnswer);
+            this.answers.unshift(wordAnswer);
         }
     }
 
