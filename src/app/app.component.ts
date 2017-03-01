@@ -28,9 +28,10 @@ export class KatsuApp {
      */
     ngAfterViewInit() {
         this.nav.viewDidEnter.subscribe((data) => {
-            GoogleAnalytics.startTrackerWithId('UA-92834344-1').then(() => {
-                GoogleAnalytics.trackView(data.instance.constructor.name)
-            }).catch(e => console.log('Error starting GoogleAnalytics', e));
+            console.log(data.instance.constructor.name);
+            //GoogleAnalytics.startTrackerWithId('UA-92834344-1').then(() => {
+                //GoogleAnalytics.trackView(data.instance.constructor.name)
+            //}).catch(e => console.log('Error starting GoogleAnalytics', e));
         });
     }
 }

@@ -17,14 +17,14 @@ export class ReviewPage {
     public questions: any = [];
 
     public settings: any;
-    
+
     public index: number = 0;
 
     wanakana: any;
 
     constructor(
-        public navCtrl: NavController, 
-        public dataService: QuestionData, 
+        public navCtrl: NavController,
+        public dataService: QuestionData,
         private navParams: NavParams
     ) {
         this.settings = this.navParams.get('settings');
@@ -32,7 +32,6 @@ export class ReviewPage {
     }
 
     ionViewDidLoad() {
-        console.log('didLoad')
         this.dataService.load(this.settings).then(questions => {
             this.questions = questions;
             console.log("Loaded", this.questions);
@@ -48,29 +47,29 @@ export class ReviewPage {
 
         this.focusAnswerField();
     }
-    
+
     focusAnswerField() {
         setTimeout(() => {
             this.answerInput.setFocus();
-        }, 150);        
+        }, 150);
     }
 
     nextQuestion() {
-        if (this.index < this.questions.length - 1) { 
-            this.goToQuestion(this.index + 1); 
+        if (this.index < this.questions.length - 1) {
+            this.goToQuestion(this.index + 1);
         } else {
             this.showSummary();
         }
     }
-    
+
     goToQuestion(index: number) {
         this.index = index;
-        
+
         this.focusAnswerField();
     }
-    
+
     showSummary() {
-        this.navCtrl.push(SummaryPage, {questions: this.questions});
+        this.navCtrl.push(SummaryPage, {questions: this.questions, delegate: this});
     }
 
     /**
@@ -81,13 +80,13 @@ export class ReviewPage {
      */
     checkAnswer(question: Question) {
         question.checkAnswer();
- 
+
         // If an answer is already given, go to the next question directly.
         if (question.answered === true) {
             this.nextQuestion();
             return;
         }
-        
+
         question.answered = true;
     }
 }
