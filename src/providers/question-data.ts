@@ -22,19 +22,31 @@ export class QuestionData {
     load(settings: Settings) {
         return new Promise(resolve => {
             this.http.get('assets/data/questions/words-' + settings.jlptLevel + '.json').map(res => res.json()).subscribe(dictionary => {
-                let allWords: Array<any> = dictionary.data;
+                let allVerbs: Array<any> = dictionary.verb;
+                let allIAdjectives: Array<any> = dictionary['adj-i'];
+                let allNaAdjectives: Array<any> = dictionary['adj-na'];
                 let questions: Array<Question> = [];
                 let word: any;
 
                 const numberOfQuestions = 10;
 
                 for (let i = 0; i < numberOfQuestions; i++) {
-                    word = this.getRandomItem(allWords);
+                    let type: string = this.getRandomItem(this.questionTypeOptions(settings), false);
+                    if (type.startsWith('i-adjective')) {
+                        console.log('find i adj');
+                        word = this.getRandomItem(allIAdjectives);
+                    } else if (type.startsWith('na-adjective')) {
+                        console.log('find na adj');
+                        word = this.getRandomItem(allNaAdjectives);
+                    } else {
+                        console.log('find verbj');
+                        word = this.getRandomItem(allVerbs);
+                    }
+                    
                     if (!word) {
                         break;
                     }
 
-                    let type: string = this.getRandomItem(this.questionTypeOptions(settings), false);
                     let verb = new Verb(word);
                     if (!verb.word) {
                         i--;
@@ -130,20 +142,40 @@ export class QuestionData {
         }
 
         if (settings.iAdjective === true) {
-            if (settings.nonPast === true) {
-                if (settings.positive === true) {
-                    options.push('i-adjective-positive-present');
+            if (settings.plain === true) {
+                if (settings.nonPast === true) {
+                    if (settings.positive === true) {
+                        options.push('i-adjective-plain-positive-present');
+                    }
+                    if (settings.negative === true) {
+                        options.push('i-adjective-plain-negative-present');
+                    }
                 }
-                if (settings.negative === true) {
-                    options.push('i-adjective-negative-present');
+                if (settings.past === true) {
+                    if (settings.positive === true) {
+                        options.push('i-adjective-plain-positive-past');
+                    }
+                    if (settings.negative === true) {
+                        options.push('i-adjective-plain-negative-past');
+                    }
                 }
             }
-            if (settings.past === true) {
-                if (settings.positive === true) {
-                    options.push('i-adjective-positive-past');
+            if (settings.polite === true) {
+                if (settings.nonPast === true) {
+                    if (settings.positive === true) {
+                        options.push('i-adjective-polite-positive-present');
+                    }
+                    if (settings.negative === true) {
+                        options.push('i-adjective-polite-negative-present');
+                    }
                 }
-                if (settings.negative === true) {
-                    options.push('i-adjective-negative-past');
+                if (settings.past === true) {
+                    if (settings.positive === true) {
+                        options.push('i-adjective-polite-positive-past');
+                    }
+                    if (settings.negative === true) {
+                        options.push('i-adjective-polite-negative-past');
+                    }
                 }
             }
         }

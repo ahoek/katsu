@@ -37,12 +37,11 @@
     </ion-item>
 
     <ion-list ngClass="settings-list">
+        <!-- special forms -->
         <ion-item *ngIf="questions[index].type === 'te-form'">
             <ion-icon item-left>て</ion-icon>
             Te form
         </ion-item>
-
-        <!-- forms -->
         <ion-item *ngIf="questions[index].type.search('tai-form') !== -1">
             <ion-icon name="heart" item-left></ion-icon>
             Tai form</ion-item>               
@@ -50,7 +49,7 @@
             <ion-icon name="walk" item-left></ion-icon>
             Volitional
         </ion-item>
-
+        
         <!-- polite -->
         <ion-item *ngIf="questions[index].type.search('polite') !== -1">
             <ion-icon name="bowtie" item-left></ion-icon>

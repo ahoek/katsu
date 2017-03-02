@@ -14,11 +14,12 @@ export class Verb {
     // Grammatical part of speech
     public partOfSpeech: string;
     
-    // Englis meaning
+    public type: string;
+    
+    // English meaning
     public englishDefinition: string;
 
     private endChar: string;
-    private secondCharToEnd: string;
     private withoutEnd: string;
 
     public notAVerb: boolean = false;
@@ -42,6 +43,7 @@ export class Verb {
         'Kuru verb - special class',
         'Suru verb - irregular',
         'Suru verb - special class',
+        'I-adjective',
     ];
 
     /**
@@ -87,12 +89,19 @@ export class Verb {
             this.reading = this.reading + 'する';
             this.englishDefinition = '[to do] ' + this.englishDefinition;
         }
+        
+        if (this.partOfSpeech === 'I-adjective') {
+            this.type = 'i-adjective';
+        } else if (this.partOfSpeech === 'Na-adjective') {
+            this.type = 'na-adjective';
+        } else {
+            this.type = 'verb';
+        }
 
         // Find slices
         this.endChar = this.reading.slice(-1);
-        this.secondCharToEnd = this.reading.slice(-2, -1);
         this.withoutEnd = this.reading.slice(0, -1);
-        console.log('verb', this.word, this.reading, this.partOfSpeech)
+        console.log('word', this.word, this.reading, this.partOfSpeech)
     }
 
     /**
@@ -138,8 +147,10 @@ export class Verb {
             case 'Suru verb - special class':
                 group = '3'
                 break;
+            case 'I-adjective':
+                group = 'i-adjective';
             default:
-                // Not a verb
+                // Not a word we cn conjungate
                 break;
         }
 
@@ -169,7 +180,7 @@ export class Verb {
             if (this.partOfSpeech != 'Suru verb') {
                 stem = HiraganaColumnHelper.change(this.withoutEnd, 'U', 'I');
             } else {
-                stem = this.reading.slice(0, -2) + HiraganaColumnHelper.change(this.secondCharToEnd, 'U', 'I');
+                stem = this.reading.slice(0, -2) + HiraganaColumnHelper.change(this.reading.slice(-2, -1), 'U', 'I');
             }
         }
 
@@ -215,10 +226,20 @@ export class Verb {
     }
 
     /**
-     * Get the normal verb ending
+     * Get the normal verb or adjective ending
      */
     normalForm(speechLevel: string, positive: boolean, nonPast: boolean): string {
         let ending = '';
+        if (this.type === 'i-adjective') {
+            if (nonPast) {
+                ending = positive ? 'い' : 'くない';
+            } else {
+                ending = positive ? 'かった' : 'くなかった';
+            }     
+            return this.withoutEnd + ending + (speechLevel === 'polite' ? 'です' : '');       
+        }
+        
+        // Verbs
         switch (speechLevel) {
             case 'polite':
                 if (nonPast) {
@@ -330,7 +351,7 @@ export class Verb {
         if (speechLevel === 'polite') {
             volitional = this.masuStem() + 'ましょう';
         }
-        console.log('volitional', volitional);
+        //console.log('volitional', volitional);
         return volitional;
     }
 

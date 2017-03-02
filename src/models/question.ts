@@ -72,31 +72,45 @@ export class Question {
             case 'te-form':
                 answer = this.verb.teForm();
                 break;
-            case 'i-adjective-negative-present':
+                
+            case 'plain-positive-present':
+            case 'i-adjective-plain-positive-present':
+                answer = this.verb.normalForm('plain', true, true);
+                break;
             case 'plain-negative-present':
-                answer = this.verb.plainNegative();
+            case 'i-adjective-plain-negative-present':
+                answer = this.verb.normalForm('plain', false, true);
                 break;
             case 'plain-positive-past':
-                answer = this.verb.plainPast();
+            case 'i-adjective-plain-positive-past':
+                answer = this.verb.normalForm('plain', true, false);
                 break;
             case 'plain-negative-past':
-                answer = this.verb.plainNegativePast();
+            case 'i-adjective-plain-negative-past':
+                answer = this.verb.normalForm('plain', false, false);
                 break;
+                
             case 'polite-positive-present':
+            case 'i-adjective-polite-positive-present':
                 answer = this.verb.normalForm('polite', true, true);
                 break;
             case 'polite-negative-present':
+            case 'i-adjective-polite-negative-present':
                 answer = this.verb.normalForm('polite', false, true);
                 break;
             case 'polite-positive-past':
+            case 'i-adjective-polite-positive-past':
                 answer = this.verb.normalForm('polite', true, false);
                 break;
             case 'polite-negative-past':
+            case 'i-adjective-polite-negative-past':
                 answer = this.verb.normalForm('polite', false, false);
                 break;
+                
             case 'volitional-polite':
                 answer = this.verb.volitional('polite');
                 break;
+                
             case 'tai-form-positive-present':
                 answer = this.verb.taiForm(true, true);
                 break;
@@ -110,6 +124,8 @@ export class Question {
                 answer = this.verb.taiForm(false, false);
                 break;
         }
+        
+        
         if (!answer) {
             return;
         }

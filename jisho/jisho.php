@@ -4,8 +4,8 @@
  * Get the words via the Jisho api
  */
 $j = new JishoScraper();
-//$words = $j->getWordsOfLevel('n5');
-//$words = $j->getWordsOfLevel('n4');
+$words = $j->getWordsOfLevel('n5');
+$words = $j->getWordsOfLevel('n4');
 $words = $j->getWordsOfLevel('n3');
 var_dump("#".count($words));
 
@@ -31,14 +31,14 @@ class JishoScraper
         
         $words = [];
         
+        $fileObject = new stdClass();
         foreach ($types as $type) {
             $this->baseRequest = $this->baseUrl.'?keyword='.urlencode('#jlpt-'.$level.' #'.$type);
             var_dump($this->baseRequest);
-            $words = array_merge($words, $this->recursiveRequest(1));
+            $words = $this->recursiveRequest(1);
+            $fileObject->$type = $words;
         }
 
-        $fileObject = new stdClass();
-        $fileObject->data = $words;
         $json = json_encode($fileObject, JSON_UNESCAPED_UNICODE);
         file_put_contents('../src/assets/data/questions/words-'.$level.'.json', $json);
 
