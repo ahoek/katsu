@@ -37,12 +37,7 @@
             <ion-checkbox [(ngModel)]="settings.iAdjective" item-right></ion-checkbox>
             <ion-icon name="" item-left>い</ion-icon>
         </ion-item>
-        <ion-item>
-            <ion-label>Na adjective</ion-label>
-            <ion-checkbox  [(ngModel)]="settings.naAdjective" item-right disabled></ion-checkbox>
-            <ion-icon name="" item-left>な</ion-icon>
-        </ion-item>
-
+       
         <ion-item>
             <ion-label>Leave out Suru verbs</ion-label>
             <ion-checkbox [(ngModel)]="settings.leaveOutSuru" item-right></ion-checkbox>
@@ -51,7 +46,7 @@
 
     <ion-list>
         <ion-list-header>
-            Politeness level
+            Speech level
         </ion-list-header>
         <ion-item>
             <ion-label>Polite</ion-label>

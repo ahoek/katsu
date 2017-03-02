@@ -238,7 +238,6 @@ export class Verb {
             }     
             return this.withoutEnd + ending + (speechLevel === 'polite' ? 'です' : '');       
         }
-        
         // Verbs
         switch (speechLevel) {
             case 'polite':
@@ -248,7 +247,7 @@ export class Verb {
                     ending = positive ? 'ました' : 'ませんでした';
                 }
                 return this.masuStem() + ending;
-            case 'casual':
+            case 'plain':
                 if (nonPast) {
                     if (positive) {
                         return this.reading;

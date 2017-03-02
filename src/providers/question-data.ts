@@ -33,14 +33,12 @@ export class QuestionData {
                 for (let i = 0; i < numberOfQuestions; i++) {
                     let type: string = this.getRandomItem(this.questionTypeOptions(settings), false);
                     if (type.startsWith('i-adjective')) {
-                        console.log('find i adj');
                         word = this.getRandomItem(allIAdjectives);
                     } else if (type.startsWith('na-adjective')) {
-                        console.log('find na adj');
                         word = this.getRandomItem(allNaAdjectives);
                     } else {
-                        console.log('find verbj');
                         word = this.getRandomItem(allVerbs);
+                        //console.log('get verb', word);
                     }
                     
                     if (!word) {
@@ -82,7 +80,9 @@ export class QuestionData {
         if (settings.normal === true) {
             if (settings.plain === true) {
                 if (settings.nonPast === true) {
-                    // note: do no ask for positive plain, it is the dictionary form
+                    if (settings.positive === true) {
+                        options.push('plain-positive-present');
+                    }
                     if (settings.negative === true) {
                         options.push('plain-negative-present');
                     }

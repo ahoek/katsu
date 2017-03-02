@@ -125,7 +125,6 @@ export class Question {
                 break;
         }
         
-        
         if (!answer) {
             return;
         }
