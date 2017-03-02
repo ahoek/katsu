@@ -12,7 +12,7 @@
             Form
         </ion-list-header>  
         <ion-item>
-            <ion-label>Verb (normal)</ion-label>
+            <ion-label>Verb (basic)</ion-label>
             <ion-checkbox [(ngModel)]="settings.normal" item-right></ion-checkbox>
             <ion-icon name="text" item-left></ion-icon>
         </ion-item>
@@ -49,12 +49,12 @@
             Speech level
         </ion-list-header>
         <ion-item>
-            <ion-label>Polite</ion-label>
+            <ion-label>Formal (polite)</ion-label>
             <ion-checkbox [(ngModel)]="settings.polite" item-right></ion-checkbox>
             <ion-icon name="bowtie" item-left></ion-icon>
         </ion-item>  
         <ion-item>
-            <ion-label>Plain</ion-label>
+            <ion-label>Informal (plain)</ion-label>
             <ion-checkbox [(ngModel)]="settings.plain" item-right></ion-checkbox>
             <ion-icon name="shirt" item-left></ion-icon>
         </ion-item>
@@ -65,7 +65,7 @@
             Tense
         </ion-list-header>
         <ion-item>
-            <ion-label>Non-past tense</ion-label>
+            <ion-label>Nonpast tense</ion-label>
             <ion-checkbox [(ngModel)]="settings.nonPast" item-right checked></ion-checkbox>
             <ion-icon name="fastforward" item-left></ion-icon>
         </ion-item>  
