@@ -232,6 +232,7 @@ export class Verb {
         let ending = '';
         if (this.type === 'i-adjective') {
             if (nonPast) {
+                // @todo Make exception for ii
                 ending = positive ? 'い' : 'くない';
             } else {
                 ending = positive ? 'かった' : 'くなかった';
@@ -303,6 +304,10 @@ export class Verb {
             case 'Suru verb - special class':
                 stem = this.masuStem();
                 ending = 'て';
+                break;
+            case 'I-adjective':
+                stem = this.withoutEnd;
+                ending = 'くて';
                 break;
         }
 

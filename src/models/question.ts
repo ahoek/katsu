@@ -70,6 +70,7 @@ export class Question {
 
         switch (this.type) {
             case 'te-form':
+            case 'i-adjective-te-form':
                 answer = this.verb.teForm();
                 break;
                 

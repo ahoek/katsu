@@ -38,7 +38,7 @@
 
     <ion-list ngClass="settings-list">
         <!-- special forms -->
-        <ion-item *ngIf="questions[index].type === 'te-form'">
+        <ion-item *ngIf="questions[index].type.search('te-form') !== -1">
             <ion-icon item-left>て</ion-icon>
             Te-form
         </ion-item>

@@ -73,11 +73,10 @@ export class QuestionData {
         // Find the available question options
         const options = [];
 
-        if (settings['teForm'] === true) {
-            options.push('te-form');
-        }
-
         if (settings.normal === true) {
+            if (settings.teForm === true) {
+                options.push('te-form');
+            }
             if (settings.plain === true) {
                 if (settings.nonPast === true) {
                     if (settings.positive === true) {
@@ -142,6 +141,10 @@ export class QuestionData {
         }
 
         if (settings.iAdjective === true) {
+            if (settings.teForm === true) {
+                options.push('i-adjective-te-form'); 
+            }
+
             if (settings.plain === true) {
                 if (settings.nonPast === true) {
                     if (settings.positive === true) {
