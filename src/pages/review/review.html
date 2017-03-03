@@ -44,7 +44,7 @@
         </ion-item>
         <ion-item *ngIf="questions[index].type.search('tai-form') !== -1">
             <ion-icon name="heart" item-left></ion-icon>
-            Tai form</ion-item>               
+            Tai-form</ion-item>               
         <ion-item *ngIf="questions[index].type.search('volitional') !== -1">
             <ion-icon name="walk" item-left></ion-icon>
             Volitional
@@ -86,10 +86,8 @@
                 [ngModelOptions]="{standalone: true}"
                 class="answerInput" type="text" placeholder="答え" 
                 autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-        </ion-input>
-            <button ion-button icon-only item-right clear
-                    type="submit"
-                    >
+            </ion-input>
+            <button ion-button icon-only item-right clear type="submit">
                 <ion-icon name="arrow-forward"></ion-icon>
             </button>
         </ion-item>
