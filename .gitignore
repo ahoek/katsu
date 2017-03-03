@@ -26,7 +26,10 @@ platforms/
 plugins/
 plugins/android.json
 plugins/ios.json
-www/
+www/*
+!www
+!CNAME
+!www/CNAME
 $RECYCLE.BIN/
 
 .DS_Store

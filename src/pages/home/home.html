@@ -12,10 +12,16 @@
             Form
         </ion-list-header>  
         <ion-item>
-            <ion-label>Verb (basic)</ion-label>
+            <ion-label>Verbs</ion-label>
             <ion-checkbox [(ngModel)]="settings.normal" item-right></ion-checkbox>
             <ion-icon name="text" item-left></ion-icon>
         </ion-item>
+        <ion-item>
+            <ion-label>I adjectives</ion-label>
+            <ion-checkbox [(ngModel)]="settings.iAdjective" item-right></ion-checkbox>
+            <ion-icon name="" item-left>い</ion-icon>
+        </ion-item>
+        
         <ion-item>
             <ion-label>Te form</ion-label>
             <ion-checkbox [(ngModel)]="settings.teForm" item-right></ion-checkbox>
@@ -30,12 +36,6 @@
             <ion-label>Tai form</ion-label>
             <ion-checkbox [(ngModel)]="settings.taiForm" item-right></ion-checkbox>
             <ion-icon name="heart" item-left></ion-icon>
-        </ion-item>
-        
-        <ion-item>
-            <ion-label>I adjective</ion-label>
-            <ion-checkbox [(ngModel)]="settings.iAdjective" item-right></ion-checkbox>
-            <ion-icon name="" item-left>い</ion-icon>
         </ion-item>
        
         <ion-item>
