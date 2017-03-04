@@ -4,9 +4,11 @@
  * Get the words via the Jisho api
  */
 $j = new JishoScraper();
-$words = $j->getWordsOfLevel('n5');
-$words = $j->getWordsOfLevel('n4');
-$words = $j->getWordsOfLevel('n3');
+//$words = $j->getWordsOfLevel('n5');
+//$words = $j->getWordsOfLevel('n4');
+//$words = $j->getWordsOfLevel('n3');
+//$words = $j->getWordsOfLevel('n2');
+$words = $j->getWordsOfLevel('n1');
 var_dump("#".count($words));
 
 class JishoScraper
@@ -52,7 +54,7 @@ class JishoScraper
         $responseDecoded = json_decode($response);
         $words = $responseDecoded->data;
         echo "w = ".count($words)."\n";
-        if (count($words) > 0 && $page < 30) {
+        if (count($words) > 0 && $page < 100) {
             // Don't spam the server
             sleep(3);
             $nextWords = $this->recursiveRequest($page + 1);

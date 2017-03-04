@@ -1,8 +1,15 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar color='secondary'>
         <ion-title>
             What to practise?
         </ion-title>
+        <!--
+        <ion-buttons end>
+            <button ion-button icon-only (click)="showMenu()">
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
+        -->
     </ion-navbar>
 </ion-header>
 
@@ -98,7 +105,7 @@
     </ion-list>  
 
     <ion-list radio-group [(ngModel)]="settings.jlptLevel">
-              <ion-list-header>
+        <ion-list-header>
             JLPT level
         </ion-list-header>
         <ion-item>
@@ -112,6 +119,14 @@
         <ion-item>
             <ion-label>N3</ion-label>
             <ion-radio value="n3"></ion-radio>
+        </ion-item>
+        <ion-item>
+            <ion-label>N2</ion-label>
+            <ion-radio value="n2"></ion-radio>
+        </ion-item>
+        <ion-item>
+            <ion-label>N1</ion-label>
+            <ion-radio value="n1"></ion-radio>
         </ion-item>
     </ion-list> 
 </ion-content>
