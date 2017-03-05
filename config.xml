@@ -68,4 +68,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
     <icon src="resources/ios/icon/icon-small@3x.png" />
     <plugin name="cordova-plugin-google-analytics" spec="~1.7.5" />
+    <engine name="browser" spec="~4.1.0" />
 </widget>
