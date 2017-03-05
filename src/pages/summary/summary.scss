@@ -9,4 +9,8 @@ page-summary {
             font-size: 0.7em;
         }
     }
+    
+    ion-icon[name='close-circle'] {
+        color: map-get($colors, danger);
+    }
 }

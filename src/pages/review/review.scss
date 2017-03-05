@@ -4,13 +4,19 @@ page-review {
         overflow: hidden;
     }
     
-    ruby {
-        max-width: 60%;
-        font-size: 2.2em;
-    }
+    .dictionary {
+        ruby {
+            max-width: 60%;
+            font-size: 3.5rem;
+            
+            rt {
+                font-size: 2rem;
+            }
+        }
 
-    .note {
-        max-width: 40%;
+        .note {
+            max-width: 40%;
+        }
     }
     
     .settings-list {
@@ -36,12 +42,26 @@ page-review {
             background-color: #3d3;
             color: white;
         }
+        
+        [type='submit'] {
+            color: white;
+        }
     }
 
     .incorrect {
         .answer-item {
-            background-color: #f33;
+            background-color: map-get($colors, danger);
             color: white;
+        }
+        
+        [type='submit'] {
+            color: white;
+        }
+    }
+    
+    .answer {
+        ruby {
+            font-size: 1.2em;
         }
     }
 }

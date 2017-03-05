@@ -4,4 +4,26 @@ page-home {
         font-size: 1.4rem;
         text-decoration: line-through;
     }
+
+    ion-footer {
+        .button-md {
+            margin: 0;
+        }
+    }
+
+    ion-item:hover {
+        ion-icon {
+            transition: color 200ms ease-in-out;
+            color: map-get($colors, primary);
+            animation: pulse2 500ms linear infinite;
+        }
+
+        ion-icon[name='bowtie'] {
+            animation: spin 500ms linear infinite;
+        } 
+
+        ion-icon[name='heart'] {
+            animation: pulse1 500ms linear infinite;
+        }
+    }
 }

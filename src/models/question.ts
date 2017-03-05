@@ -129,7 +129,7 @@ export class Question {
         if (!answer) {
             return;
         }
-        this.answers.push(answer);
+        this.answers.unshift(answer);
 
         // Find the answer with romaji or kanji
         const wordAnswer = this.getWordAnswer(answer);
@@ -160,16 +160,26 @@ export class Question {
         const readingBase = this.reading.slice(0, -1 * okurigana.length);
         const wordBase = this.word.slice(0, -1 * okurigana.length);
         const conjungation = readingAnswer.substring(readingBase.length);
-        this.answers.push(wordBase + conjungation);
         return wordBase + conjungation;
     }
 
+    /**
+     * Check the question answer
+     */
     checkAnswer() {
         this.correct = false;
 
         if (this.givenAnswer) {
             // Convert romaji to kana
             this.givenAnswer = wanakana.toKana(this.givenAnswer);
+        }
+        
+        // Check if given answer still contains romaji. If so, it was probably
+        // a typo.
+        if (this.givenAnswer.match(/\w/)) {
+            this.answered = false;
+            delete this.correct;
+            return;
         }
 
         // Check for multiple correct answers

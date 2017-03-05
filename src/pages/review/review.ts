@@ -79,6 +79,8 @@ export class ReviewPage {
      * If incorrect, give 'bad' styling and show the correct answer.
      */
     checkAnswer(question: Question) {
+        // @todo What to do for empty answer?
+        
         question.checkAnswer();
 
         // If an answer is already given, go to the next question directly.

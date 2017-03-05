@@ -24,7 +24,8 @@
     [class.correct]="questions[index].correct === true"
     [class.incorrect]="questions[index].correct === false"
     >
-    <ion-item>
+    
+    <ion-item ngClass="dictionary">
         <ruby lang="jp">
             {{questions[index].word}}
             <rt *ngIf="questions[index].word !== questions[index].reading">
@@ -87,15 +88,19 @@
                 class="answerInput" type="text" placeholder="答え" 
                 autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
             </ion-input>
-            <button ion-button icon-only item-right clear type="submit">
+            <button ion-button icon-only item-right clear type="submit"
+                    [ngClass]="{pulse: questions[index].answered}">
                 <ion-icon name="arrow-forward"></ion-icon>
             </button>
         </ion-item>
     </form>
 
     <ion-item class="answer" *ngIf="questions[index].correct === false"> 
-        <span lang="jp">
+        <ruby lang="jp">
             {{questions[index].answers[0]}}
-        </span>
+            <rt>
+                {{questions[index].answers[1]}}
+            </rt>
+        </ruby>
     </ion-item>
 </ion-content>

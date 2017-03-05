@@ -3,7 +3,7 @@ import {Platform, Nav} from 'ionic-angular';
 import {StatusBar, Splashscreen, Keyboard} from 'ionic-native';
 
 import {HomePage} from '../pages/home/home';
-import {GoogleAnalytics} from 'ionic-native';
+//import {GoogleAnalytics} from 'ionic-native';
 
 
 @Component({
