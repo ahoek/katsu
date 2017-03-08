@@ -13,4 +13,9 @@ page-summary {
     ion-icon[name='close-circle'] {
         color: map-get($colors, danger);
     }
+    
+    .given-answer {
+        //text-decoration: line-through;
+        color: map-get($colors, danger);
+    }
 }

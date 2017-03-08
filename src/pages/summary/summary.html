@@ -17,7 +17,7 @@
         <ion-item *ngFor="let question of questions; let i = index;" 
             (click)="goToQuestion(i)">
             <div *ngIf="question.correct === false"> 
-                <span lang="jp">
+                <span class="given-answer" lang="jp">
                     {{question.givenAnswer}}
                 </span>
             </div>

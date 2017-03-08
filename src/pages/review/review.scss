@@ -16,15 +16,12 @@ page-review {
 
         .note {
             max-width: 40%;
+            color: map-get($colors, dark);
         }
     }
     
     .settings-list {
         margin-bottom: 0;
-        
-        ion-item {
-           // font-size: .9em;
-        }
     }
 
     .answer-item {

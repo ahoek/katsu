@@ -15,15 +15,15 @@ page-home {
         ion-icon {
             transition: color 200ms ease-in-out;
             color: map-get($colors, primary);
-            animation: pulse2 500ms linear infinite;
+            animation: pulse2 600ms linear infinite;
         }
 
         ion-icon[name='bowtie'] {
-            animation: spin 500ms linear infinite;
+            animation: spin 600ms linear infinite;
         } 
 
         ion-icon[name='heart'] {
-            animation: pulse1 500ms linear infinite;
+            animation: pulse1 600ms linear infinite;
         }
     }
 }

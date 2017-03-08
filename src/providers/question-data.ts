@@ -10,6 +10,11 @@ import {Settings} from '../models/settings';
  */
 @Injectable()
 export class QuestionData {
+    
+    // question options
+    options: string[] = [];
+    settings: Settings;
+    
     constructor(public http: Http) {
 
     }
@@ -22,6 +27,8 @@ export class QuestionData {
     load(settings: Settings) {
         return new Promise(resolve => {
             this.http.get('assets/data/questions/words-' + settings.jlptLevel + '.json').map(res => res.json()).subscribe(dictionary => {
+                this.settings = settings;
+                
                 let allVerbs: Array<any> = dictionary.verb;
                 let allIAdjectives: Array<any> = dictionary['adj-i'];
                 let allNaAdjectives: Array<any> = dictionary['adj-na'];
@@ -31,14 +38,13 @@ export class QuestionData {
                 const numberOfQuestions = 10;
 
                 for (let i = 0; i < numberOfQuestions; i++) {
-                    let type: string = this.getRandomItem(this.questionTypeOptions(settings), false);
+                    let type: string = this.getRandomItem(this.questionTypeOptions(), false);
                     if (type.startsWith('i-adjective')) {
                         word = this.getRandomItem(allIAdjectives);
                     } else if (type.startsWith('na-adjective')) {
                         word = this.getRandomItem(allNaAdjectives);
                     } else {
                         word = this.getRandomItem(allVerbs);
-                        //console.log('get verb', word);
                     }
                     
                     if (!word) {
@@ -50,7 +56,7 @@ export class QuestionData {
                         i--;
                         continue;
                     }
-                    if (settings.leaveOutSuru && verb.isSuru()) {
+                    if (this.settings.leaveOutSuru && verb.isSuru()) {
                         i--;
                         continue;
                     }
@@ -69,121 +75,67 @@ export class QuestionData {
         });
     }
 
-    questionTypeOptions(settings: Settings): Array<string> {
+    questionTypeOptions(): Array<string> {
         // Find the available question options
-        const options = [];
-
-        if (settings.normal === true) {
-            if (settings.teForm === true) {
-                options.push('te-form');
+        if (this.settings.normal) {
+            if (this.settings.teForm) {
+                this.options.push('te-form');
             }
-            if (settings.plain === true) {
-                if (settings.nonPast === true) {
-                    if (settings.positive === true) {
-                        options.push('plain-positive-present');
-                    }
-                    if (settings.negative === true) {
-                        options.push('plain-negative-present');
-                    }
-                }
-                if (settings.past === true) {
-                    if (settings.positive === true) {
-                        options.push('plain-positive-past');
-                    }
-                    if (settings.negative === true) {
-                        options.push('plain-negative-past');
-                    }
-                }
+            
+            if (this.settings.plain) {
+                this.addOptionsFor('plain');
             }
-            if (settings.polite === true) {
-                if (settings.nonPast === true) {
-                    if (settings.positive === true) {
-                        options.push('polite-positive-present');
-                    }
-                    if (settings.negative === true) {
-                        options.push('polite-negative-present');
-                    }
-                }
-                if (settings.past === true) {
-                    if (settings.positive === true) {
-                        options.push('polite-positive-past');
-                    }
-                    if (settings.negative === true) {
-                        options.push('polite-negative-past');
-                    }
-                }
+            if (this.settings.polite) {
+                this.addOptionsFor('polite');
             }
         }
 
-        if (settings.volitional === true) {
-            if (settings.polite === true) {
-                options.push('volitional-polite');
+        if (this.settings.volitional) {
+            if (this.settings.polite) {
+                this.options.push('volitional-polite');
             }
         }
 
-        if (settings.taiForm === true) {
-            if (settings.nonPast === true) {
-                if (settings.positive === true) {
-                    options.push('tai-form-positive-present');
-                }
-                if (settings.negative === true) {
-                    options.push('tai-form-negative-present');
-                }
+        if (this.settings.taiForm) {
+            this.addOptionsFor('tai-form');
+        }
+
+        if (this.settings.iAdjective) {
+            if (this.settings.teForm) {
+                this.options.push('i-adjective-te-form'); 
             }
-            if (settings.past === true) {
-                if (settings.positive === true) {
-                    options.push('tai-form-positive-past');
-                }
-                if (settings.negative === true) {
-                    options.push('tai-form-negative-past');
-                }
+
+            if (this.settings.plain) {
+                this.addOptionsFor('i-adjective-plain');
+            }
+            if (this.settings.polite) {
+                this.addOptionsFor('i-adjective-polite');
             }
         }
 
-        if (settings.iAdjective === true) {
-            if (settings.teForm === true) {
-                options.push('i-adjective-te-form'); 
+        return this.options;
+    }
+    
+    /**
+     * Add past/nonpast and positive/negative options
+     */
+    addOptionsFor(base: string) {
+        if (this.settings.nonPast) {
+            if (this.settings.positive) {
+                this.options.push(base + '-positive-present');
             }
-
-            if (settings.plain === true) {
-                if (settings.nonPast === true) {
-                    if (settings.positive === true) {
-                        options.push('i-adjective-plain-positive-present');
-                    }
-                    if (settings.negative === true) {
-                        options.push('i-adjective-plain-negative-present');
-                    }
-                }
-                if (settings.past === true) {
-                    if (settings.positive === true) {
-                        options.push('i-adjective-plain-positive-past');
-                    }
-                    if (settings.negative === true) {
-                        options.push('i-adjective-plain-negative-past');
-                    }
-                }
-            }
-            if (settings.polite === true) {
-                if (settings.nonPast === true) {
-                    if (settings.positive === true) {
-                        options.push('i-adjective-polite-positive-present');
-                    }
-                    if (settings.negative === true) {
-                        options.push('i-adjective-polite-negative-present');
-                    }
-                }
-                if (settings.past === true) {
-                    if (settings.positive === true) {
-                        options.push('i-adjective-polite-positive-past');
-                    }
-                    if (settings.negative === true) {
-                        options.push('i-adjective-polite-negative-past');
-                    }
-                }
+            if (this.settings.negative) {
+                this.options.push(base + '-negative-present');
             }
         }
-
-        return options;
+        if (this.settings.past) {
+            if (this.settings.positive) {
+                this.options.push(base + '-positive-past');
+            }
+            if (this.settings.negative) {
+                this.options.push(base + '-negative-past');
+            }
+        } 
     }
 
     /**

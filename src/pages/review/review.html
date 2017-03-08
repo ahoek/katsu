@@ -54,7 +54,7 @@
         <!-- polite -->
         <ion-item *ngIf="questions[index].type.search('polite') !== -1">
             <ion-icon name="bowtie" item-left></ion-icon>
-            Formal (polite)</ion-item>
+            Formal (neutral)</ion-item>
         <!-- plain -->
         <ion-item *ngIf="questions[index].type.search('plain') !== -1">
             <ion-icon name="shirt" item-left></ion-icon>
@@ -72,11 +72,11 @@
         <!-- non-past -->
         <ion-item *ngIf="questions[index].type.search('present') !== -1">
             <ion-icon name="fastforward" item-left></ion-icon>
-            Nonpast</ion-item>
+            Nonpast tense (present orfuture)</ion-item>
         <!-- past -->
         <ion-item *ngIf="questions[index].type.search('past') !== -1">
             <ion-icon name="rewind" item-left></ion-icon>
-            Past</ion-item>
+            Past tense</ion-item>
     </ion-list>
     
     <form (submit)="checkAnswer(questions[index])">
