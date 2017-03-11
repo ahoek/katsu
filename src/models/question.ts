@@ -108,6 +108,9 @@ export class Question {
                 answer = this.verb.normalForm('polite', false, false);
                 break;
                 
+            case 'volitional-plain':
+                answer = this.verb.volitional('plain');
+                break;
             case 'volitional-polite':
                 answer = this.verb.volitional('polite');
                 break;

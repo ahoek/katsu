@@ -91,6 +91,9 @@ export class QuestionData {
         }
 
         if (this.settings.volitional) {
+            if (this.settings.plain) {
+                this.options.push('volitional-plain');
+            }
             if (this.settings.polite) {
                 this.options.push('volitional-polite');
             }

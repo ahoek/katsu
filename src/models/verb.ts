@@ -355,6 +355,29 @@ export class Verb {
         if (speechLevel === 'polite') {
             volitional = this.masuStem() + 'ましょう';
         }
+        if (speechLevel === 'plain') {
+            const you = 'よう';
+            switch (this.group()) {
+                case '1':
+                    const stem = this.withoutEnd + HiraganaColumnHelper.change(this.endChar, 'U', 'O');
+                    volitional = stem + 'う';
+                    break;
+                case '2':
+                    volitional = this.withoutEnd + you;
+                    break;
+            }
+            switch (this.partOfSpeech) {
+                case 'Suru verb':
+                case 'Suru verb - irregular':
+                case 'Suru verb - special class':
+                    volitional = this.masuStem() + you;
+                    break;
+                case 'Kuru verb - special class':
+                    volitional = 'こ' + you;
+                    break;
+            }
+            
+        }
         //console.log('volitional', volitional);
         return volitional;
     }
