@@ -1,6 +1,6 @@
 import {NgModule, ErrorHandler} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
-import {Storage} from '@ionic/storage';
+import {IonicStorageModule} from '@ionic/storage';
 
 import {KatsuApp} from './app.component';
 import {HomePage} from '../pages/home/home';
@@ -17,7 +17,8 @@ import {QuestionData} from '../providers/question-data';
         SummaryPage,
     ],
     imports: [
-        IonicModule.forRoot(KatsuApp)
+        IonicModule.forRoot(KatsuApp),
+        IonicStorageModule.forRoot()
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -28,7 +29,6 @@ import {QuestionData} from '../providers/question-data';
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        Storage,
         QuestionData
     ]
 })
