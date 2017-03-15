@@ -5,6 +5,7 @@ import {Storage} from '@ionic/storage';
 
 import {ReviewPage} from '../review/review';
 import {Settings} from '../../models/settings';
+import {InformationPage} from '../information/information';
 
 @Component({
     selector: 'page-home',
@@ -39,5 +40,12 @@ export class HomePage {
         // Save the settings in storage
         this.storage.set('settings', JSON.stringify(this.settings));
         this.navCtrl.push(ReviewPage, {settings: this.settings});
+    }
+    
+    /**
+     * Go to information page
+     */
+    showInformation() {
+        this.navCtrl.push(InformationPage);
     }
 }
