@@ -6,16 +6,15 @@ page-summary {
     
     ruby {
         rt {
-            font-size: 0.7em;
+            font-size: .7em;
         }
     }
     
     ion-icon[name='close-circle'] {
-        color: map-get($colors, danger);
+        color: color($colors, incorrect);
     }
     
     .given-answer {
-        //text-decoration: line-through;
-        color: map-get($colors, danger);
+        color: color($colors, incorrect);
     }
 }

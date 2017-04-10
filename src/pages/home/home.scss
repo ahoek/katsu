@@ -14,7 +14,7 @@ page-home {
     ion-item:hover {
         ion-icon {
             transition: color 200ms ease-in-out;
-            color: map-get($colors, primary);
+            color: color($colors, primary);
             animation: pulse2 600ms linear infinite;
         }
 
@@ -25,5 +25,9 @@ page-home {
         ion-icon[name='heart'] {
             animation: pulse1 600ms linear infinite;
         }
+    }
+    
+    .start-review {
+        margin-bottom: 0;
     }
 }

@@ -24,11 +24,19 @@ $font-path: "../assets/fonts";
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    rgb(153, 193, 71), // chiku-rin
-  secondary:  rgb(255, 162, 12), // yu-yake
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222
+    primary:    rgb(153, 193, 71), // chiku-rin
+    secondary:  rgb(239, 151, 9), // yu-yake
+    danger:     #f53d3d, // red
+    light:      #f4f4f4, // light gray
+    dark:       #222, // black
+    correct: (
+        base:     #3d3,
+        contrast: #fff,
+    ),
+    incorrect: (
+        base:     #f53d3d,
+        contrast: #fff,
+    ),
 );
 
 

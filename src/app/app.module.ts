@@ -19,7 +19,9 @@ import {QuestionData} from '../providers/question-data';
         InformationPage,
     ],
     imports: [
-        IonicModule.forRoot(KatsuApp),
+        IonicModule.forRoot(KatsuApp, {
+            mode: 'ios',
+        }),
         IonicStorageModule.forRoot()
     ],
     bootstrap: [IonicApp],

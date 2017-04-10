@@ -10,13 +10,13 @@ page-review {
             font-size: 3.5rem;
             
             rt {
-                font-size: 2rem;
+                font-size: 2.1rem;
             }
         }
 
         .note {
             max-width: 40%;
-            color: map-get($colors, dark);
+            color: color($colors, dark);
         }
     }
     
@@ -36,23 +36,23 @@ page-review {
 
     .correct {
         .answer-item {
-            background-color: #3d3;
-            color: white;
+            background-color: color($colors, correct);
+            color: color($colors, correct, contrast);
         }
         
         [type='submit'] {
-            color: white;
+            color: color($colors, correct, contrast);
         }
     }
 
     .incorrect {
         .answer-item {
-            background-color: map-get($colors, danger);
-            color: white;
+            background-color: color($colors, incorrect);
+            color: color($colors, incorrect, contrast);
         }
         
         [type='submit'] {
-            color: white;
+            color: color($colors, incorrect, contrast);
         }
     }
     
