@@ -173,6 +173,9 @@ export class Question {
         this.correct = false;
 
         if (this.givenAnswer) {
+            // Remove whitespace
+            this.givenAnswer = this.givenAnswer.replace(/\s+/g, '');
+            
             // Convert romaji to kana
             this.givenAnswer = wanakana.toKana(this.givenAnswer);
         }
