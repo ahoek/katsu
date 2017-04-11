@@ -67,6 +67,11 @@ export class QuestionData {
                         i--;
                         continue;
                     }
+                    
+                    if (this.settings.reverse === true) {
+                        question = question.reverse();
+                    }
+                    
                     console.log('answers', question.answers);
                     questions.push(question);
                 }

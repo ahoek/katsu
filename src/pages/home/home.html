@@ -14,7 +14,7 @@
 <ion-content>
     <ion-list>
         <ion-list-header>
-            Word type
+            Question type
         </ion-list-header>  
         <ion-item>
             <ion-label>Verbs</ion-label>
@@ -24,12 +24,17 @@
         <ion-item>
             <ion-label>I-adjectives</ion-label>
             <ion-checkbox [(ngModel)]="settings.iAdjective" item-right></ion-checkbox>
-            <ion-icon lang="jp" name="" item-left>い</ion-icon>
+            <ion-icon name="" item-left>い</ion-icon>
         </ion-item>
         <ion-item>
             <ion-label>Leave out &lsquo;suru&rsquo; verbs</ion-label>
             <ion-checkbox [(ngModel)]="settings.leaveOutSuru" item-right></ion-checkbox>
-            <ion-icon lang="jp" name="no-suru" item-left>する</ion-icon>
+            <ion-icon name="no-suru" item-left>する</ion-icon>
+        </ion-item>
+        <ion-item>
+            <ion-label>Reverse (answer with dictionary form)</ion-label>
+            <ion-checkbox [(ngModel)]="settings.reverse" item-right></ion-checkbox>
+            <ion-icon name="shuffle" item-left></ion-icon>
         </ion-item> 
     </ion-list>
 
@@ -40,7 +45,7 @@
         <ion-item>
             <ion-label>Te-form</ion-label>
             <ion-checkbox [(ngModel)]="settings.teForm" item-right></ion-checkbox>
-            <ion-icon lang="jp" name="" item-left>て</ion-icon>
+            <ion-icon name="" item-left>て</ion-icon>
         </ion-item>
         <ion-item>
             <ion-label>Volitional</ion-label>

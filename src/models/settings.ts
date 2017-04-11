@@ -17,6 +17,7 @@ export class Settings {
     nonPast: boolean;
     positive: boolean;
     negative: boolean;
+    reverse: boolean;
 
     constructor() {
     }
@@ -37,6 +38,7 @@ export class Settings {
         settings.nonPast = true;
         settings.positive = true;
         settings.negative = true;
+        settings.reverse = false;
 
         return settings;
 

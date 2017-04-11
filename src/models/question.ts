@@ -200,4 +200,16 @@ export class Question {
             }
         });
     }
+    
+    /**
+     * Give the conjugated form and ask for dictionary form
+     */
+    reverse(): Question {
+        const answers = this.answers;
+        this.answers = [this.word, this.reading];
+        this.word = answers[0];
+        this.reading = answers[1];
+        
+        return this;
+    }
 }
