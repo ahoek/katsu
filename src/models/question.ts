@@ -3,7 +3,7 @@ import {Verb} from '../models/verb';
 declare var wanakana: any;
 
 /**
- * This class helps in conjungating verbs
+ * This class helps in conjugating verbs
  */
 export class Question {
 
@@ -162,8 +162,8 @@ export class Question {
         // Remove the okurigana from the word
         const readingBase = this.reading.slice(0, -1 * okurigana.length);
         const wordBase = this.word.slice(0, -1 * okurigana.length);
-        const conjungation = readingAnswer.substring(readingBase.length);
-        return wordBase + conjungation;
+        const conjugation = readingAnswer.substring(readingBase.length);
+        return wordBase + conjugation;
     }
 
     /**

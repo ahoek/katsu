@@ -1,7 +1,7 @@
 import {HiraganaColumnHelper} from './hiragana-column-helper';
 declare var wanakana: any;
 /**
- * This class helps in conjungating verbs
+ * This class helps in conjugating verbs
  */
 export class Verb {
 
@@ -128,7 +128,7 @@ export class Verb {
             case 'Godan verb with tsu ending':
             case 'Godan verb with ru ending':
             case 'Godan verb with ru ending (irregular verb)':
-            case 'Godan verb - aru special class': // @todo conjung. of いらっしゃる etc.
+            case 'Godan verb - aru special class': // conjug. of いらっしゃる etc.
             case 'Godan verb - Iku/Yuku special class':
             case 'Godan verb with ku ending':
             case 'Godan verb with gu ending':
@@ -150,7 +150,7 @@ export class Verb {
             case 'I-adjective':
                 group = 'i-adjective';
             default:
-                // Not a word we cn conjungate
+                // Not a word we can conjugate
                 break;
         }
 
