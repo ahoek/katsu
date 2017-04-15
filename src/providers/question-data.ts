@@ -29,11 +29,11 @@ export class QuestionData {
             this.http.get('assets/data/questions/words-' + settings.jlptLevel + '.json').map(res => res.json()).subscribe(dictionary => {
                 this.settings = settings;
                 
-                let allVerbs: Array<any> = dictionary.verb;
-                let allIAdjectives: Array<any> = dictionary['adj-i'];
-                let allNaAdjectives: Array<any> = dictionary['adj-na'];
+                let allVerbs: Array<JishoDefinition> = dictionary.verb;
+                let allIAdjectives: Array<JishoDefinition> = dictionary['adj-i'];
+                let allNaAdjectives: Array<JishoDefinition> = dictionary['adj-na'];
                 let questions: Array<Question> = [];
-                let word: any;
+                let word: JishoDefinition;
 
                 const numberOfQuestions = 10;
 

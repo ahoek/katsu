@@ -102,9 +102,9 @@
 
     <ion-item class="answer" *ngIf="questions[index].correct === false"> 
         <ruby lang="jp">
-            {{questions[index].answers[0]}}
+            {{questions[index].answers[0].word}}
             <rt>
-                {{questions[index].answers[1]}}
+                {{questions[index].answers[0].reading}}
             </rt>
         </ruby>
     </ion-item>

@@ -1,6 +1,5 @@
-import {Verb} from '../models/verb';
-
-declare var wanakana: any;
+import {Verb} from './verb';
+import {Answer} from './answer';
 
 /**
  * This class helps in conjugating verbs
@@ -15,7 +14,7 @@ export class Question {
 
     // Answer
     public type: string = '';
-    public answers: Array<string> = [];
+    public answers: Array<Answer> = [];
 
     // Result
     public correct?: boolean;
@@ -65,80 +64,81 @@ export class Question {
         return true;
     }
 
+    /**
+     * Set the answer to the question
+     */
     setAnswer() {
-        let answer: string;
+        let reading: string;
 
+        // Find the reading of the conjugated form
         switch (this.type) {
             case 'te-form':
             case 'i-adjective-te-form':
-                answer = this.verb.teForm();
+                reading = this.verb.teForm();
                 break;
                 
             case 'plain-positive-present':
             case 'i-adjective-plain-positive-present':
-                answer = this.verb.normalForm('plain', true, true);
+                reading = this.verb.normalForm('plain', true, true);
                 break;
             case 'plain-negative-present':
             case 'i-adjective-plain-negative-present':
-                answer = this.verb.normalForm('plain', false, true);
+                reading = this.verb.normalForm('plain', false, true);
                 break;
             case 'plain-positive-past':
             case 'i-adjective-plain-positive-past':
-                answer = this.verb.normalForm('plain', true, false);
+                reading = this.verb.normalForm('plain', true, false);
                 break;
             case 'plain-negative-past':
             case 'i-adjective-plain-negative-past':
-                answer = this.verb.normalForm('plain', false, false);
+                reading = this.verb.normalForm('plain', false, false);
                 break;
                 
             case 'polite-positive-present':
             case 'i-adjective-polite-positive-present':
-                answer = this.verb.normalForm('polite', true, true);
+                reading = this.verb.normalForm('polite', true, true);
                 break;
             case 'polite-negative-present':
             case 'i-adjective-polite-negative-present':
-                answer = this.verb.normalForm('polite', false, true);
+                reading = this.verb.normalForm('polite', false, true);
                 break;
             case 'polite-positive-past':
             case 'i-adjective-polite-positive-past':
-                answer = this.verb.normalForm('polite', true, false);
+                reading = this.verb.normalForm('polite', true, false);
                 break;
             case 'polite-negative-past':
             case 'i-adjective-polite-negative-past':
-                answer = this.verb.normalForm('polite', false, false);
+                reading = this.verb.normalForm('polite', false, false);
                 break;
                 
             case 'volitional-plain':
-                answer = this.verb.volitional('plain');
+                reading = this.verb.volitional('plain');
                 break;
             case 'volitional-polite':
-                answer = this.verb.volitional('polite');
+                reading = this.verb.volitional('polite');
                 break;
                 
             case 'tai-form-positive-present':
-                answer = this.verb.taiForm(true, true);
+                reading = this.verb.taiForm(true, true);
                 break;
             case 'tai-form-negative-present':
-                answer = this.verb.taiForm(false, true);
+                reading = this.verb.taiForm(false, true);
                 break;
             case 'tai-form-positive-past':
-                answer = this.verb.taiForm(true, false);
+                reading = this.verb.taiForm(true, false);
                 break;
             case 'tai-form-negative-past':
-                answer = this.verb.taiForm(false, false);
+                reading = this.verb.taiForm(false, false);
                 break;
         }
         
-        if (!answer) {
+        if (!reading) {
             return;
         }
-        this.answers.unshift(answer);
 
-        // Find the answer with romaji or kanji
-        const wordAnswer = this.getWordAnswer(answer);
-        if (wordAnswer) {
-            this.answers.unshift(wordAnswer);
-        }
+        const answer = new Answer(this.getWordAnswer(reading), reading);
+        
+        this.answers.unshift(answer);
     }
 
     /**
@@ -189,12 +189,8 @@ export class Question {
         }
 
         // Check for multiple correct answers
-        this.answers.some((answer: string) => {
-            if (
-                wanakana.toHiragana(answer) == this.givenAnswer
-                ||
-                wanakana.toHiragana(wanakana.toRomaji(answer)) == this.givenAnswer
-            ) {
+        this.answers.some((answer: Answer) => {
+            if (answer.checkGivenAnswer(this.givenAnswer)) {
                 this.correct = true;
                 return true;
             }
@@ -206,9 +202,9 @@ export class Question {
      */
     reverse(): Question {
         const answers = this.answers;
-        this.answers = [this.word, this.reading];
-        this.word = answers[0];
-        this.reading = answers[1];
+        this.answers = [new Answer(this.word, this.reading)];
+        this.word = answers[0].word;
+        this.reading = answers[0].reading;
         
         return this;
     }

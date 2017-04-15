@@ -1,5 +1,5 @@
 import {HiraganaColumnHelper} from './hiragana-column-helper';
-declare var wanakana: any;
+
 /**
  * This class helps in conjugating verbs
  */
@@ -49,15 +49,15 @@ export class Verb {
     /**
      * Create a verb from a Jisho api-like object
      */
-    constructor(public definition: {senses: Array<any>, japanese: Array<{word: any, reading: any}>}) {
+    constructor(public definition: JishoDefinition) {
         if (!definition) {
             return;
         }
 
         // Check all senses for part of speech and only allow verbs
-        definition.senses.some((sense: {parts_of_speech: any[], english_definitions: any[]}) => {
+        definition.senses.some((sense: JishoSense) => {
             if (sense.parts_of_speech.length > 0) {
-                sense.parts_of_speech.some((partOfSpeech: string) => {
+                sense.parts_of_speech.some((partOfSpeech) => {
                     if (Verb.verbPartOfSpeech.indexOf(partOfSpeech) !== -1) {
                         this.englishDefinition = sense.english_definitions[0];
                         this.partOfSpeech = partOfSpeech;
@@ -101,7 +101,6 @@ export class Verb {
         // Find slices
         this.endChar = this.reading.slice(-1);
         this.withoutEnd = this.reading.slice(0, -1);
-        console.log('word', this.word, this.reading, this.partOfSpeech)
     }
 
     /**
@@ -242,11 +241,10 @@ export class Verb {
         // Verbs
         switch (speechLevel) {
             case 'polite':
-                if (nonPast) {
-                    ending = positive ? 'ます' : 'ません';
-                } else {
-                    ending = positive ? 'ました' : 'ませんでした';
-                }
+                ending = nonPast
+                    ? (positive ? 'ます' : 'ません')
+                    : (positive ? 'ました' : 'ませんでした');
+                
                 return this.masuStem() + ending;
             case 'plain':
                 if (nonPast) {
@@ -266,7 +264,7 @@ export class Verb {
     }
 
     /**
-     * Get the te form
+     * Get the te-form
      * 
      * Check test case: 罰する
      */

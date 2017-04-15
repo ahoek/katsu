@@ -12,3 +12,25 @@
   https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html
 */
 declare module '*';
+
+declare class wanakana {
+    static isHiragana(input: string): boolean;
+    static toKana(input: string): string;
+    static toHiragana(input: string): string;
+    static toRomaji(input: string): string;
+}
+
+declare class JishoSense {
+    parts_of_speech: string[];
+    english_definitions: string[];
+}
+
+declare class JishoJapanese {
+    word: string; 
+    reading: string;
+}
+
+declare class JishoDefinition { 
+    senses: Array<JishoSense>; 
+    japanese: Array<JishoJapanese>;
+}

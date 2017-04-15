@@ -5,8 +5,6 @@ import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';
 import {SummaryPage} from '../summary/summary';
 
-declare var wanakana: any;
-
 @Component({
     selector: 'page-review',
     templateUrl: 'review.html'
@@ -19,8 +17,6 @@ export class ReviewPage {
     public settings: any;
 
     public index: number = 0;
-
-    wanakana: any;
 
     constructor(
         public navCtrl: NavController,

@@ -22,6 +22,9 @@ export class Settings {
     constructor() {
     }
 
+    /**
+     * Get the default settings
+     */
     static getDefault(): Settings {
         const settings = new Settings();
         settings.jlptLevel = 'n5';
@@ -41,6 +44,5 @@ export class Settings {
         settings.reverse = false;
 
         return settings;
-
     }
 }
