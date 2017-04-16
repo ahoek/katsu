@@ -4,7 +4,7 @@ Katsu is a mobile conjugation practise app for Japanese verbs and adjectives.
 
 The name is an abbreviation of the Japanese word 活用 (katsuyō), which means conjugation.
 
-Conjungations can be practised for verbs and i-adjectives.
+Conjungations can be practised for verbs, i-adjectives and na-adjectives.
 
 The following forms can be practised:
 
@@ -16,7 +16,7 @@ The following forms can be practised:
 * Tai-form
 
 
-The app is based on the Ionic 2 framework. The words were retrieved from the 
+The app is based on the Ionic 2 framework. The word definitions were retrieved from the 
 online dictionary [Jisho](http://jisho.org/).
 
 ## Installation and run
