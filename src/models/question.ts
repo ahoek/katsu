@@ -36,7 +36,7 @@ export class Question {
         let question = Question.createFromVerb(verb);
 
         question.type = type;
-        question.setAnswer();
+        question.setAnswers();
 
         return question;
     }
@@ -67,78 +67,88 @@ export class Question {
     /**
      * Set the answer to the question
      */
-    setAnswer() {
-        let reading: string;
+    setAnswers() {
+        let readings: string[];
 
         // Find the reading of the conjugated form
         switch (this.type) {
             case 'te-form':
             case 'i-adjective-te-form':
-                reading = this.verb.teForm();
+            case 'na-adjective-te-form':
+                readings = [this.verb.teForm()];
                 break;
                 
             case 'plain-positive-present':
             case 'i-adjective-plain-positive-present':
-                reading = this.verb.normalForm('plain', true, true);
+            case 'na-adjective-plain-positive-present':
+                readings = this.verb.normalForm('plain', true, true);
                 break;
             case 'plain-negative-present':
             case 'i-adjective-plain-negative-present':
-                reading = this.verb.normalForm('plain', false, true);
+            case 'na-adjective-plain-negative-present':
+                readings = this.verb.normalForm('plain', false, true);
                 break;
             case 'plain-positive-past':
             case 'i-adjective-plain-positive-past':
-                reading = this.verb.normalForm('plain', true, false);
+            case 'na-adjective-plain-positive-past':
+                readings = this.verb.normalForm('plain', true, false);
                 break;
             case 'plain-negative-past':
             case 'i-adjective-plain-negative-past':
-                reading = this.verb.normalForm('plain', false, false);
+            case 'na-adjective-plain-negative-past':
+                readings = this.verb.normalForm('plain', false, false);
                 break;
                 
             case 'polite-positive-present':
             case 'i-adjective-polite-positive-present':
-                reading = this.verb.normalForm('polite', true, true);
+            case 'na-adjective-polite-positive-present':
+                readings = this.verb.normalForm('polite', true, true);
                 break;
             case 'polite-negative-present':
             case 'i-adjective-polite-negative-present':
-                reading = this.verb.normalForm('polite', false, true);
+            case 'na-adjective-polite-negative-present':
+                readings = this.verb.normalForm('polite', false, true);
                 break;
             case 'polite-positive-past':
             case 'i-adjective-polite-positive-past':
-                reading = this.verb.normalForm('polite', true, false);
+            case 'na-adjective-polite-positive-past':
+                readings = this.verb.normalForm('polite', true, false);
                 break;
             case 'polite-negative-past':
             case 'i-adjective-polite-negative-past':
-                reading = this.verb.normalForm('polite', false, false);
+            case 'na-adjective-polite-negative-past':
+                readings = this.verb.normalForm('polite', false, false);
                 break;
                 
             case 'volitional-plain':
-                reading = this.verb.volitional('plain');
+                readings = this.verb.volitional('plain');
                 break;
             case 'volitional-polite':
-                reading = this.verb.volitional('polite');
+                readings = this.verb.volitional('polite');
                 break;
                 
             case 'tai-form-positive-present':
-                reading = this.verb.taiForm(true, true);
+                readings = this.verb.taiForm(true, true);
                 break;
             case 'tai-form-negative-present':
-                reading = this.verb.taiForm(false, true);
+                readings = this.verb.taiForm(false, true);
                 break;
             case 'tai-form-positive-past':
-                reading = this.verb.taiForm(true, false);
+                readings = this.verb.taiForm(true, false);
                 break;
             case 'tai-form-negative-past':
-                reading = this.verb.taiForm(false, false);
+                readings = this.verb.taiForm(false, false);
                 break;
         }
         
-        if (!reading) {
+        if (!readings) {
             return;
         }
 
-        const answer = new Answer(this.getWordAnswer(reading), reading);
-        
-        this.answers.unshift(answer);
+        readings.forEach(reading => {
+            const answer = new Answer(this.getWordAnswer(reading), reading);
+            this.answers.unshift(answer);
+        });
     }
 
     /**
@@ -157,6 +167,10 @@ export class Question {
             } else {
                 break;
             }
+        }
+        
+        if (okurigana.length === 0) {
+            return readingAnswer.replace(this.reading, this.word);
         }
 
         // Remove the okurigana from the word

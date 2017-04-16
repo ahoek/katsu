@@ -44,6 +44,7 @@ export class Verb {
         'Suru verb - irregular',
         'Suru verb - special class',
         'I-adjective',
+        'Na-adjective',
     ];
 
     /**
@@ -148,6 +149,10 @@ export class Verb {
                 break;
             case 'I-adjective':
                 group = 'i-adjective';
+                break
+            case 'Na-adjective':
+                group = 'na-adjective';
+                break;
             default:
                 // Not a word we can conjugate
                 break;
@@ -227,7 +232,7 @@ export class Verb {
     /**
      * Get the normal verb or adjective ending
      */
-    normalForm(speechLevel: string, positive: boolean, nonPast: boolean): string {
+    normalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
         let ending = '';
         if (this.type === 'i-adjective') {
             if (nonPast) {
@@ -236,8 +241,33 @@ export class Verb {
             } else {
                 ending = positive ? 'かった' : 'くなかった';
             }     
-            return this.withoutEnd + ending + (speechLevel === 'polite' ? 'です' : '');       
+            return [this.withoutEnd + ending + (speechLevel === 'polite' ? 'です' : '')];       
         }
+        
+        if (this.type === 'na-adjective') {
+            let endings: string[];
+            // でわ can be shortened to じゃ
+            // Polite negative forms can be made by plain negative forms + です
+            switch (speechLevel) {
+                case 'polite':
+                    endings = nonPast
+                        ? (positive ? ['です'] : ['でわありません', 'でわないです', 'じゃありません', 'じゃないです'])
+                        : (positive ? ['でした'] : ['でわありませんでした', 'でわなかったです', 'じゃありませんでした', 'じゃなかったです']);
+
+                    break;
+                case 'plain':
+                    endings = nonPast
+                        ? (positive ? ['だ'] : ['でわない', 'じゃない'])
+                        : (positive ? ['だった'] : ['でわなかった', 'じゃなかった']);
+                    break;
+            }
+            let conjugations: string[] = [];
+            endings.forEach(ending => {
+                conjugations.unshift(this.reading + ending);
+            });
+            return conjugations;
+        }
+        
         // Verbs
         switch (speechLevel) {
             case 'polite':
@@ -245,11 +275,11 @@ export class Verb {
                     ? (positive ? 'ます' : 'ません')
                     : (positive ? 'ました' : 'ませんでした');
                 
-                return this.masuStem() + ending;
+                return [this.masuStem() + ending];
             case 'plain':
                 if (nonPast) {
                     if (positive) {
-                        return this.reading;
+                        return [this.reading];
                     } else {
                         return this.plainNegative();
                     }
@@ -307,6 +337,10 @@ export class Verb {
                 stem = this.withoutEnd;
                 ending = 'くて';
                 break;
+            case 'Na-adjective':
+                stem = this.reading;
+                ending = 'で';
+                break;
         }
 
         teForm = stem + ending;
@@ -317,38 +351,38 @@ export class Verb {
     /**
      * Get the plain negative form.
      */
-    plainNegative(): string {
+    plainNegative(): string[] {
         const nai = 'ない';
         const plainNegative = this.naiStem() + nai;
         //console.log(this.partOfSpeech, this.reading, plainNegative);
-        return plainNegative;
+        return [plainNegative];
     }
 
     /**
      * Get the plain negative past form.
      */
-    plainNegativePast(): string {
+    plainNegativePast(): string[] {
         const katta = 'かった';
 
         // Remove the い and add かった.
         const plainNegativePast = this.plainNegative().slice(0, -1) + katta;
 
         //console.log(this.partOfSpeech, this.reading, plainNegativePast);
-        return plainNegativePast;
+        return [plainNegativePast];
     }
 
     /**
      * Plain past is the same as te form, but with an 'a' at the end.
      */
-    plainPast(): string {
+    plainPast(): string[] {
         const stem = this.teForm().slice(0, -1);
         const ending = this.teForm().slice(-1);
         const plainPast = stem + HiraganaColumnHelper.change(ending, 'E', 'A');
 
-        return plainPast;
+        return [plainPast];
     }
 
-    volitional(speechLevel: string): string {
+    volitional(speechLevel: string): string[] {
         let volitional;
         if (speechLevel === 'polite') {
             volitional = this.masuStem() + 'ましょう';
@@ -377,13 +411,13 @@ export class Verb {
             
         }
         //console.log('volitional', volitional);
-        return volitional;
+        return [volitional];
     }
 
     /**
      * @todo Treat as　い adjective
      */
-    taiForm(positive: boolean, nonPast: boolean): string {
+    taiForm(positive: boolean, nonPast: boolean): string[] {
         let ending;
 
         if (nonPast) {
@@ -392,6 +426,6 @@ export class Verb {
             ending = positive ? 'たかった' : 'たくなかった';
         }
 
-        return this.masuStem() + ending;
+        return [this.masuStem() + ending];
     }
 }

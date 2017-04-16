@@ -100,12 +100,15 @@
         </ion-item>
     </form>
 
-    <ion-item class="answer" *ngIf="questions[index].correct === false"> 
-        <ruby lang="jp">
-            {{questions[index].answers[0].word}}
-            <rt>
-                {{questions[index].answers[0].reading}}
-            </rt>
-        </ruby>
-    </ion-item>
+    <!-- Show all allowed answers -->
+    <ion-list *ngIf="questions[index].correct === false">
+        <ion-item class="answer" *ngFor="let answer of questions[index].answers"> 
+            <ruby lang="jp">
+                {{answer.word}}
+                <rt>
+                    {{answer.reading}}
+                </rt>
+            </ruby>
+        </ion-item>
+    </ion-list>
 </ion-content>

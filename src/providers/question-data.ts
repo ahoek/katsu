@@ -121,6 +121,19 @@ export class QuestionData {
             }
         }
 
+        if (this.settings.naAdjective) {
+            if (this.settings.teForm) {
+                this.options.push('na-adjective-te-form'); 
+            }
+
+            if (this.settings.plain) {
+                this.addOptionsFor('na-adjective-plain');
+            }
+            if (this.settings.polite) {
+                this.addOptionsFor('na-adjective-polite');
+            }
+        }
+        
         return this.options;
     }
     
