@@ -12,7 +12,7 @@ import {SummaryPage} from '../summary/summary';
 export class ReviewPage {
     @ViewChild('answerInput') answerInput: any;
 
-    public questions: any = [];
+    public questions: Question[] = [];
 
     public settings: any;
 
@@ -30,7 +30,7 @@ export class ReviewPage {
     ionViewDidLoad() {
         this.dataService.load(this.settings).then(questions => {
             this.questions = questions;
-            console.log("Loaded", this.questions);
+            console.log('Loaded', this.questions);
         });
     }
 

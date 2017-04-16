@@ -6,7 +6,7 @@ import {Question} from '../models/question';
 import {Settings} from '../models/settings';
 
 /**
- *  QuestionData provider.
+ * QuestionData provider.
  */
 @Injectable()
 export class QuestionData {
@@ -14,6 +14,7 @@ export class QuestionData {
     // question options
     options: string[] = [];
     settings: Settings;
+    dictionary: any;
     
     constructor(public http: Http) {
 
@@ -25,63 +26,80 @@ export class QuestionData {
      * Settings to create the answers
      */
     load(settings: Settings) {
-        return new Promise(resolve => {
-            this.http.get('assets/data/questions/words-' + settings.jlptLevel + '.json').map(res => res.json()).subscribe(dictionary => {
-                this.settings = settings;
-                
-                let allVerbs: Array<JishoDefinition> = dictionary.verb;
-                let allIAdjectives: Array<JishoDefinition> = dictionary['adj-i'];
-                let allNaAdjectives: Array<JishoDefinition> = dictionary['adj-na'];
-                let questions: Array<Question> = [];
-                let word: JishoDefinition;
-
-                const numberOfQuestions = 10;
-
-                for (let i = 0; i < numberOfQuestions; i++) {
-                    let type: string = this.getRandomItem(this.questionTypeOptions(), false);
-                    if (type.startsWith('i-adjective')) {
-                        word = this.getRandomItem(allIAdjectives);
-                    } else if (type.startsWith('na-adjective')) {
-                        word = this.getRandomItem(allNaAdjectives);
-                    } else {
-                        word = this.getRandomItem(allVerbs);
-                    }
-                    
-                    if (!word) {
-                        break;
-                    }
-
-                    let verb = new Verb(word);
-                    if (!verb.word) {
-                        i--;
-                        continue;
-                    }
-                    if (this.settings.leaveOutSuru && verb.isSuru()) {
-                        i--;
-                        continue;
-                    }
-
-                    let question = Question.createFromVerbWithType(verb, type);
-
-                    if (!question.isValid()) {
-                        i--;
-                        continue;
-                    }
-                    
-                    if (this.settings.reverse === true) {
-                        question = question.reverse();
-                    }
-                    
-                    console.log('answers', question.answers);
-                    questions.push(question);
-                }
-                resolve(questions);
+        return new Promise<Question[]>(resolve => {
+            const url = 'assets/data/questions/words-' + settings.jlptLevel + '.json';
+            this.settings = settings;
+            this.setQuestionTypeOptions();
+            
+            if (this.dictionary) {
+                console.log('Dictionary was preloaded');
+                resolve(this.getQuestionsFromDictionary(this.dictionary));
+                return;
+            }
+            
+            console.log('Load the dictionary');
+            this.http.get(url).map(res => res.json()).subscribe(dictionary => {
+                this.dictionary = dictionary;
+                resolve(this.getQuestionsFromDictionary(dictionary));
             });
         });
     }
+    
+    getQuestionsFromDictionary(dictionary: any): Question[] {
+        const numberOfQuestions = 10;
+        let questions: Question[] = [];
+        while (questions.length < numberOfQuestions) {
+            let question = this.getQuestion(dictionary);
+            if (question) {
+                questions.push(question);
+            }
+        }
+        return questions;
+    }
+    
+    /**
+     * Create a question from the dictionary
+     */
+    getQuestion(dictionary: any): Question {
+        let word: JishoDefinition;
+        let type: string = this.getRandomItem(this.options, false);
+        if (type.startsWith('i-adjective')) {
+            word = this.getRandomItem(dictionary['adj-i']);
+        } else if (type.startsWith('na-adjective')) {
+            word = this.getRandomItem(dictionary['adj-na']);
+        } else {
+            word = this.getRandomItem(dictionary['verb']);
+        }
 
-    questionTypeOptions(): Array<string> {
-        // Find the available question options
+        if (!word) {
+            return;
+        }
+
+        let verb = new Verb(word);
+        if (!verb.word) {
+            return;
+        }
+        
+        if (this.settings.leaveOutSuru && verb.isSuru()) {
+            return;
+        }
+
+        let question = Question.createFromVerbWithType(verb, type);
+        if (!question.isValid()) {
+            return;
+        }
+
+        if (this.settings.reverse === true) {
+            question = question.reverse();
+        }
+
+        console.log('answers', question.answers);
+        return question;
+    }
+
+    // Set the available question options
+    setQuestionTypeOptions() {
+        this.options = [];
         if (this.settings.normal) {
             if (this.settings.teForm) {
                 this.options.push('te-form');
@@ -133,8 +151,6 @@ export class QuestionData {
                 this.addOptionsFor('na-adjective-polite');
             }
         }
-        
-        return this.options;
     }
     
     /**
