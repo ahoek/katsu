@@ -1,6 +1,9 @@
 import {NgModule, ErrorHandler} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {IonicStorageModule} from '@ionic/storage';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpModule} from '@angular/http';
+import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {KatsuApp} from './app.component';
 import {HomePage} from '../pages/home/home';
@@ -19,6 +22,8 @@ import {QuestionData} from '../providers/question-data';
         InformationPage,
     ],
     imports: [
+        BrowserModule,
+        HttpModule,
         IonicModule.forRoot(KatsuApp, {
             mode: 'ios',
         }),
@@ -34,7 +39,8 @@ import {QuestionData} from '../providers/question-data';
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        QuestionData
+        QuestionData,
+        SplashScreen,
     ]
 })
 export class AppModule {}
