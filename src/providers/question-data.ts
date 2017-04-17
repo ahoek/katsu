@@ -11,11 +11,6 @@ import {Settings} from '../models/settings';
 @Injectable()
 export class QuestionData {
     
-    // question options
-    options: string[] = [];
-    settings: Settings;
-    dictionary: any;
-    
     constructor(public http: Http) {
 
     }
@@ -28,28 +23,21 @@ export class QuestionData {
     load(settings: Settings) {
         return new Promise<Question[]>(resolve => {
             const url = 'assets/data/questions/words-' + settings.jlptLevel + '.json';
-            this.settings = settings;
-            this.setQuestionTypeOptions();
-            
-            if (this.dictionary) {
-                console.log('Dictionary was preloaded');
-                resolve(this.getQuestionsFromDictionary(this.dictionary));
-                return;
-            }
-            
-            console.log('Load the dictionary');
+            const options = this.getQuestionTypeOptions(settings);
+            console.log('question types', options);
+
             this.http.get(url).map(res => res.json()).subscribe(dictionary => {
-                this.dictionary = dictionary;
-                resolve(this.getQuestionsFromDictionary(dictionary));
+                resolve(this.getQuestionsFromDictionary(dictionary, settings, options));
             });
         });
     }
     
-    getQuestionsFromDictionary(dictionary: any): Question[] {
+    getQuestionsFromDictionary(dictionary: any, settings: Settings, options: string[]): Question[] {
         const numberOfQuestions = 10;
         let questions: Question[] = [];
         while (questions.length < numberOfQuestions) {
-            let question = this.getQuestion(dictionary);
+            let type: string = this.getRandomItem(options, false);
+            let question = this.getQuestion(dictionary, settings, type);
             if (question) {
                 questions.push(question);
             }
@@ -60,9 +48,8 @@ export class QuestionData {
     /**
      * Create a question from the dictionary
      */
-    getQuestion(dictionary: any): Question {
+    getQuestion(dictionary: any, settings: Settings, type: string): Question {
         let word: JishoDefinition;
-        let type: string = this.getRandomItem(this.options, false);
         if (type.startsWith('i-adjective')) {
             word = this.getRandomItem(dictionary['adj-i']);
         } else if (type.startsWith('na-adjective')) {
@@ -80,7 +67,7 @@ export class QuestionData {
             return;
         }
         
-        if (this.settings.leaveOutSuru && verb.isSuru()) {
+        if (settings.leaveOutSuru && verb.isSuru()) {
             return;
         }
 
@@ -89,7 +76,7 @@ export class QuestionData {
             return;
         }
 
-        if (this.settings.reverse === true) {
+        if (settings.reverse === true) {
             question = question.reverse();
         }
 
@@ -98,81 +85,74 @@ export class QuestionData {
     }
 
     // Set the available question options
-    setQuestionTypeOptions() {
-        this.options = [];
-        if (this.settings.normal) {
-            if (this.settings.teForm) {
-                this.options.push('te-form');
+    getQuestionTypeOptions(settings: Settings): string[] {
+        let options: string[] = [];
+        if (settings.normal) {
+            this.addOptionsFor('', settings, options);
+        }
+
+        if (settings.volitional) {
+            if (settings.plain) {
+                options.push('volitional-plain');
             }
-            
-            if (this.settings.plain) {
-                this.addOptionsFor('plain');
-            }
-            if (this.settings.polite) {
-                this.addOptionsFor('polite');
+            if (settings.polite) {
+                options.push('volitional-polite');
             }
         }
 
-        if (this.settings.volitional) {
-            if (this.settings.plain) {
-                this.options.push('volitional-plain');
-            }
-            if (this.settings.polite) {
-                this.options.push('volitional-polite');
-            }
+        if (settings.taiForm) {
+            this.addSubOptionsFor('tai-form', settings, options);
         }
 
-        if (this.settings.taiForm) {
-            this.addOptionsFor('tai-form');
+        if (settings.iAdjective) {
+            this.addOptionsFor('i-adjective-', settings, options);
         }
 
-        if (this.settings.iAdjective) {
-            if (this.settings.teForm) {
-                this.options.push('i-adjective-te-form'); 
-            }
-
-            if (this.settings.plain) {
-                this.addOptionsFor('i-adjective-plain');
-            }
-            if (this.settings.polite) {
-                this.addOptionsFor('i-adjective-polite');
-            }
+        if (settings.naAdjective) {
+            this.addOptionsFor('na-adjective-', settings, options);
+        }
+        
+        return options;
+    }
+    
+    /**
+     * Add options for te-form, plain and polite
+     */
+    addOptionsFor(base: string, settings: Settings, options: string[]) {
+        if (settings.teForm) {
+            options.push(base + 'te-form'); 
         }
 
-        if (this.settings.naAdjective) {
-            if (this.settings.teForm) {
-                this.options.push('na-adjective-te-form'); 
-            }
-
-            if (this.settings.plain) {
-                this.addOptionsFor('na-adjective-plain');
-            }
-            if (this.settings.polite) {
-                this.addOptionsFor('na-adjective-polite');
-            }
+        if (settings.plain) {
+            this.addSubOptionsFor(base + 'plain', settings, options);
+        }
+        if (settings.polite) {
+            this.addSubOptionsFor(base + 'polite', settings, options);
         }
     }
     
     /**
      * Add past/nonpast and positive/negative options
      */
-    addOptionsFor(base: string) {
-        if (this.settings.nonPast) {
-            if (this.settings.positive) {
-                this.options.push(base + '-positive-present');
+    addSubOptionsFor(base: string, settings: Settings, options: string[]) {
+        if (settings.nonPast) {
+            if (settings.positive) {
+                options.push(base + '-positive-present');
             }
-            if (this.settings.negative) {
-                this.options.push(base + '-negative-present');
+            if (settings.negative) {
+                options.push(base + '-negative-present');
             }
         }
-        if (this.settings.past) {
-            if (this.settings.positive) {
-                this.options.push(base + '-positive-past');
+        if (settings.past) {
+            if (settings.positive) {
+                options.push(base + '-positive-past');
             }
-            if (this.settings.negative) {
-                this.options.push(base + '-negative-past');
+            if (settings.negative) {
+                options.push(base + '-negative-past');
             }
-        } 
+        }
+        
+        return options;
     }
 
     /**
