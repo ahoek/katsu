@@ -43,7 +43,7 @@ export class ReviewPage {
 
     ionViewDidEnter() {
         // Add IME to answer field
-        const answers = document.getElementsByClassName("answerInput")
+        const answers = document.getElementsByClassName('answerInput')
         for (let i = 0; i < answers.length; i++) {
             wanakana.bind(answers[i]);
         }
@@ -71,7 +71,7 @@ export class ReviewPage {
         this.focusAnswerField();
         
         this.platform.ready().then(() => {
-            GoogleAnalytics.trackView('Question ' + this.questions[this.index].type);
+            GoogleAnalytics.trackEvent('Question', 'show', this.questions[this.index].type, this.index);
         });
     }
 
@@ -97,5 +97,9 @@ export class ReviewPage {
         }
 
         question.answered = true;
+        
+        this.platform.ready().then(() => {
+            GoogleAnalytics.trackEvent('Question', 'answer-check', question.correct ? 'correct' : 'incorrect', 1);
+        }); 
     }
 }

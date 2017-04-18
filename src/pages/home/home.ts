@@ -33,12 +33,14 @@ export class HomePage {
                 this.storage.set('settings', JSON.stringify(this.settings));
             }
         });
-
+    }
+    
+    ionViewDidLoad() {
         this.platform.ready().then(() => {
-            GoogleAnalytics.trackView('Home Page', '', true);
+            GoogleAnalytics.trackView('Home Page');
         });
     }
-
+    
     /**
      * Start the reviews with the correct settings
      */
@@ -46,6 +48,10 @@ export class HomePage {
         // Save the settings in storage
         this.storage.set('settings', JSON.stringify(this.settings));
         this.navCtrl.push(ReviewPage, {settings: this.settings});
+        
+        this.platform.ready().then(() => {
+            GoogleAnalytics.trackEvent('Review', 'start', '', 1);
+        });        
     }
 
     /**
