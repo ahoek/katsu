@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {NavController, NavParams, Platform} from 'ionic-angular';
+import {GoogleAnalytics} from 'ionic-native';
 
 import {ReviewPage} from '../review/review';
 
@@ -15,11 +16,21 @@ export class SummaryPage {
     // Review delegate
     public reviewDelegate: ReviewPage;
 
-    constructor(public navCtrl: NavController, private navParams: NavParams) {
+    constructor(
+        public navCtrl: NavController, 
+        public platform: Platform,
+        private navParams: NavParams
+    ) {
         this.questions = this.navParams.get('questions');
         this.reviewDelegate = this.navParams.get('delegate');
     }
-
+    
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad SummaryPage');
+        this.platform.ready().then(() => {
+            GoogleAnalytics.trackView('Summary Page');
+        });         
+    }
     /**
      * Return to a quiz question
      */

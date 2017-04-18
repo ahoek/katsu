@@ -1,22 +1,27 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController, Platform} from 'ionic-angular';
+import {GoogleAnalytics} from 'ionic-native';
 
-/*
-  Generated class for the Information page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+/**
+ * Information page 
+ */
 @Component({
-  selector: 'page-information',
-  templateUrl: 'information.html'
+    selector: 'page-information',
+    templateUrl: 'information.html'
 })
 export class InformationPage {
 
-  constructor(public navCtrl: NavController) {}
+    constructor(
+        public navCtrl: NavController,
+        public platform: Platform
+    ) {
+        
+    }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad InformationPage');
-  }
-
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad InformationPage');
+        this.platform.ready().then(() => {
+            GoogleAnalytics.trackView('Information Page');
+        });         
+    }
 }

@@ -1,5 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {NavController, NavParams, Platform} from 'ionic-angular';
+import {GoogleAnalytics} from 'ionic-native';
 
 import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';
@@ -21,6 +22,7 @@ export class ReviewPage {
     constructor(
         public navCtrl: NavController,
         public dataService: QuestionData,
+        public platform: Platform,
         private navParams: NavParams
     ) {
         this.settings = this.navParams.get('settings');
@@ -31,6 +33,11 @@ export class ReviewPage {
         this.dataService.load(this.settings).then(questions => {
             this.questions = questions;
             console.log('Loaded', this.questions);
+            this.goToQuestion(0);
+        });
+        
+        this.platform.ready().then(() => {
+            GoogleAnalytics.trackView('Review Page');
         });
     }
 
@@ -62,6 +69,10 @@ export class ReviewPage {
         this.index = index;
 
         this.focusAnswerField();
+        
+        this.platform.ready().then(() => {
+            GoogleAnalytics.trackView('Question ' + this.questions[this.index].type);
+        });
     }
 
     showSummary() {

@@ -4,7 +4,7 @@ import {StatusBar, Keyboard} from 'ionic-native';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {HomePage} from '../pages/home/home';
-//import {GoogleAnalytics} from 'ionic-native';
+import {GoogleAnalytics} from 'ionic-native';
 
 @Component({
     templateUrl: 'app.html'
@@ -20,6 +20,17 @@ export class KatsuApp {
             StatusBar.styleDefault();
             this.splash.hide();
             Keyboard.disableScroll(true);
+
+            // google
+            return GoogleAnalytics.startTrackerWithId("UA-92834344-1")
+                .then(() => {
+                    console.log('Google analytics is ready now');
+                    return GoogleAnalytics.enableUncaughtExceptionReporting(true);
+                }).then((_success) => {
+                    console.log("startTrackerWithId success");
+                }).catch((_error) => {
+                    console.log("enableUncaughtExceptionReporting", _error);
+                });
         });
     }
 
@@ -28,10 +39,12 @@ export class KatsuApp {
      */
     ngAfterViewInit() {
         this.nav.viewDidEnter.subscribe((data) => {
-            console.log(data.instance.constructor.name);
-            //GoogleAnalytics.startTrackerWithId('UA-92834344-1').then(() => {
-            //GoogleAnalytics.trackView(data.instance.constructor.name)
-            //}).catch(e => console.log('Error starting GoogleAnalytics', e));
+            //console.log('vde', data);
+            this.platform.ready().then(() => {
+//            GoogleAnalytics.startTrackerWithId('UA-92834344-1').then(() => {
+//                GoogleAnalytics.trackView(data.name);
+//            }).catch(e => console.log('Error starting GoogleAnalytics', e));
+            });
         });
     }
 }

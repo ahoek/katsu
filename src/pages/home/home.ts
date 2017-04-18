@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-
-import {NavController} from 'ionic-angular';
+import {NavController, Platform} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
+import {GoogleAnalytics} from 'ionic-native';
 
 import {ReviewPage} from '../review/review';
 import {Settings} from '../../models/settings';
@@ -16,9 +16,11 @@ export class HomePage {
 
     settings: any;
 
-    private storage: Storage;
-
-    constructor(public navCtrl: NavController, storage: Storage) {
+    constructor(
+        public navCtrl: NavController, 
+        private storage: Storage,
+        public platform: Platform
+    ) {
         this.storage = storage;
 
         // Default settings
@@ -31,6 +33,10 @@ export class HomePage {
                 this.storage.set('settings', JSON.stringify(this.settings));
             }
         });
+
+        this.platform.ready().then(() => {
+            GoogleAnalytics.trackView('Home Page', '', true);
+        });
     }
 
     /**
@@ -41,7 +47,7 @@ export class HomePage {
         this.storage.set('settings', JSON.stringify(this.settings));
         this.navCtrl.push(ReviewPage, {settings: this.settings});
     }
-    
+
     /**
      * Go to information page
      */
