@@ -35,7 +35,7 @@ export class HomePage {
         });
     }
     
-    ionViewDidLoad() {
+    ionViewDidEnter() {
         this.platform.ready().then(() => {
             GoogleAnalytics.trackView('Home Page');
         });
