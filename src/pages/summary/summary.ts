@@ -32,7 +32,7 @@ export class SummaryPage {
         });         
     }
     /**
-     * Return to a quiz question
+     * Return to a review question
      */
     goToQuestion(index: number) {
         this.reviewDelegate.goToQuestion(index);

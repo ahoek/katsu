@@ -10,6 +10,10 @@ page-summary {
         }
     }
     
+    ion-icon[name='checkmark-circle'] {
+        color: color($colors, correct);
+    }
+    
     ion-icon[name='close-circle'] {
         color: color($colors, incorrect);
     }

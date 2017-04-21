@@ -4,6 +4,7 @@ import {GoogleAnalytics} from 'ionic-native';
 
 import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';
+import {Settings} from '../../models/settings';
 import {SummaryPage} from '../summary/summary';
 
 @Component({
@@ -15,7 +16,7 @@ export class ReviewPage {
 
     public questions: Question[] = [];
 
-    public settings: any;
+    public settings: Settings;
 
     public index: number = 0;
 
@@ -43,7 +44,7 @@ export class ReviewPage {
 
     ionViewDidEnter() {
         // Add IME to answer field
-        const answers = document.getElementsByClassName('answerInput')
+        const answers = document.getElementsByClassName('answerInput');
         for (let i = 0; i < answers.length; i++) {
             wanakana.bind(answers[i]);
         }
@@ -71,7 +72,7 @@ export class ReviewPage {
         this.focusAnswerField();
         
         this.platform.ready().then(() => {
-            GoogleAnalytics.trackEvent('Question', 'show', this.questions[this.index].type, this.index);
+            GoogleAnalytics.trackEvent('Question', 'show', this.questions[this.index].type, 1);
         });
     }
 

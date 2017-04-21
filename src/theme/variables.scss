@@ -1,9 +1,8 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/v2/theming/
-$font-path: "../assets/fonts";
+$font-path: '../assets/fonts';
 
-@import "ionic.globals";
-
+@import 'ionic.globals';
 
 // Shared Variables
 // --------------------------------------------------
@@ -21,7 +20,7 @@ $font-path: "../assets/fonts";
 // It's highly recommended to change the default colors
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
-// The "primary" color is the only required color in the map.
+// The 'primary' color is the only required color in the map.
 
 $colors: (
     primary:    rgb(153, 193, 71), // chiku-rin
@@ -30,7 +29,7 @@ $colors: (
     light:      #f4f4f4, // light gray
     dark:       #222, // black
     correct: (
-        base:     #3d3,
+        base:     #3b3,
         contrast: #fff,
     ),
     incorrect: (
@@ -39,28 +38,6 @@ $colors: (
     ),
 );
 
-
-// App iOS Variables
-// --------------------------------------------------
-// iOS only Sass variables can go here
-
-
-
-
-// App Material Design Variables
-// --------------------------------------------------
-// Material Design only Sass variables can go here
-
-
-
-
-// App Windows Variables
-// --------------------------------------------------
-// Windows only Sass variables can go here
-
-
-
-
 // App Theme
 // --------------------------------------------------
 // Ionic apps can have different themes applied, which can
@@ -68,7 +45,7 @@ $colors: (
 // so that the above variables are used and Ionic's
 // default are overridden.
 
-@import "ionic.theme.default";
+@import 'ionic.theme.default';
 
 
 // Ionicons
@@ -76,11 +53,9 @@ $colors: (
 // The premium icon font for Ionic. For more info, please see:
 // http://ionicframework.com/docs/v2/ionicons/
 
-@import "ionic.ionicons";
+@import 'ionic.ionicons';
 
 
 // Fonts
 // --------------------------------------------------
-
-@import "roboto";
-@import "noto-sans";
+@import 'noto-sans';
