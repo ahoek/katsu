@@ -1,3 +1,6 @@
+/**
+ * Answer
+ */
 export class Answer {
     constructor(public word: string, public reading: string) {
     }

@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {NavController, NavParams, Platform} from 'ionic-angular';
 import {GoogleAnalytics} from 'ionic-native';
+import {Keyboard} from '@ionic-native/keyboard';
 
 import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';
@@ -9,7 +10,8 @@ import {SummaryPage} from '../summary/summary';
 
 @Component({
     selector: 'page-review',
-    templateUrl: 'review.html'
+    templateUrl: 'review.html',
+    providers: [Keyboard],
 })
 export class ReviewPage {
     @ViewChild('answerInput') answerInput: any;
@@ -24,7 +26,8 @@ export class ReviewPage {
         public navCtrl: NavController,
         public dataService: QuestionData,
         public platform: Platform,
-        private navParams: NavParams
+        private navParams: NavParams,
+        private keyboard: Keyboard
     ) {
         this.settings = this.navParams.get('settings');
         this.questions[0] = new Question();
@@ -54,14 +57,16 @@ export class ReviewPage {
 
     focusAnswerField() {
         setTimeout(() => {
+            this.keyboard.show(); // Android
             this.answerInput.setFocus();
-        }, 150);
+        }, 250);
     }
 
     nextQuestion() {
         if (this.index < this.questions.length - 1) {
             this.goToQuestion(this.index + 1);
         } else {
+            this.keyboard.close();
             this.showSummary();
         }
     }
@@ -69,8 +74,6 @@ export class ReviewPage {
     goToQuestion(index: number) {
         this.index = index;
 
-        this.focusAnswerField();
-        
         this.platform.ready().then(() => {
             GoogleAnalytics.trackEvent('Question', 'show', this.questions[this.index].type, 1);
         });
