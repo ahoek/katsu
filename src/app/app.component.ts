@@ -1,10 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
 import {Platform, Nav} from 'ionic-angular';
-import {StatusBar} from 'ionic-native';
+import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {Keyboard} from '@ionic-native/keyboard';
 import {HomePage} from '../pages/home/home';
-import {GoogleAnalytics} from 'ionic-native';
+import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
 @Component({
     templateUrl: 'app.html',
@@ -17,20 +17,22 @@ export class KatsuApp {
     constructor(
         public platform: Platform, 
         private splash: SplashScreen,
-        private keyboard: Keyboard
+        private statusBar: StatusBar,
+        private keyboard: Keyboard,
+        private google: GoogleAnalytics
     ) {
         this.platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
-            StatusBar.styleDefault();
+            this.statusBar.styleDefault();
             this.splash.hide();
             this.keyboard.disableScroll(true);
 
             // google
-            return GoogleAnalytics.startTrackerWithId('UA-92834344-1')
+            return this.google.startTrackerWithId('UA-92834344-1')
                 .then(() => {
                     console.log('Google analytics is ready now');
-                    return GoogleAnalytics.enableUncaughtExceptionReporting(true);
+                    return this.google.enableUncaughtExceptionReporting(true);
                 }).then((_success) => {
                     console.log('startTrackerWithId success');
                 }).catch((_error) => {

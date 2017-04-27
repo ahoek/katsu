@@ -16,10 +16,13 @@ The following forms can be practised:
 * Tai-form
 
 
-The app is based on the Ionic 2 framework. The word definitions were retrieved from the 
-online dictionary [Jisho](http://jisho.org/).
+## Demo
+
+Use a web version of the app at http://katsu.arthurhoek.nl/
+
 
 ## Installation and run
+
 Make sure you have the correct environment tools available.
 
 ```
@@ -43,3 +46,9 @@ Run the tests
 ```
 npm test
 ```
+
+
+## Acknowledgements
+
+The app is based on the Ionic framework. The word definitions were retrieved from the 
+online dictionary [Jisho](http://jisho.org/).

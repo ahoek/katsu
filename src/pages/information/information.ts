@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, Platform} from 'ionic-angular';
-import {GoogleAnalytics} from 'ionic-native';
+import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
 /**
  * Information page 
@@ -13,7 +13,8 @@ export class InformationPage {
 
     constructor(
         public navCtrl: NavController,
-        public platform: Platform
+        public platform: Platform,
+        private google: GoogleAnalytics
     ) {
         
     }
@@ -21,7 +22,7 @@ export class InformationPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad InformationPage');
         this.platform.ready().then(() => {
-            GoogleAnalytics.trackView('Information Page');
+            this.google.trackView('Information Page');
         });         
     }
 }

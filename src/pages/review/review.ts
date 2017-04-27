@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {NavController, NavParams, Platform} from 'ionic-angular';
-import {GoogleAnalytics} from 'ionic-native';
+import {GoogleAnalytics} from '@ionic-native/google-analytics';
 import {Keyboard} from '@ionic-native/keyboard';
 
 import {QuestionData} from '../../providers/question-data';
@@ -27,7 +27,8 @@ export class ReviewPage {
         public dataService: QuestionData,
         public platform: Platform,
         private navParams: NavParams,
-        private keyboard: Keyboard
+        private keyboard: Keyboard,
+        private google: GoogleAnalytics
     ) {
         this.settings = this.navParams.get('settings');
         this.questions[0] = new Question();
@@ -41,7 +42,7 @@ export class ReviewPage {
         });
         
         this.platform.ready().then(() => {
-            GoogleAnalytics.trackView('Review Page');
+            this.google.trackView('Review Page');
         });
     }
 
@@ -75,7 +76,7 @@ export class ReviewPage {
         this.index = index;
 
         this.platform.ready().then(() => {
-            GoogleAnalytics.trackEvent('Question', 'show', this.questions[this.index].type, 1);
+            this.google.trackEvent('Question', 'show', this.questions[this.index].type, 1);
         });
     }
 
@@ -103,7 +104,7 @@ export class ReviewPage {
         question.answered = true;
         
         this.platform.ready().then(() => {
-            GoogleAnalytics.trackEvent('Question', 'answer-check', question.correct ? 'correct' : 'incorrect', 1);
+            this.google.trackEvent('Question', 'answer-check', question.correct ? 'correct' : 'incorrect', 1);
         }); 
     }
 }

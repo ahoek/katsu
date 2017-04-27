@@ -3,7 +3,9 @@ import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {IonicStorageModule} from '@ionic/storage';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
+import {GoogleAnalytics} from '@ionic-native/google-analytics';
 import {SplashScreen} from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
 
 import {KatsuApp} from './app.component';
 import {HomePage} from '../pages/home/home';
@@ -40,7 +42,9 @@ import {QuestionData} from '../providers/question-data';
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         QuestionData,
+        GoogleAnalytics,
         SplashScreen,
+        StatusBar,
     ]
 })
 export class AppModule {}

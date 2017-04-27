@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, Platform} from 'ionic-angular';
-import {GoogleAnalytics} from 'ionic-native';
+import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
 import {ReviewPage} from '../review/review';
 
@@ -19,7 +19,8 @@ export class SummaryPage {
     constructor(
         public navCtrl: NavController, 
         public platform: Platform,
-        private navParams: NavParams
+        private navParams: NavParams,
+        private google: GoogleAnalytics
     ) {
         this.questions = this.navParams.get('questions');
         this.reviewDelegate = this.navParams.get('delegate');
@@ -28,7 +29,7 @@ export class SummaryPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad SummaryPage');
         this.platform.ready().then(() => {
-            GoogleAnalytics.trackView('Summary Page');
+            this.google.trackView('Summary Page');
         });         
     }
     /**
