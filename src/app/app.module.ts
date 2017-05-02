@@ -28,6 +28,7 @@ import {QuestionData} from '../providers/question-data';
         HttpModule,
         IonicModule.forRoot(KatsuApp, {
             mode: 'ios',
+            //statusbarPadding: false,
         }),
         IonicStorageModule.forRoot()
     ],

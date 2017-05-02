@@ -246,19 +246,19 @@ export class Verb {
         
         if (this.type === 'na-adjective') {
             let endings: string[];
-            // でわ can be shortened to じゃ
+            // では can be shortened to じゃ
             // Polite negative forms can be made by plain negative forms + です
             switch (speechLevel) {
                 case 'polite':
                     endings = nonPast
-                        ? (positive ? ['です'] : ['でわありません', 'でわないです', 'じゃありません', 'じゃないです'])
-                        : (positive ? ['でした'] : ['でわありませんでした', 'でわなかったです', 'じゃありませんでした', 'じゃなかったです']);
+                        ? (positive ? ['です'] : ['ではありません', 'ではないです', 'じゃありません', 'じゃないです'])
+                        : (positive ? ['でした'] : ['ではありませんでした', 'ではなかったです', 'じゃありませんでした', 'じゃなかったです']);
 
                     break;
                 case 'plain':
                     endings = nonPast
-                        ? (positive ? ['だ'] : ['でわない', 'じゃない'])
-                        : (positive ? ['だった'] : ['でわなかった', 'じゃなかった']);
+                        ? (positive ? ['だ'] : ['ではない', 'じゃない'])
+                        : (positive ? ['だった'] : ['ではなかった', 'じゃなかった']);
                     break;
             }
             let conjugations: string[] = [];

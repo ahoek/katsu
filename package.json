@@ -21,6 +21,7 @@
     "@angular/platform-browser": "4.0.2",
     "@angular/platform-browser-dynamic": "4.0.2",
     "@angular/platform-server": "4.0.2",
+    "@ionic-native/app-version": "^3.5.0",
     "@ionic-native/core": "3.5.0",
     "@ionic-native/google-analytics": "^3.5.0",
     "@ionic-native/keyboard": "3.5.0",
