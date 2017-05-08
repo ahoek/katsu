@@ -4,13 +4,22 @@ page-review {
         overflow: hidden;
     }
     
+    .label-ios {
+        margin-top: 6px;
+        margin-bottom: 5px;
+    }
+    
+    .item-block {
+        min-height: 3.0rem;
+    }
+    
     .dictionary {
         ruby {
             max-width: 60%;
-            font-size: 3.5rem;
+            font-size: 3.4rem;
             
             rt {
-                font-size: 2.1rem;
+                font-size: 2.0rem;
             }
         }
 
@@ -22,15 +31,31 @@ page-review {
     
     .settings-list {
         margin-bottom: 0;
+        
+        .item-ios ion-icon[item-left] {
+            margin-top: 5px;
+            margin-bottom: 4px;
+        }
     }
 
     .answer-item {
         margin-top: 0;
-        font-size: 1.4em;
+        font-size: 1.6em;
         line-height: 1.2;
 
         input::placeholder {
             color: rgba(#999, .5);
+        }
+
+        &.item-ios.item-block .item-inner {
+            padding-right: 0;
+        }
+        
+        [item-right] {
+            margin: 0;
+            font-size: 0.9em;
+            height: 100%;
+            width: 45px;
         }
     }
 
