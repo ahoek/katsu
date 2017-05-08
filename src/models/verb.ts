@@ -7,15 +7,15 @@ export class Verb {
 
     // Japanese word
     public word: string;
-    
+
     // Reading in hiragana / katakana
     public reading: string;
-    
+
     // Grammatical part of speech
     public partOfSpeech: string;
-    
+
     public type: string;
-    
+
     // English meaning
     public englishDefinition: string;
 
@@ -90,7 +90,7 @@ export class Verb {
             this.reading = this.reading + 'する';
             this.englishDefinition = '[to do] ' + this.englishDefinition;
         }
-        
+
         if (this.partOfSpeech === 'I-adjective') {
             this.type = 'i-adjective';
         } else if (this.partOfSpeech === 'Na-adjective') {
@@ -233,32 +233,51 @@ export class Verb {
      * Get the normal verb or adjective ending
      */
     normalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+        const dewa = 'では';
+        const ja = 'じゃ';
+        const nai = 'ない';
+        const desu = 'です';
+
         let ending = '';
         if (this.type === 'i-adjective') {
             if (nonPast) {
                 // @todo Make exception for ii
-                ending = positive ? 'い' : 'くない';
+                ending = positive ? 'い' : 'く' + nai;
             } else {
                 ending = positive ? 'かった' : 'くなかった';
-            }     
-            return [this.withoutEnd + ending + (speechLevel === 'polite' ? 'です' : '')];       
+            }
+            return [this.withoutEnd + ending + (speechLevel === 'polite' ? desu : '')];
         }
-        
+
         if (this.type === 'na-adjective') {
             let endings: string[];
+
             // では can be shortened to じゃ
+
             // Polite negative forms can be made by plain negative forms + です
             switch (speechLevel) {
                 case 'polite':
                     endings = nonPast
-                        ? (positive ? ['です'] : ['ではありません', 'ではないです', 'じゃありません', 'じゃないです'])
-                        : (positive ? ['でした'] : ['ではありませんでした', 'ではなかったです', 'じゃありませんでした', 'じゃなかったです']);
+                        ? (positive
+                            ? [desu]
+                            : [
+                                dewa + 'ありません',
+                                dewa + nai + desu,
+                                ja + 'ありません',
+                                ja + nai + desu])
+                        : (positive
+                            ? ['でした']
+                            : [
+                                dewa + 'ありませんでした',
+                                dewa + 'なかった' + desu,
+                                ja + 'ありませんでした',
+                                ja + 'なかった' + desu]);
 
                     break;
                 case 'plain':
                     endings = nonPast
-                        ? (positive ? ['だ'] : ['ではない', 'じゃない'])
-                        : (positive ? ['だった'] : ['ではなかった', 'じゃなかった']);
+                        ? (positive ? ['だ'] : [dewa + nai, ja + nai])
+                        : (positive ? ['だった'] : [dewa + 'なかった', ja + 'なかった']);
                     break;
             }
             let conjugations: string[] = [];
@@ -267,14 +286,14 @@ export class Verb {
             });
             return conjugations;
         }
-        
+
         // Verbs
         switch (speechLevel) {
             case 'polite':
                 ending = nonPast
                     ? (positive ? 'ます' : 'ません')
                     : (positive ? 'ました' : 'ませんでした');
-                
+
                 return [this.masuStem() + ending];
             case 'plain':
                 if (nonPast) {
@@ -408,7 +427,7 @@ export class Verb {
                     volitional = 'こ' + you;
                     break;
             }
-            
+
         }
         //console.log('volitional', volitional);
         return [volitional];
