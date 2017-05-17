@@ -19,10 +19,10 @@ export class Verb {
     // English meaning
     public englishDefinition: string;
 
+    public notAVerb: boolean = false;
+
     private endChar: string;
     private withoutEnd: string;
-
-    public notAVerb: boolean = false;
 
     // Allowed parts of speech
     public static verbPartOfSpeech = [
@@ -61,12 +61,13 @@ export class Verb {
                 sense.parts_of_speech.some((partOfSpeech) => {
                     if (Verb.verbPartOfSpeech.indexOf(partOfSpeech) !== -1) {
                         if (partOfSpeech === 'Na-adjective' && (sense.parts_of_speech.indexOf('No-adjective') !== -1)) {
-                            console.log('Na adj is also no', definition.japanese[0]);
                             return false;
                         }
+                        
                         // Take the first definition
                         this.englishDefinition = sense.english_definitions[0];
                         this.partOfSpeech = partOfSpeech;
+                        
                         return true;
                     }
                 });
@@ -89,24 +90,31 @@ export class Verb {
         this.reading = japanese.reading;
 
         // Suru verb
-        if (this.partOfSpeech == 'Suru verb') {
+        if (this.partOfSpeech === 'Suru verb') {
             // Make a verb out of the noun
             this.word = this.word + 'する';
             this.reading = this.reading + 'する';
             this.englishDefinition = '[to do] ' + this.englishDefinition;
         }
 
-        if (this.partOfSpeech === 'I-adjective') {
-            this.type = 'i-adjective';
-        } else if (this.partOfSpeech === 'Na-adjective') {
-            this.type = 'na-adjective';
-        } else {
-            this.type = 'verb';
-        }
+        this.type = Verb.getType(this.partOfSpeech);
 
         // Find slices
         this.endChar = this.reading.slice(-1);
         this.withoutEnd = this.reading.slice(0, -1);
+    }
+    
+    /**
+     * Get the type for part of speech
+     */
+    private static getType(partOfSpeech: string): string {
+        if (partOfSpeech === 'I-adjective') {
+            return 'i-adjective';
+        } else if (partOfSpeech === 'Na-adjective') {
+            return 'na-adjective';
+        } else {
+            return 'verb';
+        }
     }
 
     /**
