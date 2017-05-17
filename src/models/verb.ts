@@ -55,11 +55,16 @@ export class Verb {
             return;
         }
 
-        // Check all senses for part of speech and only allow verbs
+        // Check all senses for part of speech and only allow words that can be conjugated
         definition.senses.some((sense: JishoSense) => {
             if (sense.parts_of_speech.length > 0) {
                 sense.parts_of_speech.some((partOfSpeech) => {
                     if (Verb.verbPartOfSpeech.indexOf(partOfSpeech) !== -1) {
+                        if (partOfSpeech === 'Na-adjective' && (sense.parts_of_speech.indexOf('No-adjective') !== -1)) {
+                            console.log('Na adj is also no', definition.japanese[0]);
+                            return false;
+                        }
+                        // Take the first definition
                         this.englishDefinition = sense.english_definitions[0];
                         this.partOfSpeech = partOfSpeech;
                         return true;
