@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {NavController, NavParams, Platform} from 'ionic-angular';
 import {GoogleAnalytics} from '@ionic-native/google-analytics';
 import {Keyboard} from '@ionic-native/keyboard';
+import * as wanakana from 'wanakana/lib/wanakana.js';
 
 import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';

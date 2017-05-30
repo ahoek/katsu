@@ -1,4 +1,4 @@
-import {Verb} from './verb.ts';
+import {Verb} from './verb';
 
 describe('Verb model', () => {
 

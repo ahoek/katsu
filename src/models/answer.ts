@@ -1,3 +1,5 @@
+import * as wanakana from 'wanakana/lib/wanakana.js';
+
 /**
  * Answer
  */
