@@ -127,13 +127,7 @@ export class Verb {
      * Check if this is a 'suru' verb (noun + suru)
      */
     isSuru(): boolean {
-        if (this.partOfSpeech === 'Suru verb') {
-            return true;
-        }
-        if (this.partOfSpeech === 'Suru verb - irregular') {
-            return true;
-        }
-        return false;
+        return this.partOfSpeech.startsWith('Suru verb');
     }
 
     /**
@@ -142,39 +136,18 @@ export class Verb {
     group(): string {
         let group: string;
 
-        switch (this.partOfSpeech) {
-            case 'Godan verb with u ending':
-            case 'Godan verb with tsu ending':
-            case 'Godan verb with ru ending':
-            case 'Godan verb with ru ending (irregular verb)':
-            case 'Godan verb - aru special class': // conjug. of いらっしゃる etc.
-            case 'Godan verb - Iku/Yuku special class':
-            case 'Godan verb with ku ending':
-            case 'Godan verb with gu ending':
-            case 'Godan verb with bu ending':
-            case 'Godan verb with mu ending':
-            case 'Godan verb with nu ending':
-            case 'Godan verb with su ending':
-                group = '1'
-                break;
-            case 'Ichidan verb':
-                group = '2'
-                break;
-            case 'Suru verb':
-            case 'Kuru verb - special class':
-            case 'Suru verb - irregular':
-            case 'Suru verb - special class':
-                group = '3'
-                break;
-            case 'I-adjective':
-                group = 'i-adjective';
-                break
-            case 'Na-adjective':
-                group = 'na-adjective';
-                break;
-            default:
-                // Not a word we can conjugate
-                break;
+        if (this.partOfSpeech.startsWith('Godan verb')) {
+            group = '1';
+        } else if (this.partOfSpeech.startsWith('Ichidan verb')) {
+            group = '2';
+        } else if (this.isSuru() || this.partOfSpeech.startsWith('Kuru verb')) {
+            group = '3';
+        } else if (this.partOfSpeech === 'I-adjective') {
+            group = 'i-adjective';
+        } else if (this.partOfSpeech === 'Na-adjective') {
+            group = 'na-adjective';
+        } else {
+            // Not a word we can conjugate
         }
 
         return group;
