@@ -133,23 +133,19 @@ export class Verb {
      * Get the verb group (1, 2 or 3)
      */
     group(): string {
-        let group: string;
-
         if (this.partOfSpeech.startsWith('Godan verb')) {
-            group = '1';
+            return '1';
         } else if (this.partOfSpeech.startsWith('Ichidan verb')) {
-            group = '2';
+            return '2';
         } else if (this.isSuru() || this.partOfSpeech.startsWith('Kuru verb')) {
-            group = '3';
+            return '3';
         } else if (this.partOfSpeech === 'I-adjective') {
-            group = 'i-adjective';
+            return 'i-adjective';
         } else if (this.partOfSpeech === 'Na-adjective') {
-            group = 'na-adjective';
-        } else {
-            // Not a word we can conjugate
-        }
-
-        return group;
+            return 'na-adjective';
+        } 
+        // Not a word we can conjugate
+        return;
     }
 
     /**
@@ -325,7 +321,6 @@ export class Verb {
      * Check test case: 罰する
      */
     teForm(): string {
-        let teForm;
         let stem = this.withoutEnd;
         let ending;
         switch (this.partOfSpeech) {
@@ -360,7 +355,6 @@ export class Verb {
                 ending = 'て';
                 break;
             case 'I-adjective':
-                stem = this.withoutEnd;
                 ending = 'くて';
                 break;
             case 'Na-adjective':
@@ -369,9 +363,7 @@ export class Verb {
                 break;
         }
 
-        teForm = stem + ending;
-        //console.log(this.partOfSpeech, this.reading, this.withoutEnd, stem, teForm)
-        return teForm;
+        return stem + ending;
     }
 
     /**
