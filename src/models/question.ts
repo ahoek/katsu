@@ -69,85 +69,85 @@ export class Question {
      * Set the answer to the question
      */
     setAnswers() {
-        let conjungated: string[];
+        let conjungations: string[];
 
         // Find the reading of the conjugated form
         switch (this.type) {
             case 'te-form':
             case 'i-adjective-te-form':
             case 'na-adjective-te-form':
-                conjungated = [this.verb.teForm()];
+                conjungations = [this.verb.teForm()];
                 break;
                 
             case 'plain-positive-present':
             case 'i-adjective-plain-positive-present':
             case 'na-adjective-plain-positive-present':
-                conjungated = this.verb.normalForm('plain', true, true);
+                conjungations = this.verb.normalForm('plain', true, true);
                 break;
             case 'plain-negative-present':
             case 'i-adjective-plain-negative-present':
             case 'na-adjective-plain-negative-present':
-                conjungated = this.verb.normalForm('plain', false, true);
+                conjungations = this.verb.normalForm('plain', false, true);
                 break;
             case 'plain-positive-past':
             case 'i-adjective-plain-positive-past':
             case 'na-adjective-plain-positive-past':
-                conjungated = this.verb.normalForm('plain', true, false);
+                conjungations = this.verb.normalForm('plain', true, false);
                 break;
             case 'plain-negative-past':
             case 'i-adjective-plain-negative-past':
             case 'na-adjective-plain-negative-past':
-                conjungated = this.verb.normalForm('plain', false, false);
+                conjungations = this.verb.normalForm('plain', false, false);
                 break;
                 
             case 'polite-positive-present':
             case 'i-adjective-polite-positive-present':
             case 'na-adjective-polite-positive-present':
-                conjungated = this.verb.normalForm('polite', true, true);
+                conjungations = this.verb.normalForm('polite', true, true);
                 break;
             case 'polite-negative-present':
             case 'i-adjective-polite-negative-present':
             case 'na-adjective-polite-negative-present':
-                conjungated = this.verb.normalForm('polite', false, true);
+                conjungations = this.verb.normalForm('polite', false, true);
                 break;
             case 'polite-positive-past':
             case 'i-adjective-polite-positive-past':
             case 'na-adjective-polite-positive-past':
-                conjungated = this.verb.normalForm('polite', true, false);
+                conjungations = this.verb.normalForm('polite', true, false);
                 break;
             case 'polite-negative-past':
             case 'i-adjective-polite-negative-past':
             case 'na-adjective-polite-negative-past':
-                conjungated = this.verb.normalForm('polite', false, false);
+                conjungations = this.verb.normalForm('polite', false, false);
                 break;
                 
             case 'volitional-plain':
-                conjungated = this.verb.volitional('plain');
+                conjungations = this.verb.volitional('plain');
                 break;
             case 'volitional-polite':
-                conjungated = this.verb.volitional('polite');
+                conjungations = this.verb.volitional('polite');
                 break;
                 
             case 'tai-form-positive-present':
-                conjungated = this.verb.taiForm(true, true);
+                conjungations = this.verb.taiForm(true, true);
                 break;
             case 'tai-form-negative-present':
-                conjungated = this.verb.taiForm(false, true);
+                conjungations = this.verb.taiForm(false, true);
                 break;
             case 'tai-form-positive-past':
-                conjungated = this.verb.taiForm(true, false);
+                conjungations = this.verb.taiForm(true, false);
                 break;
             case 'tai-form-negative-past':
-                conjungated = this.verb.taiForm(false, false);
+                conjungations = this.verb.taiForm(false, false);
                 break;
         }
         
-        if (!conjungated) {
+        if (!conjungations) {
             return;
         }
 
-        conjungated.forEach(reading => {
-            const answer = new Answer(this.getWordAnswer(reading), reading);
+        conjungations.forEach(conjungation => {
+            const answer = new Answer(this.getWordAnswer(conjungation), conjungation);
             this.answers.unshift(answer);
         });
     }
