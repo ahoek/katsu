@@ -64,21 +64,22 @@ export class Question {
 
         return true;
     }
-
+    
     /**
-     * Set the answer to the question
+     * Check of this is a question of a certain type
      */
-    setAnswers() {
-        let conjungations: string[];
-
+    isOfType(type: string) {
+        return this.type.search(type) !== -1;
+    }
+    
+    getConjungations(): string[] {
+        if (this.isOfType('te-form')) {
+            return [this.verb.teForm()];
+        }
+        
         // Find the reading of the conjugated form
+        let conjungations: string[];
         switch (this.type) {
-            case 'te-form':
-            case 'i-adjective-te-form':
-            case 'na-adjective-te-form':
-                conjungations = [this.verb.teForm()];
-                break;
-                
             case 'plain-positive-present':
             case 'i-adjective-plain-positive-present':
             case 'na-adjective-plain-positive-present':
@@ -140,7 +141,16 @@ export class Question {
             case 'tai-form-negative-past':
                 conjungations = this.verb.taiForm(false, false);
                 break;
-        }
+        }       
+        return conjungations;
+    }
+
+    /**
+     * Set the answer to the question
+     */
+    setAnswers() {
+        const conjungations = this.getConjungations();
+
         
         if (!conjungations) {
             return;
