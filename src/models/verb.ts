@@ -52,7 +52,6 @@ export class Verb {
     private readonly nai = 'ない';
     private readonly desu = 'です';
 
-
     /**
      * Create a verb from a Jisho api-like object
      */
@@ -319,7 +318,7 @@ export class Verb {
                 }
         }
     }
-
+    
     /**
      * Get the te-form
      * 

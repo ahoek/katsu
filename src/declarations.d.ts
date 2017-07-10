@@ -25,7 +25,7 @@ declare class JishoSense {
 }
 
 declare class JishoJapanese {
-    word: string; 
+    word?: string; 
     reading: string;
 }
 

@@ -29,5 +29,23 @@ describe('Verb model', () => {
         });
         expect(verb.teForm()).toBe('いって');
     });
+
+    it('"na-adjective-polite-negative-present" of そう', () => {
+        let word = new Verb({
+            'japanese': [{
+                'reading': 'そう'
+            }],
+            'senses': [{
+                'english_definitions': ['appearing that'],
+                'parts_of_speech': ['Na-adjective']
+            }]
+        });
+        expect(word.normalForm('polite', false, true)).toBe([
+            'そうじゃないです',
+            'そうじゃありません',
+            'そうではないです',
+            'そうではありません']);
+    });   
+    
 });
 

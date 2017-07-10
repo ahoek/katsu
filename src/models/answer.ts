@@ -11,10 +11,10 @@ export class Answer {
      * Check if given answer is reading or word
      */
     checkGivenAnswer(givenAnswer: string): boolean {
-        if (this.cleanUpAnswer(this.word).indexOf(givenAnswer) !== -1) {
+        if (this.word && this.cleanUpAnswer(this.word).indexOf(givenAnswer) !== -1) {
             return true;
         }
-        if (this.cleanUpAnswer(this.reading).indexOf(givenAnswer) !== -1) {
+        if (this.reading && this.cleanUpAnswer(this.reading).indexOf(givenAnswer) !== -1) {
             return true;
         }
         
