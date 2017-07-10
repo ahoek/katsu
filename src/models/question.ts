@@ -64,100 +64,56 @@ export class Question {
 
         return true;
     }
-    
+
     /**
      * Check of this is a question of a certain type
      */
     isOfType(type: string) {
         return this.type.search(type) !== -1;
     }
-    
-    getConjungations(): string[] {
+
+    /**
+     * Gets all correct verb conjugations
+     */
+    getConjugations(): string[] {
         if (this.isOfType('te-form')) {
             return [this.verb.teForm()];
         }
+
+        let politeness;
+        if (this.isOfType('plain')) {
+            politeness = 'plain';
+        } else if (this.isOfType('plain')) {
+            politeness = 'polite';
+        }
+
+        if (this.isOfType('volitional')) {
+            return this.verb.volitional(politeness);
+        }
         
-        // Find the reading of the conjugated form
-        let conjungations: string[];
-        switch (this.type) {
-            case 'plain-positive-present':
-            case 'i-adjective-plain-positive-present':
-            case 'na-adjective-plain-positive-present':
-                conjungations = this.verb.normalForm('plain', true, true);
-                break;
-            case 'plain-negative-present':
-            case 'i-adjective-plain-negative-present':
-            case 'na-adjective-plain-negative-present':
-                conjungations = this.verb.normalForm('plain', false, true);
-                break;
-            case 'plain-positive-past':
-            case 'i-adjective-plain-positive-past':
-            case 'na-adjective-plain-positive-past':
-                conjungations = this.verb.normalForm('plain', true, false);
-                break;
-            case 'plain-negative-past':
-            case 'i-adjective-plain-negative-past':
-            case 'na-adjective-plain-negative-past':
-                conjungations = this.verb.normalForm('plain', false, false);
-                break;
-                
-            case 'polite-positive-present':
-            case 'i-adjective-polite-positive-present':
-            case 'na-adjective-polite-positive-present':
-                conjungations = this.verb.normalForm('polite', true, true);
-                break;
-            case 'polite-negative-present':
-            case 'i-adjective-polite-negative-present':
-            case 'na-adjective-polite-negative-present':
-                conjungations = this.verb.normalForm('polite', false, true);
-                break;
-            case 'polite-positive-past':
-            case 'i-adjective-polite-positive-past':
-            case 'na-adjective-polite-positive-past':
-                conjungations = this.verb.normalForm('polite', true, false);
-                break;
-            case 'polite-negative-past':
-            case 'i-adjective-polite-negative-past':
-            case 'na-adjective-polite-negative-past':
-                conjungations = this.verb.normalForm('polite', false, false);
-                break;
-                
-            case 'volitional-plain':
-                conjungations = this.verb.volitional('plain');
-                break;
-            case 'volitional-polite':
-                conjungations = this.verb.volitional('polite');
-                break;
-                
-            case 'tai-form-positive-present':
-                conjungations = this.verb.taiForm(true, true);
-                break;
-            case 'tai-form-negative-present':
-                conjungations = this.verb.taiForm(false, true);
-                break;
-            case 'tai-form-positive-past':
-                conjungations = this.verb.taiForm(true, false);
-                break;
-            case 'tai-form-negative-past':
-                conjungations = this.verb.taiForm(false, false);
-                break;
-        }       
-        return conjungations;
+        const positive = this.isOfType('positive');
+        const nonPast = this.isOfType('present');
+
+        if (this.isOfType('tai-form')) {
+            return this.verb.taiForm(positive, nonPast);
+        }
+        
+        // The last is the 'normal' conjugation
+        return this.verb.normalForm(politeness, positive, nonPast);
     }
 
     /**
      * Set the answer to the question
      */
     setAnswers() {
-        const conjungations = this.getConjungations();
+        const conjugations = this.getConjugations();
 
-        
-        if (!conjungations) {
+        if (!conjugations) {
             return;
         }
 
-        conjungations.forEach(conjungation => {
-            const answer = new Answer(this.getWordAnswer(conjungation), conjungation);
+        conjugations.forEach(conjugation => {
+            const answer = new Answer(this.getWordAnswer(conjugation), conjugation);
             this.answers.unshift(answer);
         });
     }
@@ -179,7 +135,7 @@ export class Question {
                 break;
             }
         }
-        
+
         if (okurigana.length === 0) {
             return readingAnswer.replace(this.reading, this.word);
         }
@@ -200,11 +156,11 @@ export class Question {
         if (this.givenAnswer) {
             // Remove whitespace
             this.givenAnswer = this.givenAnswer.replace(/\s+/g, '');
-            
+
             // Convert romaji to kana
             this.givenAnswer = wanakana.toKana(this.givenAnswer);
         }
-        
+
         // Check if given answer still contains romaji. If so, it was probably
         // a typo.
         if (this.givenAnswer.match(/\w/)) {
@@ -221,7 +177,7 @@ export class Question {
             }
         });
     }
-    
+
     /**
      * Give the conjugated form and ask for dictionary form
      */
@@ -230,7 +186,7 @@ export class Question {
         this.answers = [new Answer(this.word, this.reading)];
         this.word = answers[0].word;
         this.reading = answers[0].reading;
-        
+
         return this;
     }
 }
