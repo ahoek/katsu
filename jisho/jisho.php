@@ -5,7 +5,7 @@
  */
 $j = new JishoScraper();
 $j->getWordsOfLevel('n5');
-$j->getWordsOfLevel('n4');
+//$j->getWordsOfLevel('n4');
 $j->getWordsOfLevel('n3');
 $j->getWordsOfLevel('n2');
 $j->getWordsOfLevel('n1');
@@ -30,16 +30,16 @@ class JishoScraper
         ];
         
         $words = [];
-        
-        $fileObject = new stdClass();
+        $dictionary = new stdClass();
         foreach ($types as $type) {
             $this->baseRequest = $this->baseUrl.'?keyword='.urlencode('#jlpt-'.$level.' #'.$type);
             var_dump($this->baseRequest);
             $words = $this->getWordsFromPage(1);
-            $fileObject->$type = $words;
+            
+            $dictionary->$type = $this->stripUnwantedInfo($words);
         }
 
-        $json = json_encode($fileObject, JSON_UNESCAPED_UNICODE);
+        $json = json_encode($dictionary, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
         file_put_contents('../src/assets/data/questions/words-'.$level.'.json', $json);
         var_dump("#".count($words));
     }
@@ -52,20 +52,45 @@ class JishoScraper
      */
     protected function getWordsFromPage($page = 1)
     {
-        var_dump("page $page");
+        echo "Page $page";
         $response = file_get_contents($this->baseRequest.'&page='.$page);
         $responseDecoded = json_decode($response);
         $words = $responseDecoded->data;
-        echo "w = ".count($words)."\n";
+        echo " [".count($words)."]\n";
         if (count($words) > 0 && $page < 100) {
             // Don't spam the server
-            sleep(3);
+            sleep(2);
             $nextWords = $this->getWordsFromPage($page + 1);
             if (is_array($nextWords)) {
                 $words = array_merge($words, $nextWords);
             }
         }
 
+        return $words;
+    }
+    
+    protected function stripUnwantedInfo($words)
+    {
+        foreach ($words as $word) {
+            unset($word->is_common);
+            unset($word->tags);
+            unset($word->attribution);
+            foreach ($word->senses as $key => $sense) {
+                if (!$sense->parts_of_speech || $sense->parts_of_speech == ['Wikipedia definition']) {
+                    unset($word->senses[$key]);
+                    continue;
+                }
+                unset($sense->links);
+                unset($sense->tags);
+                unset($sense->restrictions);
+                unset($sense->see_also);
+                unset($sense->antonyms);
+                unset($sense->source);
+                unset($sense->info);
+                $sense->english_definitions = [$sense->english_definitions[0]];
+            }
+            $word->senses = array_values($word->senses);
+        }
         return $words;
     }
 
