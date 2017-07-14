@@ -5,7 +5,7 @@
  */
 $j = new JishoScraper();
 $j->getWordsOfLevel('n5');
-//$j->getWordsOfLevel('n4');
+$j->getWordsOfLevel('n4');
 $j->getWordsOfLevel('n3');
 $j->getWordsOfLevel('n2');
 $j->getWordsOfLevel('n1');
@@ -33,7 +33,7 @@ class JishoScraper
         $dictionary = new stdClass();
         foreach ($types as $type) {
             $this->baseRequest = $this->baseUrl.'?keyword='.urlencode('#jlpt-'.$level.' #'.$type);
-            var_dump($this->baseRequest);
+            echo $this->baseRequest."\n";
             $words = $this->getWordsFromPage(1);
             
             $dictionary->$type = $this->stripUnwantedInfo($words);
@@ -41,7 +41,7 @@ class JishoScraper
 
         $json = json_encode($dictionary, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
         file_put_contents('../src/assets/data/questions/words-'.$level.'.json', $json);
-        var_dump("#".count($words));
+        echo "# ".count($words)."\n";
     }
 
     /**
