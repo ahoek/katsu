@@ -1,4 +1,4 @@
-import * as wanakana from 'wanakana/lib/wanakana.js';
+import * as wanakana from 'wanakana/lib/wanakana.esm.js';
 import {Verb} from './verb';
 import {Answer} from './answer';
 

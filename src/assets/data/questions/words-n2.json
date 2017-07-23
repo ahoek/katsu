@@ -9531,6 +9531,29 @@
         {
             "japanese": [
                 {
+                    "word": "静まる",
+                    "reading": "しずまる"
+                },
+                {
+                    "word": "鎮まる",
+                    "reading": "しずまる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to quieten down"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "揃う",
                     "reading": "そろう"
                 }
@@ -9569,29 +9592,6 @@
         {
             "japanese": [
                 {
-                    "word": "静まる",
-                    "reading": "しずまる"
-                },
-                {
-                    "word": "鎮まる",
-                    "reading": "しずまる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to quieten down"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "裂く",
                     "reading": "さく"
                 },
@@ -9615,17 +9615,29 @@
         {
             "japanese": [
                 {
-                    "word": "跳ねる",
-                    "reading": "はねる"
+                    "word": "蘇る",
+                    "reading": "よみがえる"
+                },
+                {
+                    "word": "甦る",
+                    "reading": "よみがえる"
+                },
+                {
+                    "word": "蘇える",
+                    "reading": "よみがえる"
+                },
+                {
+                    "word": "甦える",
+                    "reading": "よみがえる"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to jump"
+                        "to be resurrected"
                     ],
                     "parts_of_speech": [
-                        "Ichidan verb",
+                        "Godan verb with ru ending",
                         "intransitive verb"
                     ]
                 }
@@ -10196,33 +10208,6 @@
         {
             "japanese": [
                 {
-                    "word": "引き止める",
-                    "reading": "ひきとめる"
-                },
-                {
-                    "word": "引止める",
-                    "reading": "ひきとめる"
-                },
-                {
-                    "word": "引き留める",
-                    "reading": "ひきとめる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to detain"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "尖る",
                     "reading": "とがる"
                 },
@@ -10312,6 +10297,33 @@
                     "parts_of_speech": [
                         "Ichidan verb",
                         "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "引き止める",
+                    "reading": "ひきとめる"
+                },
+                {
+                    "word": "引止める",
+                    "reading": "ひきとめる"
+                },
+                {
+                    "word": "引き留める",
+                    "reading": "ひきとめる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to detain"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "Transitive verb"
                     ]
                 }
             ]
@@ -11388,25 +11400,6 @@
         {
             "japanese": [
                 {
-                    "word": "採る",
-                    "reading": "とる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to adopt (measure, proposal)"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "追い越す",
                     "reading": "おいこす"
                 },
@@ -11426,6 +11419,25 @@
                     ],
                     "parts_of_speech": [
                         "Godan verb with su ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "炊く",
+                    "reading": "たく"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to cook (grains, e.g. rice)"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ku ending",
                         "Transitive verb"
                     ]
                 }
@@ -11542,29 +11554,6 @@
         {
             "japanese": [
                 {
-                    "word": "長引く",
-                    "reading": "ながびく"
-                },
-                {
-                    "word": "長びく",
-                    "reading": "ながびく"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to be prolonged"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ku ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "散らす",
                     "reading": "ちらす"
                 }
@@ -11593,17 +11582,40 @@
         {
             "japanese": [
                 {
-                    "word": "採る",
-                    "reading": "とる"
+                    "word": "長引く",
+                    "reading": "ながびく"
+                },
+                {
+                    "word": "長びく",
+                    "reading": "ながびく"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to adopt (measure, proposal)"
+                        "to be prolonged"
                     ],
                     "parts_of_speech": [
-                        "Godan verb with ru ending",
+                        "Godan verb with ku ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "炊く",
+                    "reading": "たく"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to cook (grains, e.g. rice)"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ku ending",
                         "Transitive verb"
                     ]
                 }
@@ -11669,29 +11681,6 @@
         {
             "japanese": [
                 {
-                    "word": "扇ぐ",
-                    "reading": "あおぐ"
-                },
-                {
-                    "word": "煽ぐ",
-                    "reading": "あおぐ"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to fan"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with gu ending",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "下書き",
                     "reading": "したがき"
                 }
@@ -11730,18 +11719,22 @@
         {
             "japanese": [
                 {
-                    "word": "感ずる",
-                    "reading": "かんずる"
+                    "word": "注す",
+                    "reading": "さす"
+                },
+                {
+                    "word": "点す",
+                    "reading": "さす"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to feel"
+                        "to pour"
                     ],
                     "parts_of_speech": [
-                        "Ichidan verb - zuru verb (alternative form of -jiru verbs)",
-                        "intransitive verb"
+                        "Godan verb with su ending",
+                        "Transitive verb"
                     ]
                 }
             ]
@@ -11891,6 +11884,29 @@
                     "parts_of_speech": [
                         "Noun",
                         "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "扇ぐ",
+                    "reading": "あおぐ"
+                },
+                {
+                    "word": "煽ぐ",
+                    "reading": "あおぐ"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to fan"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with gu ending",
+                        "Transitive verb"
                     ]
                 }
             ]
@@ -12608,33 +12624,6 @@
         {
             "japanese": [
                 {
-                    "word": "言いつける",
-                    "reading": "いいつける"
-                },
-                {
-                    "word": "言い付ける",
-                    "reading": "いいつける"
-                },
-                {
-                    "word": "言付ける",
-                    "reading": "いいつける"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to tell (to do)"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "齧る",
                     "reading": "かじる"
                 },
@@ -12654,6 +12643,33 @@
                     ],
                     "parts_of_speech": [
                         "Godan verb with ru ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "言いつける",
+                    "reading": "いいつける"
+                },
+                {
+                    "word": "言い付ける",
+                    "reading": "いいつける"
+                },
+                {
+                    "word": "言付ける",
+                    "reading": "いいつける"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to tell (to do)"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
                         "Transitive verb"
                     ]
                 }
@@ -14494,33 +14510,6 @@
         {
             "japanese": [
                 {
-                    "word": "咥える",
-                    "reading": "くわえる"
-                },
-                {
-                    "word": "銜える",
-                    "reading": "くわえる"
-                },
-                {
-                    "word": "啣える",
-                    "reading": "くわえる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to hold in one's mouth"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "遣っ付ける",
                     "reading": "やっつける"
                 },
@@ -14537,6 +14526,33 @@
                 {
                     "english_definitions": [
                         "to beat"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "咥える",
+                    "reading": "くわえる"
+                },
+                {
+                    "word": "銜える",
+                    "reading": "くわえる"
+                },
+                {
+                    "word": "啣える",
+                    "reading": "くわえる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to hold in one's mouth"
                     ],
                     "parts_of_speech": [
                         "Ichidan verb",
