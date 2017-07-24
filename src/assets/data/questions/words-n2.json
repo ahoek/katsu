@@ -1091,26 +1091,6 @@
         {
             "japanese": [
                 {
-                    "word": "集合",
-                    "reading": "しゅうごう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "gathering"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb",
-                        "No-adjective"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "測定",
                     "reading": "そくてい"
                 }
@@ -1138,6 +1118,26 @@
                 {
                     "english_definitions": [
                         "gymnastics"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "集合",
+                    "reading": "しゅうごう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "gathering"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -1308,25 +1308,6 @@
         {
             "japanese": [
                 {
-                    "word": "接続",
-                    "reading": "せつぞく"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "connection"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "圧縮",
                     "reading": "あっしゅく"
                 },
@@ -1372,6 +1353,25 @@
                 {
                     "english_definitions": [
                         "sending a telegram"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "接続",
+                    "reading": "せつぞく"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "connection"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -1435,18 +1435,19 @@
         {
             "japanese": [
                 {
-                    "word": "測量",
-                    "reading": "そくりょう"
+                    "word": "筆記",
+                    "reading": "ひっき"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "measurement"
+                        "(taking) notes"
                     ],
                     "parts_of_speech": [
                         "Noun",
-                        "Suru verb"
+                        "Suru verb",
+                        "No-adjective"
                     ]
                 }
             ]
@@ -1454,18 +1455,19 @@
         {
             "japanese": [
                 {
-                    "word": "測量",
-                    "reading": "そくりょう"
+                    "word": "筆記",
+                    "reading": "ひっき"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "measurement"
+                        "(taking) notes"
                     ],
                     "parts_of_speech": [
                         "Noun",
-                        "Suru verb"
+                        "Suru verb",
+                        "No-adjective"
                     ]
                 }
             ]
@@ -1492,19 +1494,18 @@
         {
             "japanese": [
                 {
-                    "word": "筆記",
-                    "reading": "ひっき"
+                    "word": "輸血",
+                    "reading": "ゆけつ"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "(taking) notes"
+                        "blood transfusion"
                     ],
                     "parts_of_speech": [
                         "Noun",
-                        "Suru verb",
-                        "No-adjective"
+                        "Suru verb"
                     ]
                 }
             ]
@@ -1656,25 +1657,6 @@
         {
             "japanese": [
                 {
-                    "word": "省略",
-                    "reading": "しょうりゃく"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "omission"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "蒸発",
                     "reading": "じょうはつ"
                 }
@@ -1719,6 +1701,25 @@
                 {
                     "english_definitions": [
                         "detour"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "省略",
+                    "reading": "しょうりゃく"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "omission"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -2691,33 +2692,6 @@
         {
             "japanese": [
                 {
-                    "word": "努める",
-                    "reading": "つとめる"
-                },
-                {
-                    "word": "勉める",
-                    "reading": "つとめる"
-                },
-                {
-                    "word": "力める",
-                    "reading": "つとめる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to endeavor (endeavour)"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "殴る",
                     "reading": "なぐる"
                 },
@@ -2737,6 +2711,33 @@
                     ],
                     "parts_of_speech": [
                         "Godan verb with ru ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "努める",
+                    "reading": "つとめる"
+                },
+                {
+                    "word": "勉める",
+                    "reading": "つとめる"
+                },
+                {
+                    "word": "力める",
+                    "reading": "つとめる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to endeavor (endeavour)"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
                         "Transitive verb"
                     ]
                 }
@@ -2787,6 +2788,25 @@
         {
             "japanese": [
                 {
+                    "word": "狙う",
+                    "reading": "ねらう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to aim at"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with u ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "迫る",
                     "reading": "せまる"
                 },
@@ -2815,25 +2835,6 @@
                     ],
                     "parts_of_speech": [
                         "Godan verb with ru ending",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "狙う",
-                    "reading": "ねらう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to aim at"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with u ending",
                         "Transitive verb"
                     ]
                 }
@@ -3056,6 +3057,34 @@
         {
             "japanese": [
                 {
+                    "word": "接する",
+                    "reading": "せっする"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to touch"
+                    ],
+                    "parts_of_speech": [
+                        "Suru verb - special class",
+                        "intransitive verb"
+                    ]
+                },
+                {
+                    "english_definitions": [
+                        "to make touch"
+                    ],
+                    "parts_of_speech": [
+                        "Suru verb - special class",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "配る",
                     "reading": "くばる"
                 },
@@ -3095,34 +3124,6 @@
                     "parts_of_speech": [
                         "Ichidan verb",
                         "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "接する",
-                    "reading": "せっする"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to touch"
-                    ],
-                    "parts_of_speech": [
-                        "Suru verb - special class",
-                        "intransitive verb"
-                    ]
-                },
-                {
-                    "english_definitions": [
-                        "to make touch"
-                    ],
-                    "parts_of_speech": [
-                        "Suru verb - special class",
-                        "Transitive verb"
                     ]
                 }
             ]
@@ -3276,6 +3277,25 @@
         {
             "japanese": [
                 {
+                    "word": "埋める",
+                    "reading": "うめる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to bury (e.g. in the ground)"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "解散",
                     "reading": "かいさん"
                 }
@@ -3307,25 +3327,6 @@
                     "parts_of_speech": [
                         "Godan verb with tsu ending",
                         "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "埋める",
-                    "reading": "うめる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to bury (e.g. in the ground)"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
                     ]
                 }
             ]
@@ -3385,25 +3386,6 @@
         {
             "japanese": [
                 {
-                    "word": "登場",
-                    "reading": "とうじょう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "entry (on stage)"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "手続き",
                     "reading": "てつづき"
                 },
@@ -3427,14 +3409,37 @@
         {
             "japanese": [
                 {
-                    "word": "登場",
-                    "reading": "とうじょう"
+                    "word": "通知",
+                    "reading": "つうち"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "entry (on stage)"
+                        "notice"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "手続き",
+                    "reading": "てつづき"
+                },
+                {
+                    "word": "手続",
+                    "reading": "てつづき"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "procedure"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -3488,18 +3493,18 @@
         {
             "japanese": [
                 {
-                    "word": "集会",
-                    "reading": "しゅうかい"
+                    "word": "縛る",
+                    "reading": "しばる"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "meeting"
+                        "to tie"
                     ],
                     "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
+                        "Godan verb with ru ending",
+                        "Transitive verb"
                     ]
                 }
             ]
@@ -3526,38 +3531,18 @@
         {
             "japanese": [
                 {
-                    "word": "縛る",
-                    "reading": "しばる"
+                    "word": "集会",
+                    "reading": "しゅうかい"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to tie"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "侵入",
-                    "reading": "しんにゅう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "invasion"
+                        "meeting"
                     ],
                     "parts_of_speech": [
                         "Noun",
-                        "Suru verb",
-                        "No-adjective"
+                        "Suru verb"
                     ]
                 }
             ]
@@ -3622,6 +3607,65 @@
         {
             "japanese": [
                 {
+                    "word": "侵入",
+                    "reading": "しんにゅう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "invasion"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "郵送",
+                    "reading": "ゆうそう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "mailing"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "分類",
+                    "reading": "ぶんるい"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "classification"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "手入れ",
                     "reading": "ていれ"
                 }
@@ -3629,7 +3673,7 @@
             "senses": [
                 {
                     "english_definitions": [
-                        "repairs"
+                        "care"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -3668,25 +3712,6 @@
         {
             "japanese": [
                 {
-                    "word": "分類",
-                    "reading": "ぶんるい"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "classification"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "改正",
                     "reading": "かいせい"
                 }
@@ -3695,26 +3720,6 @@
                 {
                     "english_definitions": [
                         "revision"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb",
-                        "No-adjective"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "郵送",
-                    "reading": "ゆうそう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "mailing"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -3752,56 +3757,6 @@
         {
             "japanese": [
                 {
-                    "word": "住まい",
-                    "reading": "すまい"
-                },
-                {
-                    "word": "住居",
-                    "reading": "すまい"
-                },
-                {
-                    "word": "住い",
-                    "reading": "すまい"
-                },
-                {
-                    "word": "住居",
-                    "reading": "じゅうきょ"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "dwelling"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "調整",
-                    "reading": "ちょうせい"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "adjustment"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "展開",
                     "reading": "てんかい"
                 }
@@ -3810,44 +3765,6 @@
                 {
                     "english_definitions": [
                         "development"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "見舞う",
-                    "reading": "みまう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to ask after (someone's health)"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with u ending",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "調整",
-                    "reading": "ちょうせい"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "adjustment"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -3909,14 +3826,72 @@
         {
             "japanese": [
                 {
-                    "word": "展開",
-                    "reading": "てんかい"
+                    "word": "接近",
+                    "reading": "せっきん"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "development"
+                        "getting closer"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "見舞う",
+                    "reading": "みまう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to ask after (someone's health)"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with u ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "統計",
+                    "reading": "とうけい"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "statistics"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "接近",
+                    "reading": "せっきん"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "getting closer"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -3947,19 +3922,37 @@
         {
             "japanese": [
                 {
-                    "word": "統計",
-                    "reading": "とうけい"
+                    "word": "展開",
+                    "reading": "てんかい"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "statistics"
+                        "development"
                     ],
                     "parts_of_speech": [
                         "Noun",
-                        "Suru verb",
-                        "No-adjective"
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "調整",
+                    "reading": "ちょうせい"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "adjustment"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
                     ]
                 }
             ]
@@ -3999,42 +3992,6 @@
                     "parts_of_speech": [
                         "Ichidan verb",
                         "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "前後",
-                    "reading": "ぜんご"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "front and rear"
-                    ],
-                    "parts_of_speech": [
-                        "Noun"
-                    ]
-                },
-                {
-                    "english_definitions": [
-                        "inversion"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                },
-                {
-                    "english_definitions": [
-                        "around"
-                    ],
-                    "parts_of_speech": [
-                        "Noun - used as a suffix",
-                        "Noun"
                     ]
                 }
             ]
@@ -4131,6 +4088,42 @@
         {
             "japanese": [
                 {
+                    "word": "前後",
+                    "reading": "ぜんご"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "front and rear"
+                    ],
+                    "parts_of_speech": [
+                        "Noun"
+                    ]
+                },
+                {
+                    "english_definitions": [
+                        "inversion"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                },
+                {
+                    "english_definitions": [
+                        "around"
+                    ],
+                    "parts_of_speech": [
+                        "Noun - used as a suffix",
+                        "Noun"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "往復",
                     "reading": "おうふく"
                 }
@@ -4170,41 +4163,6 @@
         {
             "japanese": [
                 {
-                    "word": "温まる",
-                    "reading": "あたたまる"
-                },
-                {
-                    "word": "温まる",
-                    "reading": "あったまる"
-                },
-                {
-                    "word": "暖まる",
-                    "reading": "あたたまる"
-                },
-                {
-                    "word": "暖まる",
-                    "reading": "あったまる"
-                },
-                {
-                    "word": "温まる",
-                    "reading": "ぬくまる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to warm oneself"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "争う",
                     "reading": "あらそう"
                 }
@@ -4217,6 +4175,106 @@
                     "parts_of_speech": [
                         "Godan verb with u ending",
                         "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "相違",
+                    "reading": "そうい"
+                },
+                {
+                    "word": "相異",
+                    "reading": "そうい"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "difference"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "修繕",
+                    "reading": "しゅうぜん"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "repair"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "可決",
+                    "reading": "かけつ"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "approval"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "分解",
+                    "reading": "ぶんかい"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "disassembly"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "停車",
+                    "reading": "ていしゃ"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "stopping (e.g. train)"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
                     ]
                 }
             ]
@@ -4250,185 +4308,18 @@
         {
             "japanese": [
                 {
-                    "word": "可決",
-                    "reading": "かけつ"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "approval"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "相違",
-                    "reading": "そうい"
+                    "word": "停止",
+                    "reading": "ていし"
                 },
                 {
-                    "word": "相異",
-                    "reading": "そうい"
+                    "word": "停止",
+                    "reading": "ちょうじ"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "difference"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "冷やす",
-                    "reading": "ひやす"
-                },
-                {
-                    "word": "冷す",
-                    "reading": "ひやす"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to cool (from room temperature)"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with su ending",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "活躍",
-                    "reading": "かつやく"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "activity (esp. energetic)"
-                    ],
-                    "parts_of_speech": [
-                        "Noun"
-                    ]
-                },
-                {
-                    "english_definitions": [
-                        "to flourish"
-                    ],
-                    "parts_of_speech": [
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "油断",
-                    "reading": "ゆだん"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "negligence"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "終了",
-                    "reading": "しゅうりょう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "end"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "相違",
-                    "reading": "そうい"
-                },
-                {
-                    "word": "相異",
-                    "reading": "そうい"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "difference"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "争う",
-                    "reading": "あらそう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to compete"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with u ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "停車",
-                    "reading": "ていしゃ"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "stopping (e.g. train)"
+                        "suspension"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -4459,14 +4350,56 @@
         {
             "japanese": [
                 {
-                    "word": "生存",
-                    "reading": "せいぞん"
+                    "word": "相違",
+                    "reading": "そうい"
+                },
+                {
+                    "word": "相異",
+                    "reading": "そうい"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "existence"
+                        "difference"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "争う",
+                    "reading": "あらそう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to compete"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with u ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "活躍",
+                    "reading": "かつやく"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "activity (esp. energetic)"
                     ],
                     "parts_of_speech": [
                         "Noun"
@@ -4474,7 +4407,7 @@
                 },
                 {
                     "english_definitions": [
-                        "to exist"
+                        "to flourish"
                     ],
                     "parts_of_speech": [
                         "Suru verb"
@@ -4531,18 +4464,227 @@
         {
             "japanese": [
                 {
-                    "word": "停止",
-                    "reading": "ていし"
-                },
-                {
-                    "word": "停止",
-                    "reading": "ちょうじ"
+                    "word": "分解",
+                    "reading": "ぶんかい"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "suspension"
+                        "disassembly"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "冷やす",
+                    "reading": "ひやす"
+                },
+                {
+                    "word": "冷す",
+                    "reading": "ひやす"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to cool (from room temperature)"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with su ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "温まる",
+                    "reading": "あたたまる"
+                },
+                {
+                    "word": "温まる",
+                    "reading": "あったまる"
+                },
+                {
+                    "word": "暖まる",
+                    "reading": "あたたまる"
+                },
+                {
+                    "word": "暖まる",
+                    "reading": "あったまる"
+                },
+                {
+                    "word": "温まる",
+                    "reading": "ぬくまる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to warm oneself"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "応対",
+                    "reading": "おうたい"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "receiving"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "追加",
+                    "reading": "ついか"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "addition"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "推定",
+                    "reading": "すいてい"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "presumption"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "受験",
+                    "reading": "じゅけん"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "taking an examination (esp. school and university entrance)"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "見学",
+                    "reading": "けんがく"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "inspection"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "心得る",
+                    "reading": "こころえる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to know"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "回答",
+                    "reading": "かいとう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "reply"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "防止",
+                    "reading": "ぼうし"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "prevention"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -4574,97 +4716,40 @@
         {
             "japanese": [
                 {
-                    "word": "応対",
-                    "reading": "おうたい"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "receiving"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "防止",
-                    "reading": "ぼうし"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "prevention"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "見学",
-                    "reading": "けんがく"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "inspection"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "回答",
-                    "reading": "かいとう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "reply"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "干す",
-                    "reading": "ほす"
+                    "word": "膨らむ",
+                    "reading": "ふくらむ"
                 },
                 {
-                    "word": "乾す",
-                    "reading": "ほす"
+                    "word": "脹らむ",
+                    "reading": "ふくらむ"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to air"
+                        "to expand"
                     ],
                     "parts_of_speech": [
-                        "Godan verb with su ending",
+                        "Godan verb with mu ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "出迎える",
+                    "reading": "でむかえる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to meet"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
                         "Transitive verb"
                     ]
                 }
@@ -4673,53 +4758,14 @@
         {
             "japanese": [
                 {
-                    "word": "追加",
-                    "reading": "ついか"
+                    "word": "発売",
+                    "reading": "はつばい"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "addition"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb",
-                        "No-adjective"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "受験",
-                    "reading": "じゅけん"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "taking an examination (esp. school and university entrance)"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "受験",
-                    "reading": "じゅけん"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "taking an examination (esp. school and university entrance)"
+                        "sale"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -4759,86 +4805,6 @@
                     ],
                     "parts_of_speech": [
                         "Noun"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "膨らむ",
-                    "reading": "ふくらむ"
-                },
-                {
-                    "word": "脹らむ",
-                    "reading": "ふくらむ"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to expand"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with mu ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "発射",
-                    "reading": "はっしゃ"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "firing"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "発売",
-                    "reading": "はつばい"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "sale"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "出迎える",
-                    "reading": "でむかえる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to meet"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
                     ]
                 }
             ]
@@ -4970,6 +4936,44 @@
         {
             "japanese": [
                 {
+                    "word": "発射",
+                    "reading": "はっしゃ"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "firing"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "重ねる",
+                    "reading": "かさねる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to pile up"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "生る",
                     "reading": "なる"
                 }
@@ -5008,18 +5012,19 @@
         {
             "japanese": [
                 {
-                    "word": "重ねる",
-                    "reading": "かさねる"
+                    "word": "縮小",
+                    "reading": "しゅくしょう"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to pile up"
+                        "reduction"
                     ],
                     "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
                     ]
                 }
             ]
@@ -5066,25 +5071,6 @@
                     "parts_of_speech": [
                         "Noun",
                         "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "物語る",
-                    "reading": "ものがたる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to tell"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "Transitive verb"
                     ]
                 }
             ]
@@ -5177,6 +5163,25 @@
         {
             "japanese": [
                 {
+                    "word": "録音",
+                    "reading": "ろくおん"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "(audio) recording"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "次ぐ",
                     "reading": "つぐ"
                 },
@@ -5193,26 +5198,6 @@
                     "parts_of_speech": [
                         "Godan verb with gu ending",
                         "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "縮小",
-                    "reading": "しゅくしょう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "reduction"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb",
-                        "No-adjective"
                     ]
                 }
             ]
@@ -5240,6 +5225,25 @@
         {
             "japanese": [
                 {
+                    "word": "整備",
+                    "reading": "せいび"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "maintenance"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "来日",
                     "reading": "らいにち"
                 }
@@ -5252,26 +5256,6 @@
                     "parts_of_speech": [
                         "Noun",
                         "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "就任",
-                    "reading": "しゅうにん"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "inauguration"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb",
-                        "No-adjective"
                     ]
                 }
             ]
@@ -5333,25 +5317,6 @@
                     "parts_of_speech": [
                         "Ichidan verb",
                         "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "整備",
-                    "reading": "せいび"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "maintenance"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
                     ]
                 }
             ]
@@ -5498,25 +5463,19 @@
         {
             "japanese": [
                 {
-                    "word": "成立",
-                    "reading": "せいりつ"
+                    "word": "就任",
+                    "reading": "しゅうにん"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "coming into existence"
+                        "inauguration"
                     ],
                     "parts_of_speech": [
-                        "Noun"
-                    ]
-                },
-                {
-                    "english_definitions": [
-                        "to come into existence"
-                    ],
-                    "parts_of_speech": [
-                        "Suru verb"
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
                     ]
                 }
             ]
@@ -5564,6 +5523,25 @@
         {
             "japanese": [
                 {
+                    "word": "膨らます",
+                    "reading": "ふくらます"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to swell"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with su ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "工事",
                     "reading": "こうじ"
                 }
@@ -5576,6 +5554,45 @@
                     "parts_of_speech": [
                         "Noun",
                         "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "膨らます",
+                    "reading": "ふくらます"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to swell"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with su ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "起床",
+                    "reading": "きしょう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "rising"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
                     ]
                 }
             ]
@@ -5609,58 +5626,18 @@
         {
             "japanese": [
                 {
-                    "word": "起床",
-                    "reading": "きしょう"
+                    "word": "深まる",
+                    "reading": "ふかまる"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "rising"
+                        "to deepen"
                     ],
                     "parts_of_speech": [
-                        "Noun",
-                        "Suru verb",
-                        "No-adjective"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "創作",
-                    "reading": "そうさく"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "production"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb",
-                        "No-adjective"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "対照",
-                    "reading": "たいしょう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "contrast"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
+                        "Godan verb with ru ending",
+                        "intransitive verb"
                     ]
                 }
             ]
@@ -5744,25 +5721,6 @@
         {
             "japanese": [
                 {
-                    "word": "刺さる",
-                    "reading": "ささる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to stick into (something with a sharp point)"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "冷凍",
                     "reading": "れいとう"
                 }
@@ -5782,18 +5740,37 @@
         {
             "japanese": [
                 {
-                    "word": "深まる",
-                    "reading": "ふかまる"
+                    "word": "刺さる",
+                    "reading": "ささる"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to deepen"
+                        "to stick into (something with a sharp point)"
                     ],
                     "parts_of_speech": [
                         "Godan verb with ru ending",
                         "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "対照",
+                    "reading": "たいしょう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "contrast"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
                     ]
                 }
             ]
@@ -5809,6 +5786,25 @@
                 {
                     "english_definitions": [
                         "closed (e.g. store)"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "課税",
+                    "reading": "かぜい"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "taxation"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -5836,25 +5832,6 @@
                 {
                     "english_definitions": [
                         "in and out"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "課税",
-                    "reading": "かぜい"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "taxation"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -6006,25 +5983,6 @@
         {
             "japanese": [
                 {
-                    "word": "入社",
-                    "reading": "にゅうしゃ"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "joining a company"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "驚かす",
                     "reading": "おどろかす"
                 }
@@ -6063,25 +6021,6 @@
         {
             "japanese": [
                 {
-                    "word": "制作",
-                    "reading": "せいさく"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "work (film, book)"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "研修",
                     "reading": "けんしゅう"
                 }
@@ -6101,14 +6040,22 @@
         {
             "japanese": [
                 {
-                    "word": "日帰り",
-                    "reading": "ひがえり"
+                    "word": "貸し出し",
+                    "reading": "かしだし"
+                },
+                {
+                    "word": "貸出し",
+                    "reading": "かしだし"
+                },
+                {
+                    "word": "貸出",
+                    "reading": "かしだし"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "day trip"
+                        "lending"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -6120,14 +6067,33 @@
         {
             "japanese": [
                 {
-                    "word": "評論",
-                    "reading": "ひょうろん"
+                    "word": "入社",
+                    "reading": "にゅうしゃ"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "criticism"
+                        "joining a company"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "募集",
+                    "reading": "ぼしゅう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "recruiting"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -6147,45 +6113,6 @@
                 {
                     "english_definitions": [
                         "idea"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "免税",
-                    "reading": "めんぜい"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "tax exemption"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb",
-                        "No-adjective"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "超過",
-                    "reading": "ちょうか"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "excess"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -6221,22 +6148,34 @@
         {
             "japanese": [
                 {
-                    "word": "貸し出し",
-                    "reading": "かしだし"
-                },
-                {
-                    "word": "貸出し",
-                    "reading": "かしだし"
-                },
-                {
-                    "word": "貸出",
-                    "reading": "かしだし"
+                    "word": "免税",
+                    "reading": "めんぜい"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "lending"
+                        "tax exemption"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "評論",
+                    "reading": "ひょうろん"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "criticism"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -6248,14 +6187,52 @@
         {
             "japanese": [
                 {
-                    "word": "募集",
-                    "reading": "ぼしゅう"
+                    "word": "日帰り",
+                    "reading": "ひがえり"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "recruiting"
+                        "day trip"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "制作",
+                    "reading": "せいさく"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "work (film, book)"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "超過",
+                    "reading": "ちょうか"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "excess"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -6279,44 +6256,6 @@
                     "parts_of_speech": [
                         "Noun",
                         "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "断水",
-                    "reading": "だんすい"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "water outage"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "暴れる",
-                    "reading": "あばれる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to act violently"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "intransitive verb"
                     ]
                 }
             ]
@@ -6402,18 +6341,38 @@
         {
             "japanese": [
                 {
-                    "word": "断定",
-                    "reading": "だんてい"
+                    "word": "暴れる",
+                    "reading": "あばれる"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "conclusion"
+                        "to act violently"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "解説",
+                    "reading": "かいせつ"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "explanation"
                     ],
                     "parts_of_speech": [
                         "Noun",
-                        "Suru verb"
+                        "Suru verb",
+                        "No-adjective"
                     ]
                 }
             ]
@@ -6448,6 +6407,44 @@
                 {
                     "english_definitions": [
                         "opening"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "断定",
+                    "reading": "だんてい"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "conclusion"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "留守番",
+                    "reading": "るすばん"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "care-taking"
                     ],
                     "parts_of_speech": [
                         "Noun",
@@ -6536,18 +6533,18 @@
         {
             "japanese": [
                 {
-                    "word": "暴れる",
-                    "reading": "あばれる"
+                    "word": "製作",
+                    "reading": "せいさく"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to act violently"
+                        "manufacture"
                     ],
                     "parts_of_speech": [
-                        "Ichidan verb",
-                        "intransitive verb"
+                        "Noun",
+                        "Suru verb"
                     ]
                 }
             ]
@@ -6555,23 +6552,18 @@
         {
             "japanese": [
                 {
-                    "word": "付属",
-                    "reading": "ふぞく"
-                },
-                {
-                    "word": "附属",
-                    "reading": "ふぞく"
+                    "word": "分量",
+                    "reading": "ぶんりょう"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "attached"
+                        "amount"
                     ],
                     "parts_of_speech": [
                         "Noun",
-                        "Suru verb",
-                        "No-adjective"
+                        "Suru verb"
                     ]
                 }
             ]
@@ -6621,6 +6613,25 @@
         {
             "japanese": [
                 {
+                    "word": "生長",
+                    "reading": "せいちょう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "growth"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "締め切る",
                     "reading": "しめきる"
                 },
@@ -6656,25 +6667,6 @@
         {
             "japanese": [
                 {
-                    "word": "生長",
-                    "reading": "せいちょう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "growth"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "攻める",
                     "reading": "せめる"
                 }
@@ -6687,25 +6679,6 @@
                     "parts_of_speech": [
                         "Ichidan verb",
                         "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "分量",
-                    "reading": "ぶんりょう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "amount"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
                     ]
                 }
             ]
@@ -6733,18 +6706,23 @@
         {
             "japanese": [
                 {
-                    "word": "製作",
-                    "reading": "せいさく"
+                    "word": "付属",
+                    "reading": "ふぞく"
+                },
+                {
+                    "word": "附属",
+                    "reading": "ふぞく"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "manufacture"
+                        "attached"
                     ],
                     "parts_of_speech": [
                         "Noun",
-                        "Suru verb"
+                        "Suru verb",
+                        "No-adjective"
                     ]
                 }
             ]
@@ -7261,6 +7239,29 @@
         {
             "japanese": [
                 {
+                    "word": "誓う",
+                    "reading": "ちかう"
+                },
+                {
+                    "word": "盟う",
+                    "reading": "ちかう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to swear"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with u ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "飛び込む",
                     "reading": "とびこむ"
                 },
@@ -7281,29 +7282,6 @@
                     "parts_of_speech": [
                         "Godan verb with mu ending",
                         "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "誓う",
-                    "reading": "ちかう"
-                },
-                {
-                    "word": "盟う",
-                    "reading": "ちかう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to swear"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with u ending",
-                        "Transitive verb"
                     ]
                 }
             ]
@@ -7376,6 +7354,25 @@
         {
             "japanese": [
                 {
+                    "word": "掘る",
+                    "reading": "ほる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to dig"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "関わる",
                     "reading": "かかわる"
                 },
@@ -7415,14 +7412,18 @@
         {
             "japanese": [
                 {
-                    "word": "掘る",
-                    "reading": "ほる"
+                    "word": "嫌がる",
+                    "reading": "いやがる"
+                },
+                {
+                    "word": "厭がる",
+                    "reading": "いやがる"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to dig"
+                        "to hate"
                     ],
                     "parts_of_speech": [
                         "Godan verb with ru ending",
@@ -7453,29 +7454,6 @@
                     ],
                     "parts_of_speech": [
                         "Ichidan verb",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "嫌がる",
-                    "reading": "いやがる"
-                },
-                {
-                    "word": "厭がる",
-                    "reading": "いやがる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to hate"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
                         "Transitive verb"
                     ]
                 }
@@ -7530,25 +7508,6 @@
         {
             "japanese": [
                 {
-                    "word": "妨げる",
-                    "reading": "さまたげる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to disturb"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "躊躇う",
                     "reading": "ためらう"
                 }
@@ -7568,6 +7527,25 @@
         {
             "japanese": [
                 {
+                    "word": "妨げる",
+                    "reading": "さまたげる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to disturb"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "点く",
                     "reading": "つく"
                 }
@@ -7580,25 +7558,6 @@
                     "parts_of_speech": [
                         "Godan verb with ku ending",
                         "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "儲ける",
-                    "reading": "もうける"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to profit"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
                     ]
                 }
             ]
@@ -7652,14 +7611,14 @@
         {
             "japanese": [
                 {
-                    "word": "纏める",
-                    "reading": "まとめる"
+                    "word": "儲ける",
+                    "reading": "もうける"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to collect"
+                        "to profit"
                     ],
                     "parts_of_speech": [
                         "Ichidan verb",
@@ -7705,6 +7664,25 @@
                     ],
                     "parts_of_speech": [
                         "Godan verb with ru ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "纏める",
+                    "reading": "まとめる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to collect"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
                         "Transitive verb"
                     ]
                 }
@@ -7770,18 +7748,30 @@
         {
             "japanese": [
                 {
-                    "word": "訳す",
-                    "reading": "やくす"
+                    "word": "溶ける",
+                    "reading": "とける"
+                },
+                {
+                    "word": "融ける",
+                    "reading": "とける"
+                },
+                {
+                    "word": "熔ける",
+                    "reading": "とける"
+                },
+                {
+                    "word": "鎔ける",
+                    "reading": "とける"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to translate"
+                        "to melt"
                     ],
                     "parts_of_speech": [
-                        "Godan verb with su ending",
-                        "Transitive verb"
+                        "Ichidan verb",
+                        "intransitive verb"
                     ]
                 }
             ]
@@ -7949,6 +7939,25 @@
         {
             "japanese": [
                 {
+                    "word": "泊める",
+                    "reading": "とめる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to give shelter to"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "足る",
                     "reading": "たる"
                 }
@@ -8011,25 +8020,6 @@
                     "parts_of_speech": [
                         "Godan verb with ru ending",
                         "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "泊める",
-                    "reading": "とめる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to give shelter to"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
                     ]
                 }
             ]
@@ -8337,6 +8327,29 @@
         {
             "japanese": [
                 {
+                    "word": "剃る",
+                    "reading": "そる"
+                },
+                {
+                    "word": "剃る",
+                    "reading": "する"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to shave"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "燃やす",
                     "reading": "もやす"
                 },
@@ -8398,6 +8411,24 @@
                         "Godan verb with ku ending",
                         "intransitive verb"
                     ]
+                },
+                {
+                    "english_definitions": [
+                        "to examine (an expression)"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ku ending",
+                        "Transitive verb"
+                    ]
+                },
+                {
+                    "english_definitions": [
+                        "to face"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ku ending",
+                        "intransitive verb"
+                    ]
                 }
             ]
         },
@@ -8420,29 +8451,6 @@
                     "parts_of_speech": [
                         "Ichidan verb",
                         "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "剃る",
-                    "reading": "そる"
-                },
-                {
-                    "word": "剃る",
-                    "reading": "する"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to shave"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "Transitive verb"
                     ]
                 }
             ]
@@ -8482,29 +8490,6 @@
         {
             "japanese": [
                 {
-                    "word": "怒鳴る",
-                    "reading": "どなる"
-                },
-                {
-                    "word": "呶鳴る",
-                    "reading": "どなる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to shout"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "裏返す",
                     "reading": "うらがえす"
                 }
@@ -8513,25 +8498,6 @@
                 {
                     "english_definitions": [
                         "to turn inside out"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with su ending",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "崩す",
-                    "reading": "くずす"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to destroy"
                     ],
                     "parts_of_speech": [
                         "Godan verb with su ending",
@@ -8559,6 +8525,25 @@
                     "parts_of_speech": [
                         "Godan verb with ku ending",
                         "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "崩す",
+                    "reading": "くずす"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to destroy"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with su ending",
+                        "Transitive verb"
                     ]
                 }
             ]
@@ -8611,6 +8596,48 @@
         {
             "japanese": [
                 {
+                    "word": "怒鳴る",
+                    "reading": "どなる"
+                },
+                {
+                    "word": "呶鳴る",
+                    "reading": "どなる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to shout"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "冷める",
+                    "reading": "さめる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to become cool (e.g. from a high temperature to room temperature)"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "可愛がる",
                     "reading": "かわいがる"
                 }
@@ -8652,25 +8679,6 @@
         {
             "japanese": [
                 {
-                    "word": "縫う",
-                    "reading": "ぬう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to sew"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with u ending",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "揃える",
                     "reading": "そろえる"
                 }
@@ -8690,18 +8698,18 @@
         {
             "japanese": [
                 {
-                    "word": "冷める",
-                    "reading": "さめる"
+                    "word": "縫う",
+                    "reading": "ぬう"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to become cool (e.g. from a high temperature to room temperature)"
+                        "to sew"
                     ],
                     "parts_of_speech": [
-                        "Ichidan verb",
-                        "intransitive verb"
+                        "Godan verb with u ending",
+                        "Transitive verb"
                     ]
                 }
             ]
@@ -8731,18 +8739,18 @@
         {
             "japanese": [
                 {
-                    "word": "躓く",
-                    "reading": "つまずく"
+                    "word": "傾く",
+                    "reading": "かたむく"
                 },
                 {
-                    "word": "躓く",
-                    "reading": "つまづく"
+                    "word": "傾く",
+                    "reading": "かたぶく"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to stumble"
+                        "to incline toward"
                     ],
                     "parts_of_speech": [
                         "Godan verb with ku ending",
@@ -8777,22 +8785,22 @@
         {
             "japanese": [
                 {
-                    "word": "傾く",
-                    "reading": "かたむく"
+                    "word": "近づける",
+                    "reading": "ちかづける"
                 },
                 {
-                    "word": "傾く",
-                    "reading": "かたぶく"
+                    "word": "近付ける",
+                    "reading": "ちかづける"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to incline toward"
+                        "to bring near"
                     ],
                     "parts_of_speech": [
-                        "Godan verb with ku ending",
-                        "intransitive verb"
+                        "Ichidan verb",
+                        "Transitive verb"
                     ]
                 }
             ]
@@ -8819,29 +8827,6 @@
         {
             "japanese": [
                 {
-                    "word": "近づける",
-                    "reading": "ちかづける"
-                },
-                {
-                    "word": "近付ける",
-                    "reading": "ちかづける"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to bring near"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "編む",
                     "reading": "あむ"
                 }
@@ -8854,6 +8839,29 @@
                     "parts_of_speech": [
                         "Godan verb with mu ending",
                         "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "躓く",
+                    "reading": "つまずく"
+                },
+                {
+                    "word": "躓く",
+                    "reading": "つまづく"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to stumble"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ku ending",
+                        "intransitive verb"
                     ]
                 }
             ]
@@ -8961,6 +8969,29 @@
         {
             "japanese": [
                 {
+                    "word": "捕る",
+                    "reading": "とる"
+                },
+                {
+                    "word": "獲る",
+                    "reading": "とる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to take"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "砕ける",
                     "reading": "くだける"
                 },
@@ -8996,29 +9027,6 @@
                     "parts_of_speech": [
                         "Godan verb with ru ending",
                         "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "捕る",
-                    "reading": "とる"
-                },
-                {
-                    "word": "獲る",
-                    "reading": "とる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to take"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "Transitive verb"
                     ]
                 }
             ]
@@ -9106,6 +9114,25 @@
         {
             "japanese": [
                 {
+                    "word": "浮く",
+                    "reading": "うく"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to float"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ku ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "固まる",
                     "reading": "かたまる"
                 }
@@ -9117,6 +9144,37 @@
                     ],
                     "parts_of_speech": [
                         "Godan verb with ru ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "這う",
+                    "reading": "はう"
+                },
+                {
+                    "word": "匍う",
+                    "reading": "はう"
+                },
+                {
+                    "word": "延う",
+                    "reading": "はう"
+                },
+                {
+                    "word": "爬う",
+                    "reading": "はう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to creep"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with u ending",
                         "intransitive verb"
                     ]
                 }
@@ -9157,25 +9215,6 @@
         {
             "japanese": [
                 {
-                    "word": "固まる",
-                    "reading": "かたまる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to harden"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "浮く",
                     "reading": "うく"
                 }
@@ -9187,37 +9226,6 @@
                     ],
                     "parts_of_speech": [
                         "Godan verb with ku ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "這う",
-                    "reading": "はう"
-                },
-                {
-                    "word": "匍う",
-                    "reading": "はう"
-                },
-                {
-                    "word": "延う",
-                    "reading": "はう"
-                },
-                {
-                    "word": "爬う",
-                    "reading": "はう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to creep"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with u ending",
                         "intransitive verb"
                     ]
                 }
@@ -9432,14 +9440,14 @@
         {
             "japanese": [
                 {
-                    "word": "教わる",
-                    "reading": "おそわる"
+                    "word": "儲かる",
+                    "reading": "もうかる"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to be taught (by)"
+                        "to be profitable"
                     ],
                     "parts_of_speech": [
                         "Godan verb with ru ending",
@@ -9451,14 +9459,14 @@
         {
             "japanese": [
                 {
-                    "word": "儲かる",
-                    "reading": "もうかる"
+                    "word": "教わる",
+                    "reading": "おそわる"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to be profitable"
+                        "to be taught (by)"
                     ],
                     "parts_of_speech": [
                         "Godan verb with ru ending",
@@ -9501,6 +9509,25 @@
                     "parts_of_speech": [
                         "Godan verb with mu ending",
                         "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "落第",
+                    "reading": "らくだい"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "failure"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
                     ]
                 }
             ]
@@ -9569,110 +9596,18 @@
         {
             "japanese": [
                 {
-                    "word": "静まる",
-                    "reading": "しずまる"
-                },
-                {
-                    "word": "鎮まる",
-                    "reading": "しずまる"
+                    "word": "睨む",
+                    "reading": "にらむ"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to quieten down"
+                        "to glare at"
                     ],
                     "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "裂く",
-                    "reading": "さく"
-                },
-                {
-                    "word": "割く",
-                    "reading": "さく"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to tear"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ku ending",
+                        "Godan verb with mu ending",
                         "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "跳ねる",
-                    "reading": "はねる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to jump"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "裂く",
-                    "reading": "さく"
-                },
-                {
-                    "word": "割く",
-                    "reading": "さく"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to tear"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ku ending",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "静まる",
-                    "reading": "しずまる"
-                },
-                {
-                    "word": "鎮まる",
-                    "reading": "しずまる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to quieten down"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "intransitive verb"
                     ]
                 }
             ]
@@ -9765,6 +9700,48 @@
         {
             "japanese": [
                 {
+                    "word": "静まる",
+                    "reading": "しずまる"
+                },
+                {
+                    "word": "鎮まる",
+                    "reading": "しずまる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to quieten down"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "儲かる",
+                    "reading": "もうかる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to be profitable"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "重なる",
                     "reading": "かさなる"
                 }
@@ -9777,6 +9754,61 @@
                     "parts_of_speech": [
                         "Godan verb with ru ending",
                         "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "睨む",
+                    "reading": "にらむ"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to glare at"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with mu ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "目眩",
+                    "reading": "めまい"
+                },
+                {
+                    "word": "眩暈",
+                    "reading": "めまい"
+                },
+                {
+                    "word": "目まい",
+                    "reading": "めまい"
+                },
+                {
+                    "word": "目眩い",
+                    "reading": "めまい"
+                },
+                {
+                    "word": "眩暈",
+                    "reading": "げんうん"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "dizziness"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb",
+                        "No-adjective"
                     ]
                 }
             ]
@@ -9827,49 +9859,6 @@
                     "parts_of_speech": [
                         "Noun",
                         "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "溶け込む",
-                    "reading": "とけこむ"
-                },
-                {
-                    "word": "解け込む",
-                    "reading": "とけこむ"
-                },
-                {
-                    "word": "融け込む",
-                    "reading": "とけこむ"
-                },
-                {
-                    "word": "溶込む",
-                    "reading": "とけこむ"
-                },
-                {
-                    "word": "解込む",
-                    "reading": "とけこむ"
-                },
-                {
-                    "word": "溶けこむ",
-                    "reading": "とけこむ"
-                },
-                {
-                    "word": "とけ込む",
-                    "reading": "とけこむ"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to melt into"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with mu ending",
-                        "intransitive verb"
                     ]
                 }
             ]
@@ -10019,6 +10008,76 @@
         {
             "japanese": [
                 {
+                    "word": "溶け込む",
+                    "reading": "とけこむ"
+                },
+                {
+                    "word": "解け込む",
+                    "reading": "とけこむ"
+                },
+                {
+                    "word": "融け込む",
+                    "reading": "とけこむ"
+                },
+                {
+                    "word": "溶込む",
+                    "reading": "とけこむ"
+                },
+                {
+                    "word": "解込む",
+                    "reading": "とけこむ"
+                },
+                {
+                    "word": "溶けこむ",
+                    "reading": "とけこむ"
+                },
+                {
+                    "word": "とけ込む",
+                    "reading": "とけこむ"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to melt into"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with mu ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "通用",
+                    "reading": "つうよう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "popular use"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                },
+                {
+                    "english_definitions": [
+                        "to pass as"
+                    ],
+                    "parts_of_speech": [
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "思い込む",
                     "reading": "おもいこむ"
                 },
@@ -10061,65 +10120,6 @@
         {
             "japanese": [
                 {
-                    "word": "目眩",
-                    "reading": "めまい"
-                },
-                {
-                    "word": "眩暈",
-                    "reading": "めまい"
-                },
-                {
-                    "word": "目まい",
-                    "reading": "めまい"
-                },
-                {
-                    "word": "目眩い",
-                    "reading": "めまい"
-                },
-                {
-                    "word": "眩暈",
-                    "reading": "げんうん"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "dizziness"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb",
-                        "No-adjective"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "実る",
-                    "reading": "みのる"
-                },
-                {
-                    "word": "稔る",
-                    "reading": "みのる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to bear fruit"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "受け持つ",
                     "reading": "うけもつ"
                 }
@@ -10139,17 +10139,17 @@
         {
             "japanese": [
                 {
-                    "word": "溜める",
-                    "reading": "ためる"
+                    "word": "担ぐ",
+                    "reading": "かつぐ"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to amass"
+                        "to shoulder"
                     ],
                     "parts_of_speech": [
-                        "Ichidan verb",
+                        "Godan verb with gu ending",
                         "Transitive verb"
                     ]
                 }
@@ -10185,33 +10185,6 @@
                 {
                     "english_definitions": [
                         "to mimic"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "引き止める",
-                    "reading": "ひきとめる"
-                },
-                {
-                    "word": "引止める",
-                    "reading": "ひきとめる"
-                },
-                {
-                    "word": "引き留める",
-                    "reading": "ひきとめる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to detain"
                     ],
                     "parts_of_speech": [
                         "Ichidan verb",
@@ -10337,37 +10310,26 @@
         {
             "japanese": [
                 {
-                    "word": "纏まる",
-                    "reading": "まとまる"
+                    "word": "引き止める",
+                    "reading": "ひきとめる"
+                },
+                {
+                    "word": "引止める",
+                    "reading": "ひきとめる"
+                },
+                {
+                    "word": "引き留める",
+                    "reading": "ひきとめる"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to be collected"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "巫山戯る",
-                    "reading": "ふざける"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to joke"
+                        "to detain"
                     ],
                     "parts_of_speech": [
                         "Ichidan verb",
-                        "intransitive verb"
+                        "Transitive verb"
                     ]
                 }
             ]
@@ -10406,6 +10368,25 @@
                     "parts_of_speech": [
                         "Ichidan verb",
                         "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "巫山戯る",
+                    "reading": "ふざける"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to joke"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "intransitive verb"
                     ]
                 }
             ]
@@ -10528,6 +10509,33 @@
         {
             "japanese": [
                 {
+                    "word": "整う",
+                    "reading": "ととのう"
+                },
+                {
+                    "word": "調う",
+                    "reading": "ととのう"
+                },
+                {
+                    "word": "斉う",
+                    "reading": "ととのう"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to be ready"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with u ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "散らかす",
                     "reading": "ちらかす"
                 }
@@ -10578,26 +10586,26 @@
         {
             "japanese": [
                 {
-                    "word": "整う",
-                    "reading": "ととのう"
+                    "word": "溶かす",
+                    "reading": "とかす"
                 },
                 {
-                    "word": "調う",
-                    "reading": "ととのう"
+                    "word": "解かす",
+                    "reading": "とかす"
                 },
                 {
-                    "word": "斉う",
-                    "reading": "ととのう"
+                    "word": "融かす",
+                    "reading": "とかす"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to be ready"
+                        "to melt"
                     ],
                     "parts_of_speech": [
-                        "Godan verb with u ending",
-                        "intransitive verb"
+                        "Godan verb with su ending",
+                        "Transitive verb"
                     ]
                 }
             ]
@@ -10643,29 +10651,6 @@
                     ],
                     "parts_of_speech": [
                         "Godan verb with mu ending",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "当てはめる",
-                    "reading": "あてはめる"
-                },
-                {
-                    "word": "当て嵌める",
-                    "reading": "あてはめる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to apply"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
                         "Transitive verb"
                     ]
                 }
@@ -10743,25 +10728,6 @@
         {
             "japanese": [
                 {
-                    "word": "錆びる",
-                    "reading": "さびる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to rust"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "剥く",
                     "reading": "むく"
                 },
@@ -10785,6 +10751,25 @@
         {
             "japanese": [
                 {
+                    "word": "錆びる",
+                    "reading": "さびる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to rust"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "被せる",
                     "reading": "かぶせる"
                 }
@@ -10793,6 +10778,29 @@
                 {
                     "english_definitions": [
                         "to cover (with something)"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "当てはめる",
+                    "reading": "あてはめる"
+                },
+                {
+                    "word": "当て嵌める",
+                    "reading": "あてはめる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to apply"
                     ],
                     "parts_of_speech": [
                         "Ichidan verb",
@@ -10981,6 +10989,48 @@
         {
             "japanese": [
                 {
+                    "word": "交差",
+                    "reading": "こうさ"
+                },
+                {
+                    "word": "交叉",
+                    "reading": "こうさ"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "crossing"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "濁る",
+                    "reading": "にごる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to become muddy"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "剥がす",
                     "reading": "はがす"
                 },
@@ -11013,52 +11063,6 @@
                     "parts_of_speech": [
                         "Godan verb with su ending",
                         "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "帰す",
-                    "reading": "かえす"
-                },
-                {
-                    "word": "還す",
-                    "reading": "かえす"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to send (someone) back"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with su ending",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "交差",
-                    "reading": "こうさ"
-                },
-                {
-                    "word": "交叉",
-                    "reading": "こうさ"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "crossing"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
                     ]
                 }
             ]
@@ -11140,58 +11144,6 @@
         {
             "japanese": [
                 {
-                    "word": "凸凹",
-                    "reading": "でこぼこ"
-                },
-                {
-                    "word": "凸凹",
-                    "reading": "とつおう"
-                },
-                {
-                    "word": "凸凹",
-                    "reading": "だくぼく"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "unevenness"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "No-adjective",
-                        "Na-adjective",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "拵える",
-                    "reading": "こしらえる"
-                },
-                {
-                    "word": "拵える",
-                    "reading": "こさえる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to make"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "散る",
                     "reading": "ちる"
                 }
@@ -11204,25 +11156,6 @@
                     "parts_of_speech": [
                         "Godan verb with ru ending",
                         "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "治める",
-                    "reading": "おさめる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to govern"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb",
-                        "Transitive verb"
                     ]
                 }
             ]
@@ -11246,6 +11179,25 @@
                     "parts_of_speech": [
                         "Godan verb with ku ending",
                         "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "治める",
+                    "reading": "おさめる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to govern"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "Transitive verb"
                     ]
                 }
             ]
@@ -11299,14 +11251,66 @@
         {
             "japanese": [
                 {
-                    "word": "焚く",
+                    "word": "凸凹",
+                    "reading": "でこぼこ"
+                },
+                {
+                    "word": "凸凹",
+                    "reading": "とつおう"
+                },
+                {
+                    "word": "凸凹",
+                    "reading": "だくぼく"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "unevenness"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "No-adjective",
+                        "Na-adjective",
+                        "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "拵える",
+                    "reading": "こしらえる"
+                },
+                {
+                    "word": "拵える",
+                    "reading": "こさえる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to make"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "炊く",
                     "reading": "たく"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to burn"
+                        "to cook (grains, e.g. rice)"
                     ],
                     "parts_of_speech": [
                         "Godan verb with ku ending",
@@ -11381,25 +11385,6 @@
                     ],
                     "parts_of_speech": [
                         "Ichidan verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "採る",
-                    "reading": "とる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to adopt (measure, proposal)"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "Transitive verb"
                     ]
                 }
             ]
@@ -11542,22 +11527,19 @@
         {
             "japanese": [
                 {
-                    "word": "長引く",
-                    "reading": "ながびく"
-                },
-                {
-                    "word": "長びく",
-                    "reading": "ながびく"
+                    "word": "等分",
+                    "reading": "とうぶん"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to be prolonged"
+                        "division into equal parts"
                     ],
                     "parts_of_speech": [
-                        "Godan verb with ku ending",
-                        "intransitive verb"
+                        "Noun",
+                        "Suru verb",
+                        "Suffix"
                     ]
                 }
             ]
@@ -11593,17 +11575,17 @@
         {
             "japanese": [
                 {
-                    "word": "採る",
-                    "reading": "とる"
+                    "word": "炊く",
+                    "reading": "たく"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to adopt (measure, proposal)"
+                        "to cook (grains, e.g. rice)"
                     ],
                     "parts_of_speech": [
-                        "Godan verb with ru ending",
+                        "Godan verb with ku ending",
                         "Transitive verb"
                     ]
                 }
@@ -11631,17 +11613,40 @@
         {
             "japanese": [
                 {
-                    "word": "焚く",
-                    "reading": "たく"
+                    "word": "長引く",
+                    "reading": "ながびく"
+                },
+                {
+                    "word": "長びく",
+                    "reading": "ながびく"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to burn"
+                        "to be prolonged"
                     ],
                     "parts_of_speech": [
                         "Godan verb with ku ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "採る",
+                    "reading": "とる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to adopt (measure, proposal)"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
                         "Transitive verb"
                     ]
                 }
@@ -11662,6 +11667,25 @@
                     "parts_of_speech": [
                         "Noun",
                         "Suru verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "感ずる",
+                    "reading": "かんずる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to feel"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb - zuru verb (alternative form of -jiru verbs)",
+                        "intransitive verb"
                     ]
                 }
             ]
@@ -11730,25 +11754,6 @@
         {
             "japanese": [
                 {
-                    "word": "感ずる",
-                    "reading": "かんずる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to feel"
-                    ],
-                    "parts_of_speech": [
-                        "Ichidan verb - zuru verb (alternative form of -jiru verbs)",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "跨ぐ",
                     "reading": "またぐ"
                 }
@@ -11760,6 +11765,29 @@
                     ],
                     "parts_of_speech": [
                         "Godan verb with gu ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "注す",
+                    "reading": "さす"
+                },
+                {
+                    "word": "点す",
+                    "reading": "さす"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to pour"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with su ending",
                         "Transitive verb"
                     ]
                 }
@@ -11898,18 +11926,18 @@
         {
             "japanese": [
                 {
-                    "word": "勘違い",
-                    "reading": "かんちがい"
+                    "word": "映す",
+                    "reading": "うつす"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "misunderstanding"
+                        "to project"
                     ],
                     "parts_of_speech": [
-                        "Noun",
-                        "Suru verb"
+                        "Godan verb with su ending",
+                        "Transitive verb"
                     ]
                 }
             ]
@@ -11960,38 +11988,6 @@
                     ],
                     "parts_of_speech": [
                         "Noun",
-                        "Suru verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "瓶詰め",
-                    "reading": "びんづめ"
-                },
-                {
-                    "word": "瓶詰",
-                    "reading": "びんづめ"
-                },
-                {
-                    "word": "壜詰め",
-                    "reading": "びんづめ"
-                },
-                {
-                    "word": "壜詰",
-                    "reading": "びんづめ"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "bottling"
-                    ],
-                    "parts_of_speech": [
-                        "Noun",
-                        "No-adjective",
                         "Suru verb"
                     ]
                 }
@@ -12183,29 +12179,6 @@
         {
             "japanese": [
                 {
-                    "word": "匂う",
-                    "reading": "におう"
-                },
-                {
-                    "word": "臭う",
-                    "reading": "におう"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to be fragrant"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with u ending",
-                        "intransitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "炊事",
                     "reading": "すいじ"
                 }
@@ -12268,22 +12241,18 @@
         {
             "japanese": [
                 {
-                    "word": "倣う",
-                    "reading": "ならう"
+                    "word": "匂う",
+                    "reading": "におう"
                 },
                 {
-                    "word": "傚う",
-                    "reading": "ならう"
-                },
-                {
-                    "word": "慣らう",
-                    "reading": "ならう"
+                    "word": "臭う",
+                    "reading": "におう"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to imitate"
+                        "to be fragrant"
                     ],
                     "parts_of_speech": [
                         "Godan verb with u ending",
@@ -12314,21 +12283,17 @@
         {
             "japanese": [
                 {
-                    "word": "区切る",
-                    "reading": "くぎる"
-                },
-                {
-                    "word": "句切る",
-                    "reading": "くぎる"
+                    "word": "拝む",
+                    "reading": "おがむ"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to demarcate"
+                        "to assume the posture of praying"
                     ],
                     "parts_of_speech": [
-                        "Godan verb with ru ending",
+                        "Godan verb with mu ending",
                         "Transitive verb"
                     ]
                 }
@@ -12360,17 +12325,48 @@
         {
             "japanese": [
                 {
-                    "word": "拝む",
-                    "reading": "おがむ"
+                    "word": "倣う",
+                    "reading": "ならう"
+                },
+                {
+                    "word": "傚う",
+                    "reading": "ならう"
+                },
+                {
+                    "word": "慣らう",
+                    "reading": "ならう"
                 }
             ],
             "senses": [
                 {
                     "english_definitions": [
-                        "to assume the posture of praying"
+                        "to imitate"
                     ],
                     "parts_of_speech": [
-                        "Godan verb with mu ending",
+                        "Godan verb with u ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "区切る",
+                    "reading": "くぎる"
+                },
+                {
+                    "word": "句切る",
+                    "reading": "くぎる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to demarcate"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
                         "Transitive verb"
                     ]
                 }
@@ -13207,29 +13203,6 @@
         {
             "japanese": [
                 {
-                    "word": "炙る",
-                    "reading": "あぶる"
-                },
-                {
-                    "word": "焙る",
-                    "reading": "あぶる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to warm (e.g. one's hands over a fire)"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "破く",
                     "reading": "やぶく"
                 }
@@ -13269,6 +13242,29 @@
                 {
                     "english_definitions": [
                         "to throw"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
+                        "Transitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "炙る",
+                    "reading": "あぶる"
+                },
+                {
+                    "word": "焙る",
+                    "reading": "あぶる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to warm (e.g. one's hands over a fire)"
                     ],
                     "parts_of_speech": [
                         "Godan verb with ru ending",
@@ -15073,6 +15069,29 @@
         {
             "japanese": [
                 {
+                    "word": "透き通る",
+                    "reading": "すきとおる"
+                },
+                {
+                    "word": "透きとおる",
+                    "reading": "すきとおる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to be transparent"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "論ずる",
                     "reading": "ろんずる"
                 }
@@ -15123,29 +15142,6 @@
                     "parts_of_speech": [
                         "Ichidan verb",
                         "Transitive verb"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "透き通る",
-                    "reading": "すきとおる"
-                },
-                {
-                    "word": "透きとおる",
-                    "reading": "すきとおる"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to be transparent"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with ru ending",
-                        "intransitive verb"
                     ]
                 }
             ]
@@ -16231,24 +16227,6 @@
         {
             "japanese": [
                 {
-                    "word": "厚かましい",
-                    "reading": "あつかましい"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "impudent"
-                    ],
-                    "parts_of_speech": [
-                        "I-adjective"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
                     "word": "鈍い",
                     "reading": "にぶい"
                 },
@@ -16261,6 +16239,24 @@
                 {
                     "english_definitions": [
                         "dull (e.g. a knife)"
+                    ],
+                    "parts_of_speech": [
+                        "I-adjective"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
+                    "word": "厚かましい",
+                    "reading": "あつかましい"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "impudent"
                     ],
                     "parts_of_speech": [
                         "I-adjective"
@@ -16381,6 +16377,24 @@
         {
             "japanese": [
                 {
+                    "word": "下らない",
+                    "reading": "くだらない"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "good-for-nothing"
+                    ],
+                    "parts_of_speech": [
+                        "I-adjective"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "青白い",
                     "reading": "あおじろい"
                 },
@@ -16397,24 +16411,6 @@
                 {
                     "english_definitions": [
                         "pale"
-                    ],
-                    "parts_of_speech": [
-                        "I-adjective"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "下らない",
-                    "reading": "くだらない"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "good-for-nothing"
                     ],
                     "parts_of_speech": [
                         "I-adjective"
@@ -16601,6 +16597,24 @@
         {
             "japanese": [
                 {
+                    "word": "荒い",
+                    "reading": "あらい"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "rough"
+                    ],
+                    "parts_of_speech": [
+                        "I-adjective"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "眩しい",
                     "reading": "まぶしい"
                 },
@@ -16613,24 +16627,6 @@
                 {
                     "english_definitions": [
                         "dazzling"
-                    ],
-                    "parts_of_speech": [
-                        "I-adjective"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "荒い",
-                    "reading": "あらい"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "rough"
                     ],
                     "parts_of_speech": [
                         "I-adjective"

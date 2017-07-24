@@ -86,7 +86,9 @@
     
     <form (submit)="checkAnswer(questions[index])">
         <ion-item ngClass="answer-item">
-            <ion-input #answerInput
+            <ion-input 
+                #answerInput
+                #answerInputNative
                 lang="jp"
                 [(ngModel)]="questions[index].givenAnswer"
                 [ngModelOptions]="{standalone: true}"

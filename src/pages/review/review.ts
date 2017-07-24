@@ -1,8 +1,8 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, ElementRef} from '@angular/core';
 import {NavController, NavParams, Platform} from 'ionic-angular';
 import {GoogleAnalytics} from '@ionic-native/google-analytics';
 import {Keyboard} from '@ionic-native/keyboard';
-import * as wanakana from 'wanakana/lib/wanakana.js';
+import * as wanakana from 'wanakana/lib/wanakana.esm.js';
 
 import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';
@@ -16,6 +16,7 @@ import {SummaryPage} from '../summary/summary';
 })
 export class ReviewPage {
     @ViewChild('answerInput') answerInput: any;
+    @ViewChild('answerInputNative', { read: ElementRef }) answerInputNative: ElementRef;
 
     public questions: Question[] = [];
 
@@ -49,11 +50,7 @@ export class ReviewPage {
 
     ionViewDidEnter() {
         // Add IME to answer field
-        const answers = document.getElementsByClassName('answerInput');
-        for (let i = 0; i < answers.length; i++) {
-            wanakana.bind(answers[i]);
-        }
-
+        wanakana.bind(this.answerInputNative.nativeElement.firstElementChild);
         this.focusAnswerField();
     }
 
