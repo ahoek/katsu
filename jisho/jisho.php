@@ -40,7 +40,7 @@ class JishoScraper
         }
 
         $json = json_encode($dictionary, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-        file_put_contents('../src/assets/data/questions/words-'.$level.'.json', $json);
+        file_put_contents(__DIR__ . '/../src/assets/data/questions/words-'.$level.'.json', $json);
         echo "# ".count($words)."\n";
     }
 

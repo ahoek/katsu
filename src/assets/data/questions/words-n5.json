@@ -947,6 +947,29 @@
         {
             "japanese": [
                 {
+                    "word": "立つ",
+                    "reading": "たつ"
+                },
+                {
+                    "word": "発つ",
+                    "reading": "たつ"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to stand"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with tsu ending",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        },
+        {
+            "japanese": [
+                {
                     "word": "出す",
                     "reading": "だす"
                 }
@@ -968,29 +991,6 @@
                     "parts_of_speech": [
                         "Suffix",
                         "Godan verb with su ending"
-                    ]
-                }
-            ]
-        },
-        {
-            "japanese": [
-                {
-                    "word": "立つ",
-                    "reading": "たつ"
-                },
-                {
-                    "word": "発つ",
-                    "reading": "たつ"
-                }
-            ],
-            "senses": [
-                {
-                    "english_definitions": [
-                        "to stand"
-                    ],
-                    "parts_of_speech": [
-                        "Godan verb with tsu ending",
-                        "intransitive verb"
                     ]
                 }
             ]
