@@ -83,7 +83,7 @@ export class Question {
         let politeness;
         if (this.isOfType('plain')) {
             politeness = 'plain';
-        } else if (this.isOfType('plain')) {
+        } else if (this.isOfType('polite')) {
             politeness = 'polite';
         }
 
