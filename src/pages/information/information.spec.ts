@@ -3,6 +3,7 @@ import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
 import {InformationPage} from './information';
 import {IonicModule, NavController} from 'ionic-angular/index';
+import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
 describe('InformationPage', function () {
     let de: DebugElement;
@@ -16,7 +17,8 @@ describe('InformationPage', function () {
                 IonicModule.forRoot(InformationPage)
             ],
             providers: [
-                NavController
+                NavController,
+                GoogleAnalytics
             ]
         });
     }));

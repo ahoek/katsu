@@ -185,7 +185,10 @@ export class Verb {
         let stem: string = '';
         switch (this.group()) {
             case '1':
-                if (this.endChar === 'う') {
+                if (this.partOfSpeech === 'Godan verb with ru ending (irregular verb)') {
+                    // aru
+                    stem = '';
+                } else if (this.endChar === 'う') {
                     stem = this.withoutEnd + 'わ';
                 } else {
                     stem = this.withoutEnd + HiraganaColumnHelper.change(this.endChar, 'U', 'A');
@@ -370,9 +373,7 @@ export class Verb {
      * Get the plain negative form.
      */
     plainNegative(): string[] {
-        const nai = 'ない';
-        const plainNegative = this.naiStem() + nai;
-        //console.log(this.partOfSpeech, this.reading, plainNegative);
+        const plainNegative = this.naiStem() + this.nai;
         return [plainNegative];
     }
 
@@ -383,9 +384,8 @@ export class Verb {
         const katta = 'かった';
 
         // Remove the い and add かった.
-        const plainNegativePast = this.plainNegative().slice(0, -1) + katta;
+        const plainNegativePast = this.plainNegative()[0].slice(0, -1) + katta;
 
-        //console.log(this.partOfSpeech, this.reading, plainNegativePast);
         return [plainNegativePast];
     }
 

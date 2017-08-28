@@ -40,12 +40,34 @@ describe('Verb model', () => {
                 'parts_of_speech': ['Na-adjective']
             }]
         });
-        expect(word.normalForm('polite', false, true)).toBe([
+        expect(word.normalForm('polite', false, true)).toEqual([
             'そうじゃないです',
             'そうじゃありません',
             'そうではないです',
             'そうではありません']);
+    });
+ 
+    it('negative plain of ある', () => {
+        let verb = new Verb({
+            "japanese": [
+                {
+                    "word": "有る",
+                    "reading": "ある"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to be (usu. of inanimate objects)"
+                    ],
+                    "parts_of_speech": [
+                        "Godan verb with ru ending (irregular verb)",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        });
+        expect(verb.normalForm('plain', false, true)).toEqual(['ない']);
+        expect(verb.normalForm('plain', false, false)).toEqual(['なかった']);
     });   
-    
 });
-
