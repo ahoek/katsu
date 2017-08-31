@@ -400,11 +400,16 @@ export class Verb {
         return [plainPast];
     }
 
+    /**
+     * Volitional
+     */
     volitional(speechLevel: string): string[] {
         let volitional;
+        
         if (speechLevel === 'polite') {
             volitional = this.masuStem() + 'ましょう';
         }
+        
         if (speechLevel === 'plain') {
             const you = 'よう';
             switch (this.group()) {
@@ -416,6 +421,7 @@ export class Verb {
                     volitional = this.withoutEnd + you;
                     break;
             }
+            // Irregular
             switch (this.partOfSpeech) {
                 case 'Suru verb':
                 case 'Suru verb - irregular':
@@ -426,13 +432,14 @@ export class Verb {
                     volitional = 'こ' + you;
                     break;
             }
-
         }
-        //console.log('volitional', volitional);
+        
         return [volitional];
     }
 
     /**
+     * Tai form (desire)
+     * 
      * @todo Treat as　い adjective
      */
     taiForm(positive: boolean, nonPast: boolean): string[] {
@@ -445,5 +452,54 @@ export class Verb {
         }
 
         return [this.masuStem() + ending];
+    }
+    
+    /**
+     * Potential form
+     * 
+     * Tense and modality are left out, because they conjugate like eru or masu
+     */
+    potential(speechLevel: string): string[] {
+        let potential = [];
+        let stem = '';
+        
+        switch (this.group()) {
+            case '1':
+                stem = this.withoutEnd + HiraganaColumnHelper.change(this.endChar, 'U', 'E');
+                break;
+            case '2':
+                stem = this.withoutEnd + 'られ';
+                break;
+        }
+        
+        // Irregular
+        switch (this.partOfSpeech) {
+            case 'Kuru verb - special class':
+                stem = 'こられ';
+                break;
+        }
+        
+        let stems = [];
+        if (this.isSuru()) {
+            stem = this.reading.slice(0, -2);
+            stems.push(stem + 'でき');
+            stems.push(stem + '出来');
+            stems.push(stem + '出き');
+        } else {
+            stems.push(stem);
+        }
+            
+        for (stem of stems) {
+            switch (speechLevel) {
+                case 'polite':
+                    potential.push(stem + 'ます');
+                    break;
+                case 'plain':
+                    potential.push(stem + 'る');
+                    break;
+            }
+        }
+        
+        return potential;
     }
 }

@@ -84,7 +84,9 @@ export class QuestionData {
         return question;
     }
 
-    // Set the available question options
+    /** 
+     * Set the available question options
+     */
     getQuestionTypeOptions(settings: Settings): string[] {
         let options: string[] = [];
         if (settings.normal) {
@@ -97,6 +99,15 @@ export class QuestionData {
             }
             if (settings.polite) {
                 options.push('volitional-polite');
+            }
+        }
+        
+        if (settings.potential) {
+            if (settings.plain) {
+                options.push('potential-plain');
+            }
+            if (settings.polite) {
+                options.push('potential-polite');
             }
         }
 

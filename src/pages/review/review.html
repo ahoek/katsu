@@ -50,6 +50,10 @@
             <ion-icon name="walk" item-left></ion-icon>
             Volitional
         </ion-item>
+                <ion-item *ngIf="questions[index].isOfType('potential')">
+            <ion-icon name="flag" item-left></ion-icon>
+            Potential
+        </ion-item>
         
         <!-- polite -->
         <ion-item *ngIf="questions[index].isOfType('polite')">
