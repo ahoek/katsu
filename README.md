@@ -14,6 +14,7 @@ The following forms can be practised:
 * Te-form
 * Volitional
 * Tai-form
+* Potential
 
 
 ## Demo

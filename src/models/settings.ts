@@ -10,6 +10,7 @@ export class Settings {
     naAdjective: boolean;
     volitional: boolean;
     taiForm: boolean;
+    potential: boolean;
     leaveOutSuru: boolean;
     polite: boolean;
     plain: boolean;
@@ -34,6 +35,7 @@ export class Settings {
         settings.naAdjective = false;
         settings.volitional = false;
         settings.taiForm = false;
+        settings.potential = false;
         settings.leaveOutSuru = true;
         settings.polite = false;
         settings.plain = true;

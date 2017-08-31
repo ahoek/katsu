@@ -91,6 +91,10 @@ export class Question {
             return this.verb.volitional(politeness);
         }
         
+        if (this.isOfType('potential')) {
+            return this.verb.potential(politeness);
+        }
+        
         const positive = this.isOfType('positive');
         const nonPast = this.isOfType('present');
 
