@@ -3,7 +3,7 @@ import {Verb} from './verb';
 import {Answer} from './answer';
 
 /**
- * This class helps in conjugating verbs
+ * Make a question from a verb and conjugation type
  */
 export class Question {
 
@@ -73,37 +73,38 @@ export class Question {
     }
 
     /**
-     * Gets all correct verb conjugations
+     * Get the verb conjugation(s)
+     * 
+     * Based on
+     * - Form
+     * - Speech level
+     * - Modality
+     * - Tense
      */
     getConjugations(): string[] {
+        let speechLevel;
+        if (this.isOfType('plain')) {
+            speechLevel = 'plain';
+        } else if (this.isOfType('polite')) {
+            speechLevel = 'polite';
+        }
+        const modality = this.isOfType('positive') ? 'positive' : 'negative';
+        const tense = this.isOfType('present') ? 'non-past' : 'past';
+        
         if (this.isOfType('te-form')) {
             return [this.verb.teForm()];
         }
-
-        let politeness;
-        if (this.isOfType('plain')) {
-            politeness = 'plain';
-        } else if (this.isOfType('polite')) {
-            politeness = 'polite';
-        }
-
         if (this.isOfType('volitional')) {
-            return this.verb.volitional(politeness);
+            return this.verb.volitional(speechLevel);
         }
-        
         if (this.isOfType('potential')) {
-            return this.verb.potential(politeness);
+            return this.verb.potential(speechLevel);
         }
-        
-        const positive = this.isOfType('positive');
-        const nonPast = this.isOfType('present');
-
         if (this.isOfType('tai-form')) {
-            return this.verb.taiForm(positive, nonPast);
+            return this.verb.taiForm(modality, tense);
         }
-        
         // The last is the 'normal' conjugation
-        return this.verb.normalForm(politeness, positive, nonPast);
+        return this.verb.normalForm(speechLevel, modality === 'positive', tense === 'non-past');
     }
 
     /**

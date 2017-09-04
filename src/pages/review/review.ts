@@ -38,8 +38,10 @@ export class ReviewPage {
 
     ionViewDidLoad() {
         this.dataService.load(this.settings).then(questions => {
-            this.questions = questions;
-            console.log('Loaded', this.questions);
+            if (questions.length > 0) {
+                this.questions = questions;
+            }
+            console.log('Loaded questions', this.questions);
             this.goToQuestion(0);
         });
         
