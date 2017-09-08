@@ -259,13 +259,26 @@ export class Verb {
      * Get the nominal adjective conjugation
      */
     naAdjectiveNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
-        // The endings are conjugations of 'de aru'
-        let endings: string[];
+        const endings = this.deAruNormalForm(speechLevel, positive, nonPast);
+        
+        let conjugations: string[] = [];
+        endings.forEach(ending => {
+            conjugations.unshift(this.reading + ending);
+        });
+        
+        return conjugations;
+    }
+    
+    /**
+     * Conjugate de aru
+     */
+    deAruNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+        let conjugations: string[];
 
         // Polite negative forms can be made by plain negative forms + です
         switch (speechLevel) {
             case 'polite':
-                endings = nonPast
+                conjugations = nonPast
                     ? (positive
                         ? [this.desu]
                         : [
@@ -283,7 +296,7 @@ export class Verb {
 
                 break;
             case 'plain':
-                endings = nonPast
+                conjugations = nonPast
                     ? (positive 
                         ? ['だ'] 
                         : [this.dewa + this.nai, this.ja + this.nai])
@@ -292,10 +305,7 @@ export class Verb {
                         : [this.dewa + 'な' + this.katta, this.ja + 'な' + this.katta]);
                 break;
         }
-        let conjugations: string[] = [];
-        endings.forEach(ending => {
-            conjugations.unshift(this.reading + ending);
-        });
+        
         return conjugations;
     }
     
@@ -373,11 +383,15 @@ export class Verb {
                 break;
             case 'Na-adjective':
                 stem = this.reading;
-                ending = 'で';
+                ending = this.deAruTeForm();
                 break;
         }
 
         return stem + ending;
+    }
+    
+    deAruTeForm(): string {
+        return 'で';
     }
 
     /**
