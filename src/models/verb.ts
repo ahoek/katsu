@@ -310,6 +310,7 @@ export class Verb {
                     ? (positive ? 'ます' : 'ません')
                     : (positive ? 'ました' : 'ませんでした');
                 conjugation = this.masuStem() + ending;
+                break;
             case 'plain':
                 if (nonPast) {
                     if (positive) {
@@ -324,6 +325,7 @@ export class Verb {
                         conjugation = this.plainNegativePast();
                     }
                 }
+                break;
         }
         
         return [conjugation];
@@ -331,8 +333,6 @@ export class Verb {
     
     /**
      * Get the te-form
-     * 
-     * Check test case: 罰する
      */
     teForm(): string {
         let stem = this.removeLast();

@@ -59,7 +59,7 @@ online dictionary [Jisho](http://jisho.org/).
 
 - Make aggregation of jlpt levels
 - Add dutch translation
-- Make start screen easier (disable if not correct settings
+- Make start screen easier (disable if not correct settings)
 - Option to resume quiz
 - Better information on summary screen
 - Handle errors if no questions could be made
