@@ -70,4 +70,27 @@ describe('Verb model', () => {
         expect(verb.normalForm('plain', false, true)).toEqual(['ない']);
         expect(verb.normalForm('plain', false, false)).toEqual(['なかった']);
     });   
+    
+    it('formal negative nonpast of ふえる', () => {
+        let verb = new Verb({
+            "japanese": [
+                {
+                    "word": "増える",
+                    "reading": "ふえる"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "to increase"
+                    ],
+                    "parts_of_speech": [
+                        "Ichidan verb",
+                        "intransitive verb"
+                    ]
+                }
+            ]
+        });
+        expect(verb.normalForm('polite', false, true)).toEqual(['ふえません']);
+    });
 });

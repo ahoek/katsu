@@ -53,3 +53,13 @@ npm test
 
 The app is based on the Ionic framework. The word definitions were retrieved from the 
 online dictionary [Jisho](http://jisho.org/).
+
+
+## To do
+
+- Make aggregation of jlpt levels
+- Add dutch translation
+- Make start screen easier (disable if not correct settings)
+- Option to resume quiz
+- Better information on summary screen
+- Handle errors if no questions could be made

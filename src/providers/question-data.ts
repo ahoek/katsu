@@ -35,9 +35,15 @@ export class QuestionData {
     getQuestionsFromDictionary(dictionary: any, settings: Settings, options: string[]): Question[] {
         const numberOfQuestions = 10;
         let questions: Question[] = [];
+
+        if (options.length == 0) {        
+            return questions;
+        }
+        
         while (questions.length < numberOfQuestions) {
-            let type: string = this.getRandomItem(options, false);
-            let question = this.getQuestion(dictionary, settings, type);
+            let questionType: string = this.getRandomItem(options, false);
+            
+            let question = this.getQuestion(dictionary, settings, questionType);
             if (question) {
                 questions.push(question);
             }
@@ -49,6 +55,9 @@ export class QuestionData {
      * Create a question from the dictionary
      */
     getQuestion(dictionary: any, settings: Settings, type: string): Question {
+        if (!type) {
+            return;
+        }
         let word: JishoDefinition;
         if (type.startsWith('i-adjective')) {
             word = this.getRandomItem(dictionary['adj-i']);
