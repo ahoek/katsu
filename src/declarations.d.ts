@@ -32,4 +32,5 @@ declare class JishoJapanese {
 declare class JishoDefinition { 
     senses: Array<JishoSense>; 
     japanese: Array<JishoJapanese>;
+    level?: number;
 }
