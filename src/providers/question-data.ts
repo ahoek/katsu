@@ -22,7 +22,7 @@ export class QuestionData {
      */
     load(settings: Settings) {
         return new Promise<Question[]>(resolve => {
-            const url = 'assets/data/questions/words-' + settings.jlptLevel + '.json';
+            const url = 'assets/data/questions/words.json';
             const options = this.getQuestionTypeOptions(settings);
             console.log('question types', options);
 
@@ -70,6 +70,10 @@ export class QuestionData {
         if (!word) {
             return;
         }
+        
+        if (word.level < Number(settings.jlptLevel.slice(-1))) {
+            return;
+        }
 
         let verb = new Verb(word);
         if (!verb.word) {
@@ -89,7 +93,7 @@ export class QuestionData {
             question = question.reverse();
         }
 
-        console.log('answers', question.answers);
+        console.log('answers', word.level, question.answers);
         return question;
     }
 
