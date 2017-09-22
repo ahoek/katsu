@@ -20,11 +20,7 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content
-    [class.correct]="questions[index].correct === true"
-    [class.incorrect]="questions[index].correct === false"
-    >
-    
+<ion-content [ngClass]="classNames()">
     <ion-item ngClass="dictionary">
         <ruby lang="jp">
             {{questions[index].word}}

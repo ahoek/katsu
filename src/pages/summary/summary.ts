@@ -3,7 +3,9 @@ import {NavController, NavParams, Platform} from 'ionic-angular';
 import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
 import {ReviewPage} from '../review/review';
+import {IonicPage} from 'ionic-angular';
 
+@IonicPage()
 @Component({
     selector: 'page-summary',
     templateUrl: 'summary.html'
@@ -27,7 +29,6 @@ export class SummaryPage {
     }
     
     ionViewDidLoad() {
-        console.log('ionViewDidLoad SummaryPage');
         this.platform.ready().then(() => {
             this.google.trackView('Summary Page');
         });         

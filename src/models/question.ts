@@ -194,4 +194,8 @@ export class Question {
 
         return this;
     }
+    
+    correctedAnswer(): string {
+        return this.givenAnswer;
+    }
 }

@@ -3,15 +3,18 @@ import {Platform, Nav} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {Keyboard} from '@ionic-native/keyboard';
-import {HomePage} from '../pages/home/home';
 import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
 @Component({
     templateUrl: 'app.html',
-    providers: [Keyboard],
+    providers: [
+        Keyboard,        
+        SplashScreen,
+        StatusBar,
+    ],
 })
 export class KatsuApp {
-    rootPage = HomePage;
+    rootPage = 'HomePage';
     @ViewChild(Nav) nav: Nav;
 
     constructor(
@@ -22,10 +25,7 @@ export class KatsuApp {
         private google: GoogleAnalytics
     ) {
         this.platform.ready().then(() => {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
             this.statusBar.styleDefault();
-            //this.statusBar.hide();
             this.splash.hide();
             this.keyboard.disableScroll(true);
 

@@ -125,14 +125,14 @@ export class Verb {
     /**
      * Check if this is a 'suru' verb (noun + suru)
      */
-    isSuru(): boolean {
+    public isSuru(): boolean {
         return this.partOfSpeech.startsWith('Suru verb');
     }
 
     /**
      * Get the verb group (1, 2 or 3) or adjective type
      */
-    group(): string {
+    public group(): string {
         if (this.partOfSpeech.startsWith('Godan verb')) {
             return '1';
         } else if (this.partOfSpeech.startsWith('Ichidan verb')) {
@@ -151,7 +151,7 @@ export class Verb {
     /**
      * Get the masu stem (ren'youkei)
      */
-    masuStem(): string {
+    public masuStem(): string {
         let stem: string;
         if (this.group() === '1') {
             let preMasu;
@@ -191,7 +191,7 @@ export class Verb {
     /**
      * Get the stem for plain negative forms
      */
-    naiStem(): string {
+    public naiStem(): string {
         let stem: string = '';
         switch (this.group()) {
             case '1':
@@ -227,7 +227,7 @@ export class Verb {
     /**
      * Get the normal verb or adjective ending
      */
-    normalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+    public normalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
         if (this.type === 'i-adjective') {
             return this.iAdjectiveNormalForm(speechLevel, positive, nonPast);
         }
@@ -243,7 +243,7 @@ export class Verb {
     /**
      * Get the verbal adjective conjugation
      */
-    iAdjectiveNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+    public iAdjectiveNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
         let ending = '';
         if (nonPast) {
             // @todo Make exception for ii
@@ -258,7 +258,7 @@ export class Verb {
     /**
      * Get the nominal adjective conjugation
      */
-    naAdjectiveNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+    public naAdjectiveNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
         const endings = this.deAruNormalForm(speechLevel, positive, nonPast);
         
         let conjugations: string[] = [];
@@ -272,7 +272,7 @@ export class Verb {
     /**
      * Conjugate de aru
      */
-    deAruNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+    public deAruNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
         let conjugations: string[];
 
         // Polite negative forms can be made by plain negative forms + です
@@ -312,7 +312,7 @@ export class Verb {
     /**
      * Get the normal verb conjugation
      */
-    verbNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+    public verbNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
         let conjugation = '';
         switch (speechLevel) {
             case 'polite':
@@ -344,7 +344,7 @@ export class Verb {
     /**
      * Get the te-form
      */
-    teForm(): string {
+    public teForm(): string {
         let stem = this.removeLast();
         let ending;
         switch (this.partOfSpeech) {
@@ -390,21 +390,21 @@ export class Verb {
         return stem + ending;
     }
     
-    deAruTeForm(): string {
+    public deAruTeForm(): string {
         return 'で';
     }
 
     /**
      * Get the plain negative form.
      */
-    plainNegative(): string {
+    public plainNegative(): string {
         return this.naiStem() + this.nai;
     }
 
     /**
      * Get the plain negative past form.
      */
-    plainNegativePast(): string {
+    public plainNegativePast(): string {
         // Remove the い and add かった.
         return this.plainNegative().slice(0, -1) + this.katta;
     }
@@ -412,7 +412,7 @@ export class Verb {
     /**
      * Plain past is the same as te form, but with an 'a' at the end.
      */
-    plainPast(): string {
+    public plainPast(): string {
         const stem = this.teForm().slice(0, -1);
         const ending = this.teForm().slice(-1);
         
@@ -422,7 +422,7 @@ export class Verb {
     /**
      * Volitional
      */
-    volitional(speechLevel: string): string[] {
+    public volitional(speechLevel: string): string[] {
         let volitional;
         
         if (speechLevel === 'polite') {
@@ -459,7 +459,7 @@ export class Verb {
     /**
      * Tai form (desire)
      */
-    taiForm(modality: string, tense: string): string[] {
+    public taiForm(modality: string, tense: string): string[] {
         let taiForm = this.masuStem() + 'たい';
         
         if (modality === 'negative') {
@@ -480,7 +480,7 @@ export class Verb {
      * 
      * Tense and modality are left out, because they conjugate like eru or masu
      */
-    potential(speechLevel: string): string[] {
+    public potential(speechLevel: string): string[] {
         let potential = [];
         let stem = '';
         
