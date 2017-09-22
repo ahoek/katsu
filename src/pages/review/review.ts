@@ -7,16 +7,17 @@ import * as wanakana from 'wanakana/lib/wanakana.esm.js';
 import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';
 import {Settings} from '../../models/settings';
-import {SummaryPage} from '../summary/summary';
+import {IonicPage} from 'ionic-angular';
 
+@IonicPage()
 @Component({
     selector: 'page-review',
     templateUrl: 'review.html',
-    providers: [Keyboard],
+    providers: [Keyboard, QuestionData],
 })
 export class ReviewPage {
     @ViewChild('answerInput') answerInput: any;
-    @ViewChild('answerInputNative', { read: ElementRef }) answerInputNative: ElementRef;
+    @ViewChild('answerInputNative', {read: ElementRef}) answerInputNative: ElementRef;
 
     public questions: Question[] = [];
 
@@ -44,7 +45,7 @@ export class ReviewPage {
             console.log('Loaded questions', this.questions);
             this.goToQuestion(0);
         });
-        
+
         this.platform.ready().then(() => {
             this.google.trackView('Review Page');
         });
@@ -81,7 +82,7 @@ export class ReviewPage {
     }
 
     showSummary() {
-        this.navCtrl.push(SummaryPage, {questions: this.questions, delegate: this});
+        this.navCtrl.push('SummaryPage', {questions: this.questions, delegate: this});
     }
 
     /**
@@ -91,8 +92,6 @@ export class ReviewPage {
      * If incorrect, give 'bad' styling and show the correct answer.
      */
     checkAnswer(question: Question) {
-        // @todo What to do for empty answer?
-        
         question.checkAnswer();
 
         // If an answer is already given, go to the next question directly.
@@ -102,9 +101,16 @@ export class ReviewPage {
         }
 
         question.answered = true;
-        
+
         this.platform.ready().then(() => {
             this.google.trackEvent('Question', 'answer-check', question.correct ? 'correct' : 'incorrect', 1);
-        }); 
+        });
+    }
+
+    public classNames(): any {
+        return {
+            'correct': this.questions[this.index].correct === true,
+            'incorrect': this.questions[this.index].correct === false
+        }
     }
 }

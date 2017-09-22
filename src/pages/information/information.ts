@@ -1,11 +1,13 @@
-import {Component} from '@angular/core';
-import {NavController, Platform} from 'ionic-angular';
-import {GoogleAnalytics} from '@ionic-native/google-analytics';
-//import {AppVersion} from '@ionic-native/app-version';
-
 /**
  * Information page 
  */
+
+import {Component} from '@angular/core';
+import {NavController, Platform} from 'ionic-angular';
+import {GoogleAnalytics} from '@ionic-native/google-analytics';
+import {IonicPage} from 'ionic-angular';
+
+@IonicPage()
 @Component({
     selector: 'page-information',
     templateUrl: 'information.html'
@@ -16,7 +18,6 @@ export class InformationPage {
         public navCtrl: NavController,
         public platform: Platform,
         private google: GoogleAnalytics,
-        //public version: appVersion,
     ) {
 
     }

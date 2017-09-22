@@ -28,7 +28,7 @@ export class Settings {
      */
     static getDefault(): Settings {
         const settings = new Settings();
-        settings.jlptLevel = 'n5';
+        settings.jlptLevel = 'n3';
         settings.normal = true;
         settings.teForm = true;
         settings.iAdjective = false;

@@ -3,10 +3,10 @@ import {NavController, Platform} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
-import {ReviewPage} from '../review/review';
 import {Settings} from '../../models/settings';
-import {InformationPage} from '../information/information';
+import {IonicPage} from 'ionic-angular';
 
+@IonicPage()
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html'
@@ -46,7 +46,7 @@ export class HomePage {
     startReview() {
         // Save the settings in storage
         this.storage.set('settings', JSON.stringify(this.settings));
-        this.navCtrl.push(ReviewPage, {settings: this.settings});
+        this.navCtrl.push('ReviewPage', {settings: this.settings});
         
         this.platform.ready().then(() => {
             this.google.trackEvent('Review', 'start', '', 1);
@@ -57,6 +57,6 @@ export class HomePage {
      * Go to information page
      */
     showInformation() {
-        this.navCtrl.push(InformationPage);
+        this.navCtrl.push('InformationPage');
     }
 }
