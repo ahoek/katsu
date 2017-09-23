@@ -22,7 +22,7 @@
 
 <ion-content [ngClass]="classNames()">
     <ion-item ngClass="dictionary">
-        <ruby lang="jp">
+        <ruby lang="ja">
             {{questions[index].word}}
             <rt *ngIf="questions[index].word !== questions[index].reading">
                 {{questions[index].reading}}
@@ -89,7 +89,7 @@
             <ion-input 
                 #answerInput
                 #answerInputNative
-                lang="jp"
+                lang="ja"
                 [(ngModel)]="questions[index].givenAnswer"
                 [ngModelOptions]="{standalone: true}"
                 class="answerInput" 
@@ -107,7 +107,7 @@
     <!-- Show all allowed answers -->
     <ion-list *ngIf="questions[index].correct === false">
         <ion-item class="answer" *ngFor="let answer of questions[index].answers"> 
-            <ruby lang="jp">
+            <ruby lang="ja">
                 {{answer.word}}
                 <rt>
                     {{answer.reading}}

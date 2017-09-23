@@ -17,19 +17,12 @@
         <ion-item *ngFor="let question of questions; let i = index;" 
             (click)="goToQuestion(i)">
             <div *ngIf="question.correct === false"> 
-                <span class="given-answer" lang="jp">
+                <span class="given-answer" lang="ja">
                     {{question.givenAnswer}}
                 </span>
             </div>
             
-            <div>
-                <ruby lang="jp">
-                    {{question.answers[0].word}}
-                    <rt>
-                        {{question.answers[0].reading}}
-                    </rt>
-                </ruby>
-            </div>
+            <answers [question]="question"></answers>
 
             <ion-icon *ngIf="question.correct === true" name="checkmark-circle" color="primary" item-right></ion-icon>
             <ion-icon *ngIf="question.correct === false" name="close-circle" item-right></ion-icon>
