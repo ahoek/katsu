@@ -3,6 +3,7 @@ import {NavController, NavParams, Platform} from 'ionic-angular';
 import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
 import {ReviewPage} from '../review/review';
+import {Question} from '../../models/question';
 import {IonicPage} from 'ionic-angular';
 
 @IonicPage()
@@ -13,7 +14,7 @@ import {IonicPage} from 'ionic-angular';
 export class SummaryPage {
 
     // All questions from the review
-    public questions: any = [];
+    public questions: Question[] = [];
     
     // Review delegate
     public reviewDelegate: ReviewPage;
@@ -33,6 +34,7 @@ export class SummaryPage {
             this.google.trackView('Summary Page');
         });         
     }
+
     /**
      * Return to a review question
      */

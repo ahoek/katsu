@@ -17,7 +17,7 @@ import {KatsuApp} from './app.component';
         IonicModule.forRoot(KatsuApp, {
             mode: 'ios',
         }),
-        IonicStorageModule.forRoot()
+        IonicStorageModule.forRoot(),
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -29,3 +29,4 @@ import {KatsuApp} from './app.component';
     ]
 })
 export class AppModule {}
+
