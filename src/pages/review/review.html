@@ -104,15 +104,8 @@
         </ion-item>
     </form>
 
-    <!-- Show all allowed answers -->
-    <ion-list *ngIf="questions[index].correct === false">
-        <ion-item class="answer" *ngFor="let answer of questions[index].answers"> 
-            <ruby lang="ja">
-                {{answer.word}}
-                <rt>
-                    {{answer.reading}}
-                </rt>
-            </ruby>
-        </ion-item>
-    </ion-list>
+    <!-- Show all allowed answers if given answer is incorrect -->
+    <answers [question]="questions[index]"
+             *ngIf="questions[index].correct === false"></answers>
+
 </ion-content>
