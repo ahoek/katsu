@@ -15,6 +15,7 @@ The following forms can be practised:
 * Volitional
 * Tai-form
 * Potential
+* Imperative / prohibitive 
 
 
 ## Demo

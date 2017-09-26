@@ -100,6 +100,9 @@ export class Question {
         if (this.isOfType('potential')) {
             return this.verb.potential(speechLevel);
         }
+        if (this.isOfType('imperative')) {
+            return this.verb.imperative(modality);
+        }
         if (this.isOfType('tai-form')) {
             return this.verb.taiForm(modality, tense);
         }

@@ -15,8 +15,12 @@
 <ion-content>
     <ion-list>
         <ion-item *ngFor="let question of questions; let i = index;" 
-            (click)="goToQuestion(i)">
-            <div *ngIf="question.correct === false"> 
+            (click)="goToQuestion(i)"
+            [ngClass]="{
+                'correct': question.correct === true,
+                'incorrect': question.correct === false
+            }">
+            <div> 
                 <span class="given-answer" lang="ja">
                     {{question.givenAnswer}}
                 </span>

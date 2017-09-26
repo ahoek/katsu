@@ -525,6 +525,43 @@ export class Verb {
     }
     
     /**
+     * Imperative / prohibitive
+     * 
+     * @todo State verbs as aru, dekiru or wakaru do not have an imperative form
+     */
+    public imperative(modality: string): string[] {
+        let conjugation = '';
+        if (modality == 'positive') {
+            switch (this.group()) {
+                case '1':
+                    // Change last i of ren'youkei to e
+                    conjugation = this.masuStem().slice(0, -1)
+                        + HiraganaColumnHelper.change(this.masuStem().slice(-1), 'I', 'E');
+                    
+                    break;
+                case '2':
+                    if (this.word == '呉れる') {
+                        conjugation = 'くれ';
+                    } else {
+                        conjugation = this.masuStem() + 'ろ';
+                    }
+                    break;
+                case '3':
+                    if (this.isSuru()) {
+                        conjugation = this.masuStem() + 'ろ';
+                    } else if (this.partOfSpeech == 'Kuru verb - special class') {
+                        conjugation = 'こい';
+                    }
+                    break;
+            }
+        } else {
+            // Prohibitive = jishokei + na
+            conjugation = this.reading + 'な';
+        }
+        return [conjugation];
+    }
+    
+    /**
      * Return the word without the last character
      */
     private removeLast(): string {

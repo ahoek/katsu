@@ -123,7 +123,16 @@ export class QuestionData {
                 options.push('potential-polite');
             }
         }
-
+        
+        if (settings.imperative) {
+            if (settings.positive) {
+                options.push('imperative-positive');
+            }
+            if (settings.negative) {
+                options.push('imperative-negative');
+            }
+        }
+        
         if (settings.taiForm) {
             this.addSubOptionsFor('tai-form', settings, options);
         }

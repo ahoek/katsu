@@ -17,8 +17,16 @@ page-summary {
     ion-icon[name='close-circle'] {
         color: color($colors, incorrect);
     }
+
+    .correct .given-answer {
+        color: color($colors, correct);
+    }
     
-    .given-answer {
+    .incorrect .given-answer {
         color: color($colors, incorrect);
+    }
+    
+    answers ion-list.list-ios {
+        margin-bottom: 0;
     }
 }
