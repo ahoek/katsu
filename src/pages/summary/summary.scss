@@ -1,14 +1,25 @@
 page-summary {
+    ion-content * {
+        font-size: 2.5rem;
+    }
+    
+    .number {
+        font-size: 2rem;
+        color: #666;
+        
+        &::after {
+            content: '.';
+        }
+    }
+    
     .summary {
         overflow-y: scroll;
         display: block;
     }
     
-    ruby {
-        rt {
-            font-size: .7em;
-        }
-    }
+
+    
+
     
     ion-icon[name='checkmark-circle'] {
         color: color($colors, correct);

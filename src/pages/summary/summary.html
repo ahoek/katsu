@@ -20,11 +20,11 @@
                 'correct': question.correct === true,
                 'incorrect': question.correct === false
             }">
-            <div> 
-                <span class="given-answer" lang="ja">
-                    {{question.givenAnswer}}
-                </span>
-            </div>
+            <span class="number">{{i + 1}}</span>
+            
+            <span class="given-answer" lang="ja">
+                {{question.givenAnswer}}
+            </span>
             
             <answers [question]="question"></answers>
 

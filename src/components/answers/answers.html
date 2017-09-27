@@ -1,11 +1,9 @@
 <!-- Correct question answers -->
-<ion-list>
-    <ion-item class="answer" *ngFor="let answer of question.answers"> 
-        <ruby lang="ja">
-            {{answer.word}}
-            <rt>
-                {{answer.reading}}
-            </rt>
-        </ruby>
-    </ion-item>
-</ion-list>
+<div class="answer" *ngFor="let answer of question.answers"> 
+    <ruby lang="ja">
+        {{answer.word}}
+        <rt>
+            {{answer.reading}}
+        </rt>
+    </ruby>
+</div>
