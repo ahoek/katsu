@@ -63,3 +63,4 @@ online dictionary [Jisho](http://jisho.org/).
 - Option to resume quiz
 - Better information on summary screen
 - Handle errors if no questions could be made
+- Only add furigana for kanji
