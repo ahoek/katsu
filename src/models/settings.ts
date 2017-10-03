@@ -11,6 +11,7 @@ export class Settings {
     volitional: boolean;
     taiForm: boolean;
     potential: boolean;
+    imperative: boolean;
     leaveOutSuru: boolean;
     polite: boolean;
     plain: boolean;
@@ -36,6 +37,7 @@ export class Settings {
         settings.volitional = false;
         settings.taiForm = false;
         settings.potential = false;
+        settings.imperative = false;
         settings.leaveOutSuru = true;
         settings.polite = false;
         settings.plain = true;

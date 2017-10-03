@@ -1,7 +1,7 @@
 page-home {
     [name='no-suru'] {
-        min-height: 1.4rem;
-        font-size: 1.4rem;
+        min-height: 1.3rem;
+        font-size: 1.3rem;
         text-decoration: line-through;
     }
 
@@ -9,6 +9,10 @@ page-home {
         .button-md {
             margin: 0;
         }
+    }
+    
+    ion-icon[name=''] {
+        font-size: 2.3rem;
     }
 
     ion-item:hover {

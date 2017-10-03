@@ -15,12 +15,16 @@
 <ion-content>
     <ion-list>
         <ion-item *ngFor="let question of questions; let i = index;" 
-            (click)="goToQuestion(i)">
-            <div *ngIf="question.correct === false"> 
-                <span class="given-answer" lang="ja">
-                    {{question.givenAnswer}}
-                </span>
-            </div>
+            (click)="goToQuestion(i)"
+            [ngClass]="{
+                'correct': question.correct === true,
+                'incorrect': question.correct === false
+            }">
+            <span class="number">{{i + 1}}</span>
+            
+            <span class="given-answer" lang="ja">
+                {{question.givenAnswer}}
+            </span>
             
             <answers [question]="question"></answers>
 
