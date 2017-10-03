@@ -504,6 +504,7 @@ export class Verb {
         if (this.isSuru()) {
             stem = this.removeSuru();
             stems.push(stem + 'でき');
+            // @todo fix readings with kanji for showns answers
             stems.push(stem + '出来');
             stems.push(stem + '出き');
         } else {

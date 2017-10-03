@@ -22,12 +22,8 @@
 
 <ion-content [ngClass]="classNames()">
     <ion-item ngClass="dictionary">
-        <ruby lang="ja">
-            {{questions[index].word}}
-            <rt *ngIf="questions[index].word !== questions[index].reading">
-                {{questions[index].reading}}
-            </rt>
-        </ruby>
+        <furigana [input]="questions[index]"></furigana>
+
         <ion-note item-right>
             {{questions[index].meaning}}
         </ion-note>
