@@ -21,6 +21,13 @@ export class FuriganaComponent {
     constructor() {
     }
     
+    /**
+     * Make text with furigana from word and reading
+     * 
+     * @todo Fix
+     * <furigana [input]="{word:'尤も',reading:'もっとも'}"></furigana>
+     * <furigana [input]="{word:'幸い',reading:'さいわい'}"></furigana>
+     */
     setOutput() {
         this.output = '';
         if (!this.word) {
@@ -47,7 +54,7 @@ export class FuriganaComponent {
             
             lastType = currentType;
             
-            if (wanakana.isKanji(wordPart)) {
+            if (wanakana.isKanji(wordPart) || wordPart == '々') {
                 currentType = 'kanji';
             } else {
                 currentType = 'kana';
@@ -74,19 +81,27 @@ export class FuriganaComponent {
         
         // Find the position of the kana tokens in the reading
         let reading = this.reading;
+        let readingPosition = 0;
         for (let i = 0; i < tokens.length; i++) {
             let token = tokens[i];
             if ( i == 0) {
                 token.readingStart = 0;
             }
             if (token.type == 'kana') {
-                token.readingStart = reading.indexOf(token.content);
+                token.readingStart = reading.indexOf(token.content, i);
                 token.readingStop = token.readingStart + token.content.length;
+                readingPosition = token.readingStop;
                 if (i > 0) {
                     tokens[i - 1].readingStop = token.readingStart - 1;
                 }
                 if (i < (tokens.length - 1)) {
                     tokens[i + 1].readingStart = token.readingStop;
+                }
+            }
+            // Add stop for last token
+            if (token.type == 'kanji') {
+                if (i == tokens.length - 1) {
+                    token.readingStop = reading.length - 1;
                 }
             }
         }

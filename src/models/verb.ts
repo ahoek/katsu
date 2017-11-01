@@ -484,6 +484,10 @@ export class Verb {
         let potential = [];
         let stem = '';
         
+        if (this.word == '分かる') {
+            return;
+        }
+        
         switch (this.group()) {
             case '1':
                 stem = this.changeLastVowel('U', 'E');
@@ -504,9 +508,9 @@ export class Verb {
         if (this.isSuru()) {
             stem = this.removeSuru();
             stems.push(stem + 'でき');
-            // @todo fix readings with kanji for showns answers
-            stems.push(stem + '出来');
-            stems.push(stem + '出き');
+            // @todo fix readings with kanji for shown answers
+            //stems.push(stem + '出来');
+            //stems.push(stem + '出き');
         } else {
             stems.push(stem);
         }
@@ -536,8 +540,7 @@ export class Verb {
             switch (this.group()) {
                 case '1':
                     // Change last i of ren'youkei to e
-                    conjugation = this.masuStem().slice(0, -1)
-                        + HiraganaColumnHelper.change(this.masuStem().slice(-1), 'I', 'E');
+                    conjugation = this.changeLastVowel('U', 'E');
                     
                     break;
                 case '2':
