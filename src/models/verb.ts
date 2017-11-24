@@ -90,8 +90,13 @@ export class Verb {
             if (sense.parts_of_speech.length > 0) {
                 sense.parts_of_speech.some((partOfSpeech) => {
                     if (Verb.verbPartOfSpeech.indexOf(partOfSpeech) !== -1) {
-                        if (partOfSpeech === 'Na-adjective' && (sense.parts_of_speech.indexOf('No-adjective') !== -1)) {
-                            return false;
+                        if (partOfSpeech === 'Na-adjective') {
+                            if (sense.parts_of_speech.indexOf('No-adjective') !== -1) {
+                                return false;
+                            }
+                            if (sense.parts_of_speech.indexOf('Suru verb') !== -1) {
+                                return false;
+                            }
                         }
                         
                         // Take the first definition
