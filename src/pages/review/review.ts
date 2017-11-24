@@ -88,7 +88,7 @@ export class ReviewPage {
     /**
      * Check the given answer
      * 
-     * If correct, give good styling, and go to next question after 1 sec.
+     * If correct, give good styling.
      * If incorrect, give 'bad' styling and show the correct answer.
      */
     checkAnswer(question: Question) {
@@ -113,5 +113,21 @@ export class ReviewPage {
             'incorrect': this.questions[this.index].correct === false
         }
     }
+    
+    /**
+     * Get the word to ask the conjugation
+     */
+    public currentQuestion(): Question {
+        const question = this.questions[this.index];
+        if (!question) {
+            return;
+        }
+        
+        if (question.isOfType('na-adjective') && !this.settings.reverse) {
+            question.word += 'な';
+            question.reading += 'な';
+        }
+        
+        return question;
+    }
 }
-
