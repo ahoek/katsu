@@ -133,6 +133,30 @@ export class QuestionData {
             }
         }
         
+        if (settings.conditional) {
+            if (settings.positive) {
+                if (settings.normal) {
+                    options.push('conditional-positive');
+                }
+                if (settings.iAdjective) {
+                    options.push('i-adjective-conditional-positive');
+                }
+                if (settings.naAdjective) {
+                    options.push('na-adjective-conditional-positive');
+                }
+            }
+            if (settings.negative) {
+                if (settings.normal) {
+                    options.push('conditional-negative');
+                }
+                if (settings.iAdjective) {
+                    options.push('i-adjective-conditional-negative');
+                }
+                // This option is not yet completed
+                //options.push('na-adjective-conditional-negative');
+            }
+        } 
+               
         if (settings.taiForm) {
             this.addSubOptionsFor('tai-form', settings, options);
         }

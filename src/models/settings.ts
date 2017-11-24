@@ -12,6 +12,7 @@ export class Settings {
     taiForm: boolean;
     potential: boolean;
     imperative: boolean;
+    conditional: boolean;
     leaveOutSuru: boolean;
     polite: boolean;
     plain: boolean;
@@ -38,6 +39,7 @@ export class Settings {
         settings.taiForm = false;
         settings.potential = false;
         settings.imperative = false;
+        settings.conditional = false;
         settings.leaveOutSuru = true;
         settings.polite = false;
         settings.plain = true;
