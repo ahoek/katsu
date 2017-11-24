@@ -103,6 +103,9 @@ export class Question {
         if (this.isOfType('imperative')) {
             return this.verb.imperative(modality);
         }
+        if (this.isOfType('conditional')) {
+            return this.verb.conditional(modality);
+        }
         if (this.isOfType('tai-form')) {
             return this.verb.taiForm(modality, tense);
         }

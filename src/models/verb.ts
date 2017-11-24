@@ -565,6 +565,44 @@ export class Verb {
         return [conjugation];
     }
     
+    public conditional(modality: string): string[] {
+        let conjugation = '';
+        if (modality == 'positive') {
+            switch (this.group()) {
+                case '1':
+                case '2':
+                case '3':
+                    conjugation = this.changeLastVowel('U', 'E') + 'ば';
+                    break;
+                case 'i-adjective':
+                    conjugation = this.removeLast() + 'ければ';
+                    break;
+                case 'na-adjective':
+                    conjugation = this.reading + 'なら';
+                    // であれば
+                    // 
+                    break;
+            }
+        } else {
+            switch (this.group()) {
+                case '1':
+                case '2':
+                case '3':
+                    conjugation = this.naiStem() + 'なければ';
+                    break;
+                case 'i-adjective':
+                    conjugation = this.removeLast() + 'くなければ';
+                    break;
+                case 'na-adjective':
+                    conjugation = this.reading + 'でなければ';
+                    // じゃないなら 
+                    // ではなければ
+                    break;
+            }
+        }
+        return [conjugation];
+    }
+    
     /**
      * Return the word without the last character
      */

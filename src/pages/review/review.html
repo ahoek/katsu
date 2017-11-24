@@ -50,6 +50,10 @@
             <ion-icon name="megaphone" item-left></ion-icon>
             Imperative
         </ion-item>
+        <ion-item *ngIf="questions[index].isOfType('conditional')">
+            <ion-icon name="conditional" item-left></ion-icon>
+            Conditional
+        </ion-item>
         
         <!-- polite -->
         <ion-item *ngIf="questions[index].isOfType('polite')">

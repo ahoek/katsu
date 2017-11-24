@@ -133,6 +133,19 @@ export class QuestionData {
             }
         }
         
+        if (settings.conditional) {
+            if (settings.positive) {
+                options.push('conditional-positive');
+                options.push('i-adjective-conditional-positive');
+                options.push('na-adjective-conditional-positive');
+            }
+            if (settings.negative) {
+                options.push('conditional-negative');
+                options.push('i-adjective-conditional-negative');
+                options.push('na-adjective-conditional-negative');
+            }
+        } 
+               
         if (settings.taiForm) {
             this.addSubOptionsFor('tai-form', settings, options);
         }
