@@ -135,14 +135,25 @@ export class QuestionData {
         
         if (settings.conditional) {
             if (settings.positive) {
-                options.push('conditional-positive');
-                options.push('i-adjective-conditional-positive');
-                options.push('na-adjective-conditional-positive');
+                if (settings.normal) {
+                    options.push('conditional-positive');
+                }
+                if (settings.iAdjective) {
+                    options.push('i-adjective-conditional-positive');
+                }
+                if (settings.naAdjective) {
+                    options.push('na-adjective-conditional-positive');
+                }
             }
             if (settings.negative) {
-                options.push('conditional-negative');
-                options.push('i-adjective-conditional-negative');
-                options.push('na-adjective-conditional-negative');
+                if (settings.normal) {
+                    options.push('conditional-negative');
+                }
+                if (settings.iAdjective) {
+                    options.push('i-adjective-conditional-negative');
+                }
+                // This option is not yet completed
+                //options.push('na-adjective-conditional-negative');
             }
         } 
                
