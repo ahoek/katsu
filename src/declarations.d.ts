@@ -14,6 +14,7 @@
 
 declare class wanakana {
     static isHiragana(input: string): boolean;
+    static isKanji(input: string): boolean;
     static toKana(input: string): string;
     static toHiragana(input: string): string;
     static toRomaji(input: string): string;
