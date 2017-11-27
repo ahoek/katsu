@@ -21,6 +21,8 @@ export class Question {
     public correct?: boolean;
     public givenAnswer?: string = '';
     public answered: boolean = false;
+    
+    public reversed = false;
 
     /**
      * Question
@@ -197,6 +199,7 @@ export class Question {
         this.answers = [new Answer(this.word, this.reading)];
         this.word = answers[0].word;
         this.reading = answers[0].reading;
+        this.reversed = true;
 
         return this;
     }

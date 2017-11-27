@@ -16,6 +16,7 @@ The following forms can be practised:
 * Tai-form
 * Potential
 * Imperative / prohibitive 
+* Conditional
 
 
 ## Demo
@@ -62,5 +63,5 @@ online dictionary [Jisho](http://jisho.org/).
 - Make start screen easier (disable if not correct settings)
 - Option to resume quiz
 - Better information on summary screen
-- Handle errors if no questions could be made
 - If potential form contains dekiru in reading, don't show readings with kanji
+- Improve furigana algorithm

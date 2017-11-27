@@ -22,7 +22,7 @@
 
 <ion-content [ngClass]="classNames()">
     <ion-item ngClass="dictionary">
-        <furigana [input]="questions[index]"></furigana>
+        <furigana [input]="currentQuestion()"></furigana>
 
         <ion-note item-right>
             {{questions[index].meaning}}

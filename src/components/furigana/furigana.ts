@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import * as wanakana from 'wanakana/lib/wanakana.esm.js';
+import {WordToken} from '../../models/word-token';
 
 @Component({
     selector: 'furigana',
@@ -12,109 +13,110 @@ export class FuriganaComponent {
         this.reading = value.reading;
         this.setOutput();
     }
-    
+
     private word: string;
     private reading: string;
-    
+
     public output: string = '';
 
     constructor() {
     }
-    
+
     /**
      * Make text with furigana from word and reading
      * 
      * @todo Fix
      * <furigana [input]="{word:'尤も',reading:'もっとも'}"></furigana>
-     * <furigana [input]="{word:'幸い',reading:'さいわい'}"></furigana>
+     * <furigana [input]="{word:'幸い幸い',reading:'さいわいさいわい'}"></furigana>
+     * <furigana [input]="{word:'可愛い',reading:'かわいい'}"></furigana>
      */
     setOutput() {
-        this.output = '';
-        if (!this.word) {
+        if (!this.word || this.word == this.reading) {
             this.output = this.reading;
             return;
         }
-        if (this.word == this.reading) {
-            this.output = this.word;
-            return;
-        }
-        
-        // split the word into parts and check the type
+
+        const tokens = this.tokenize();
+        this.addPositionToTokens(tokens);
+        this.output = this.getMarkupFromTokens(tokens);
+    }
+
+    // Convert word and reading to tokens
+    private tokenize(): WordToken[] {
         let currentType;
         let lastType;
-        let currentToken = {
-            content: '',
-            type: '',
-            readingStart: null,
-            readingStop: null
-        };
+        let currentToken = new WordToken();
+
         let tokens: any[] = [];
         for (let i = 0; i < this.word.length; i++) {
             let wordPart = this.word[i];
-            
+
             lastType = currentType;
-            
+
             if (wanakana.isKanji(wordPart) || wordPart == '々') {
                 currentType = 'kanji';
             } else {
                 currentType = 'kana';
             }
-            
+
             if (lastType != currentType) {
                 // start new token
                 if (currentToken.content !== '') {
                     tokens.push(currentToken);
                 }
-                currentToken = {
-                    content: wordPart,
-                    type: currentType,
-                    readingStart: null,
-                    readingStop: null,
-                };
+                currentToken = new WordToken();
+                currentToken.content = wordPart;
+                currentToken.type = currentType;
             } else {
-                // append token
+                // append to token
                 currentToken.content += wordPart;
             }
         }
-        
         tokens.push(currentToken);
         
-        // Find the position of the kana tokens in the reading
+        return tokens;
+    }
+
+    // Find the position of the kana tokens in the reading
+    private addPositionToTokens(tokens: WordToken[]) {
         let reading = this.reading;
-        let readingPosition = 0;
-        for (let i = 0; i < tokens.length; i++) {
+        for (let i = tokens.length - 1; i >= 0; i--) {
             let token = tokens[i];
-            if ( i == 0) {
-                token.readingStart = 0;
-            }
             if (token.type == 'kana') {
-                token.readingStart = reading.indexOf(token.content, i);
-                token.readingStop = token.readingStart + token.content.length;
-                readingPosition = token.readingStop;
-                if (i > 0) {
-                    tokens[i - 1].readingStop = token.readingStart - 1;
-                }
-                if (i < (tokens.length - 1)) {
-                    tokens[i + 1].readingStart = token.readingStop;
-                }
+                token.readingStop = this.reading.length;
+                token.readingStart = token.readingStop - token.content.length;
+                reading = reading.slice(0, -1 * token.content.length);
             }
             // Add stop for last token
             if (token.type == 'kanji') {
-                if (i == tokens.length - 1) {
-                    token.readingStop = reading.length - 1;
+                token.readingStop = reading.length - 1;
+
+                if (i == 0) {
+                    token.readingStart = 0;
+                } else {
+                    // Check previous (kana) token
+                    if (tokens[i - 1]) {
+                        token.readingStart = reading.indexOf(tokens[i - 1].content, i - 1) + 1;
+                    }
                 }
+                reading = reading.slice(0, token.readingStart - token.readingStop - 1);
             }
         }
-        
-        // add furigana to the tokens
+    }
+
+    // set the ruby markup
+    private getMarkupFromTokens(tokens: WordToken[]): string {
+        let markup = '';
         for (let token of tokens) {
             let furigana;
             if (token.type == 'kanji') {
                 furigana = this.reading.substring(token.readingStart, token.readingStop + 1);
-                this.output += `<ruby>${token.content}<rt>${furigana}</rt></ruby>`;
+                markup += `<ruby>${token.content}<rt>${furigana}</rt></ruby>`;
             } else {
-                this.output += token.content;
+                markup += token.content;
             }
         }
+        
+        return markup;
     }
 }
