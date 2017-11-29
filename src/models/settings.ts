@@ -32,7 +32,7 @@ export class Settings {
         const settings = new Settings();
         settings.jlptLevel = 'n3';
         settings.normal = true;
-        settings.teForm = true;
+        settings.teForm = false;
         settings.iAdjective = false;
         settings.naAdjective = false;
         settings.volitional = false;

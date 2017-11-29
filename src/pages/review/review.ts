@@ -33,7 +33,7 @@ export class ReviewPage {
         private keyboard: Keyboard,
         private google: GoogleAnalytics
     ) {
-        this.settings = this.navParams.get('settings');
+        this.settings = this.navParams.get('settings') || Settings.getDefault();
         this.questions[0] = new Question();
     }
 
@@ -43,7 +43,7 @@ export class ReviewPage {
                 this.questions = questions;
             }
             console.log('Loaded questions', this.questions);
-            this.goToQuestion(0);
+            this.goToQuestion(this.index);
         });
 
         this.platform.ready().then(() => {
