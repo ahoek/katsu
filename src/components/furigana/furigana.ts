@@ -25,7 +25,6 @@ export class FuriganaComponent {
     /**
      * Make text with furigana from word and reading
      * 
-     * @todo Fix
      * <furigana [input]="{word:'尤も',reading:'もっとも'}"></furigana>
      * <furigana [input]="{word:'幸い幸い',reading:'さいわいさいわい'}"></furigana>
      * <furigana [input]="{word:'可愛い',reading:'かわいい'}"></furigana>
