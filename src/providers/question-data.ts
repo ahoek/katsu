@@ -152,8 +152,9 @@ export class QuestionData {
                 if (settings.iAdjective) {
                     options.push('i-adjective-conditional-negative');
                 }
-                // This option is not yet completed
-                //options.push('na-adjective-conditional-negative');
+                if (settings.naAdjective) {
+                    options.push('na-adjective-conditional-negative');
+                }
             }
         } 
                

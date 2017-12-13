@@ -44,8 +44,12 @@
                 [ngModelOptions]="{standalone: true}"
                 class="answerInput" 
                 type="text" 
-                placeholder="答え" 
-                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                placeholder="答え"
+                inputmode="kana"
+                autocomplete="off" 
+                autocorrect="off" 
+                autocapitalize="none" 
+                spellcheck="false">
             </ion-input>
             <button ion-button icon-only item-right clear type="submit"
                     [ngClass]="{pulse: questions[index].answered}">

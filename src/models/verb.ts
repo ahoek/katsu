@@ -609,12 +609,11 @@ export class Verb {
                 case 'i-adjective':
                     conjugation = this.removeLast() + 'くなければ';
                     break;
-                // @todo This option is not yet complete
                 case 'na-adjective':
-                    conjugation = this.reading + 'でなければ';
-                    // じゃないなら 
-                    // ではなければ
-                    break;
+                    return [
+                        this.reading + 'ではなければ',
+                        this.reading + 'じゃなければ',
+                    ];
             }
         }
         return [conjugation];
