@@ -25,68 +25,14 @@
         <furigana [input]="currentQuestion()"></furigana>
 
         <ion-note item-right>
-            {{questions[index].meaning}}
+            {{questions[index]?.meaning}}
         </ion-note>
     </ion-item>
 
-    <ion-list ngClass="settings-list">
-        <!-- special forms -->
-        <ion-item *ngIf="questions[index].isOfType('te-form')">
-            <ion-icon item-left>て</ion-icon>
-            Te-form
-        </ion-item>
-        <ion-item *ngIf="questions[index].isOfType('tai-form')">
-            <ion-icon name="heart" item-left></ion-icon>
-            Tai-form</ion-item>               
-        <ion-item *ngIf="questions[index].isOfType('volitional')">
-            <ion-icon name="walk" item-left></ion-icon>
-            Volitional
-        </ion-item>
-        <ion-item *ngIf="questions[index].isOfType('potential')">
-            <ion-icon name="flag" item-left></ion-icon>
-            Potential
-        </ion-item>
-        <ion-item *ngIf="questions[index].isOfType('imperative')">
-            <ion-icon name="megaphone" item-left></ion-icon>
-            Imperative
-        </ion-item>
-        <ion-item *ngIf="questions[index].isOfType('conditional')">
-            <ion-icon name="code-download" item-left></ion-icon>
-            Conditional
-        </ion-item>
-        
-        <!-- polite -->
-        <ion-item *ngIf="questions[index].isOfType('polite')">
-            <ion-icon name="bowtie" item-left></ion-icon>
-            Formal (neutral)</ion-item>
-        <!-- plain -->
-        <ion-item *ngIf="questions[index].isOfType('plain')">
-            <ion-icon name="shirt" item-left></ion-icon>
-            Informal (plain)</ion-item>
-
-        <!-- positive -->
-        <ion-item *ngIf="questions[index].isOfType('positive')">                   
-            <ion-icon name="happy" item-left></ion-icon>
-            Positive</ion-item>
-        <!-- negative -->
-        <ion-item *ngIf="questions[index].type.search('negative') !== -1">                   
-            <ion-icon name="sad" item-left></ion-icon>
-            Negative</ion-item>
-
-        <!-- non-past -->
-        <ion-item *ngIf="questions[index].isOfType('present')">
-            <ion-icon name="fastforward" item-left></ion-icon>
-            Nonpast tense (present or future)</ion-item>
-        <!-- past -->
-        <ion-item *ngIf="questions[index].isOfType('past')">
-            <ion-icon name="rewind" item-left></ion-icon>
-            Past tense</ion-item>
-        
-        <!-- reverse -->
-        <ion-item *ngIf="settings.reverse === true">
-            <ion-icon name="shuffle" item-left></ion-icon>
-            Reverse, answer with dictionary form</ion-item>        
-    </ion-list>
+    <review-settings-list 
+        [question]="questions[index]" 
+        [settings]="settings">
+    </review-settings-list>
     
     <form (submit)="checkAnswer(questions[index])">
         <ion-item ngClass="answer-item">
@@ -98,11 +44,15 @@
                 [ngModelOptions]="{standalone: true}"
                 class="answerInput" 
                 type="text" 
-                placeholder="答え" 
-                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                placeholder="答え"
+                inputmode="kana"
+                autocomplete="off" 
+                autocorrect="off" 
+                autocapitalize="none" 
+                spellcheck="false">
             </ion-input>
             <button ion-button icon-only item-right clear type="submit"
-                    [ngClass]="{pulse: questions[index].answered}">
+                    [ngClass]="{pulse: questions[index]?.answered}">
                 <ion-icon name="arrow-forward"></ion-icon>
             </button>
         </ion-item>
@@ -110,6 +60,6 @@
 
     <!-- Show all allowed answers if given answer is incorrect -->
     <answers [question]="questions[index]"
-             *ngIf="questions[index].correct === false"></answers>
+             *ngIf="questions[index]?.correct === false"></answers>
 
 </ion-content>

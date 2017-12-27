@@ -89,20 +89,11 @@ export class Verb {
         definition.senses.some((sense: JishoSense) => {
             if (sense.parts_of_speech.length > 0) {
                 sense.parts_of_speech.some((partOfSpeech) => {
-                    if (Verb.verbPartOfSpeech.indexOf(partOfSpeech) !== -1) {
-                        if (partOfSpeech === 'Na-adjective') {
-                            if (sense.parts_of_speech.indexOf('No-adjective') !== -1) {
-                                return false;
-                            }
-                            if (sense.parts_of_speech.indexOf('Suru verb') !== -1) {
-                                return false;
-                            }
-                        }
-                        
+                    if (this.isUsable(partOfSpeech, sense)) {
                         // Take the first definition
                         this.englishDefinition = sense.english_definitions[0];
                         this.partOfSpeech = partOfSpeech;
-                        
+
                         return true;
                     }
                 });
@@ -112,6 +103,26 @@ export class Verb {
                 }
             }
         });
+    }
+    
+    /**
+     * Check if this word can be conjugated correctly
+     */
+    public isUsable(partOfSpeech: string, sense: JishoSense): boolean {
+        if (Verb.verbPartOfSpeech.indexOf(partOfSpeech) === -1) {
+            return false;
+        }
+        
+        if (partOfSpeech === 'Na-adjective') {
+            if (sense.parts_of_speech.indexOf('No-adjective') !== -1) {
+                return false;
+            }
+            if (sense.parts_of_speech.indexOf('Suru verb') !== -1) {
+                return false;
+            }
+        }
+        
+        return true;
     }
     
     /**
@@ -598,12 +609,11 @@ export class Verb {
                 case 'i-adjective':
                     conjugation = this.removeLast() + 'くなければ';
                     break;
-                // @todo This option is not yet complete
                 case 'na-adjective':
-                    conjugation = this.reading + 'でなければ';
-                    // じゃないなら 
-                    // ではなければ
-                    break;
+                    return [
+                        this.reading + 'ではなければ',
+                        this.reading + 'じゃなければ',
+                    ];
             }
         }
         return [conjugation];
