@@ -25,7 +25,7 @@
         <furigana [input]="currentQuestion()"></furigana>
 
         <ion-note item-right>
-            {{questions[index].meaning}}
+            {{questions[index]?.meaning}}
         </ion-note>
     </ion-item>
 
@@ -52,7 +52,7 @@
                 spellcheck="false">
             </ion-input>
             <button ion-button icon-only item-right clear type="submit"
-                    [ngClass]="{pulse: questions[index].answered}">
+                    [ngClass]="{pulse: questions[index]?.answered}">
                 <ion-icon name="arrow-forward"></ion-icon>
             </button>
         </ion-item>
@@ -60,6 +60,6 @@
 
     <!-- Show all allowed answers if given answer is incorrect -->
     <answers [question]="questions[index]"
-             *ngIf="questions[index].correct === false"></answers>
+             *ngIf="questions[index]?.correct === false"></answers>
 
 </ion-content>

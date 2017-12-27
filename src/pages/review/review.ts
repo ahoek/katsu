@@ -21,8 +21,10 @@ export class ReviewPage {
 
     public questions: Question[] = [];
 
+    // Question settings
     public settings: Settings;
 
+    // Question index
     public index: number = 0;
 
     constructor(
@@ -37,6 +39,9 @@ export class ReviewPage {
         this.questions[0] = new Question();
     }
 
+    /**
+     * Set up the review page
+     */
     ionViewDidLoad() {
         this.dataService.load(this.settings).then(questions => {
             if (questions.length > 0) {
@@ -107,7 +112,13 @@ export class ReviewPage {
         });
     }
 
+    /**
+     * Get the 'correct' and 'incorrect' class names
+     */
     public classNames(): any {
+        if (!this.questions[this.index]) {
+            return {};
+        }
         return {
             'correct': this.questions[this.index].correct === true,
             'incorrect': this.questions[this.index].correct === false
