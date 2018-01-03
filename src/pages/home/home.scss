@@ -1,7 +1,11 @@
 page-home {
-    [name='no-suru'] {
+    [name='no-suru'],
+    [name='tari'] {
         min-height: 1.3rem;
         font-size: 1.3rem;
+    }
+    
+    [name='no-suru'] {
         text-decoration: line-through;
     }
 

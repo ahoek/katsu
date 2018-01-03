@@ -13,6 +13,7 @@ export class Settings {
     potential: boolean;
     imperative: boolean;
     conditional: boolean;
+    tariForm: boolean;
     leaveOutSuru: boolean;
     polite: boolean;
     plain: boolean;
@@ -40,6 +41,7 @@ export class Settings {
         settings.potential = false;
         settings.imperative = false;
         settings.conditional = false;
+        settings.tariForm = false;
         settings.leaveOutSuru = true;
         settings.polite = false;
         settings.plain = true;

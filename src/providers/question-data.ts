@@ -170,6 +170,15 @@ export class QuestionData {
             this.addOptionsFor('na-adjective-', settings, options);
         }
         
+        if (settings.tariForm) {
+            if (settings.positive) {
+                options.push('tari-form-positive');
+            }
+            if (settings.negative) {
+                options.push('tari-form-negative');
+            }
+        }
+        
         return options;
     }
     

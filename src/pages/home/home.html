@@ -104,6 +104,13 @@
                 item-right></ion-checkbox>
             <ion-icon name="code-download" item-left></ion-icon>
         </ion-item>
+                <ion-item>
+            <ion-label>Tari-form</ion-label>
+            <ion-checkbox [(ngModel)]="settings.tariForm" 
+                [disabled]="settings.normal === false"
+                item-right></ion-checkbox>
+            <ion-icon name="tari" item-left>たり</ion-icon>
+        </ion-item>
     </ion-list>        
 
     <ion-list>
