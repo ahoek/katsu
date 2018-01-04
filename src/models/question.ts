@@ -111,6 +111,10 @@ export class Question {
         if (this.isOfType('tai-form')) {
             return this.verb.taiForm(modality, tense);
         }
+        if (this.isOfType('tari-form')) {
+            return this.verb.tariForm(modality);
+        }
+        
         // The last is the 'normal' conjugation
         return this.verb.normalForm(speechLevel, modality === 'positive', tense === 'non-past');
     }

@@ -23,7 +23,11 @@
         <ion-icon name="code-download" item-left></ion-icon>
         Conditional
     </ion-item>
-
+    <ion-item *ngIf="question.isOfType('tari-form')">
+        <ion-icon name="tari" item-left>たり</ion-icon>
+        Tari-form
+    </ion-item>
+    
     <!-- polite -->
     <ion-item *ngIf="question.isOfType('polite')">
         <ion-icon name="bowtie" item-left></ion-icon>

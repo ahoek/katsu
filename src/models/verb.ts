@@ -619,6 +619,18 @@ export class Verb {
         return [conjugation];
     }
     
+    public tariForm(modality: string): string[] {
+        let conjugation;
+        let plain;
+        if (modality === 'positive') {
+            plain = this.plainPast();
+        } else {
+            plain = this.plainNegativePast();
+        }
+        conjugation = plain + 'り';
+        return [conjugation];
+    }
+    
     /**
      * Return the word without the last character
      */

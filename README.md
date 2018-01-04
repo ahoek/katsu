@@ -14,6 +14,7 @@ The following forms can be practised:
 * Te-form
 * Volitional
 * Tai-form
+* Tari-form
 * Potential
 * Imperative / prohibitive 
 * Conditional
@@ -64,4 +65,3 @@ online dictionary [Jisho](http://jisho.org/).
 - Option to resume quiz
 - Better information on summary screen
 - If potential form contains dekiru in reading, don't show readings with kanji
-- Improve furigana algorithm
