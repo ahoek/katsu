@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import {Verb} from '../models/verb';
 import {Question} from '../models/question';
@@ -11,7 +11,7 @@ import {Settings} from '../models/settings';
 @Injectable()
 export class QuestionData {
     
-    constructor(public http: Http) {
+    constructor(public http: HttpClient) {
 
     }
 
@@ -26,7 +26,7 @@ export class QuestionData {
             const options = this.getQuestionTypeOptions(settings);
             console.log('question types', options);
 
-            this.http.get(url).map(res => res.json()).subscribe(dictionary => {
+            this.http.get(url).subscribe(dictionary => {
                 resolve(this.getQuestionsFromDictionary(dictionary, settings, options));
             });
         });
@@ -225,7 +225,7 @@ export class QuestionData {
     /**
      * Get a random item from an array and remove it from the array
      */
-    getRandomItem(items: Array<any>, removeItem: boolean = true) {
+    getRandomItem(items: Array<any>, removeItem: boolean = true): any {
         const randomIndex = Math.floor(Math.random() * items.length);
         if (removeItem === true) {
             let item = items.splice(randomIndex, 1);
