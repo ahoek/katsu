@@ -25,9 +25,9 @@ export class HomePage {
         // Default settings
         this.settings = Settings.getDefault();
 
-        this.storage.get('settings').then((settingsJson) => {
+        this.storage.get('settings').then(settingsJson => {
             if (settingsJson) {
-                this.settings = JSON.parse(settingsJson);
+                this.settings = Object.assign(this.settings, JSON.parse(settingsJson));
             } else {
                 this.storage.set('settings', JSON.stringify(this.settings));
             }

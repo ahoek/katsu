@@ -102,10 +102,32 @@ export class QuestionData {
      */
     getQuestionTypeOptions(settings: Settings): string[] {
         let options: string[] = [];
-        if (settings.normal) {
-            this.addOptionsFor('', settings, options);
-        }
+        console.log('settings', settings);
 
+        if (settings.normal) {
+            if (settings.verb) {
+                this.addOptionsFor('verb-', settings, options);
+            }
+            if (settings.iAdjective) {
+                this.addOptionsFor('i-adjective-', settings, options);
+            }
+            if (settings.naAdjective) {
+                this.addOptionsFor('na-adjective-', settings, options);
+            }
+        }
+        
+        if (settings.teForm) {
+            if (settings.verb) {
+                options.push('verb-te-form'); 
+            }
+            if (settings.iAdjective) {
+                options.push('i-adjective-te-form'); 
+            }
+            if (settings.naAdjective) {
+                options.push('na-adjective-te-form'); 
+            }
+        }
+        
         if (settings.volitional) {
             if (settings.plain) {
                 options.push('volitional-plain');
@@ -162,13 +184,7 @@ export class QuestionData {
             this.addSubOptionsFor('tai-form', settings, options);
         }
 
-        if (settings.iAdjective) {
-            this.addOptionsFor('i-adjective-', settings, options);
-        }
 
-        if (settings.naAdjective) {
-            this.addOptionsFor('na-adjective-', settings, options);
-        }
         
         if (settings.tariForm) {
             if (settings.positive) {
@@ -186,15 +202,15 @@ export class QuestionData {
      * Add options for te-form, plain and polite
      */
     addOptionsFor(base: string, settings: Settings, options: string[]) {
-        if (settings.teForm) {
-            options.push(base + 'te-form'); 
-        }
 
-        if (settings.plain) {
-            this.addSubOptionsFor(base + 'plain', settings, options);
-        }
-        if (settings.polite) {
-            this.addSubOptionsFor(base + 'polite', settings, options);
+
+        if (settings.normal) {
+            if (settings.plain) {
+                this.addSubOptionsFor(base + 'plain', settings, options);
+            }
+            if (settings.polite) {
+                this.addSubOptionsFor(base + 'polite', settings, options);
+            }
         }
     }
     
