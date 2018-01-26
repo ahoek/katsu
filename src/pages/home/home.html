@@ -14,34 +14,6 @@
 <ion-content>
     <ion-list>
         <ion-list-header>
-            Part of speech
-        </ion-list-header>  
-        <ion-item>
-            <ion-label>
-                Verb</ion-label>
-            <ion-checkbox [(ngModel)]="settings.verb" item-right></ion-checkbox>
-            <ion-icon name="text" item-left></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                I-adjective
-                <ion-note>(verbal)</ion-note>
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.iAdjective" item-right></ion-checkbox>
-            <ion-icon name="" item-left>い</ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                Na-adjective
-                <ion-note>(nominal)</ion-note>
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.naAdjective" item-right></ion-checkbox>
-            <ion-icon name="" item-left>な</ion-icon>
-        </ion-item>
-    </ion-list>
-    
-    <ion-list>
-        <ion-list-header>
             Form
         </ion-list-header>
         <ion-item>
@@ -99,12 +71,39 @@
 
     <ion-list>
         <ion-list-header>
+            Part of speech
+        </ion-list-header>  
+        <ion-item>
+            <ion-label>
+                Verb</ion-label>
+            <ion-checkbox [(ngModel)]="settings.verb" item-right></ion-checkbox>
+            <ion-icon name="text" item-left></ion-icon>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                I-adjective
+                <ion-note>(verbal)</ion-note>
+            </ion-label>
+            <ion-checkbox [(ngModel)]="settings.iAdjective" item-right></ion-checkbox>
+            <ion-icon name="" item-left>い</ion-icon>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                Na-adjective
+                <ion-note>(nominal)</ion-note>
+            </ion-label>
+            <ion-checkbox [(ngModel)]="settings.naAdjective" item-right></ion-checkbox>
+            <ion-icon name="" item-left>な</ion-icon>
+        </ion-item>
+    </ion-list>
+
+    <ion-list>
+        <ion-list-header>
             Speech level
         </ion-list-header>
         <ion-item>
             <ion-label>
                 Formal 
-                <ion-note>(neutral)</ion-note>
             </ion-label>
             <ion-checkbox [(ngModel)]="settings.polite" item-right></ion-checkbox>
             <ion-icon name="bowtie" item-left></ion-icon>
@@ -112,7 +111,6 @@
         <ion-item>
             <ion-label>
                 Informal 
-                <ion-note>(colloquial)</ion-note>
             </ion-label>
             <ion-checkbox [(ngModel)]="settings.plain" item-right></ion-checkbox>
             <ion-icon name="shirt" item-left></ion-icon>
@@ -187,7 +185,7 @@
         <ion-item>
             <ion-label>Leave out &lsquo;suru&rsquo; verbs</ion-label>
             <ion-checkbox [(ngModel)]="settings.leaveOutSuru"
-                [disabled]="settings.normal === false"
+                [disabled]="settings.verb === false"
                 item-right></ion-checkbox>
             <ion-icon name="no-suru" item-left>する</ion-icon>
         </ion-item>
