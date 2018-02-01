@@ -251,7 +251,7 @@ export class Settings {
             this.addOptionsFor(form + '-verb-', options);
         }
         if (this.iAdjective) {
-            this.addOptionsFor(form + '-i-adjective', options);
+            this.addOptionsFor(form + '-i-adjective-', options);
         }
         if (this.naAdjective) {
             this.addOptionsFor(form + '-na-adjective-', options);
@@ -265,13 +265,13 @@ export class Settings {
         }
 
         if (this.verb) {
-            options.push(form + 'verb'); 
+            options.push(form + '-verb'); 
         }
         if (this.iAdjective) {
-            options.push(form + 'i-adjective'); 
+            options.push(form + '-i-adjective'); 
         }
         if (this.naAdjective) {
-            options.push(form + 'na-adjective'); 
+            options.push(form + '-na-adjective'); 
         }
     }
     
