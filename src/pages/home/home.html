@@ -28,51 +28,51 @@
         </ion-item>
         <ion-item>
             <ion-label>Volitional</ion-label>
-            <ion-checkbox [(ngModel)]="settings.volitional" 
+            <ion-checkbox [(ngModel)]="settings.volitional"
                 [disabled]="settings.verb === false"
                 item-right></ion-checkbox>
             <ion-icon name="walk" item-left></ion-icon>
         </ion-item>
         <ion-item>
             <ion-label>Tai-form</ion-label>
-            <ion-checkbox [(ngModel)]="settings.taiForm" 
+            <ion-checkbox [(ngModel)]="settings.taiForm"
                 [disabled]="settings.verb === false"
                 item-right></ion-checkbox>
             <ion-icon name="heart" item-left></ion-icon>
         </ion-item>
         <ion-item>
             <ion-label>Tari-form</ion-label>
-            <ion-checkbox [(ngModel)]="settings.tariForm" 
+            <ion-checkbox [(ngModel)]="settings.tariForm"
                 [disabled]="settings.verb === false"
                 item-right></ion-checkbox>
             <ion-icon name="tari" item-left>たり</ion-icon>
-        </ion-item>        
+        </ion-item>
         <ion-item>
             <ion-label>Potential</ion-label>
-            <ion-checkbox [(ngModel)]="settings.potential" 
+            <ion-checkbox [(ngModel)]="settings.potential"
                 [disabled]="settings.verb === false"
                 item-right></ion-checkbox>
             <ion-icon name="flag" item-left></ion-icon>
         </ion-item>
         <ion-item>
             <ion-label>Imperative</ion-label>
-            <ion-checkbox [(ngModel)]="settings.imperative" 
+            <ion-checkbox [(ngModel)]="settings.imperative"
                 [disabled]="settings.verb === false"
                 item-right></ion-checkbox>
             <ion-icon name="megaphone" item-left></ion-icon>
         </ion-item>
         <ion-item>
             <ion-label>Conditional</ion-label>
-            <ion-checkbox [(ngModel)]="settings.conditional" 
+            <ion-checkbox [(ngModel)]="settings.conditional"
                 item-right></ion-checkbox>
             <ion-icon name="code-download" item-left></ion-icon>
         </ion-item>
-    </ion-list>        
+    </ion-list>
 
     <ion-list>
         <ion-list-header>
             Part of speech
-        </ion-list-header>  
+        </ion-list-header>
         <ion-item>
             <ion-label>
                 Verb
@@ -102,19 +102,21 @@
         </ion-list-header>
         <ion-item>
             <ion-label>
-                Formal 
+                Formal
+                <ion-note>(neutral)</ion-note>
             </ion-label>
             <ion-checkbox [(ngModel)]="settings.polite" item-right></ion-checkbox>
             <ion-icon name="bowtie" item-left></ion-icon>
-        </ion-item>  
+        </ion-item>
         <ion-item>
             <ion-label>
-                Informal 
+                Informal
+                <ion-note>(colloquial)</ion-note>
             </ion-label>
             <ion-checkbox [(ngModel)]="settings.plain" item-right></ion-checkbox>
             <ion-icon name="shirt" item-left></ion-icon>
         </ion-item>
-    </ion-list>        
+    </ion-list>
 
     <ion-list>
         <ion-list-header>
@@ -122,18 +124,18 @@
         </ion-list-header>
         <ion-item>
             <ion-label>
-                Nonpast tense 
+                Nonpast tense
                 <ion-note>(present or future)</ion-note>
             </ion-label>
             <ion-checkbox [(ngModel)]="settings.nonPast" item-right checked></ion-checkbox>
             <ion-icon name="fastforward" item-left></ion-icon>
-        </ion-item>  
+        </ion-item>
         <ion-item>
             <ion-label>Past tense</ion-label>
             <ion-checkbox [(ngModel)]="settings.past" item-right checked></ion-checkbox>
             <ion-icon name="rewind" item-left></ion-icon>
         </ion-item>
-    </ion-list> 
+    </ion-list>
 
     <ion-list>
         <ion-list-header>
@@ -143,13 +145,13 @@
             <ion-label>Positive</ion-label>
             <ion-checkbox [(ngModel)]="settings.positive" item-right></ion-checkbox>
             <ion-icon name="happy" item-left></ion-icon>
-        </ion-item>  
+        </ion-item>
         <ion-item>
             <ion-label>Negative</ion-label>
             <ion-checkbox [(ngModel)]="settings.negative" item-right></ion-checkbox>
             <ion-icon name="sad" item-left></ion-icon>
         </ion-item>
-    </ion-list>  
+    </ion-list>
 
     <ion-list radio-group [(ngModel)]="settings.jlptLevel">
         <ion-list-header>
@@ -158,7 +160,7 @@
         <ion-item>
             <ion-label>N5</ion-label>
             <ion-radio value="n5"></ion-radio>
-        </ion-item>  
+        </ion-item>
         <ion-item>
             <ion-label>N4</ion-label>
             <ion-radio value="n4"></ion-radio>
@@ -180,7 +182,7 @@
     <ion-list>
         <ion-list-header>
             Special options
-        </ion-list-header>  
+        </ion-list-header>
         <ion-item>
             <ion-label>Leave out &lsquo;suru&rsquo; verbs</ion-label>
             <ion-checkbox [(ngModel)]="settings.leaveOutSuru"
@@ -190,12 +192,12 @@
         </ion-item>
         <ion-item>
             <ion-label>
-                Reverse 
+                Reverse
                 <ion-note>(answer with dictionary form)</ion-note>
             </ion-label>
             <ion-checkbox [(ngModel)]="settings.reverse" item-right></ion-checkbox>
             <ion-icon name="shuffle" item-left></ion-icon>
-        </ion-item> 
+        </ion-item>
     </ion-list>
 </ion-content>
 
