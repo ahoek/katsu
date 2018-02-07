@@ -59,14 +59,14 @@ export class QuestionData {
             return;
         }
         let word: JishoDefinition;
-        if (type.startsWith('i-adjective')) {
+        if (type.search('i-adjective') !== -1) {
             word = this.getRandomItem(dictionary['adj-i']);
-        } else if (type.startsWith('na-adjective')) {
+        } else if (type.search('na-adjective') !== -1) {
             word = this.getRandomItem(dictionary['adj-na']);
         } else {
             word = this.getRandomItem(dictionary['verb']);
         }
-
+        
         if (!word) {
             return;
         }
