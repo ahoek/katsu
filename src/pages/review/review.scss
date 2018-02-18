@@ -3,23 +3,27 @@ page-review {
     .scroll-content {
         overflow: hidden;
     }
-    
+
     .label-ios {
         margin-top: 6px;
         margin-bottom: 5px;
     }
-    
+
     .item-block {
         min-height: 3.0rem;
     }
-    
+
     .dictionary {
+        .label {
+            padding-top: 17px;
+        }
+
         furigana {
             max-width: 60%;
-            font-size: 3.4rem;
-            
+            font-size: 2.1em;
+
             rt {
-                font-size: 2.0rem;
+                font-size: 60%;
             }
         }
 
@@ -28,7 +32,7 @@ page-review {
             color: color($colors, dark);
         }
     }
-    
+
     .answer-item {
         margin-top: 0;
         font-size: 1.6em;
@@ -41,7 +45,7 @@ page-review {
         &.item-ios.item-block .item-inner {
             padding-right: 0;
         }
-        
+
         [item-right] {
             margin: 0;
             font-size: 0.9em;
@@ -55,7 +59,7 @@ page-review {
             background-color: color($colors, correct);
             color: color($colors, correct, contrast);
         }
-        
+
         [type='submit'] {
             color: color($colors, correct, contrast);
         }
@@ -66,12 +70,12 @@ page-review {
             background-color: color($colors, incorrect);
             color: color($colors, incorrect, contrast);
         }
-        
+
         [type='submit'] {
             color: color($colors, incorrect, contrast);
         }
     }
-    
+
     .answer {
         furigana {
             font-size: 1.2em;
