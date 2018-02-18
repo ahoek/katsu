@@ -6,7 +6,7 @@
     </ion-item>
     <ion-item *ngIf="question.isOfType('tai-form')">
         <ion-icon name="heart" item-left></ion-icon>
-        Tai-form</ion-item>               
+        Tai-form</ion-item>
     <ion-item *ngIf="question.isOfType('volitional')">
         <ion-icon name="walk" item-left></ion-icon>
         Volitional
@@ -27,22 +27,22 @@
         <ion-icon name="tari" item-left>たり</ion-icon>
         Tari-form
     </ion-item>
-    
-    <!-- polite -->
+
+    <!-- formal -->
     <ion-item *ngIf="question.isOfType('polite')">
         <ion-icon name="bowtie" item-left></ion-icon>
         Formal (neutral)</ion-item>
-    <!-- plain -->
+    <!-- informal -->
     <ion-item *ngIf="question.isOfType('plain')">
         <ion-icon name="shirt" item-left></ion-icon>
-        Informal (plain)</ion-item>
+        Informal (colloquial)</ion-item>
 
     <!-- positive -->
-    <ion-item *ngIf="question.isOfType('positive')">                   
+    <ion-item *ngIf="question.isOfType('positive')">
         <ion-icon name="happy" item-left></ion-icon>
         Positive</ion-item>
     <!-- negative -->
-    <ion-item *ngIf="question.isOfType('negative')">                   
+    <ion-item *ngIf="question.isOfType('negative')">
         <ion-icon name="sad" item-left></ion-icon>
         Negative</ion-item>
 
@@ -58,5 +58,5 @@
     <!-- reverse -->
     <ion-item *ngIf="settings?.reverse === true">
         <ion-icon name="shuffle" item-left></ion-icon>
-        Reverse, answer with dictionary form</ion-item>        
+        Reverse, answer with dictionary form</ion-item>
 </ion-list>
