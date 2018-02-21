@@ -118,6 +118,7 @@ export class Settings {
     jlptLevel: string;
     leaveOutSuru: boolean;
     reverse: boolean;
+    amount: number;
 
     constructor() {
     }
@@ -183,6 +184,7 @@ export class Settings {
         settings.jlptLevel = 'n3';
         settings.leaveOutSuru = true;
         settings.reverse = false;
+        settings.amount = 10;
 
         return settings;
     }
