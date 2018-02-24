@@ -67,6 +67,8 @@ export class Settings {
         if (this._potential) {
             this.needsVerb();
             this.needsSpeechLevel();
+            this.needsTense();
+            this.needsModality();
         }
     }
 
