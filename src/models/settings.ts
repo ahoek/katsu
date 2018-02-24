@@ -228,7 +228,7 @@ export class Settings {
         this.addConditional(options);
 
         if (this.taiForm) {
-            this.addSubOptionsFor('tai-form', options);
+            this.addNormalOptionsFor('tai-form', options);
         }
 
         if (this.tariForm) {
@@ -250,13 +250,13 @@ export class Settings {
         }
 
         if (this.verb) {
-            this.addNormalOptionsFor(form + '-verb-', options);
+            this.addNormalOptionsFor(form + '-verb', options);
         }
         if (this.iAdjective) {
-            this.addNormalOptionsFor(form + '-i-adjective-', options);
+            this.addNormalOptionsFor(form + '-i-adjective', options);
         }
         if (this.naAdjective) {
-            this.addNormalOptionsFor(form + '-na-adjective-', options);
+            this.addNormalOptionsFor(form + '-na-adjective', options);
         }
     }
 
@@ -264,13 +264,11 @@ export class Settings {
      * Add options for plain and polite
      */
     addNormalOptionsFor(base: string, options: string[]) {
-        if (this.normal) {
-            if (this.plain) {
-                this.addSubOptionsFor(base + 'plain', options);
-            }
-            if (this.polite) {
-                this.addSubOptionsFor(base + 'polite', options);
-            }
+        if (this.plain) {
+            this.addSubOptionsFor(base + '-plain', options);
+        }
+        if (this.polite) {
+            this.addSubOptionsFor(base + '-polite', options);
         }
     }
 

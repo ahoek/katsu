@@ -475,7 +475,7 @@ export class Verb {
     /**
      * Tai form (desire)
      */
-    public taiForm(modality: string, tense: string): string[] {
+    public taiForm(modality: string, tense: string, speechLevel: string): string[] {
         let taiForm = this.masuStem() + 'たい';
 
         if (modality === 'negative') {
@@ -486,6 +486,10 @@ export class Verb {
         if (tense === 'past') {
             // Remove i and add katta
             taiForm = taiForm.slice(0, -1) + this.katta;
+        }
+
+        if (speechLevel === 'polite') {
+            taiForm += this.desu;
         }
 
         return [taiForm];
