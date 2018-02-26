@@ -16,7 +16,7 @@ export class ReviewSettingsListComponent {
 
     constructor() {
     }
-    
+
     ionViewDidLoad() {
         if (!this.settings) {
             this.settings = Settings.getDefault();

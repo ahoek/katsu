@@ -21,7 +21,7 @@ export class Question {
     public correct?: boolean;
     public givenAnswer?: string = '';
     public answered: boolean = false;
-    
+
     public reversed = false;
 
     /**
@@ -76,7 +76,7 @@ export class Question {
 
     /**
      * Get the verb conjugation(s)
-     * 
+     *
      * Based on
      * - Form
      * - Speech level
@@ -92,7 +92,7 @@ export class Question {
         }
         const modality = this.isOfType('positive') ? 'positive' : 'negative';
         const tense = this.isOfType('present') ? 'non-past' : 'past';
-        
+
         if (this.isOfType('te-form')) {
             return [this.verb.teForm()];
         }
@@ -109,12 +109,15 @@ export class Question {
             return this.verb.conditional(modality);
         }
         if (this.isOfType('tai-form')) {
-            return this.verb.taiForm(modality, tense);
+            return this.verb.taiForm(modality, tense, speechLevel);
         }
         if (this.isOfType('tari-form')) {
             return this.verb.tariForm(modality);
         }
-        
+        if (this.isOfType('passive')) {
+            return this.verb.passive(speechLevel, modality === 'positive', tense === 'non-past');
+        }
+
         // The last is the 'normal' conjugation
         return this.verb.normalForm(speechLevel, modality === 'positive', tense === 'non-past');
     }
@@ -207,7 +210,7 @@ export class Question {
 
         return this;
     }
-    
+
     correctedAnswer(): string {
         return this.givenAnswer;
     }

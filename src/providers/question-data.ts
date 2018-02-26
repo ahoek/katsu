@@ -10,14 +10,14 @@ import {Settings} from '../models/settings';
  */
 @Injectable()
 export class QuestionData {
-    
+
     constructor(public http: HttpClient) {
 
     }
 
     /**
      * Provider of question data
-     * 
+     *
      * Settings to create the answers
      */
     load(settings: Settings) {
@@ -31,18 +31,18 @@ export class QuestionData {
             });
         });
     }
-    
+
     getQuestionsFromDictionary(dictionary: any, settings: Settings, options: string[]): Question[] {
-        const numberOfQuestions = 10;
+        const numberOfQuestions = settings.amount || 10;
         let questions: Question[] = [];
 
-        if (options.length == 0) {        
+        if (options.length == 0) {
             return questions;
         }
-        
+
         while (questions.length < numberOfQuestions) {
             let questionType: string = this.getRandomItem(options, false);
-            
+
             let question = this.getQuestion(dictionary, settings, questionType);
             if (question) {
                 questions.push(question);
@@ -50,7 +50,7 @@ export class QuestionData {
         }
         return questions;
     }
-    
+
     /**
      * Create a question from the dictionary
      */
@@ -66,11 +66,11 @@ export class QuestionData {
         } else {
             word = this.getRandomItem(dictionary['verb']);
         }
-        
+
         if (!word) {
             return;
         }
-        
+
         if (word.level < Number(settings.jlptLevel.slice(-1))) {
             return;
         }
@@ -79,7 +79,7 @@ export class QuestionData {
         if (!verb.word) {
             return;
         }
-        
+
         if (settings.leaveOutSuru && verb.isSuru()) {
             return;
         }

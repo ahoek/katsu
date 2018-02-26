@@ -6,7 +6,9 @@
     </ion-item>
     <ion-item *ngIf="question.isOfType('tai-form')">
         <ion-icon name="heart" item-left></ion-icon>
-        Tai-form</ion-item>
+        Tai-form
+        <ion-note>(ends in ば or なら)</ion-note>
+    </ion-item>
     <ion-item *ngIf="question.isOfType('volitional')">
         <ion-icon name="walk" item-left></ion-icon>
         Volitional
@@ -27,36 +29,51 @@
         <ion-icon name="tari" item-left>たり</ion-icon>
         Tari-form
     </ion-item>
+    <ion-item *ngIf="question.isOfType('passive')">
+        <ion-icon name="bonfire" item-left></ion-icon>
+        Passive
+    </ion-item>
 
     <!-- formal -->
     <ion-item *ngIf="question.isOfType('polite')">
         <ion-icon name="bowtie" item-left></ion-icon>
-        Formal (neutral)</ion-item>
+        Formal
+        <ion-note>(neutral)</ion-note>
+    </ion-item>
     <!-- informal -->
     <ion-item *ngIf="question.isOfType('plain')">
         <ion-icon name="shirt" item-left></ion-icon>
-        Informal (colloquial)</ion-item>
+        Informal
+        <ion-note>(colloquial)</ion-note>
+    </ion-item>
 
     <!-- positive -->
     <ion-item *ngIf="question.isOfType('positive')">
         <ion-icon name="happy" item-left></ion-icon>
-        Positive</ion-item>
+        Positive
+    </ion-item>
     <!-- negative -->
     <ion-item *ngIf="question.isOfType('negative')">
         <ion-icon name="sad" item-left></ion-icon>
-        Negative</ion-item>
+        Negative
+    </ion-item>
 
     <!-- non-past -->
     <ion-item *ngIf="question.isOfType('present')">
         <ion-icon name="fastforward" item-left></ion-icon>
-        Nonpast tense (present or future)</ion-item>
+        Nonpast tense
+        <ion-note>(present or future)</ion-note>
+    </ion-item>
     <!-- past -->
     <ion-item *ngIf="question.isOfType('past')">
         <ion-icon name="rewind" item-left></ion-icon>
-        Past tense</ion-item>
+        Past tense
+    </ion-item>
 
     <!-- reverse -->
     <ion-item *ngIf="settings?.reverse === true">
         <ion-icon name="shuffle" item-left></ion-icon>
-        Reverse, answer with dictionary form</ion-item>
+        Reverse, answer with dictionary form
+    </ion-item>
+
 </ion-list>
