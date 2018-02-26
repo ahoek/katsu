@@ -11,6 +11,7 @@ export class Settings {
     get normal(): boolean {
         return this._normal;
     }
+
     set normal(value) {
         this._normal = value;
         if (this._normal) {
@@ -25,6 +26,7 @@ export class Settings {
     get teForm(): boolean {
         return this._teForm;
     }
+
     set teForm(value) {
         this._teForm = value;
         if (this._teForm) {
@@ -36,6 +38,7 @@ export class Settings {
     get volitional(): boolean {
         return this._volitional;
     }
+
     set volitional(value) {
         this._volitional = value;
         if (this._volitional) {
@@ -48,6 +51,7 @@ export class Settings {
     get taiForm(): boolean {
         return this._taiForm;
     }
+
     set taiForm(value) {
         this._taiForm = value;
         if (this._taiForm) {
@@ -62,6 +66,7 @@ export class Settings {
     get potential(): boolean {
         return this._potential;
     }
+
     set potential(value) {
         this._potential = value;
         if (this._potential) {
@@ -76,6 +81,7 @@ export class Settings {
     get imperative(): boolean {
         return this._imperative;
     }
+
     set imperative(value) {
         this._imperative = value;
         if (this._imperative) {
@@ -88,6 +94,7 @@ export class Settings {
     get conditional(): boolean {
         return this._conditional;
     }
+
     set conditional(value) {
         this._conditional = value;
         if (this._conditional) {
@@ -100,10 +107,26 @@ export class Settings {
     get tariForm(): boolean {
         return this._tariForm;
     }
+
     set tariForm(value) {
         this._tariForm = value;
         if (this._tariForm) {
             this.needsVerb();
+            this.needsModality();
+        }
+    }
+
+    private _passive: boolean;
+    get passive(): boolean {
+        return this._passive;
+    }
+
+    set passive(value) {
+        this._passive = value;
+        if (this._passive) {
+            this.needsVerb();
+            this.needsSpeechLevel();
+            this.needsTense();
             this.needsModality();
         }
     }
@@ -169,6 +192,7 @@ export class Settings {
         settings.imperative = false;
         settings.conditional = false;
         settings.tariForm = false;
+        settings.passive = false;
 
         settings.verb = true;
         settings.iAdjective = false;
@@ -241,6 +265,8 @@ export class Settings {
                 options.push('tari-form-negative');
             }
         }
+
+        this.addPassive(options);
 
         return options;
     }
@@ -345,4 +371,7 @@ export class Settings {
         }
     }
 
+    addPassive(options: string[]) {
+        this.addNormalOptionsFor('passive', options);
+    }
 }

@@ -29,6 +29,10 @@
         <ion-icon name="tari" item-left>たり</ion-icon>
         Tari-form
     </ion-item>
+    <ion-item *ngIf="question.isOfType('passive')">
+        <ion-icon name="bonfire" item-left></ion-icon>
+        Passive
+    </ion-item>
 
     <!-- formal -->
     <ion-item *ngIf="question.isOfType('polite')">

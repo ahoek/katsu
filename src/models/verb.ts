@@ -205,7 +205,7 @@ export class Verb {
     }
 
     /**
-     * Get the stem for plain negative forms
+     * Get the stem for plain negative forms (mizenkei/ A-stem)
      */
     public naiStem(): string {
         let stem: string = '';
@@ -439,10 +439,10 @@ export class Verb {
      * Volitional
      */
     public volitional(speechLevel: string): string[] {
-        let volitional;
+        let conjugation;
 
         if (speechLevel === 'polite') {
-            volitional = this.masuStem() + 'ましょう';
+            conjugation = this.masuStem() + 'ましょう';
         }
 
         if (speechLevel === 'plain') {
@@ -450,10 +450,10 @@ export class Verb {
             switch (this.group()) {
                 case '1':
                     const stem = this.changeLastVowel('U', 'O');
-                    volitional = stem + 'う';
+                    conjugation = stem + 'う';
                     break;
                 case '2':
-                    volitional = this.removeLast() + you;
+                    conjugation = this.removeLast() + you;
                     break;
             }
             // Irregular
@@ -461,38 +461,38 @@ export class Verb {
                 case 'Suru verb':
                 case 'Suru verb - irregular':
                 case 'Suru verb - special class':
-                    volitional = this.masuStem() + you;
+                    conjugation = this.masuStem() + you;
                     break;
                 case 'Kuru verb - special class':
-                    volitional = 'こ' + you;
+                    conjugation = 'こ' + you;
                     break;
             }
         }
 
-        return [volitional];
+        return [conjugation];
     }
 
     /**
      * Tai form (desire)
      */
     public taiForm(modality: string, tense: string, speechLevel: string): string[] {
-        let taiForm = this.masuStem() + 'たい';
+        let conjugation = this.masuStem() + 'たい';
 
         if (modality === 'negative') {
             // Remove i and add kunai
-            taiForm = taiForm.slice(0, -1) + 'く' + this.nai;
+            conjugation = conjugation.slice(0, -1) + 'く' + this.nai;
         }
 
         if (tense === 'past') {
             // Remove i and add katta
-            taiForm = taiForm.slice(0, -1) + this.katta;
+            conjugation = conjugation.slice(0, -1) + this.katta;
         }
 
         if (speechLevel === 'polite') {
-            taiForm += this.desu;
+            conjugation += this.desu;
         }
 
-        return [taiForm];
+        return [conjugation];
     }
 
     /**
@@ -631,6 +631,37 @@ export class Verb {
         const conjugation = plain + 'り';
 
         return [conjugation];
+    }
+
+    public passive(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+        // Find the 'A' stem
+        let stem = '';
+        switch (this.group()) {
+            case '1':
+                stem = this.naiStem();
+                break;
+            case '2':
+                stem = this.naiStem() + 'ら';
+                break;
+        }
+
+        // Irregular
+        if (this.isSuru()) {
+            stem = this.removeSuru() + 'さ';
+        }
+        if (this.partOfSpeech === 'Kuru verb - special class') {
+            stem = 'こら';
+        }
+
+        const conjugation = stem + 'れる';
+
+        // Treat the passive conjugation base as an ichidan verb
+        const definition = <JishoDefinition> {
+            senses: [{parts_of_speech: ['Ichidan verb'], english_definitions: ['']}],
+            japanese: [{reading: conjugation}],
+        };
+        const passive = new Verb(definition);
+        return passive.verbNormalForm(speechLevel, positive, nonPast);
     }
 
     /**

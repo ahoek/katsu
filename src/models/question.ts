@@ -114,6 +114,9 @@ export class Question {
         if (this.isOfType('tari-form')) {
             return this.verb.tariForm(modality);
         }
+        if (this.isOfType('passive')) {
+            return this.verb.passive(speechLevel, modality === 'positive', tense === 'non-past');
+        }
 
         // The last is the 'normal' conjugation
         return this.verb.normalForm(speechLevel, modality === 'positive', tense === 'non-past');
