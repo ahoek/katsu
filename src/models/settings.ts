@@ -266,7 +266,9 @@ export class Settings {
             }
         }
 
-        this.addPassive(options);
+        if (this.passive) {
+            this.addPassive(options);
+        }
 
         return options;
     }
