@@ -92,7 +92,7 @@ export class ReviewPage {
 
     /**
      * Check the given answer
-     * 
+     *
      * If correct, give good styling.
      * If incorrect, give 'bad' styling and show the correct answer.
      */
@@ -124,21 +124,33 @@ export class ReviewPage {
             'incorrect': this.questions[this.index].correct === false
         }
     }
-    
+
     /**
      * Get the word to ask the conjugation
      */
-    public currentQuestion(): Question {
+    public currentQuestion(): any {
         const question = this.questions[this.index];
         if (!question) {
             return;
         }
-        
+
+        const na = this.getNa(question);
+        const furigana = {
+            word: question.word + na,
+            reading: question.reading + na,
+        };
+
+        return furigana;
+    }
+
+    /**
+     * Get な if this is a na-adjective
+     */
+    public getNa(question): string {
         if (question.isOfType('na-adjective') && !this.settings.reverse) {
-            question.word += 'な';
-            question.reading += 'な';
+            return 'な';
         }
-        
-        return question;
+
+        return '';
     }
 }
