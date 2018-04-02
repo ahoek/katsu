@@ -75,6 +75,7 @@
                 Passive
             </ion-label>
             <ion-checkbox [(ngModel)]="settings.passive"
+                          [disabled]="settings.verb === false"
                           item-right></ion-checkbox>
             <ion-icon name="bonfire" item-left></ion-icon>
         </ion-item>
