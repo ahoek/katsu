@@ -4,6 +4,7 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {Keyboard} from '@ionic-native/keyboard';
 import {GoogleAnalytics} from '@ionic-native/google-analytics';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     templateUrl: 'app.html',
@@ -22,12 +23,20 @@ export class KatsuApp {
         private splash: SplashScreen,
         private statusBar: StatusBar,
         private keyboard: Keyboard,
-        private google: GoogleAnalytics
+        private google: GoogleAnalytics,
+        private translate: TranslateService,
     ) {
         this.platform.ready().then(() => {
             this.statusBar.styleDefault();
             this.splash.hide();
             this.keyboard.disableScroll(true);
+
+            translate.addLangs(["en", "nl"]);
+            translate.setDefaultLang('en');
+
+            let browserLang = translate.getBrowserLang();
+            translate.use(browserLang.match(/en|nl/) ? browserLang : 'en');
+
 
             // google
             return this.google.startTrackerWithId('UA-92834344-1')

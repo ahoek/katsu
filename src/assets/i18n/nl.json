@@ -1,0 +1,19 @@
+{
+  "setting": {
+    "group-title": {
+      "form": "Vorm"
+    },
+    "form": {
+      "normal": "Normaal",
+      "te-form": "Te vorm",
+      "volitional": "Aansporende wijs",
+      "tai-form": "Wensende wijs",
+      "tari-form": "Tari vorm",
+      "potential": "Potentialis",
+      "imperative": "Gebiedende wijs",
+      "conditional": "Conditionalis",
+      "passive": "Passivum",
+      "": ""
+    }
+  }
+}

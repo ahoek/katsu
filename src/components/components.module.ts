@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {AnswersComponent} from './answers/answers';
 import {FuriganaComponent} from './furigana/furigana';
 import {ReviewSettingsListComponent} from './review-settings-list/review-settings-list';
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
     declarations: [
@@ -10,11 +11,15 @@ import {ReviewSettingsListComponent} from './review-settings-list/review-setting
         FuriganaComponent,
         ReviewSettingsListComponent,
     ],
-    imports: [IonicModule],
+    imports: [
+        IonicModule,
+        TranslateModule,
+    ],
     exports: [
         AnswersComponent,
         FuriganaComponent,
         ReviewSettingsListComponent,
+        TranslateModule,
     ]
 })
 export class ComponentsModule {}
