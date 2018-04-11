@@ -144,6 +144,7 @@ export class Settings {
     leaveOutSuru: boolean;
     reverse: boolean;
     amount: number;
+    language: string;
 
     constructor() {
     }

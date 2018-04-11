@@ -223,6 +223,17 @@
             </ion-select>
             <ion-icon name="" item-left></ion-icon>
         </ion-item>
+        <ion-item>
+            <ion-label>
+                Language
+            </ion-label>
+            <ion-select [ngModel]="translate.currentLang" (ngModelChange)="setLanguage($event)" item-right>
+                <ion-option value="en">English</ion-option>
+                <ion-option value="nl">Nederlands</ion-option>
+                <ion-option value="ja">日本語</ion-option>
+            </ion-select>
+            <ion-icon name="" item-left></ion-icon>
+        </ion-item>
     </ion-list>
 </ion-content>
 

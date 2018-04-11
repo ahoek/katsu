@@ -9,7 +9,7 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import {KatsuApp} from './app.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
-    return new TranslateHttpLoader(httpClient, "../assets/i18n/", ".json");
+    return new TranslateHttpLoader(httpClient, '../assets/i18n/', '.json');
 }
 
 @NgModule({

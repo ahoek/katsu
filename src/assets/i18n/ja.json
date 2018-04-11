@@ -1,0 +1,48 @@
+{
+  "setting": {
+    "title": "Choose conjugation settings",
+    "group-title": {
+      "form": "Form",
+      "part-of-speech": "Part of speech",
+      "speech-level": "Speech level",
+      "tense": "Tense",
+      "positive/negative": "Positive/negative",
+      "jlpt-level": "JLPT level",
+      "special-options": "Special options",
+      "":""
+    },
+    "form": {
+      "normal": "Normal",
+      "te-form": "Te-form",
+      "volitional": "Volitional",
+      "tai-form": "Tai-form",
+      "tari-form": "Tari-form",
+      "potential": "Potential",
+      "imperative": "Imperative",
+      "conditional": "Conditional",
+      "passive": "Passive",
+      "": ""
+    },
+    "part-of-speech": {
+      "verb": "Verb",
+      "i-adjective": "I-adjective",
+      "na-adjective": "Na-adjective"
+    },
+    "speech-level": {
+      "formal": "Formal",
+      "neutral": "neutral",
+      "informal": "Informal",
+      "colloquial": "colloquial"
+    },
+    "tense": {
+      "nonpast-tense": "Nonpast tense",
+      "nonpast-tense-label": "present or future",
+      "past-tense": "Past tense"
+    },
+    "special-options": {
+
+    },
+    "":""
+  },
+  "":""
+}

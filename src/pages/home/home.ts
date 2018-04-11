@@ -5,6 +5,7 @@ import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
 import {Settings} from '../../models/settings';
 import {IonicPage} from 'ionic-angular';
+import {TranslateService} from "@ngx-translate/core";
 
 @IonicPage()
 @Component({
@@ -20,7 +21,8 @@ export class HomePage {
         public navCtrl: NavController, 
         private storage: Storage,
         public platform: Platform,
-        private google: GoogleAnalytics
+        private google: GoogleAnalytics,
+        private translate: TranslateService,
     ) {
         // Default settings
         this.settings = Settings.getDefault();
@@ -28,6 +30,9 @@ export class HomePage {
         this.storage.get('settings').then(settingsJson => {
             if (settingsJson) {
                 this.settings = Object.assign(this.settings, JSON.parse(settingsJson));
+                if (this.settings.language) {
+                    this.setLanguage(this.settings.language);
+                }
             } else {
                 this.storage.set('settings', JSON.stringify(this.settings));
             }
@@ -58,5 +63,10 @@ export class HomePage {
      */
     showInformation() {
         this.navCtrl.push('InformationPage');
+    }
+
+    setLanguage(language) {
+        this.settings.language = language;
+        this.translate.use(this.settings.language);
     }
 }
