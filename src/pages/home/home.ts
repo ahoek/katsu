@@ -38,7 +38,7 @@ export class HomePage {
             }
         });
     }
-    
+
     ionViewDidEnter() {
         this.platform.ready().then(() => {
             this.google.trackView('Home Page');
