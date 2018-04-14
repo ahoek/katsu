@@ -6,7 +6,7 @@ import * as wanakana from 'wanakana/lib/wanakana.esm.js';
 
 import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';
-import {Settings} from '../../models/settings';
+import {SettingsService} from '../../providers/settings.service';
 import {IonicPage} from 'ionic-angular';
 
 @IonicPage()
@@ -22,7 +22,7 @@ export class ReviewPage {
     public questions: Question[] = [];
 
     // Question settings
-    public settings: Settings;
+    public settings: SettingsService;
 
     // Question index
     public index: number = 0;
@@ -35,7 +35,7 @@ export class ReviewPage {
         private keyboard: Keyboard,
         private google: GoogleAnalytics
     ) {
-        this.settings = this.navParams.get('settings') || Settings.getDefault();
+        this.settings = this.navParams.get('settings') || SettingsService.getDefault();
         this.questions[0] = new Question();
     }
 

@@ -1,7 +1,10 @@
 /**
  * Review settings
  */
-export class Settings {
+import { Injectable } from '@angular/core';
+
+@Injectable()
+export class SettingsService {
 
     verb: true;
     iAdjective: false;
@@ -182,8 +185,8 @@ export class Settings {
     /**
      * Get the default settings
      */
-    static getDefault(): Settings {
-        const settings = new Settings();
+    static getDefault(): SettingsService {
+        const settings = new SettingsService();
 
         settings.normal = true;
         settings.teForm = false;
@@ -376,5 +379,9 @@ export class Settings {
 
     addPassive(options: string[]) {
         this.addNormalOptionsFor('passive', options);
+    }
+
+    getLanguage(): string {
+        return this.language;
     }
 }

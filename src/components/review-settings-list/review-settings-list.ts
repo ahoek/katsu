@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Question} from '../../models/question';
-import {Settings} from '../../models/settings';
+import {SettingsService} from '../../providers/settings.service';
 
 /**
  * Show a list of settings for the current review question
@@ -12,14 +12,14 @@ import {Settings} from '../../models/settings';
 export class ReviewSettingsListComponent {
 
     @Input('question') question: Question;
-    @Input('settings') settings: Settings;
+    @Input('settings') settings: SettingsService;
 
     constructor() {
     }
 
     ionViewDidLoad() {
         if (!this.settings) {
-            this.settings = Settings.getDefault();
+            this.settings = SettingsService.getDefault();
         }
     }
 }

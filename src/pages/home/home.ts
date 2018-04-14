@@ -3,7 +3,7 @@ import {NavController, Platform} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
-import {Settings} from '../../models/settings';
+import {SettingsService} from '../../providers/settings.service';
 import {IonicPage} from 'ionic-angular';
 import {TranslateService} from "@ngx-translate/core";
 
@@ -25,7 +25,7 @@ export class HomePage {
         private translate: TranslateService,
     ) {
         // Default settings
-        this.settings = Settings.getDefault();
+        this.settings = SettingsService.getDefault();
 
         this.storage.get('settings').then(settingsJson => {
             if (settingsJson) {
