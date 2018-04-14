@@ -52,5 +52,13 @@
   },
   "home": {
     "start": "Start reviews!"
+  },
+  "review": {
+    "stop": "Stop",
+    "skip": "Skip"
+  },
+  "summary": {
+    "title": "Summary",
+    "close": "Done"
   }
 }

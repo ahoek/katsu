@@ -20,7 +20,6 @@
       "imperative": "Gebiedende wijs",
       "conditional": "Conditionalis",
       "conditional-note": "(eindigt op ば of なら)",
-
       "passive": "Passivum"
     },
     "part-of-speech": {
@@ -53,5 +52,13 @@
   },
   "home": {
     "start": "Begin met oefenen!"
+  },
+  "review": {
+    "stop": "Stop",
+    "skip": "Sla over"
+  },
+  "summary": {
+    "title": "Samenvatting",
+    "close": "Klaar"
   }
 }
