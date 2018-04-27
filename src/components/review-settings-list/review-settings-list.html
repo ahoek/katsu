@@ -7,7 +7,6 @@
     <ion-item *ngIf="question.isOfType('tai-form')">
         <ion-icon name="heart" item-left></ion-icon>
         Tai-form
-        <ion-note>(ends in ば or なら)</ion-note>
     </ion-item>
     <ion-item *ngIf="question.isOfType('volitional')">
         <ion-icon name="walk" item-left></ion-icon>
@@ -24,6 +23,7 @@
     <ion-item *ngIf="question.isOfType('conditional')">
         <ion-icon name="code-download" item-left></ion-icon>
         Conditional
+        <ion-note>(ends in ば or なら)</ion-note>
     </ion-item>
     <ion-item *ngIf="question.isOfType('tari-form')">
         <ion-icon name="tari" item-left>たり</ion-icon>

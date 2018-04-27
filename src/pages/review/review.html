@@ -6,10 +6,10 @@
                 Stop
             </button>
         </ion-buttons>
-        
+
         <ion-title>
             {{index + 1}} / {{questions.length}}
-        </ion-title> 
+        </ion-title>
 
         <ion-buttons end>
             <button ion-button icon-only (click)="nextQuestion()">
@@ -29,26 +29,26 @@
         </ion-note>
     </ion-item>
 
-    <review-settings-list 
-        [question]="questions[index]" 
+    <review-settings-list
+        [question]="questions[index]"
         [settings]="settings">
     </review-settings-list>
-    
+
     <form (submit)="checkAnswer(questions[index])">
         <ion-item ngClass="answer-item">
-            <ion-input 
+            <ion-input
                 #answerInput
                 #answerInputNative
                 lang="ja"
                 [(ngModel)]="questions[index].givenAnswer"
                 [ngModelOptions]="{standalone: true}"
-                class="answerInput" 
-                type="text" 
+                class="answerInput"
+                type="text"
                 placeholder="答え"
                 inputmode="kana"
-                autocomplete="off" 
-                autocorrect="off" 
-                autocapitalize="none" 
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="none"
                 spellcheck="false">
             </ion-input>
             <button ion-button icon-only item-right clear type="submit"
