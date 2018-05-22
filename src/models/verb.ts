@@ -163,6 +163,9 @@ export class Verb {
         // Not a word we can conjugate
         return;
     }
+    public isVerb() {
+        return
+    }
 
     /**
      * Get the masu stem (ren'youkei)
@@ -476,6 +479,9 @@ export class Verb {
      * Tai form (desire)
      */
     public taiForm(modality: string, tense: string, speechLevel: string): string[] {
+        if (this.type !== 'verb') {
+            return;
+        }
         let conjugation = this.masuStem() + 'たい';
 
         if (modality === 'negative') {

@@ -254,7 +254,7 @@ export class Settings {
         this.addConditional(options);
 
         if (this.taiForm) {
-            this.addNormalOptionsFor('tai-form', options);
+            this.addNormalOptionsFor('tai-form-verb', options);
         }
 
         if (this.tariForm) {
@@ -374,6 +374,6 @@ export class Settings {
     }
 
     addPassive(options: string[]) {
-        this.addNormalOptionsFor('passive', options);
+        this.addNormalOptionsFor('passive-verb', options);
     }
 }

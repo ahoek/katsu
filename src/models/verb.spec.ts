@@ -93,4 +93,29 @@ describe('Verb model', () => {
         });
         expect(verb.normalForm('polite', false, true)).toEqual(['ふえません']);
     });
+
+    it('Tai form of na adjective 加減な', () => {
+        let verb = new Verb({
+            "japanese": [
+                {
+                    "word": "加減",
+                    "reading": "かげん"
+                }
+            ],
+            "senses": [
+                {
+                    "english_definitions": [
+                        "degree"
+                    ],
+                    "parts_of_speech": [
+                        "Noun",
+                        "Na-adjective",
+                        "Noun - used as a suffix"
+                    ]
+                },
+            ],
+            "level": 3
+        });
+        expect(verb.taiForm('negative', 'nonpast', 'polite')).toEqual(undefined);
+    });
 });
