@@ -2,78 +2,79 @@
     <!-- forms -->
     <ion-item *ngIf="question.isOfType('te-form')">
         <ion-icon item-left>て</ion-icon>
-        Te-form
+        {{'setting.form.te-form'|translate}}
     </ion-item>
     <ion-item *ngIf="question.isOfType('tai-form')">
         <ion-icon name="heart" item-left></ion-icon>
-        Tai-form
+        {{'setting.form.tai-form'|translate}}
     </ion-item>
     <ion-item *ngIf="question.isOfType('volitional')">
         <ion-icon name="walk" item-left></ion-icon>
-        Volitional
+        {{'setting.form.volitional'|translate}}
     </ion-item>
     <ion-item *ngIf="question.isOfType('potential')">
         <ion-icon name="flag" item-left></ion-icon>
-        Potential
+        {{'setting.form.potential'|translate}}
     </ion-item>
     <ion-item *ngIf="question.isOfType('imperative')">
         <ion-icon name="megaphone" item-left></ion-icon>
-        Imperative
+        {{'setting.form.imperative'|translate}}
     </ion-item>
     <ion-item *ngIf="question.isOfType('conditional')">
         <ion-icon name="code-download" item-left></ion-icon>
-        Conditional
+        {{'setting.form.conditional'|translate}}
         <ion-note>(ends in ば or なら)</ion-note>
     </ion-item>
     <ion-item *ngIf="question.isOfType('tari-form')">
         <ion-icon name="tari" item-left>たり</ion-icon>
-        Tari-form
+        {{'setting.form.tari-form'|translate}}
     </ion-item>
     <ion-item *ngIf="question.isOfType('passive')">
         <ion-icon name="bonfire" item-left></ion-icon>
-        Passive
+        {{'setting.form.passive'|translate}}
     </ion-item>
 
     <!-- formal -->
     <ion-item *ngIf="question.isOfType('polite')">
         <ion-icon name="bowtie" item-left></ion-icon>
-        Formal
-        <ion-note>(neutral)</ion-note>
+        {{'setting.speech-level.formal'|translate}}
+        <ion-note>{{'setting.speech-level.formal-note'|translate}}</ion-note>
     </ion-item>
     <!-- informal -->
     <ion-item *ngIf="question.isOfType('plain')">
         <ion-icon name="shirt" item-left></ion-icon>
-        Informal
-        <ion-note>(colloquial)</ion-note>
+        {{'setting.speech-level.informal'|translate}}
+        <ion-note>{{'setting.speech-level.informal-note'|translate}}</ion-note>
     </ion-item>
 
     <!-- positive -->
     <ion-item *ngIf="question.isOfType('positive')">
         <ion-icon name="happy" item-left></ion-icon>
-        Positive
+        {{'setting.positive/negative.positive'|translate}}
     </ion-item>
     <!-- negative -->
     <ion-item *ngIf="question.isOfType('negative')">
         <ion-icon name="sad" item-left></ion-icon>
-        Negative
+        {{'setting.positive/negative.negative'|translate}}
     </ion-item>
 
     <!-- non-past -->
     <ion-item *ngIf="question.isOfType('present')">
         <ion-icon name="fastforward" item-left></ion-icon>
-        Nonpast tense
-        <ion-note>(present or future)</ion-note>
+        {{'setting.tense.nonpast'|translate}}
+        <ion-note>{{'setting.tense.nonpast-note'|translate}}</ion-note>
     </ion-item>
     <!-- past -->
     <ion-item *ngIf="question.isOfType('past')">
         <ion-icon name="rewind" item-left></ion-icon>
-        Past tense
+        <ion-label>{{'setting.tense.past'|translate}}</ion-label>
     </ion-item>
 
     <!-- reverse -->
     <ion-item *ngIf="settings?.reverse === true">
         <ion-icon name="shuffle" item-left></ion-icon>
-        Reverse, answer with dictionary form
+        {{'setting.special.reverse'|translate}}
+        <ion-note>{{'setting.special.reverse-note'|translate}}</ion-note>
     </ion-item>
 
 </ion-list>

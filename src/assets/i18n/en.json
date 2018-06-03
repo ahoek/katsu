@@ -1,0 +1,64 @@
+{
+  "setting": {
+    "title": "Choose conjugation settings",
+    "group-title": {
+      "form": "Form",
+      "part-of-speech": "Part of speech",
+      "speech-level": "Speech level",
+      "tense": "Tense",
+      "positive/negative": "Positive/negative",
+      "jlpt-level": "JLPT level",
+      "special-options": "Special options"
+    },
+    "form": {
+      "normal": "Normal",
+      "te-form": "Te-form",
+      "volitional": "Volitional",
+      "tai-form": "Tai-form",
+      "tari-form": "Tari-form",
+      "potential": "Potential",
+      "imperative": "Imperative",
+      "conditional": "Conditional",
+      "conditional-note": "(ends in ば or なら)",
+      "passive": "Passive"
+    },
+    "part-of-speech": {
+      "verb": "Verb",
+      "i-adjective": "I-adjective",
+      "na-adjective": "Na-adjective"
+    },
+    "speech-level": {
+      "formal": "Formal",
+      "formal-note": "(neutral)",
+      "informal": "Informal",
+      "informal-note": "(colloquial)"
+    },
+    "tense": {
+      "nonpast": "Nonpast tense",
+      "nonpast-note": "(present or future)",
+      "past": "Past tense"
+    },
+    "positive/negative": {
+      "positive": "Positive",
+      "negative": "Negative"
+    },
+    "special": {
+      "reverse": "Reverse",
+      "reverse-note": "(answer with dictionary form)",
+      "no-suru": "Leave out ‘suru’ verbs",
+      "amount": "Amount of reviews",
+      "language": "Language"
+    }
+  },
+  "home": {
+    "start": "Start reviews!"
+  },
+  "review": {
+    "stop": "Stop",
+    "skip": "Skip"
+  },
+  "summary": {
+    "title": "Summary",
+    "close": "Done"
+  }
+}
