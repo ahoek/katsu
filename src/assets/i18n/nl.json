@@ -1,0 +1,64 @@
+{
+  "setting": {
+    "title": "Kies instellingen",
+    "group-title": {
+      "form": "Vorm",
+      "part-of-speech": "Woordsoort",
+      "speech-level": "Beleefdheidsregister",
+      "tense": "Tijd",
+      "positive/negative": "Bevestigend/ontkennend",
+      "jlpt-level": "JLPT niveau",
+      "special-options": "Speciale opties"
+    },
+    "form": {
+      "normal": "Normaal",
+      "te-form": "Te vorm",
+      "volitional": "Aansporende wijs",
+      "tai-form": "Wensende wijs",
+      "tari-form": "Tari vorm",
+      "potential": "Potentialis",
+      "imperative": "Gebiedende wijs",
+      "conditional": "Conditionalis",
+      "conditional-note": "(eindigt op ば of なら)",
+      "passive": "Passivum"
+    },
+    "part-of-speech": {
+      "verb": "Werkwoord",
+      "i-adjective": "I adjectief",
+      "na-adjective": "Na adjectief"
+    },
+    "speech-level": {
+      "formal": "Neutraal",
+      "formal-note": "",
+      "informal": "Colloquiaal",
+      "informal-note": ""
+    },
+    "tense": {
+      "nonpast": "Tegenwoordige tijd",
+      "nonpast-note": "(of toekomende)",
+      "past": "Verleden tijd"
+    },
+    "positive/negative": {
+      "positive": "Bevestigend",
+      "negative": "Ontkennend"
+    },
+    "special": {
+      "reverse": "Omgekeerd",
+      "reverse-note": "(antwoord in woordenboekvorm)",
+      "no-suru": "Laat ‘suru’ werkwoorden weg",
+      "amount": "Aantal vragen",
+      "language": "Taal"
+    }
+  },
+  "home": {
+    "start": "Begin met oefenen!"
+  },
+  "review": {
+    "stop": "Stop",
+    "skip": "Sla over"
+  },
+  "summary": {
+    "title": "Samenvatting",
+    "close": "Klaar"
+  }
+}

@@ -3,8 +3,9 @@ import {NavController, Platform} from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 import {GoogleAnalytics} from '@ionic-native/google-analytics';
 
-import {Settings} from '../../models/settings';
+import {SettingsService} from '../../providers/settings.service';
 import {IonicPage} from 'ionic-angular';
+import {TranslateService} from "@ngx-translate/core";
 
 @IonicPage()
 @Component({
@@ -20,20 +21,24 @@ export class HomePage {
         public navCtrl: NavController, 
         private storage: Storage,
         public platform: Platform,
-        private google: GoogleAnalytics
+        private google: GoogleAnalytics,
+        private translate: TranslateService,
     ) {
         // Default settings
-        this.settings = Settings.getDefault();
+        this.settings = SettingsService.getDefault();
 
         this.storage.get('settings').then(settingsJson => {
             if (settingsJson) {
                 this.settings = Object.assign(this.settings, JSON.parse(settingsJson));
+                if (this.settings.language) {
+                    this.setLanguage(this.settings.language);
+                }
             } else {
                 this.storage.set('settings', JSON.stringify(this.settings));
             }
         });
     }
-    
+
     ionViewDidEnter() {
         this.platform.ready().then(() => {
             this.google.trackView('Home Page');
@@ -58,5 +63,10 @@ export class HomePage {
      */
     showInformation() {
         this.navCtrl.push('InformationPage');
+    }
+
+    setLanguage(language) {
+        this.settings.language = language;
+        this.translate.use(this.settings.language);
     }
 }

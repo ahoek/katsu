@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import {Verb} from '../models/verb';
 import {Question} from '../models/question';
-import {Settings} from '../models/settings';
+import {SettingsService} from './settings.service';
 
 /**
  * QuestionData provider.
@@ -18,9 +18,9 @@ export class QuestionData {
     /**
      * Provider of question data
      *
-     * Settings to create the answers
+     * SettingsService to create the answers
      */
-    load(settings: Settings) {
+    load(settings: SettingsService) {
         return new Promise<Question[]>(resolve => {
             const url = 'assets/data/questions/words.json';
             const options = settings.getQuestionTypeOptions();
@@ -32,7 +32,7 @@ export class QuestionData {
         });
     }
 
-    getQuestionsFromDictionary(dictionary: any, settings: Settings, options: string[]): Question[] {
+    getQuestionsFromDictionary(dictionary: any, settings: SettingsService, options: string[]): Question[] {
         const numberOfQuestions = settings.amount || 10;
         let questions: Question[] = [];
 
@@ -54,7 +54,7 @@ export class QuestionData {
     /**
      * Create a question from the dictionary
      */
-    getQuestion(dictionary: any, settings: Settings, type: string): Question {
+    getQuestion(dictionary: any, settings: SettingsService, type: string): Question {
         if (!type) {
             return;
         }
