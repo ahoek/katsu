@@ -31,11 +31,11 @@ export class KatsuApp {
             this.splash.hide();
             this.keyboard.disableScroll(true);
 
-            translate.addLangs(['en', 'nl', 'ja']);
-            translate.setDefaultLang('en');
+            this.translate.addLangs(['en', 'nl', 'ja']);
+            this.translate.setDefaultLang('en');
 
-            let browserLang = translate.getBrowserLang();
-            translate.use(browserLang.match(/en|nl/) ? browserLang : 'en');
+            let browserLang = this.translate.getBrowserLang();
+            this.translate.use(browserLang.match(/en|nl/) ? browserLang : 'en');
 
             // google
             return this.google.startTrackerWithId('UA-92834344-1')
