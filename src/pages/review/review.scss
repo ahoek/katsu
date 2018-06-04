@@ -1,5 +1,4 @@
 page-review {
-
     .scroll-content {
         overflow: hidden;
     }
@@ -33,13 +32,17 @@ page-review {
         }
     }
 
+    .list-ios .item-block .item-inner {
+        border-bottom-width: 0;
+    }
+
     .answer-item {
         margin-top: 0;
         font-size: 1.6em;
         line-height: 1.2;
 
         input::placeholder {
-            color: rgba(#999, .5);
+            color: rgba(#aaa, .6);
         }
 
         &.item-ios.item-block .item-inner {
