@@ -670,6 +670,37 @@ export class Verb {
         return passive.verbNormalForm(speechLevel, positive, nonPast);
     }
 
+    public causative(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+        // Find the 'A' stem
+        let stem = '';
+        switch (this.group()) {
+            case '1':
+                stem = this.naiStem();
+                break;
+            case '2':
+                stem = this.naiStem() + 'ら';
+                break;
+        }
+
+        // Irregular
+        if (this.isSuru()) {
+            stem = this.removeSuru() + 'さ';
+        }
+        if (this.partOfSpeech === 'Kuru verb - special class') {
+            stem = 'こら';
+        }
+
+        const conjugation = stem + 'させ';
+
+        // Treat the conjugation base as an ichidan verb
+        const definition = <JishoDefinition> {
+            senses: [{parts_of_speech: ['Ichidan verb'], english_definitions: ['']}],
+            japanese: [{reading: conjugation}],
+        };
+        const causative = new Verb(definition);
+        return causative.verbNormalForm(speechLevel, positive, nonPast);
+    }
+
     /**
      * Return the word without the last character
      */

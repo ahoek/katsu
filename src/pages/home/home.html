@@ -79,6 +79,15 @@
                           item-right></ion-checkbox>
             <ion-icon name="bonfire" item-left></ion-icon>
         </ion-item>
+        <ion-item>
+            <ion-label>
+                {{'setting.form.causative'|translate}}
+            </ion-label>
+            <ion-checkbox [(ngModel)]="settings.causative"
+                          [disabled]="settings.verb === false"
+                          item-right></ion-checkbox>
+            <ion-icon name="" item-left></ion-icon>
+        </ion-item>
     </ion-list>
 
     <ion-list>

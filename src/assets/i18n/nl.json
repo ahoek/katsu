@@ -20,7 +20,8 @@
       "imperative": "Gebiedende wijs",
       "conditional": "Conditionalis",
       "conditional-note": "(eindigt op ば of なら)",
-      "passive": "Passivum"
+      "passive": "Passivum",
+      "causative": "Causativum"
     },
     "part-of-speech": {
       "verb": "Werkwoord",

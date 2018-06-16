@@ -33,6 +33,10 @@
         <ion-icon name="bonfire" item-left></ion-icon>
         {{'setting.form.passive'|translate}}
     </ion-item>
+    <ion-item *ngIf="question.isOfType('causative')">
+        <ion-icon name="" item-left></ion-icon>
+        {{'setting.form.causative'|translate}}
+    </ion-item>
 
     <!-- formal -->
     <ion-item *ngIf="question.isOfType('polite')">

@@ -20,7 +20,8 @@
       "imperative": "Imperative",
       "conditional": "Conditional",
       "conditional-note": "(ends in ば or なら)",
-      "passive": "Passive"
+      "passive": "Passive",
+      "causative": "Causative"
     },
     "part-of-speech": {
       "verb": "Verb",
