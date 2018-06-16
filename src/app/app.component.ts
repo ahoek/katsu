@@ -5,6 +5,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {Keyboard} from '@ionic-native/keyboard';
 import {GoogleAnalytics} from '@ionic-native/google-analytics';
 import {TranslateService} from '@ngx-translate/core';
+import {SpeechService} from "../providers/speech.service";
 
 @Component({
     templateUrl: 'app.html',
@@ -25,6 +26,7 @@ export class KatsuApp {
         private keyboard: Keyboard,
         private google: GoogleAnalytics,
         private translate: TranslateService,
+        private speech: SpeechService,
     ) {
         this.platform.ready().then(() => {
             this.statusBar.styleDefault();

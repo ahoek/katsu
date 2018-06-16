@@ -8,6 +8,7 @@ import {QuestionData} from '../../providers/question-data';
 import {Question} from '../../models/question';
 import {SettingsService} from '../../providers/settings.service';
 import {IonicPage} from 'ionic-angular';
+import {SpeechService} from "../../providers/speech.service";
 
 @IonicPage()
 @Component({
@@ -33,7 +34,8 @@ export class ReviewPage {
         public platform: Platform,
         private navParams: NavParams,
         private keyboard: Keyboard,
-        private google: GoogleAnalytics
+        private google: GoogleAnalytics,
+        private speech: SpeechService,
     ) {
         this.settings = this.navParams.get('settings') || SettingsService.getDefault();
         this.questions[0] = new Question();
@@ -81,6 +83,8 @@ export class ReviewPage {
     goToQuestion(index: number) {
         this.index = index;
 
+        this.speech.say(this.currentQuestion().reading);
+
         this.platform.ready().then(() => {
             this.google.trackEvent('Question', 'show', this.questions[this.index].type, 1);
         });
@@ -106,6 +110,10 @@ export class ReviewPage {
         }
 
         question.answered = true;
+
+        if (!question.correct) {
+            this.speech.say(question.answers[0].reading);
+        }
 
         this.platform.ready().then(() => {
             this.google.trackEvent('Question', 'answer-check', question.correct ? 'correct' : 'incorrect', 1);

@@ -47,7 +47,9 @@
       "reverse-note": "(antwoord in woordenboekvorm)",
       "no-suru": "Laat ‘suru’ werkwoorden weg",
       "amount": "Aantal vragen",
-      "language": "Taal"
+      "language": "Taal",
+      "voice": "Stem",
+      "none": "Geen"
     }
   },
   "home": {

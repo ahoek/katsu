@@ -148,6 +148,7 @@ export class SettingsService {
     reverse: boolean;
     amount: number;
     language: string;
+    voice: string;
 
     constructor() {
     }
@@ -215,6 +216,7 @@ export class SettingsService {
         settings.leaveOutSuru = true;
         settings.reverse = false;
         settings.amount = 10;
+        settings.voice = null;
 
         return settings;
     }
@@ -383,5 +385,9 @@ export class SettingsService {
 
     getLanguage(): string {
         return this.language;
+    }
+
+    getVoice(): any {
+        return this.voice;
     }
 }

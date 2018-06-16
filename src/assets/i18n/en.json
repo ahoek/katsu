@@ -47,7 +47,9 @@
       "reverse-note": "(answer with dictionary form)",
       "no-suru": "Leave out ‘suru’ verbs",
       "amount": "Amount of reviews",
-      "language": "Language"
+      "language": "Language",
+      "voice": "Voice",
+      "none": "None"
     }
   },
   "home": {
