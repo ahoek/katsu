@@ -8,6 +8,7 @@ import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import {KatsuApp} from './app.component';
 import {SettingsService} from "../providers/settings.service";
+import {SpeechService} from "../providers/speech.service";
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
     return new TranslateHttpLoader(httpClient, '../assets/i18n/', '.json');
@@ -44,6 +45,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
             useFactory: getLanguage
         },
         GoogleAnalytics,
+        SpeechService,
     ]
 })
 export class AppModule {}

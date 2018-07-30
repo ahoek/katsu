@@ -20,7 +20,8 @@
       "imperative": "Gebiedende wijs",
       "conditional": "Conditionalis",
       "conditional-note": "(eindigt op ば of なら)",
-      "passive": "Passivum"
+      "passive": "Passivum",
+      "causative": "Causativum"
     },
     "part-of-speech": {
       "verb": "Werkwoord",
@@ -47,7 +48,9 @@
       "reverse-note": "(antwoord in woordenboekvorm)",
       "no-suru": "Laat ‘suru’ werkwoorden weg",
       "amount": "Aantal vragen",
-      "language": "Taal"
+      "language": "Taal",
+      "voice": "Stem",
+      "none": "Geen"
     }
   },
   "home": {

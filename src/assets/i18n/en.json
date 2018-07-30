@@ -20,7 +20,8 @@
       "imperative": "Imperative",
       "conditional": "Conditional",
       "conditional-note": "(ends in ば or なら)",
-      "passive": "Passive"
+      "passive": "Passive",
+      "causative": "Causative"
     },
     "part-of-speech": {
       "verb": "Verb",
@@ -47,7 +48,9 @@
       "reverse-note": "(answer with dictionary form)",
       "no-suru": "Leave out ‘suru’ verbs",
       "amount": "Amount of reviews",
-      "language": "Language"
+      "language": "Language",
+      "voice": "Voice",
+      "none": "None"
     }
   },
   "home": {

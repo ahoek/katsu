@@ -134,6 +134,21 @@ export class SettingsService {
         }
     }
 
+    private _causative: boolean;
+    get causative(): boolean {
+        return this._causative;
+    }
+
+    set causative(value) {
+        this._causative = value;
+        if (this._causative) {
+            this.needsVerb();
+            this.needsSpeechLevel();
+            this.needsTense();
+            this.needsModality();
+        }
+    }
+
     polite: boolean;
     plain: boolean;
 
@@ -148,6 +163,7 @@ export class SettingsService {
     reverse: boolean;
     amount: number;
     language: string;
+    voice: string;
 
     constructor() {
     }
@@ -197,6 +213,7 @@ export class SettingsService {
         settings.conditional = false;
         settings.tariForm = false;
         settings.passive = false;
+        settings.causative = false;
 
         settings.verb = true;
         settings.iAdjective = false;
@@ -215,6 +232,7 @@ export class SettingsService {
         settings.leaveOutSuru = true;
         settings.reverse = false;
         settings.amount = 10;
+        settings.voice = null;
 
         return settings;
     }
@@ -272,6 +290,10 @@ export class SettingsService {
 
         if (this.passive) {
             this.addPassive(options);
+        }
+
+        if (this.causative) {
+            this.addCausative(options);
         }
 
         return options;
@@ -381,7 +403,15 @@ export class SettingsService {
         this.addNormalOptionsFor('passive-verb', options);
     }
 
+    addCausative(options: string[]) {
+        this.addNormalOptionsFor('causative-verb', options);
+    }
+
     getLanguage(): string {
         return this.language;
+    }
+
+    getVoice(): any {
+        return this.voice;
     }
 }

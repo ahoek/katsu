@@ -23,7 +23,7 @@
     <ion-item *ngIf="question.isOfType('conditional')">
         <ion-icon name="code-download" item-left></ion-icon>
         {{'setting.form.conditional'|translate}}
-        <ion-note>(ends in ば or なら)</ion-note>
+        <ion-note>{{'setting.form.conditional-note'|translate}}</ion-note>
     </ion-item>
     <ion-item *ngIf="question.isOfType('tari-form')">
         <ion-icon name="tari" item-left>たり</ion-icon>
@@ -32,6 +32,10 @@
     <ion-item *ngIf="question.isOfType('passive')">
         <ion-icon name="bonfire" item-left></ion-icon>
         {{'setting.form.passive'|translate}}
+    </ion-item>
+    <ion-item *ngIf="question.isOfType('causative')">
+        <ion-icon name="" item-left></ion-icon>
+        {{'setting.form.causative'|translate}}
     </ion-item>
 
     <!-- formal -->

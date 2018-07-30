@@ -1,7 +1,85 @@
 import {Verb} from './verb';
 
-describe('Verb model', () => {
+const IKU = new Verb({
+    'japanese': [{
+        'word': '行く',
+        'reading': 'いく'
+    }],
+    'senses': [{
+        'english_definitions': ['to go'],
+        'parts_of_speech': ['Godan verb - Iku/Yuku special class']
+    }]
+});
 
+const TABERU = new Verb({
+    "japanese": [
+        {
+            "word": "食べる",
+            "reading": "たべる"
+        },
+        {
+            "word": "喰べる",
+            "reading": "たべる"
+        }
+    ],
+    "senses": [
+        {
+            "english_definitions": ["to eat"],
+            "parts_of_speech": [
+                "Ichidan verb",
+                "Transitive verb"
+            ]
+        }
+    ],
+    "level": 5
+});
+
+const KURU = new Verb({
+    "japanese": [
+        {
+            "word": "来る",
+            "reading": "くる"
+        },
+        {
+            "word": "來る",
+            "reading": "くる"
+        }
+    ],
+    "senses": [
+        {
+            "english_definitions": [
+                "to come (spatially or temporally)"
+            ],
+            "parts_of_speech": [
+                "Kuru verb - special class",
+                "intransitive verb"
+            ]
+        },
+    ],
+    "level": 5
+});
+
+const SURU = new Verb(        {
+    "japanese": [
+        {
+            "word": "為る",
+            "reading": "する"
+        }
+    ],
+    "senses": [
+        {
+            "english_definitions": [
+                "to do"
+            ],
+            "parts_of_speech": [
+                "Suru verb - irregular"
+            ]
+        },
+    ],
+    "level": 3
+});
+
+describe('Verb model', () => {
     it('te-form of magaru', () => {
         let verb = new Verb({
             'japanese': [{
@@ -17,16 +95,7 @@ describe('Verb model', () => {
     });
 
     it('te-form of いく', () => {
-        let verb = new Verb({
-            'japanese': [{
-                'word': '行く',
-                'reading': 'いく'
-            }],
-            'senses': [{
-                'english_definitions': ['to go'],
-                'parts_of_speech': ['Godan verb - Iku/Yuku special class']
-            }]
-        });
+        let verb = IKU;
         expect(verb.teForm()).toBe('いって');
     });
 
@@ -117,5 +186,29 @@ describe('Verb model', () => {
             "level": 3
         });
         expect(verb.taiForm('negative', 'nonpast', 'polite')).toEqual(undefined);
+    });
+
+    it('Causative godan', () => {
+        let verb = IKU;
+        expect(verb.causative('plain', true, true)).toEqual(['いかせる']);
+        expect(verb.causative('polite', true, true)).toEqual(['いかせます']);
+    });
+
+    it('Causative ichidan', () => {
+        let verb = TABERU;
+        expect(verb.causative('plain', true, true)).toEqual(['たべさせる']);
+        expect(verb.causative('polite', true, true)).toEqual(['たべさせます']);
+    });
+
+    it('Causative 来る', () => {
+        let verb = KURU;
+        expect(verb.causative('plain', true, true)).toEqual(['こさせる']);
+        expect(verb.causative('polite', true, true)).toEqual(['こさせます']);
+    });
+
+    it('Causative する', () => {
+        let verb = SURU;
+        expect(verb.causative('plain', true, true)).toEqual(['させる']);
+        expect(verb.causative('polite', true, true)).toEqual(['させます']);
     });
 });

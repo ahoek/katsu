@@ -19,6 +19,7 @@ The following forms can be practised:
 * Imperative / prohibitive 
 * Conditional
 * Passive
+* Causative
 
 ## Demo
 
