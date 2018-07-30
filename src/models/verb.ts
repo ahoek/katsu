@@ -678,7 +678,7 @@ export class Verb {
                 stem = this.naiStem();
                 break;
             case '2':
-                stem = this.naiStem() + 'ら';
+                stem = this.naiStem() + 'さ';
                 break;
         }
 
@@ -687,10 +687,10 @@ export class Verb {
             stem = this.removeSuru() + 'さ';
         }
         if (this.partOfSpeech === 'Kuru verb - special class') {
-            stem = 'こら';
+            stem = 'こさ';
         }
 
-        const conjugation = stem + 'させ';
+        const conjugation = stem + 'せる';
 
         // Treat the conjugation base as an ichidan verb
         const definition = <JishoDefinition> {
