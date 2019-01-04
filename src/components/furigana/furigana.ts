@@ -72,30 +72,35 @@ export class FuriganaComponent {
             }
         }
         tokens.push(currentToken);
-        
+
         return tokens;
     }
 
     // Find the position of the kana tokens in the reading
     private addPositionToTokens(tokens: WordToken[]) {
         let reading = this.reading;
+        let previousToken;
+
+        // Start with the last token
         for (let i = tokens.length - 1; i >= 0; i--) {
             let token = tokens[i];
-            if (token.type == 'kana') {
+            if (token.type === 'kana') {
                 token.readingStop = this.reading.length;
                 token.readingStart = token.readingStop - token.content.length;
                 reading = reading.slice(0, -1 * token.content.length);
             }
-            // Add stop for last token
-            if (token.type == 'kanji') {
+            if (token.type === 'kanji') {
                 token.readingStop = reading.length - 1;
 
-                if (i == 0) {
+                if (i === 0) {
+                    // Add stop for last token
                     token.readingStart = 0;
                 } else {
                     // Check previous (kana) token
-                    if (tokens[i - 1]) {
-                        token.readingStart = reading.indexOf(tokens[i - 1].content, i - 1) + 1;
+                    previousToken = tokens[i - 1];
+                    if (previousToken) {
+                        token.readingStart = reading.indexOf(previousToken.content, i - 1)
+                            + previousToken.content.length;
                     }
                 }
                 reading = reading.slice(0, token.readingStart - token.readingStop - 1);
@@ -108,7 +113,7 @@ export class FuriganaComponent {
         let markup = '';
         for (let token of tokens) {
             let furigana;
-            if (token.type == 'kanji') {
+            if (token.type === 'kanji') {
                 furigana = this.reading.substring(token.readingStart, token.readingStop + 1);
                 markup += `<ruby>${token.content}<rt>${furigana}</rt></ruby>`;
             } else {
