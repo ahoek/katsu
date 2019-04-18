@@ -39,7 +39,6 @@ export class HomePage {
     });
   }
 
-
   ionViewDidEnter() {
     this.platform.ready().then(() => {
       // this.google.trackView('Home Page');
@@ -57,13 +56,6 @@ export class HomePage {
     this.platform.ready().then(() => {
       // this.google.trackEvent('Review', 'start', '', 1);
     });
-  }
-
-  /**
-   * Go to information page
-   */
-  showInformation() {
-    this.navCtrl.push('InformationPage');
   }
 
   setLanguage(language) {
