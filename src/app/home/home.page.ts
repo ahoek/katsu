@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {SettingsService} from '../shared/settings.service';
-import {Platform} from "@ionic/angular";
+import {NavController, Platform} from "@ionic/angular";
 import {TranslateService} from "@ngx-translate/core";
 import {SpeechService} from "../shared/speech.service";
 
@@ -15,6 +15,7 @@ export class HomePage {
 
 
   constructor(
+    public navCtrl: NavController,
     private storage: Storage,
     public platform: Platform,
     // private google: GoogleAnalytics,
@@ -51,7 +52,8 @@ export class HomePage {
   startReview() {
     // Save the settings in storage
     this.storage.set('settings', JSON.stringify(this.settings));
-    this.navCtrl.push('ReviewPage', {settings: this.settings});
+    // this.navCtrl.push('ReviewPage', {settings: this.settings});
+    this.navCtrl.navigateForward('/review');
 
     this.platform.ready().then(() => {
       // this.google.trackEvent('Review', 'start', '', 1);
