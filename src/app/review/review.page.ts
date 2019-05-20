@@ -60,22 +60,11 @@ export class ReviewPage implements OnInit {
 
   ionViewDidEnter() {
     // Add IME to answer field
-
-    console.log('bind', this.answerInputNative.nativeElement.firstElementChild);
+    const element = this.answerInputNative.nativeElement;
     try {
-      wanakana.bind(
-        this.answerInputNative.nativeElement.firstElementChild,
-        {
-          // useObsoleteKana: false,
-          // passRomaji: false,
-          // upcaseKatakana: false,
-          // ignoreCase: false,
-          // IMEMode: true,
-          // romanization: ROMANIZATIONS.HEPBURN
-        },
-        true);
+      wanakana.bind(element);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
     this.focusAnswerField();
   }
