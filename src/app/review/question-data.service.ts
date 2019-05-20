@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {SettingsService} from "../shared/settings.service";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Verb} from '../models/verb';
+import {Question} from '../models/question';
+import {SettingsService} from '../shared/settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,16 +32,16 @@ export class QuestionDataService {
 
   getQuestionsFromDictionary(dictionary: any, settings: SettingsService, options: string[]): Question[] {
     const numberOfQuestions = settings.amount || 10;
-    let questions: Question[] = [];
+    const questions: Question[] = [];
 
-    if (options.length == 0) {
+    if (options.length === 0) {
       return questions;
     }
 
     while (questions.length < numberOfQuestions) {
-      let questionType: string = this.getRandomItem(options, false);
+      const questionType: string = this.getRandomItem(options, false);
 
-      let question = this.getQuestion(dictionary, settings, questionType);
+      const question = this.getQuestion(dictionary, settings, questionType);
       if (question) {
         questions.push(question);
       }

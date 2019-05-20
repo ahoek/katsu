@@ -33,7 +33,7 @@
       [question]="questions[index]"
       [settings]="settings">
   </app-review-settings-list>
-
+{{questions[index]|json}}
   <form (submit)="checkAnswer(questions[index])">
     <ion-item ngClass="answer-item">
       <ion-input
@@ -51,6 +51,8 @@
           autocapitalize="none"
           spellcheck="false">
       </ion-input>
+
+
       <button ion-button icon-only item-right clear type="submit"
               [ngClass]="{pulse: questions[index]?.answered}">
         <ion-icon name="arrow-forward"></ion-icon>

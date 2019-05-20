@@ -1,5 +1,5 @@
-// import * as wanakana from 'wanakana/lib/wanakana.esm.js';
 import * as wanakana from 'wanakana/wanakana.js';
+
 /**
  * Answer
  */

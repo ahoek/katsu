@@ -13,6 +13,7 @@
 */
 
 declare class wanakana {
+  // static bind(element: any, options: any);
   static isHiragana(input: string): boolean;
   static isKanji(input: string): boolean;
   static toKana(input: string): string;

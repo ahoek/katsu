@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-// import * as wanakana from 'wanakana/lib/wanakana.esm.js';
+import * as wanakana from 'wanakana/wanakana.js';
 import {WordToken} from '../../models/word-token';
 
 @Component({
