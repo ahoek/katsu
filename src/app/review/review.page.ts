@@ -19,12 +19,8 @@ export class ReviewPage implements OnInit {
 
   public questions: Question[] = [];
 
-  // Question settings
-  public settings: SettingsService;
-
   // Question index
   public index: number = 0;
-
 
   constructor(
     public navCtrl: NavController,
@@ -34,18 +30,17 @@ export class ReviewPage implements OnInit {
     // private keyboard: Keyboard,
     // private google: GoogleAnalytics,
     private speech: SpeechService,
+    public settings: SettingsService,
   ) {
-    // @todo get settings
-    // this.settings = this.navParams.get('settings') || SettingsService.getDefault();
-    this.settings = SettingsService.getDefault();
     this.questions[0] = new Question();
   }
 
   /**
    * Set up the review page
    */
-  ngOnInit() {
-    this.dataService.load(this.settings).then(questions => {
+  async ngOnInit() {
+    // this.settings = await this.settingsService.userSettings();
+    this.dataService.load().then(questions => {
       if (questions.length > 0) {
         this.questions = questions;
       }
@@ -97,6 +92,7 @@ export class ReviewPage implements OnInit {
   }
 
   showSummary() {
+    this.navCtrl.navigateForward('/summary');
     // this.navCtrl.push('SummaryPage', {questions: this.questions, delegate: this});
   }
 

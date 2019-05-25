@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {SettingsService} from '../shared/settings.service';
 import {NavController, Platform} from "@ionic/angular";
@@ -10,34 +10,27 @@ import {SpeechService} from "../shared/speech.service";
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
-  settings: any;
-
-
+export class HomePage implements OnInit {
   constructor(
     public navCtrl: NavController,
-    private storage: Storage,
     public platform: Platform,
     // private google: GoogleAnalytics,
     private translate: TranslateService,
     public speech: SpeechService,
+    public settings: SettingsService,
   ) {
-    // Default settings
-    this.settings = SettingsService.getDefault();
+  }
 
-    this.storage.get('settings').then(settingsJson => {
-      if (settingsJson) {
-        this.settings = Object.assign(this.settings, JSON.parse(settingsJson));
-        if (this.settings.language) {
-          this.setLanguage(this.settings.language);
-        }
-        if (this.settings.voice) {
-          this.speech.setVoiceByName(this.settings.voice);
-        }
-      } else {
-        this.storage.set('settings', JSON.stringify(this.settings));
-      }
-    });
+  async ngOnInit() {
+    // Default settings
+    await this.settings.userSettings();
+
+    if (this.settings.language) {
+      this.setLanguage(this.settings.language);
+    }
+    if (this.settings.voice) {
+      this.speech.setVoiceByName(this.settings.voice);
+    }
   }
 
   ionViewDidEnter() {
@@ -51,7 +44,8 @@ export class HomePage {
    */
   startReview() {
     // Save the settings in storage
-    this.storage.set('settings', JSON.stringify(this.settings));
+    this.settings.store();
+
     // this.navCtrl.push('ReviewPage', {settings: this.settings});
     this.navCtrl.navigateForward('/review');
 

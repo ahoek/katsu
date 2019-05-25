@@ -9,7 +9,12 @@ import {SettingsService} from '../shared/settings.service';
 })
 export class QuestionDataService {
 
-  constructor(public http: HttpClient) {
+  questions: Question[] = [];
+
+  constructor(
+    public http: HttpClient,
+    public settings: SettingsService,
+  ) {
 
   }
 
@@ -18,14 +23,17 @@ export class QuestionDataService {
    *
    * SettingsService to create the answers
    */
-  load(settings: SettingsService) {
+  async load(): Promise<Question[]> {
+    await this.settings.userSettings();
+
     return new Promise<Question[]>(resolve => {
       const url = 'assets/data/questions/words.json';
-      const options = settings.getQuestionTypeOptions();
+      const options = this.settings.getQuestionTypeOptions();
       console.log('question types', options);
 
       this.http.get(url).subscribe(dictionary => {
-        resolve(this.getQuestionsFromDictionary(dictionary, settings, options));
+        this.questions = this.getQuestionsFromDictionary(dictionary, this.settings, options);
+        resolve(this.questions);
       });
     });
   }

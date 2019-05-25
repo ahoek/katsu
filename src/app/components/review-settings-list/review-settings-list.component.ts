@@ -11,14 +11,11 @@ export class ReviewSettingsListComponent implements OnInit {
   @Input('question') question: Question;
   @Input('settings') settings: SettingsService;
 
-  constructor() {
+  constructor(
+    public settings: SettingsService,
+  ) {
   }
 
   ngOnInit() {
-    if (!this.settings) {
-      this.settings = SettingsService.getDefault();
-    }
-
   }
-
 }

@@ -2,19 +2,30 @@
  * Review settings
  */
 import { Injectable } from '@angular/core';
+import {Storage} from '@ionic/storage';
+import {Question} from '../models/question';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SettingsService {
 
-  verb: true;
-  iAdjective: false;
-  naAdjective: false;
+  private _verb = true;
+  get verb() { return this._verb; }
+  set verb(value) { this._verb = value; }
 
-  private _normal: boolean;
+  private _iAdjective = false;
+  get iAdjective() { return this._iAdjective; }
+  set iAdjective(value) { this._iAdjective = value; }
+
+  private _naAdjective = false;
+  get naAdjective() { return this._naAdjective; }
+  set naAdjective(value) { this._naAdjective = value; }
+
+  private _normal = true;
   get normal(): boolean {
     return this._normal;
   }
-
   set normal(value) {
     this._normal = value;
     if (this._normal) {
@@ -25,11 +36,10 @@ export class SettingsService {
     }
   }
 
-  private _teForm: boolean;
+  private _teForm = false;
   get teForm(): boolean {
     return this._teForm;
   }
-
   set teForm(value) {
     this._teForm = value;
     if (this._teForm) {
@@ -37,11 +47,10 @@ export class SettingsService {
     }
   }
 
-  private _volitional: boolean;
+  private _volitional = false;
   get volitional(): boolean {
     return this._volitional;
   }
-
   set volitional(value) {
     this._volitional = value;
     if (this._volitional) {
@@ -50,11 +59,10 @@ export class SettingsService {
     }
   }
 
-  private _taiForm: boolean;
+  private _taiForm = false;
   get taiForm(): boolean {
     return this._taiForm;
   }
-
   set taiForm(value) {
     this._taiForm = value;
     if (this._taiForm) {
@@ -65,11 +73,10 @@ export class SettingsService {
     }
   }
 
-  private _potential: boolean;
+  private _potential = false;
   get potential(): boolean {
     return this._potential;
   }
-
   set potential(value) {
     this._potential = value;
     if (this._potential) {
@@ -80,11 +87,10 @@ export class SettingsService {
     }
   }
 
-  private _imperative: boolean;
+  private _imperative = false;
   get imperative(): boolean {
     return this._imperative;
   }
-
   set imperative(value) {
     this._imperative = value;
     if (this._imperative) {
@@ -93,11 +99,10 @@ export class SettingsService {
     }
   }
 
-  private _conditional: boolean;
+  private _conditional = false
   get conditional(): boolean {
     return this._conditional;
   }
-
   set conditional(value) {
     this._conditional = value;
     if (this._conditional) {
@@ -106,11 +111,10 @@ export class SettingsService {
     }
   }
 
-  private _tariForm: boolean;
+  private _tariForm = false;
   get tariForm(): boolean {
     return this._tariForm;
   }
-
   set tariForm(value) {
     this._tariForm = value;
     if (this._tariForm) {
@@ -119,11 +123,10 @@ export class SettingsService {
     }
   }
 
-  private _passive: boolean;
+  private _passive = false;
   get passive(): boolean {
     return this._passive;
   }
-
   set passive(value) {
     this._passive = value;
     if (this._passive) {
@@ -134,7 +137,7 @@ export class SettingsService {
     }
   }
 
-  private _causative: boolean;
+  private _causative = false;
   get causative(): boolean {
     return this._causative;
   }
@@ -149,23 +152,49 @@ export class SettingsService {
     }
   }
 
-  polite: boolean;
-  plain: boolean;
+  private _polite = true;
+  get polite() { return this._polite; }
+  set polite(value) { this._polite = value; }
+  private _plain = false;
+  get plain() { return this._plain; }
+  set plain(value) { this._plain = value; }
 
-  past: boolean;
-  nonPast: boolean;
+  private _past = true;
+  get past() { return this._past; }
+  set past(value) { this._past = value; }
+  private _nonPast = true;
+  get nonPast() { return this._nonPast; }
+  set nonPast(value) { this._nonPast = value; }
 
-  positive: boolean;
-  negative: boolean;
+  private _positive = true;
+  get positive() { return this._positive; }
+  set positive(value) { this._positive = value; }
+  private _negative = true;
+  get negative() { return this._negative; }
+  set negative(value) { this._negative = value; }
 
-  jlptLevel: string;
-  leaveOutSuru: boolean;
-  reverse: boolean;
-  amount: number;
-  language: string;
-  voice: string;
+  private _jlptLevel = 'n3';
+  get jlptLevel() { return this._jlptLevel; }
+  set jlptLevel(value) { this._jlptLevel = value; }
+  private _leaveOutSuru = true;
+  get leaveOutSuru() { return this._leaveOutSuru; }
+  set leaveOutSuru(value) { this._leaveOutSuru = value; }
+  private _reverse = false;
+  get reverse() { return this._reverse; }
+  set reverse(value) { this._reverse = value; }
+  private _amount = 10;
+  get amount() { return this._amount; }
+  set amount(value) { this._amount = value; }
+  private _language: string;
+  get language() { return this._language; }
+  set language(value) { this._language = value; }
+  private _voice?: string;
+  get voice() { return this._voice; }
+  set voice(value) { this._voice = value; }
 
-  constructor() {
+  constructor(
+    private storage: Storage,
+  ) {
   }
 
   private needsVerb() {
@@ -198,51 +227,38 @@ export class SettingsService {
     }
   }
 
-  /**
-   * Get the default settings
-   */
-  static getDefault(): SettingsService {
-    const settings = new SettingsService();
-
-    settings.normal = true;
-    settings.teForm = false;
-    settings.volitional = false;
-    settings.taiForm = false;
-    settings.potential = false;
-    settings.imperative = false;
-    settings.conditional = false;
-    settings.tariForm = false;
-    settings.passive = false;
-    settings.causative = false;
-
-    settings.verb = true;
-    settings.iAdjective = false;
-    settings.naAdjective = false;
-
-    settings.polite = true;
-    settings.plain = true;
-
-    settings.past = true;
-    settings.nonPast = true;
-
-    settings.positive = true;
-    settings.negative = true;
-
-    settings.jlptLevel = 'n3';
-    settings.leaveOutSuru = true;
-    settings.reverse = false;
-    settings.amount = 10;
-    settings.voice = null;
-
-    return settings;
+  userSettings(): Promise {
+    return new Promise(resolve => {
+      this.storage.get('settings').then(settingsJson => {
+        if (settingsJson) {
+          console.log(settingsJson);
+          Object.assign(this, JSON.parse(settingsJson));
+        } else {
+          this.store();
+        }
+        resolve();
+      });
+    });
   }
+
+  store() {
+    const settings = {};
+    Object.keys(this).forEach((key: string) => {
+      if (key.startsWith('_')) {
+        settings[key.substring(1)] = this[key];
+      }
+    });
+    this.storage.set('settings', JSON.stringify(settings));
+  }
+
+
 
   /**
    * Get the available question options
    */
   getQuestionTypeOptions(): string[] {
     let options: string[] = [];
-
+console.log('geto', this)
     this.addNormal(options);
     this.addTeForm(options);
 
@@ -295,7 +311,7 @@ export class SettingsService {
     if (this.causative) {
       this.addCausative(options);
     }
-
+    console.log('options', options);
     return options;
   }
 
