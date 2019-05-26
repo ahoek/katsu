@@ -1,47 +1,47 @@
 
-page-home {
-  .toolbar-title,
-  ion-footer .button {
-    text-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
-  }
+.toolbar-title,
+ion-footer .button {
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
+}
 
-  [name='no-suru'],
-  [name='tari'] {
+
+ion-footer {
+  .button-md {
+    margin: 0;
+  }
+}
+
+[slot='start'] {
+  font-size: 1.5rem;
+
+  &[name='no-suru'],
+  &[name='tari'] {
     min-height: 1.3rem;
-    font-size: 1.3rem;
+    font-size: .9rem;
   }
 
-  [name='no-suru'] {
+  &[name='no-suru'] {
     text-decoration: line-through;
   }
 
-  ion-footer {
-    .button-md {
-      margin: 0;
-    }
+}
+
+ion-item:hover {
+  [slot='start'] {
+    transition: color 200ms ease-in-out;
+    --color: var(--ion-color-primary);
+    animation: pulse2 600ms linear infinite;
   }
 
-  ion-icon[name=''] {
-    font-size: 2.3rem;
+  [slot='start'][name='bowtie'] {
+    animation: spin 600ms linear infinite;
   }
 
-  ion-item:hover {
-    ion-icon {
-      transition: color 200ms ease-in-out;
-      //color: color($colors, primary);
-      animation: pulse2 600ms linear infinite;
-    }
-
-    ion-icon[name='bowtie'] {
-      animation: spin 600ms linear infinite;
-    }
-
-    ion-icon[name='heart'] {
-      animation: pulse1 600ms linear infinite;
-    }
+  [slot='start'][name='heart'] {
+    animation: pulse1 600ms linear infinite;
   }
+}
 
-  .start-review {
-    margin-bottom: 0;
-  }
+.start-review {
+  margin-bottom: 0;
 }

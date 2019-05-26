@@ -19,7 +19,7 @@
         <ion-item>
             <ion-label>{{'setting.form.normal'|translate}}</ion-label>
             <ion-checkbox [(ngModel)]="settings.normal" slot="end"></ion-checkbox>
-            <span class="text-icon" slot="start"></span>
+            <span class="text-icon" slot="start"> </span>
         </ion-item>
         <ion-item>
             <ion-label>{{'setting.form.te-form'|translate}}</ion-label>
@@ -38,7 +38,7 @@
             <ion-checkbox [(ngModel)]="settings.taiForm"
                           [disabled]="settings.verb === false"
                           slot="end"></ion-checkbox>
-            <ion-icon name="heart" slot="left"></ion-icon>
+            <ion-icon name="heart" slot="start"></ion-icon>
         </ion-item>
         <ion-item>
             <ion-label>{{'setting.form.tari-form'|translate}}</ion-label>

@@ -24,7 +24,7 @@
   <ion-item class="dictionary">
     <furigana [input]="currentQuestion()"></furigana>
 
-    <ion-note item-right>
+    <ion-note slot="end" class="note">
       {{questions[index]?.meaning}}
     </ion-note>
   </ion-item>
@@ -42,20 +42,24 @@
           lang="ja"
           [(ngModel)]="questions[index].givenAnswer"
           [ngModelOptions]="{standalone: true}"
-          class="answer-input"
+          class="answer-input native-input sc-ion-input-ios"
           type="text"
           placeholder="答え"
           inputmode="kana"
           autocomplete="off"
           autocorrect="off"
           autocapitalize="none"
-          spellcheck="false"/>
+          spellcheck="false"
+      />
 
-      <ion-button slot="end" type="submit"
+      <ion-button slot="end" fill="clear" type="submit"
               [ngClass]="{pulse: questions[index]?.answered}">
         <ion-icon name="arrow-forward"></ion-icon>
       </ion-button>
     </ion-item>
+<!--    <ion-item>-->
+<!--      <ion-input value=""></ion-input>-->
+<!--    </ion-item>-->
   </form>
 
   <!-- Show all allowed answers if given answer is incorrect -->

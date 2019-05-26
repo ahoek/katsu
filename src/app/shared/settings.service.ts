@@ -99,7 +99,7 @@ export class SettingsService {
     }
   }
 
-  private _conditional = false
+  private _conditional = false;
   get conditional(): boolean {
     return this._conditional;
   }
@@ -227,7 +227,7 @@ export class SettingsService {
     }
   }
 
-  userSettings(): Promise {
+  userSettings(): Promise<SettingsService> {
     return new Promise(resolve => {
       this.storage.get('settings').then(settingsJson => {
         if (settingsJson) {
@@ -236,7 +236,7 @@ export class SettingsService {
         } else {
           this.store();
         }
-        resolve();
+        resolve(this);
       });
     });
   }

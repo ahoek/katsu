@@ -11,7 +11,11 @@
   border: .55px solid #ccc;
   border-radius: 5px;
   display: inline-block;
-  font-size: 2.5rem;
+  font-size: 2rem;
+
+  furigana {
+    font-size: 1.2em;
+  }
 }
 
 ruby {

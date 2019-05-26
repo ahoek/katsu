@@ -56,12 +56,17 @@
   }
 }
 
-
 .answer-input,
 [type='submit'] {
   background-color: transparent;
 }
 
+.answer-input {
+  appearance: none;
+  width: 100%;
+  outline: none;
+  border: none;
+}
 
 .correct {
   .answer-item {
@@ -82,11 +87,5 @@
 
   [type='submit'] {
     color: var(--ion-color-danger-contrast);
-  }
-}
-
-.answer {
-  furigana {
-    font-size: 1.2em;
   }
 }

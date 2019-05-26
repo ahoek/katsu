@@ -46,19 +46,19 @@ export class FuriganaComponent {
     let lastType;
     let currentToken = new WordToken();
 
-    let tokens: any[] = [];
+    const tokens: any[] = [];
     for (let i = 0; i < this.word.length; i++) {
-      let wordPart = this.word[i];
+      const wordPart = this.word[i];
 
       lastType = currentType;
 
-      if (wanakana.isKanji(wordPart) || wordPart == '々') {
+      if (wanakana.isKanji(wordPart) || wordPart === '々') {
         currentType = 'kanji';
       } else {
         currentType = 'kana';
       }
 
-      if (lastType != currentType) {
+      if (lastType !== currentType) {
         // start new token
         if (currentToken.content !== '') {
           tokens.push(currentToken);
@@ -83,7 +83,7 @@ export class FuriganaComponent {
 
     // Start with the last token
     for (let i = tokens.length - 1; i >= 0; i--) {
-      let token = tokens[i];
+      const token = tokens[i];
       if (token.type === 'kana') {
         token.readingStop = this.reading.length;
         token.readingStart = token.readingStop - token.content.length;
@@ -111,7 +111,7 @@ export class FuriganaComponent {
   // set the ruby markup
   private getMarkupFromTokens(tokens: WordToken[]): string {
     let markup = '';
-    for (let token of tokens) {
+    for (const token of tokens) {
       let furigana;
       if (token.type === 'kanji') {
         furigana = this.reading.substring(token.readingStart, token.readingStop + 1);
