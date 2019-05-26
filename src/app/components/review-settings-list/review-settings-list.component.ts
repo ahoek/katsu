@@ -12,7 +12,6 @@ export class ReviewSettingsListComponent implements OnInit {
   @Input('settings') settings: SettingsService;
 
   constructor(
-    public settings: SettingsService,
   ) {
   }
 

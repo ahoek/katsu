@@ -81,7 +81,7 @@ export class QuestionDataService {
       return;
     }
 
-    let verb = new Verb(word);
+    const verb = new Verb(word);
     if (!verb.word) {
       return;
     }
@@ -109,7 +109,7 @@ export class QuestionDataService {
   getRandomItem(items: Array<any>, removeItem: boolean = true): any {
     const randomIndex = Math.floor(Math.random() * items.length);
     if (removeItem === true) {
-      let item = items.splice(randomIndex, 1);
+      const item = items.splice(randomIndex, 1);
       return item[0];
     } else {
       return items[randomIndex];

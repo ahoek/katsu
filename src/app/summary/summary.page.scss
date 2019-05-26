@@ -1,0 +1,30 @@
+ion-content * {
+  font-size: 2.5rem;
+}
+
+.number {
+  font-size: 2rem;
+  color: #666;
+
+  &::after {
+    content: '.';
+  }
+}
+
+.summary {
+  overflow-y: scroll;
+  display: block;
+}
+
+
+.correct .given-answer {
+  //color: color($colors, correct);
+}
+
+.incorrect .given-answer {
+  //color: color($colors, incorrect);
+}
+
+answers ion-list.list-ios {
+  margin-bottom: 0;
+}

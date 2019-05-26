@@ -31,12 +31,12 @@ export class Question {
   }
 
   static createFromVerb(verb: Verb): Question {
-    let question = new Question();
+    const question = new Question();
     return question.setVerb(verb);
   }
 
   static createFromVerbWithType(verb: Verb, type: string): Question {
-    let question = Question.createFromVerb(verb);
+    const question = Question.createFromVerb(verb);
 
     question.type = type;
     question.setAnswers();

@@ -1,27 +1,27 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons begin>
-      <button ion-button icon-only (click)="showSummary()">
+    <ion-buttons slot="start">
+      <ion-button (click)="showSummary()">
         <ion-icon name="arrow-back"></ion-icon>
         {{'review.stop'|translate}}
-      </button>
+      </ion-button>
     </ion-buttons>
 
     <ion-title>
       {{index + 1}} / {{questions.length}}
     </ion-title>
 
-    <ion-buttons end>
-      <button ion-button icon-only (click)="nextQuestion()">
+    <ion-buttons slot="end">
+      <ion-button (click)="nextQuestion()">
         {{'review.skip'|translate}}
         <ion-icon name="arrow-forward"></ion-icon>
-      </button>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [ngClass]="classNames()">
-  <ion-item ngClass="dictionary">
+  <ion-item class="dictionary">
     <furigana [input]="currentQuestion()"></furigana>
 
     <ion-note item-right>
@@ -35,14 +35,14 @@
   </app-review-settings-list>
 
   <form (submit)="checkAnswer(questions[index])">
-    <ion-item ngClass="answer-item">
+    <ion-item class="answer-item">
       <input
           #answerInput
           #answerInputNative
           lang="ja"
           [(ngModel)]="questions[index].givenAnswer"
           [ngModelOptions]="{standalone: true}"
-          class="answerInput"
+          class="answer-input"
           type="text"
           placeholder="答え"
           inputmode="kana"
@@ -51,10 +51,10 @@
           autocapitalize="none"
           spellcheck="false"/>
 
-      <button ion-button icon-only item-right clear type="submit"
+      <ion-button slot="end" type="submit"
               [ngClass]="{pulse: questions[index]?.answered}">
         <ion-icon name="arrow-forward"></ion-icon>
-      </button>
+      </ion-button>
     </ion-item>
   </form>
 

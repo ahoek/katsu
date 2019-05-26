@@ -1,13 +1,15 @@
 <ion-header>
-  <ion-title>
-  {{'summary.title'|translate}}
-</ion-title>
+  <ion-toolbar>
+    <ion-title>
+      {{'summary.title'|translate}}
+    </ion-title>
 
-  <ion-buttons end>
-    <button ion-button routerLink="/home" routerDirection="root">
-      {{'summary.close'|translate}}
-    </button>
-  </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/home" routerDirection="root">
+        {{'summary.close'|translate}}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -26,8 +28,12 @@
 
       <app-answers [question]="question"></app-answers>
 
-      <ion-icon *ngIf="question.correct === true" name="checkmark-circle" color="primary" item-right></ion-icon>
-      <ion-icon *ngIf="question.correct === false" name="close-circle" item-right></ion-icon>
+      <ion-icon *ngIf="question.correct === true"
+                name="checkmark-circle"
+                color="success" slot="end"></ion-icon>
+      <ion-icon *ngIf="question.correct === false"
+                name="close-circle"
+                color="danger" slot="end"></ion-icon>
     </ion-item>
   </ion-list>
 </ion-content>

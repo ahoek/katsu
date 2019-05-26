@@ -164,7 +164,7 @@ export class Verb {
         return;
     }
     public isVerb() {
-        return
+        return;
     }
 
     /**
@@ -211,7 +211,7 @@ export class Verb {
      * Get the stem for plain negative forms (mizenkei/ A-stem)
      */
     public naiStem(): string {
-        let stem: string = '';
+        let stem = '';
         switch (this.group()) {
             case '1':
                 if (this.partOfSpeech === 'Godan verb with ru ending (irregular verb)') {
@@ -280,7 +280,7 @@ export class Verb {
     public naAdjectiveNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
         const endings = this.deAruNormalForm(speechLevel, positive, nonPast);
 
-        let conjugations: string[] = [];
+        const conjugations: string[] = [];
         endings.forEach(ending => {
             conjugations.unshift(this.reading + ending);
         });
@@ -368,7 +368,7 @@ export class Verb {
         let ending;
         switch (this.partOfSpeech) {
             case 'Ichidan verb':
-                ending = 'て'
+                ending = 'て';
                 break;
             case 'Godan verb with u ending':
             case 'Godan verb with tsu ending':
@@ -507,10 +507,10 @@ export class Verb {
      * Tense and modality are left out for now, because they conjugate like -eru
      */
     public potential(speechLevel: string): string[] {
-        let potential = [];
+        const potential = [];
         let stem = '';
 
-        if (this.word == '分かる') {
+        if (this.word === '分かる') {
             return;
         }
 
@@ -530,18 +530,18 @@ export class Verb {
                 break;
         }
 
-        let stems = [];
+        const stems = [];
         if (this.isSuru()) {
             stem = this.removeSuru();
             stems.push(stem + 'でき');
             // @todo fix readings with kanji for shown answers
-            //stems.push(stem + '出来');
-            //stems.push(stem + '出き');
+            // stems.push(stem + '出来');
+            // stems.push(stem + '出き');
         } else {
             stems.push(stem);
         }
 
-        // Handle speech level, condsider stem as ren'youkei
+        // Handle speech level, consider stem as ren'youkei
         for (stem of stems) {
             switch (speechLevel) {
                 case 'polite':
@@ -563,7 +563,7 @@ export class Verb {
      */
     public imperative(modality: string): string[] {
         let conjugation = '';
-        if (modality == 'positive') {
+        if (modality === 'positive') {
             switch (this.group()) {
                 case '1':
                     conjugation = this.changeLastVowel('U', 'E');
@@ -577,7 +577,7 @@ export class Verb {
                     if (this.isSuru()) {
                         conjugation = this.masuStem() + 'ろ';
                     } else {
-                        if (this.partOfSpeech == 'Kuru verb - special class') {
+                        if (this.partOfSpeech === 'Kuru verb - special class') {
                             conjugation = 'こい';
                         }
                     }
@@ -595,7 +595,7 @@ export class Verb {
      */
     public conditional(modality: string): string[] {
         let conjugation = '';
-        if (modality == 'positive') {
+        if (modality === 'positive') {
             switch (this.group()) {
                 case '1':
                 case '2':
@@ -711,7 +711,7 @@ export class Verb {
     /**
      * Get the last kana character
      */
-    private lastKana():string {
+    private lastKana(): string {
         return this.reading.slice(-1);
     }
 
