@@ -3,7 +3,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Question} from '../models/question';
 import {SettingsService} from '../shared/settings.service';
 import {NavController, NavParams, Platform} from '@ionic/angular';
-import {GoogleAnalytics} from '@ionic-native/google-analytics/ngx';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 import {SpeechService} from '../shared/speech.service';
 import {QuestionDataService} from './question-data.service';
 import * as wanakana from 'wanakana/wanakana.js';
@@ -26,9 +26,8 @@ export class ReviewPage implements OnInit {
     public navCtrl: NavController,
     public dataService: QuestionDataService,
     public platform: Platform,
-    // private navParams: NavParams,
     // private keyboard: Keyboard,
-    // private google: GoogleAnalytics,
+    private google: GoogleAnalytics,
     private speech: SpeechService,
     public settings: SettingsService,
   ) {
@@ -49,7 +48,7 @@ export class ReviewPage implements OnInit {
     });
 
     this.platform.ready().then(() => {
-      // this.google.trackView('Review Page');
+      this.google.trackView('Review Page');
     });
   }
 

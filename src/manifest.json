@@ -1,0 +1,14 @@
+{
+  "name": "katsu",
+  "short_name": "katsu",
+  "start_url": "index.html",
+  "display": "standalone",
+  "icons": [{
+    "src": "assets/icon/largetile.png",
+    "sizes": "310x310",
+    "type": "image/png"
+  }],
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "orientation": "portrait"
+}

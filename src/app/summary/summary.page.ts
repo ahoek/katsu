@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {NavController, Platform} from "@ionic/angular";
-import {QuestionDataService} from "../review/question-data.service";
-// import {GoogleAnalytics} from "@ionic-native/google-analytics/ngx";
+import { NavController, Platform } from '@ionic/angular';
+import { QuestionDataService } from '../review/question-data.service';
+import { Question } from '../models/question';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
   selector: 'app-summary',
@@ -16,10 +17,10 @@ export class SummaryPage implements OnInit {
     public navCtrl: NavController,
     public platform: Platform,
     private questionService: QuestionDataService,
-    // private google: GoogleAnalytics
+    private google: GoogleAnalytics
   ) {
     this.questions = this.questionService.questions;
-    //this.reviewDelegate = this.navParams.get('delegate');
+    // this.reviewDelegate = this.navParams.get('delegate');
   }
 
   ngOnInit() {
@@ -27,7 +28,7 @@ export class SummaryPage implements OnInit {
 
   ionViewDidLoad() {
     this.platform.ready().then(() => {
-      //this.google.trackView('Summary Page');
+      this.google.trackView('Summary Page');
     });
   }
 
@@ -35,7 +36,7 @@ export class SummaryPage implements OnInit {
    * Return to a review question
    */
   goToQuestion(index: number) {
-    this.reviewDelegate.goToQuestion(index);
-    this.navCtrl.pop();
+    // this.reviewDelegate.goToQuestion(index);
+    // this.navCtrl.pop();
   }
 }

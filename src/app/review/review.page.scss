@@ -2,19 +2,12 @@
   overflow: hidden;
 }
 
-.label-ios {
-  margin-top: 6px;
-  margin-bottom: 5px;
-}
-
 .item-block {
   min-height: 3.0rem;
 }
 
 .dictionary {
-  .label {
-    padding-top: 17px;
-  }
+  margin-top: 17px;
 
   furigana {
     max-width: 60%;
@@ -29,10 +22,6 @@
     max-width: 40%;
     color: var(--ion-color-dark);
   }
-}
-
-.list-ios .item-block .item-inner {
-  border-bottom-width: 0;
 }
 
 .answer-item {

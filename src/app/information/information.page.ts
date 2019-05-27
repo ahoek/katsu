@@ -11,13 +11,13 @@ export class InformationPage implements OnInit {
 
   constructor(
     public platform: Platform,
-    // private google: GoogleAnalytics,
+    private google: GoogleAnalytics,
   ) { }
 
   ngOnInit() {
     console.log('ionViewDidLoad InformationPage');
     this.platform.ready().then(() => {
-      // this.google.trackView('Information Page');
+      this.google.trackView('Information Page');
     });
   }
 

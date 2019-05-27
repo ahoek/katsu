@@ -1,6 +1,6 @@
 
-.toolbar-title,
-ion-footer .button {
+ion-title,
+ion-footer ion-button {
   text-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
 }
 
@@ -13,6 +13,9 @@ ion-footer {
 
 [slot='start'] {
   font-size: 1.5rem;
+  width: 29px;
+  text-align: center;
+  white-space: nowrap;
 
   &[name='no-suru'],
   &[name='tari'] {
@@ -29,7 +32,7 @@ ion-footer {
 ion-item:hover {
   [slot='start'] {
     transition: color 200ms ease-in-out;
-    --color: var(--ion-color-primary);
+    color: var(--ion-color-primary);
     animation: pulse2 600ms linear infinite;
   }
 

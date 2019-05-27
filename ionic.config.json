@@ -1,5 +1,7 @@
 {
   "name": "katsu",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
