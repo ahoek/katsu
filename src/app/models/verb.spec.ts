@@ -63,7 +63,7 @@ const KURU = new Verb({
     "level": 5
 });
 
-const SURU = new Verb(        {
+const SURU = new Verb({
     "japanese": [
         {
             "word": "為る",

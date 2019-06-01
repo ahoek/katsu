@@ -100,7 +100,7 @@ export class Question {
       return this.verb.volitional(speechLevel);
     }
     if (this.isOfType('potential')) {
-      return this.verb.potential(speechLevel);
+      return this.verb.potential(speechLevel,  modality === 'positive', tense === 'non-past');
     }
     if (this.isOfType('imperative')) {
       return this.verb.imperative(modality);

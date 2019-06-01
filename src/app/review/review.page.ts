@@ -1,11 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 // import {Keyboard} from '@ionic-native/keyboard';
 import {Question} from '../models/question';
-import {SettingsService} from '../shared/settings.service';
-import {NavController, NavParams, Platform} from '@ionic/angular';
+import { SettingsService} from '../shared/settings.service';
+import { NavController, Platform } from '@ionic/angular';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
-import {SpeechService} from '../shared/speech.service';
-import {QuestionDataService} from './question-data.service';
+import { SpeechService } from '../shared/speech.service';
+import { QuestionDataService } from './question-data.service';
 import * as wanakana from 'wanakana/wanakana.js';
 
 @Component({
@@ -102,7 +102,7 @@ export class ReviewPage implements OnInit {
    * If incorrect, give 'bad' styling and show the correct answer.
    */
   checkAnswer(question: Question) {
-    console.log('Chack answer for', question)
+    console.log('Check answer for', question)
     question.checkAnswer();
 
     // If an answer is already given, go to the next question directly.

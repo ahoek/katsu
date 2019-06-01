@@ -257,8 +257,8 @@ export class SettingsService {
    * Get the available question options
    */
   getQuestionTypeOptions(): string[] {
-    let options: string[] = [];
-console.log('geto', this)
+    const options: string[] = [];
+
     this.addNormal(options);
     this.addTeForm(options);
 
@@ -272,12 +272,13 @@ console.log('geto', this)
     }
 
     if (this.potential) {
-      if (this.plain) {
-        options.push('potential-plain-positive-present');
-      }
-      if (this.polite) {
-        options.push('potential-polite-positive-present');
-      }
+      this.addNormalOptionsFor('potential', options);
+      // if (this.plain) {
+      //   options.push('potential-plain-positive-present');
+      // }
+      // if (this.polite) {
+      //   options.push('potential-polite-positive-present');
+      // }
     }
 
     if (this.imperative) {

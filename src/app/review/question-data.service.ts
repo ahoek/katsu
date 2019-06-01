@@ -106,7 +106,7 @@ export class QuestionDataService {
   /**
    * Get a random item from an array and remove it from the array
    */
-  getRandomItem(items: Array<any>, removeItem: boolean = true): any {
+  getRandomItem<T>(items: Array<T>, removeItem: boolean = true): T {
     const randomIndex = Math.floor(Math.random() * items.length);
     if (removeItem === true) {
       const item = items.splice(randomIndex, 1);

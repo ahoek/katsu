@@ -506,8 +506,8 @@ export class Verb {
      *
      * Tense and modality are left out for now, because they conjugate like -eru
      */
-    public potential(speechLevel: string): string[] {
-        const potential = [];
+    public potential(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+        const potentials: string[] = [];
         let stem = '';
 
         if (this.word === '分かる') {
@@ -543,17 +543,12 @@ export class Verb {
 
         // Handle speech level, consider stem as ren'youkei
         for (stem of stems) {
-            switch (speechLevel) {
-                case 'polite':
-                    potential.push(stem + 'ます');
-                    break;
-                case 'plain':
-                    potential.push(stem + 'る');
-                    break;
-            }
+            const conjugation = stem + 'る';
+            const dictVerb = this.getIchidanVerb(conjugation);
+            const potential = dictVerb.verbNormalForm(speechLevel, positive, nonPast);
+            potentials.push(potential[0]);
         }
-
-        return potential;
+        return potentials;
     }
 
     /**
@@ -660,13 +655,7 @@ export class Verb {
         }
 
         const conjugation = stem + 'れる';
-
-        // Treat the passive conjugation base as an ichidan verb
-        const definition = <JishoDefinition> {
-            senses: [{parts_of_speech: ['Ichidan verb'], english_definitions: ['']}],
-            japanese: [{reading: conjugation}],
-        };
-        const passive = new Verb(definition);
+        const passive = this.getIchidanVerb(conjugation);
         return passive.verbNormalForm(speechLevel, positive, nonPast);
     }
 
@@ -691,13 +680,8 @@ export class Verb {
         }
 
         const conjugation = stem + 'せる';
+        const causative = this.getIchidanVerb(conjugation);
 
-        // Treat the conjugation base as an ichidan verb
-        const definition = <JishoDefinition> {
-            senses: [{parts_of_speech: ['Ichidan verb'], english_definitions: ['']}],
-            japanese: [{reading: conjugation}],
-        };
-        const causative = new Verb(definition);
         return causative.verbNormalForm(speechLevel, positive, nonPast);
     }
 
@@ -720,5 +704,16 @@ export class Verb {
      */
     private changeLastVowel(from: string, to: string): string {
         return this.removeLast() + HiraganaColumnHelper.change(this.lastKana(), from, to);
+    }
+
+    /**
+     * Get a verb to conjugate as Ichidan
+     */
+    private getIchidanVerb(reading: string): Verb {
+        const definition = <JishoDefinition> {
+            senses: [{parts_of_speech: ['Ichidan verb'], english_definitions: ['']}],
+            japanese: [{reading: reading}],
+        };
+        return new Verb(definition);
     }
 }
