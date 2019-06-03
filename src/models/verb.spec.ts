@@ -1,5 +1,9 @@
 import {Verb} from './verb';
 
+/**
+ * Note: test that anshin suru is not a na adjective
+ */
+
 const IKU = new Verb({
     'japanese': [{
         'word': '行く',

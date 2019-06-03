@@ -63,3 +63,9 @@ online dictionary [Jisho](http://jisho.org/).
 - Option to resume quiz
 - Better information on summary screen
 - If potential form contains dekiru in reading, don't show readings with kanji
+
+type: "potential-plain-negative-past"
+verb: Verb
+definition:
+japanese: Array(1)
+0: {word: "加減", reading: "かげん"}
