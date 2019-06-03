@@ -1,0 +1,37 @@
+ion-list {
+  margin-bottom: 0;
+}
+
+ion-item {
+  --inner-border-width: 0;
+  --inner-padding-top: 3px;
+  --inner-padding-bottom: 3px;
+  --padding-top: 1px;
+  --padding-bottom: 1px;
+  --min-height: 10px;
+  --background: var(--app-color-bg-light);
+}
+
+
+[slot='start'] {
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-size: 1.5rem;
+  width: 29px;
+  text-align: center;
+  white-space: nowrap;
+
+  &[name='no-suru'],
+  &[name='tari'] {
+    min-height: 1.3rem;
+    font-size: .9rem;
+  }
+
+  &[name='no-suru'] {
+    text-decoration: line-through;
+  }
+}
+
+ion-note {
+  margin-left: 5px;
+}

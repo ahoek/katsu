@@ -1,53 +1,46 @@
-import {Component, ViewChild} from '@angular/core';
-import {Platform, Nav} from 'ionic-angular';
-import {StatusBar} from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {Keyboard} from '@ionic-native/keyboard';
-import {GoogleAnalytics} from '@ionic-native/google-analytics';
-import {TranslateService} from '@ngx-translate/core';
-import {SpeechService} from "../providers/speech.service";
+import { Component } from '@angular/core';
+
+import { Platform } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { TranslateService } from '@ngx-translate/core';
+import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
 @Component({
-    templateUrl: 'app.html',
-    providers: [
-        Keyboard,        
-        SplashScreen,
-        StatusBar,
-    ],
+  selector: 'app-root',
+  templateUrl: 'app.component.html'
 })
-export class KatsuApp {
-    rootPage = 'HomePage';
-    @ViewChild(Nav) nav: Nav;
+export class AppComponent {
+  constructor(
+    private platform: Platform,
+    private splashScreen: SplashScreen,
+    private statusBar: StatusBar,
+    private google: GoogleAnalytics,
+    private readonly translate: TranslateService,
+  ) {
+    this.initializeApp();
+  }
 
-    constructor(
-        public platform: Platform, 
-        private splash: SplashScreen,
-        private statusBar: StatusBar,
-        private keyboard: Keyboard,
-        private google: GoogleAnalytics,
-        private translate: TranslateService,
-        private speech: SpeechService,
-    ) {
-        this.platform.ready().then(() => {
-            this.statusBar.styleDefault();
-            this.splash.hide();
-            this.keyboard.disableScroll(true);
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
 
-            this.translate.addLangs(['en', 'nl', 'ja']);
-            this.translate.setDefaultLang('en');
+      this.translate.addLangs(['en', 'nl', 'ja']);
+      this.translate.setDefaultLang('en');
 
-            let browserLang = this.translate.getBrowserLang();
-            this.translate.use(browserLang.match(/en|nl/) ? browserLang : 'en');
+      const browserLang = this.translate.getBrowserLang();
+      this.translate.use(browserLang.match(/en|nl/) ? browserLang : 'en');
 
-            // google
-            return this.google.startTrackerWithId('UA-92834344-1')
-                .then(() => {
-                    return this.google.enableUncaughtExceptionReporting(true);
-                }).then((_success) => {
-                    console.log('startTrackerWithId success');
-                }).catch((_error) => {
-                    console.error('enableUncaughtExceptionReporting', _error);
-                });
+      // google
+      return this.google.startTrackerWithId('UA-92834344-1')
+        .then(() => {
+          return this.google.enableUncaughtExceptionReporting(true);
+        }).then((_success) => {
+          console.log('startTrackerWithId success');
+        }).catch((_error) => {
+          console.error('enableUncaughtExceptionReporting', _error);
         });
-    }
+    });
+  }
 }

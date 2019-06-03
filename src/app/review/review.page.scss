@@ -1,0 +1,84 @@
+.scroll-content {
+  overflow: hidden;
+}
+
+.item-block {
+  min-height: 3.0rem;
+}
+
+.dictionary {
+  margin-top: 17px;
+
+  furigana {
+    max-width: 60%;
+    font-size: 2.1em;
+
+    rt {
+      font-size: 60%;
+    }
+  }
+
+  .note {
+    max-width: 40%;
+    color: var(--ion-color-dark);
+  }
+}
+
+.answer-item {
+  margin-top: 0;
+  font-size: 1.6em;
+  line-height: 1.2;
+
+  .answer-input::placeholder {
+    color: rgba(#aaa, .6);
+  }
+
+  &.item-ios.item-block .item-inner {
+    padding-right: 0;
+  }
+
+  [slot='end'] {
+    margin: 0;
+    height: 100%;
+    width: 45px;
+
+    ion-icon {
+      margin: 0;
+      font-size: 2em;
+    }
+  }
+}
+
+.answer-input,
+[type='submit'] {
+  background-color: transparent;
+}
+
+.answer-input {
+  appearance: none;
+  width: 100%;
+  outline: none;
+  border: none;
+}
+
+.correct {
+  .answer-item {
+    --background: var(--ion-color-success);
+    --color: var(--ion-color-success-contrast);
+  }
+
+  [type='submit'] {
+    color: var(--ion-color-success-contrast);
+  }
+}
+
+.incorrect {
+  .answer-item {
+    --background: var(--ion-color-danger);
+    --color: var(--ion-color-danger-contrast);
+  }
+
+  [type='submit'] {
+    color: var(--ion-color-danger-contrast);
+  }
+}

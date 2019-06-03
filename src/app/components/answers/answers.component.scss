@@ -1,0 +1,21 @@
+:host {
+  display: block;
+  overflow: scroll;
+  white-space: nowrap;
+  margin: 5px 10px 5px;
+}
+
+.answer {
+  padding: 15px 5px 0px 5px;
+  margin-right: 5px;
+  border: .55px solid #ccc;
+  border-radius: 5px;
+  display: inline-block;
+  font-size: 1.8rem;
+}
+
+ruby {
+  rt {
+    font-size: .6em;
+  }
+}

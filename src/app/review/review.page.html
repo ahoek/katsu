@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="showSummary()">
+        <ion-icon name="arrow-back"></ion-icon>
+        {{'review.stop'|translate}}
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>
+      {{index + 1}} / {{questions.length}}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="nextQuestion()">
+        {{'review.skip'|translate}}
+        <ion-icon name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [ngClass]="classNames()">
+  <ion-item class="dictionary">
+    <furigana [input]="currentQuestion()"></furigana>
+
+    <ion-note slot="end" class="note">
+      {{questions[index]?.meaning}}
+    </ion-note>
+  </ion-item>
+
+  <app-review-settings-list
+      [question]="questions[index]"
+      [settings]="settings">
+  </app-review-settings-list>
+
+  <form (submit)="checkAnswer(questions[index])">
+    <ion-item class="answer-item" lines="full">
+      <input
+          #answerInput
+          #answerInputNative
+          lang="ja"
+          [(ngModel)]="questions[index].givenAnswer"
+          [ngModelOptions]="{standalone: true}"
+          class="answer-input native-input sc-ion-input-ios"
+          type="text"
+          placeholder="答え"
+          inputmode="kana"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="none"
+          spellcheck="false"
+      />
+      <ion-button slot="end" fill="clear" type="submit"
+              [ngClass]="{pulse: questions[index]?.answered}">
+        <ion-icon name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-item>
+<!--    <ion-item>-->
+<!--      <ion-input value=""></ion-input>-->
+<!--    </ion-item>-->
+  </form>
+
+  <!-- Show all allowed answers if given answer is incorrect -->
+  <app-answers [question]="questions[index]"
+           *ngIf="questions[index]?.correct === false"></app-answers>
+
+</ion-content>

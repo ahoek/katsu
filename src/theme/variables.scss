@@ -1,61 +1,100 @@
-// Ionic Variables and Theming. For more info, please see:
-// http://ionicframework.com/docs/v2/theming/
-$font-path: '../assets/fonts';
+:root {
+  --ion-color-primary: #99C147;
+  --ion-color-primary-rgb: 153,193,71;
+  --ion-color-primary-contrast: #fff;
+  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-shade: #87aa3e;
+  --ion-color-primary-tint: #a3c759;
 
-@import 'ionic.globals';
+  --ion-color-secondary: #EF9709;
+  --ion-color-secondary-rgb: 239,151,9;
+  --ion-color-secondary-contrast: #fff;
+  --ion-color-secondary-contrast-rgb: 255,255,255;
+  --ion-color-secondary-shade: #d28508;
+  --ion-color-secondary-tint: #f1a122;
 
-// Shared Variables
-// --------------------------------------------------
-// To customize the look and feel of this app, you can override
-// the Sass variables found in Ionic's source scss files.
-// To view all the possible Ionic variables, see:
-// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+  --ion-color-tertiary: #7044ff;
+  --ion-color-tertiary-rgb: 112,68,255;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255,255,255;
+  --ion-color-tertiary-shade: #633ce0;
+  --ion-color-tertiary-tint: #7e57ff;
 
+  --ion-color-success: #10dc60;
+  --ion-color-success-rgb: 16,220,96;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255,255,255;
+  --ion-color-success-shade: #0ec254;
+  --ion-color-success-tint: #28e070;
 
+  --ion-color-warning: #ffce00;
+  --ion-color-warning-rgb: 255,206,0;
+  --ion-color-warning-contrast: #ffffff;
+  --ion-color-warning-contrast-rgb: 255,255,255;
+  --ion-color-warning-shade: #e0b500;
+  --ion-color-warning-tint: #ffd31a;
 
+  --ion-color-danger: #f04141;
+  --ion-color-danger-rgb: 245,61,61;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255,255,255;
+  --ion-color-danger-shade: #d33939;
+  --ion-color-danger-tint: #f25454;
 
-// Named Color Variables
-// --------------------------------------------------
-// Named colors makes it easy to reuse colors on various components.
-// It's highly recommended to change the default colors
-// to match your app's branding. Ionic uses a Sass map of
-// colors so you can add, rename and remove colors as needed.
-// The 'primary' color is the only required color in the map.
+  --ion-color-dark: #222428;
+  --ion-color-dark-rgb: 34,34,34;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255,255,255;
+  --ion-color-dark-shade: #1e2023;
+  --ion-color-dark-tint: #383a3e;
 
-$colors: (
-    primary:    rgb(153, 193, 71), // chiku-rin
-    secondary:  rgb(239, 151, 9), // yu-yake
-    danger:     #f53d3d, // red
-    light:      #f4f4f4, // light gray
-    dark:       #222, // black
-    correct: (
-        base:     #3b3,
-        contrast: #fff,
-    ),
-    incorrect: (
-        base:     #f53d3d,
-        contrast: #fff,
-    ),
-);
+  --ion-color-medium: #989aa2;
+  --ion-color-medium-rgb: 152,154,162;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255,255,255;
+  --ion-color-medium-shade: #86888f;
+  --ion-color-medium-tint: #a2a4ab;
 
-// App Theme
-// --------------------------------------------------
-// Ionic apps can have different themes applied, which can
-// then be future customized. This import comes last
-// so that the above variables are used and Ionic's
-// default are overridden.
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244,244,244;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0,0,0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
 
-@import 'ionic.theme.default';
+  --app-color-bg-dark: #ebebec;
+  --app-color-bg-light: #ededf0;
+}
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-border-color: var(--ion-color-dark-shade);
+    --ion-background-color: var(--ion-color-dark);
+    --ion-background-color-rgb: var(--ion-color-dark-rgb);
+    --ion-text-color: var(--ion-color-light);
+    --ion-text-color-rgb: var(--ion-color-light-rgb);
 
-// Ionicons
-// --------------------------------------------------
-// The premium icon font for Ionic. For more info, please see:
-// http://ionicframework.com/docs/v2/ionicons/
+    --ion-color-step-50: #232323;
+    --ion-color-step-100: #2e2e2e;
+    --ion-color-step-150: #3a3a3a;
+    --ion-color-step-200: #454545;
+    --ion-color-step-250: #515151;
+    --ion-color-step-300: #5d5d5d;
+    --ion-color-step-350: #8b8b8b;
+    --ion-color-step-400: #747474;
+    --ion-color-step-450: #7f7f7f;
+    --ion-color-step-500: #8b8b8b;
+    --ion-color-step-550: #979797;
+    --ion-color-step-600: #a2a2a2;
+    --ion-color-step-650: #aeaeae;
+    --ion-color-step-700: #b9b9b9;
+    --ion-color-step-750: #c5c5c5;
+    --ion-color-step-800: #d1d1d1;
+    --ion-color-step-850: #dcdcdc;
+    --ion-color-step-900: #e8e8e8;
+    --ion-color-step-950: #f3f3f3;
 
-@import 'ionic.ionicons';
-
-
-// Fonts
-// --------------------------------------------------
-@import 'noto-sans';
+    --app-color-bg-dark: #131300;
+    --app-color-bg-light: #152524;
+  }
+}

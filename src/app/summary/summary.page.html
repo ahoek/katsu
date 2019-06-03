@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>
+      {{'summary.title'|translate}}
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button routerLink="/home" routerDirection="root">
+        {{'summary.close'|translate}}
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let question of questions; let i = index;"
+              (click)="goToQuestion(i)"
+              [ngClass]="{
+                'correct': question.correct === true,
+                'incorrect': question.correct === false
+            }">
+      <ion-label text-wra>
+        <span class="number">{{i + 1}}</span>
+
+        <span class="given-answer" lang="ja">
+          {{question.givenAnswer}}
+        </span>
+      <app-answers [question]="question"></app-answers>
+      </ion-label>
+
+      <ion-icon *ngIf="question.correct === true"
+                name="checkmark-circle"
+                color="success"
+                slot="end"></ion-icon>
+      <ion-icon *ngIf="question.correct === false"
+                name="close-circle"
+                color="danger"
+                slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

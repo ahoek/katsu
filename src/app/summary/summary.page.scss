@@ -1,0 +1,29 @@
+ion-item {
+  font-size: 1.6rem;
+}
+
+.number {
+  color: #666;
+
+  &::after {
+    content: '.';
+  }
+}
+
+.summary {
+  overflow-y: scroll;
+  display: block;
+}
+
+
+.correct .given-answer {
+  color: var(--ion-color-success);
+}
+
+.incorrect .given-answer {
+  color: var(--ion-color-danger);
+}
+
+answers ion-list.list-ios {
+  margin-bottom: 0;
+}

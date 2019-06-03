@@ -1,0 +1,75 @@
+// http://ionicframework.com/docs/theming/
+@import '~@ionic/angular/css/core.css';
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
+
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
+
+* {
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+[lang='ja'],
+[lang='ja'] * {
+  font-family: 'YuKyokasho Yoko', sans-serif;
+  font-weight: normal;
+}
+
+@keyframes spin {
+  100% {
+    transform:rotate(360deg);
+  }
+}
+
+@keyframes pulse1 {
+  0% {
+    color: rgba(165, 25, 25, 1);
+  }
+  90% {
+    color: rgba(255, 0, 0, 0.0);
+  }
+  100% {
+    color: rgba(255, 0, 0, 1.0);
+  }
+}
+
+@keyframes pulse2 {
+  0% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse {
+  animation: pulse2 500ms linear infinite;
+}
+
+body {
+  margin: 0 auto;
+  display: flex;
+
+  background-color: var(--app-color-bg-dark);
+  background-image:
+    radial-gradient(circle at 100% 150%, var(--app-color-bg-dark) 24%, var(--app-color-bg-light) 25%, var(--app-color-bg-light) 28%, var(--app-color-bg-dark) 29%, var(--app-color-bg-dark) 36%, var(--app-color-bg-light) 36%, var(--app-color-bg-light) 40%, transparent 40%, transparent),
+    radial-gradient(circle at 0    150%, var(--app-color-bg-dark) 24%, var(--app-color-bg-light) 25%, var(--app-color-bg-light) 28%, var(--app-color-bg-dark) 29%, var(--app-color-bg-dark) 36%, var(--app-color-bg-light) 36%, var(--app-color-bg-light) 40%, transparent 40%, transparent),
+    radial-gradient(circle at 50%  100%, var(--app-color-bg-light) 10%, var(--app-color-bg-dark) 11%, var(--app-color-bg-dark) 23%, var(--app-color-bg-light) 24%, var(--app-color-bg-light) 30%, var(--app-color-bg-dark) 31%, var(--app-color-bg-dark) 43%, var(--app-color-bg-light) 44%, var(--app-color-bg-light) 50%, var(--app-color-bg-dark) 51%, var(--app-color-bg-dark) 63%, var(--app-color-bg-light) 64%, var(--app-color-bg-light) 71%, transparent 71%, transparent),
+    radial-gradient(circle at 100% 50%, var(--app-color-bg-light) 5%, var(--app-color-bg-dark) 6%, var(--app-color-bg-dark) 15%, var(--app-color-bg-light) 16%, var(--app-color-bg-light) 20%, var(--app-color-bg-dark) 21%, var(--app-color-bg-dark) 30%, var(--app-color-bg-light) 31%, var(--app-color-bg-light) 35%, var(--app-color-bg-dark) 36%, var(--app-color-bg-dark) 45%, var(--app-color-bg-light) 46%, var(--app-color-bg-light) 49%, transparent 50%, transparent),
+    radial-gradient(circle at 0    50%, var(--app-color-bg-light) 5%, var(--app-color-bg-dark) 6%, var(--app-color-bg-dark) 15%, var(--app-color-bg-light) 16%, var(--app-color-bg-light) 20%, var(--app-color-bg-dark) 21%, var(--app-color-bg-dark) 30%, var(--app-color-bg-light) 31%, var(--app-color-bg-light) 35%, var(--app-color-bg-dark) 36%, var(--app-color-bg-dark) 45%, var(--app-color-bg-light) 46%, var(--app-color-bg-light) 49%, transparent 50%, transparent);
+  background-size:100px 50px;
+}
+
+ion-app {
+  max-width: 700px;
+  margin: 0 auto;
+  position: relative;
+}
