@@ -16,11 +16,17 @@ export class SettingsService {
 
   private _iAdjective = false;
   get iAdjective() { return this._iAdjective; }
-  set iAdjective(value) { this._iAdjective = value; }
+  set iAdjective(value) {
+    this._iAdjective = value;
+    this.needsAdjectiveConjugations();
+  }
 
   private _naAdjective = false;
   get naAdjective() { return this._naAdjective; }
-  set naAdjective(value) { this._naAdjective = value; }
+  set naAdjective(value) {
+    this._naAdjective = value;
+    this.needsAdjectiveConjugations();
+  }
 
   private _normal = true;
   get normal(): boolean {
@@ -227,6 +233,12 @@ export class SettingsService {
     }
   }
 
+  private needsAdjectiveConjugations() {
+    if (!this.normal && !this.teForm && !this.conditional) {
+      this.normal = true;
+    }
+  }
+
   userSettings(): Promise<SettingsService> {
     return new Promise(resolve => {
       this.storage.get('settings').then(settingsJson => {
@@ -272,12 +284,6 @@ export class SettingsService {
 
     if (this.potential) {
       this.addNormalOptionsFor('potential', options);
-      // if (this.plain) {
-      //   options.push('potential-plain-positive-present');
-      // }
-      // if (this.polite) {
-      //   options.push('potential-polite-positive-present');
-      // }
     }
 
     if (this.imperative) {
