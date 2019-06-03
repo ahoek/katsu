@@ -100,7 +100,6 @@ export class ReviewPage implements OnInit {
    * If incorrect, give 'bad' styling and show the correct answer.
    */
   checkAnswer(question: Question) {
-    console.log('Check answer for', question)
     question.checkAnswer();
 
     // If an answer is already given, go to the next question directly.

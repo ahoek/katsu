@@ -231,7 +231,6 @@ export class SettingsService {
     return new Promise(resolve => {
       this.storage.get('settings').then(settingsJson => {
         if (settingsJson) {
-          console.log(settingsJson);
           Object.assign(this, JSON.parse(settingsJson));
         } else {
           this.store();
