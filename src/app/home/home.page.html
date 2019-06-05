@@ -1,276 +1,285 @@
 <ion-header>
-    <ion-toolbar color='secondary'>
-        <ion-title>
-            {{'setting.title'|translate}}
-        </ion-title>
-        <ion-buttons slot="end">
-            <ion-button icon-only routerLink="/information" routerDirection="forward">
-                <ion-icon name="information-circle"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
+  <ion-toolbar color='secondary'>
+    <ion-title>
+      {{'setting.title'|translate}}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button icon-only routerLink="/information" routerDirection="forward">
+        <ion-icon name="information-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-list>
-        <ion-list-header>
-            {{'setting.group-title.form'|translate}}
-        </ion-list-header>
-        <ion-item>
-            <ion-label>{{'setting.form.normal'|translate}}</ion-label>
-            <ion-checkbox [(ngModel)]="settings.normal" slot="end"></ion-checkbox>
-            <span class="text-icon" slot="start"> </span>
-        </ion-item>
-        <ion-item>
-            <ion-label>{{'setting.form.te-form'|translate}}</ion-label>
-            <ion-checkbox [(ngModel)]="settings.teForm" slot="end"></ion-checkbox>
-            <span slot="start">て</span>
-        </ion-item>
-        <ion-item>
-            <ion-label>{{'setting.form.volitional'|translate}}</ion-label>
-            <ion-checkbox [(ngModel)]="settings.volitional"
-                          [disabled]="settings.verb === false"
-                          slot="end"></ion-checkbox>
-            <ion-icon name="walk" slot="start"></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>{{'setting.form.tai-form'|translate}}</ion-label>
-            <ion-checkbox [(ngModel)]="settings.taiForm"
-                          [disabled]="settings.verb === false"
-                          slot="end"></ion-checkbox>
-            <ion-icon name="heart" slot="start"></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>{{'setting.form.tari-form'|translate}}</ion-label>
-            <ion-checkbox [(ngModel)]="settings.tariForm"
-                          [disabled]="settings.verb === false"
-                          slot="end"></ion-checkbox>
-            <span name="tari" slot="start">たり</span>
-        </ion-item>
-        <ion-item>
-            <ion-label>{{'setting.form.potential'|translate}}</ion-label>
-            <ion-checkbox [(ngModel)]="settings.potential"
-                          [disabled]="settings.verb === false"
-                          slot="end"></ion-checkbox>
-            <ion-icon name="flag" slot="start"></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>{{'setting.form.imperative'|translate}}</ion-label>
-            <ion-checkbox [(ngModel)]="settings.imperative"
-                          [disabled]="settings.verb === false"
-                          slot="end"></ion-checkbox>
-            <ion-icon name="megaphone" slot="start"></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                {{'setting.form.conditional'|translate}}
-                <ion-note>{{'setting.form.conditional-note'|translate}}</ion-note>
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.conditional"
-                          slot="end"></ion-checkbox>
-            <ion-icon name="code-download" slot="start"></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                {{'setting.form.passive'|translate}}
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.passive"
-                          [disabled]="settings.verb === false"
-                          slot="end"></ion-checkbox>
-            <ion-icon name="bonfire" slot="start"></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                {{'setting.form.causative'|translate}}
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.causative"
-                          [disabled]="settings.verb === false"
-                          slot="end"></ion-checkbox>
-            <span slot="start"></span>
-        </ion-item>
-    </ion-list>
+  <ion-list>
+    <ion-list-header>
+      {{'setting.group-title.form'|translate}}
+    </ion-list-header>
+    <ion-item>
+      <ion-label>{{'setting.form.normal'|translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="settings.normal" slot="end"></ion-checkbox>
+      <span class="text-icon" slot="start"> </span>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'setting.form.te-form'|translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="settings.teForm" slot="end"></ion-checkbox>
+      <span slot="start">て</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'setting.form.volitional'|translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="settings.volitional"
+                    [disabled]="settings.verb === false"
+                    slot="end"></ion-checkbox>
+      <ion-icon name="walk" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'setting.form.tai-form'|translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="settings.taiForm"
+                    [disabled]="settings.verb === false"
+                    slot="end"></ion-checkbox>
+      <ion-icon name="heart" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'setting.form.tari-form'|translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="settings.tariForm"
+                    [disabled]="settings.verb === false"
+                    slot="end"></ion-checkbox>
+      <span name="tari" slot="start">たり</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'setting.form.potential'|translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="settings.potential"
+                    [disabled]="settings.verb === false"
+                    slot="end"></ion-checkbox>
+      <ion-icon name="flag" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'setting.form.imperative'|translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="settings.imperative"
+                    [disabled]="settings.verb === false"
+                    slot="end"></ion-checkbox>
+      <ion-icon name="megaphone" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{'setting.form.conditional'|translate}}
+        <ion-note>{{'setting.form.conditional-note'|translate}}</ion-note>
+      </ion-label>
+      <ion-checkbox [(ngModel)]="settings.conditional"
+                    slot="end"></ion-checkbox>
+      <ion-icon name="code-download" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{'setting.form.passive'|translate}}
+      </ion-label>
+      <ion-checkbox [(ngModel)]="settings.passive"
+                    [disabled]="settings.verb === false"
+                    slot="end"></ion-checkbox>
+      <ion-icon name="bonfire" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{'setting.form.causative'|translate}}
+      </ion-label>
+      <ion-checkbox [(ngModel)]="settings.causative"
+                    [disabled]="settings.verb === false"
+                    slot="end"></ion-checkbox>
+      <span slot="start"></span>
+    </ion-item>
+  </ion-list>
 
-    <ion-list>
-        <ion-list-header>
-            {{'setting.group-title.part-of-speech'|translate}}
-        </ion-list-header>
-        <ion-item>
-            <ion-label>
-                {{'setting.part-of-speech.verb'|translate}}
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.verb" slot="end"></ion-checkbox>
-            <ion-icon name="text" slot="start"></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                {{'setting.part-of-speech.i-adjective'|translate}}
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.iAdjective" slot="end"></ion-checkbox>
-            <span slot="start">い</span>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                {{'setting.part-of-speech.na-adjective'|translate}}
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.naAdjective" slot="end"></ion-checkbox>
-            <span slot="start">な</span>
-        </ion-item>
-    </ion-list>
+  <ion-list>
+    <ion-list-header>
+      {{'setting.group-title.part-of-speech'|translate}}
+    </ion-list-header>
+    <ion-item>
+      <ion-label>
+        {{'setting.part-of-speech.verb'|translate}}
+      </ion-label>
+      <ion-checkbox [(ngModel)]="settings.verb" slot="end"></ion-checkbox>
+      <ion-icon name="text" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{'setting.part-of-speech.i-adjective'|translate}}
+      </ion-label>
+      <ion-checkbox [(ngModel)]="settings.iAdjective" slot="end"></ion-checkbox>
+      <span slot="start">い</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{'setting.part-of-speech.na-adjective'|translate}}
+      </ion-label>
+      <ion-checkbox [(ngModel)]="settings.naAdjective" slot="end"></ion-checkbox>
+      <span slot="start">な</span>
+    </ion-item>
+  </ion-list>
 
-    <ion-list>
-        <ion-list-header>
-            {{'setting.group-title.speech-level'|translate}}
-        </ion-list-header>
-        <ion-item>
-            <ion-label>
-                {{'setting.speech-level.formal'|translate}}
-                <ion-note>{{'setting.speech-level.formal-note'|translate}}</ion-note>
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.polite" slot="end"></ion-checkbox>
-            <ion-icon name="bowtie" slot="start"></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                {{'setting.speech-level.informal'|translate}}
-                <ion-note>{{'setting.speech-level.informal-note'|translate}}</ion-note>
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.plain" slot="end"></ion-checkbox>
-            <ion-icon name="shirt" slot="start"></ion-icon>
-        </ion-item>
-    </ion-list>
+  <ion-list>
+    <ion-list-header>
+      {{'setting.group-title.speech-level'|translate}}
+    </ion-list-header>
+    <ion-item>
+      <ion-label>
+        {{'setting.speech-level.formal'|translate}}
+        <ion-note>{{'setting.speech-level.formal-note'|translate}}</ion-note>
+      </ion-label>
+      <ion-checkbox [(ngModel)]="settings.polite" slot="end"></ion-checkbox>
+      <ion-icon name="bowtie" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{'setting.speech-level.informal'|translate}}
+        <ion-note>{{'setting.speech-level.informal-note'|translate}}</ion-note>
+      </ion-label>
+      <ion-checkbox [(ngModel)]="settings.plain" slot="end"></ion-checkbox>
+      <ion-icon name="shirt" slot="start"></ion-icon>
+    </ion-item>
+  </ion-list>
 
-    <ion-list>
-        <ion-list-header>
-            {{'setting.group-title.tense'|translate}}
-        </ion-list-header>
-        <ion-item>
-            <ion-label>
-                {{'setting.tense.nonpast'|translate}}
-                <ion-note>{{'setting.tense.nonpast-note'|translate}}</ion-note>
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.nonPast" slot="end"></ion-checkbox>
-            <ion-icon name="fastforward" slot="start"></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>{{'setting.tense.past'|translate}}</ion-label>
-            <ion-checkbox [(ngModel)]="settings.past" slot="end"></ion-checkbox>
-            <ion-icon name="rewind" slot="start"></ion-icon>
-        </ion-item>
-    </ion-list>
+  <ion-list>
+    <ion-list-header>
+      {{'setting.group-title.tense'|translate}}
+    </ion-list-header>
+    <ion-item>
+      <ion-label>
+        {{'setting.tense.nonpast'|translate}}
+        <ion-note>{{'setting.tense.nonpast-note'|translate}}</ion-note>
+      </ion-label>
+      <ion-checkbox [(ngModel)]="settings.nonPast" slot="end"></ion-checkbox>
+      <ion-icon name="fastforward" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'setting.tense.past'|translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="settings.past" slot="end"></ion-checkbox>
+      <ion-icon name="rewind" slot="start"></ion-icon>
+    </ion-item>
+  </ion-list>
 
-    <ion-list>
-        <ion-list-header>
-            {{'setting.group-title.positive/negative'|translate}}
-        </ion-list-header>
-        <ion-item>
-            <ion-label>
-                {{'setting.positive/negative.positive'|translate}}
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.positive" slot="end"></ion-checkbox>
-            <ion-icon name="happy" slot="start"></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                {{'setting.positive/negative.negative'|translate}}
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.negative" slot="end"></ion-checkbox>
-            <ion-icon name="sad" slot="start"></ion-icon>
-        </ion-item>
-    </ion-list>
+  <ion-list>
+    <ion-list-header>
+      {{'setting.group-title.positive/negative'|translate}}
+    </ion-list-header>
+    <ion-item>
+      <ion-label>
+        {{'setting.positive/negative.positive'|translate}}
+      </ion-label>
+      <ion-checkbox [(ngModel)]="settings.positive" slot="end"></ion-checkbox>
+      <ion-icon name="happy" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{'setting.positive/negative.negative'|translate}}
+      </ion-label>
+      <ion-checkbox [(ngModel)]="settings.negative" slot="end"></ion-checkbox>
+      <ion-icon name="sad" slot="start"></ion-icon>
+    </ion-item>
+  </ion-list>
 
-    <ion-list>
-        <ion-list-header>
-            {{'setting.group-title.jlpt-level'|translate}}
-        </ion-list-header>
-        <ion-radio-group [(ngModel)]="settings.jlptLevel">
-            <ion-item>
-                <ion-label>N5</ion-label>
-                <ion-radio value="n5"></ion-radio>
-            </ion-item>
-            <ion-item>
-                <ion-label>N4</ion-label>
-                <ion-radio value="n4"></ion-radio>
-            </ion-item>
-            <ion-item>
-                <ion-label>N3</ion-label>
-                <ion-radio value="n3"></ion-radio>
-            </ion-item>
-            <ion-item>
-                <ion-label>N2</ion-label>
-                <ion-radio value="n2"></ion-radio>
-            </ion-item>
-            <ion-item>
-                <ion-label>N1</ion-label>
-                <ion-radio value="n1"></ion-radio>
-            </ion-item>
-        </ion-radio-group>
-    </ion-list>
+  <ion-list>
+    <ion-list-header>
+      {{'setting.group-title.jlpt-level'|translate}}
+    </ion-list-header>
+    <ion-radio-group [(ngModel)]="settings.jlptLevel">
+      <ion-item>
+        <ion-label>N5</ion-label>
+        <ion-radio value="n5"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>N4</ion-label>
+        <ion-radio value="n4"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>N3</ion-label>
+        <ion-radio value="n3"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>N2</ion-label>
+        <ion-radio value="n2"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>N1</ion-label>
+        <ion-radio value="n1"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
 
-    <ion-list>
-        <ion-list-header>
-            {{'setting.group-title.special-options'|translate}}
-        </ion-list-header>
-        <ion-item>
-            <ion-label>{{'setting.special.no-suru'|translate}}</ion-label>
-            <ion-checkbox [(ngModel)]="settings.leaveOutSuru"
-                          [disabled]="settings.verb === false"
-                          slot="end"></ion-checkbox>
-            <span name="no-suru" slot="start">する</span>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                {{'setting.special.reverse'|translate}}
-                <ion-note>{{'setting.special.reverse-note'|translate}}</ion-note>
-            </ion-label>
-            <ion-checkbox [(ngModel)]="settings.reverse" slot="end"></ion-checkbox>
-            <ion-icon name="shuffle" slot="start"></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                {{'setting.special.amount'|translate}}
-            </ion-label>
-            <ion-select [(ngModel)]="settings.amount" slot="end">
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="30">30</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
-                <ion-select-option value="50">50</ion-select-option>
-            </ion-select>
-            <span slot="start">#</span>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                {{'setting.special.language'|translate}}
-            </ion-label>
-            <ion-select [ngModel]="settings.language" (ngModelChange)="setLanguage($event)" slot="end">
-                <ion-select-option value="en">English</ion-select-option>
-                <ion-select-option value="nl">Nederlands</ion-select-option>
-            </ion-select>
-            <ion-icon name="globe" slot="start"></ion-icon>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                {{'setting.special.voice'|translate}}
-            </ion-label>
-            <ion-select [ngModel]="settings.voice"
-                        (ngModelChange)="setVoice($event)"
-                        slot="end">
-                <ion-select-option value="">{{'setting.special.none'|translate}}</ion-select-option>
-                <ion-select-option *ngFor="let voice of speech.getVoices()"
-                                   value="{{voice.name}}" >
-                    {{voice.name}}
-                </ion-select-option>
-            </ion-select>
-            <ion-icon name="volume-high" slot="start"></ion-icon>
-        </ion-item>
-    </ion-list>
+  <ion-list>
+    <ion-list-header>
+      {{'setting.group-title.special-options'|translate}}
+    </ion-list-header>
+    <ion-item>
+      <ion-label>{{'setting.special.no-suru'|translate}}</ion-label>
+      <ion-checkbox [(ngModel)]="settings.leaveOutSuru"
+                    [disabled]="settings.verb === false"
+                    slot="end"></ion-checkbox>
+      <span name="no-suru" slot="start">する</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{'setting.special.reverse'|translate}}
+        <ion-note>{{'setting.special.reverse-note'|translate}}</ion-note>
+      </ion-label>
+      <ion-checkbox [(ngModel)]="settings.reverse" slot="end"></ion-checkbox>
+      <ion-icon name="shuffle" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{'setting.special.amount'|translate}}
+      </ion-label>
+      <ion-select [(ngModel)]="settings.amount"
+                  [selectedText]="settings.amount"
+                  interface="action-sheet"
+                  slot="end">
+        <ion-select-option value="10">10</ion-select-option>
+        <ion-select-option value="20">20</ion-select-option>
+        <ion-select-option value="30">30</ion-select-option>
+        <ion-select-option value="40">40</ion-select-option>
+        <ion-select-option value="50">50</ion-select-option>
+      </ion-select>
+      <span slot="start">#</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{'setting.special.language'|translate}}
+      </ion-label>
+      <ion-select [ngModel]="settings.language"
+                  (ngModelChange)="setLanguage($event)"
+                  interface="action-sheet"
+                  slot="end">
+        <ion-select-option value="en">English</ion-select-option>
+        <ion-select-option value="nl">Nederlands</ion-select-option>
+      </ion-select>
+      <ion-icon name="globe" slot="start"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        {{'setting.special.voice'|translate}}
+      </ion-label>
+      <ion-select [ngModel]="settings.voice"
+                  (ngModelChange)="setVoice($event)"
+                  interface="action-sheet"
+                  slot="end">
+        <ion-select-option value="">
+          {{'setting.special.none'|translate}}
+        </ion-select-option>
+        <ion-select-option *ngFor="let voice of speech.getVoices()"
+                           value="{{voice.name}}" >
+          {{voice.name}}
+        </ion-select-option>
+      </ion-select>
+      <ion-icon name="volume-high" slot="start"></ion-icon>
+    </ion-item>
+  </ion-list>
 </ion-content>
 
 <ion-footer>
-    <ion-button (click)="startReview()"
-                expand="full"
-                size="large"
-                class="start-review">
-        <span class="text">{{'home.start'|translate}}</span>
-    </ion-button>
+  <ion-button (click)="startReview()"
+              expand="full"
+              size="large"
+              class="start-review">
+    <span class="text">{{'home.start'|translate}}</span>
+  </ion-button>
 </ion-footer>

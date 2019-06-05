@@ -25,7 +25,7 @@ export class HomePage implements OnInit {
     // Default settings
     await this.settings.userSettings();
 
-    if (this.settings.language) {
+    if (this.settings.language !== this.translate.currentLang) {
       this.setLanguage(this.settings.language);
     }
     if (this.settings.voice) {

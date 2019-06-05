@@ -59,7 +59,7 @@ online dictionary [Jisho](http://jisho.org/).
 ## To do
 
 - Add complete dutch translation
-- Make start screen easier (disable if not correct settings)
+- Make start screen easier (disable if not correct settings, never allow incorrect setting combinations)
 - Option to resume quiz
 - If potential form contains dekiru in reading, don't show readings with kanji
 - Fix bug where na adjective is shown as verb:
@@ -68,3 +68,6 @@ online dictionary [Jisho](http://jisho.org/).
     definition:
     japanese: Array(1)
     0: {word: "加減", reading: "かげん"}
+- only select japanese voices or none at all
+- header height ios
+
