@@ -12,6 +12,8 @@ class JishoScraper
     protected $words = [];
     protected $baseRequest = '';
 
+    private $currentType;
+
     function __construct()
     {
         
@@ -37,10 +39,11 @@ class JishoScraper
             'adj-na',
         ];
         
-        $words = [];
         $dictionary = [];
         foreach ($types as $type) {
-            $this->baseRequest = $this->baseUrl.'?keyword='.urlencode('#jlpt-n'.$level.' #'.$type);
+            $this->baseRequest = $this->baseUrl.'?keyword='
+                .urlencode('#jlpt-n'.$level.' #'.$type);
+            $this->currentType = $type;
             echo $this->baseRequest."\n";
             $words = $this->getWordsFromPage(1);
             echo "# ".count($words)." $type\n";
@@ -80,14 +83,30 @@ class JishoScraper
     {
         foreach ($words as $index => $word) {
             $word['level'] = $this->level;
+            $word['japanese'] = [$word['japanese'][0]];
+            unset($word['slug']);
+            unset($word['jlpt']);
             unset($word['is_common']);
             unset($word['tags']);
             unset($word['attribution']);
             foreach ($word['senses'] as $key => $sense) {
-                if (!$sense['parts_of_speech'] || $sense['parts_of_speech'] == ['Wikipedia definition']) {
+                $pos = $sense['parts_of_speech'];
+                $pos = array_filter($pos, function ($p) {
+                    if ($this->currentType === 'adj-na') {
+                        return $p === 'Na-adjective';
+                    } else {
+                        return $p !== 'Noun' && $p !== 'No-adjective' && $p !== 'Adverb' && $p !== 'Na-adjective';
+                    }
+                });
+                if (
+                    !$pos
+                    || $pos === ['Wikipedia definition']
+                ) {
                     unset($word['senses'][$key]);
                     continue;
                 }
+                $sense['parts_of_speech'] = array_values($pos);
+
                 unset($sense['links']);
                 unset($sense['tags']);
                 unset($sense['restrictions']);
