@@ -70,4 +70,5 @@ online dictionary [Jisho](http://jisho.org/).
     0: {word: "加減", reading: "かげん"}
 - only select japanese voices or none at all
 - header height ios
+- review again, start with question 1 instead of 10.
 

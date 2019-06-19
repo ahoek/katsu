@@ -56,8 +56,11 @@ export class ReviewPage implements OnInit {
   ionViewDidEnter() {
     // Add IME to answer field
     const element = this.answerInputNative.nativeElement;
+    const options = {
+      IMEMode: true,
+    };
     try {
-      wanakana.bind(element);
+      wanakana.bind(element, options);
     } catch (e) {
       console.error(e);
     }
