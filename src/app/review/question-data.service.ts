@@ -4,6 +4,10 @@ import {Verb} from '../models/verb';
 import {Question} from '../models/question';
 import {SettingsService} from '../shared/settings.service';
 
+type Dictionary = {
+  [id: string]: JishoDefinition[];
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,6 +23,10 @@ export class QuestionDataService {
 
   }
 
+  get currentQuestion(): Question {
+    return this.questions[this.index];
+  }
+
   /**
    * Provider of question data
    *
@@ -32,15 +40,16 @@ export class QuestionDataService {
       const options = this.settings.getQuestionTypeOptions();
       console.log('question types', options);
 
-      this.http.get(url).subscribe(dictionary => {
-        this.questions = this.getQuestionsFromDictionary(dictionary, this.settings, options);
+      this.http.get(url).subscribe((dictionary: Dictionary) => {
+        this.questions = this.getQuestionsFromDictionary(dictionary, options);
+        this.index = 0;
         resolve(this.questions);
       });
     });
   }
 
-  getQuestionsFromDictionary(dictionary: any, settings: SettingsService, options: string[]): Question[] {
-    const numberOfQuestions = settings.amount || 10;
+  private getQuestionsFromDictionary(dictionary: Dictionary, options: string[]): Question[] {
+    const numberOfQuestions = this.settings.amount || 10;
     const questions: Question[] = [];
 
     if (options.length === 0) {
@@ -50,7 +59,7 @@ export class QuestionDataService {
     while (questions.length < numberOfQuestions) {
       const questionType: string = this.getRandomItem(options, false);
 
-      const question = this.getQuestion(dictionary, settings, questionType);
+      const question = this.getQuestion(dictionary, questionType);
       if (question) {
         questions.push(question);
       }
@@ -61,7 +70,7 @@ export class QuestionDataService {
   /**
    * Create a question from the dictionary
    */
-  getQuestion(dictionary: any, settings: SettingsService, type: string): Question {
+  private getQuestion(dictionary: Dictionary, type: string): Question {
     if (!type) {
       return;
     }
@@ -78,7 +87,7 @@ export class QuestionDataService {
       return;
     }
 
-    if (word.level < Number(settings.jlptLevel.slice(-1))) {
+    if (word.level < Number(this.settings.jlptLevel.slice(-1))) {
       return;
     }
 
@@ -87,7 +96,7 @@ export class QuestionDataService {
       return;
     }
 
-    if (settings.leaveOutSuru && verb.isSuru()) {
+    if (this.settings.leaveOutSuru && verb.isSuru()) {
       return;
     }
 
@@ -96,7 +105,7 @@ export class QuestionDataService {
       return;
     }
 
-    if (settings.reverse === true) {
+    if (this.settings.reverse === true) {
       question = question.reverse();
     }
 
@@ -107,7 +116,7 @@ export class QuestionDataService {
   /**
    * Get a random item from an array and remove it from the array
    */
-  getRandomItem<T>(items: Array<T>, removeItem: boolean = true): T {
+  private getRandomItem<T>(items: Array<T>, removeItem: boolean = true): T {
     const randomIndex = Math.floor(Math.random() * items.length);
     if (removeItem === true) {
       const item = items.splice(randomIndex, 1);
@@ -115,9 +124,5 @@ export class QuestionDataService {
     } else {
       return items[randomIndex];
     }
-  }
-
-  get currentQuestion(): Question {
-    return this.questions[this.index];
   }
 }

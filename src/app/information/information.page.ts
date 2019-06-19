@@ -15,7 +15,6 @@ export class InformationPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('ionViewDidLoad InformationPage');
     this.platform.ready().then(() => {
       this.google.trackView('Information Page');
     });

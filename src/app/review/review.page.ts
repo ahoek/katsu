@@ -56,8 +56,11 @@ export class ReviewPage implements OnInit {
   ionViewDidEnter() {
     // Add IME to answer field
     const element = this.answerInputNative.nativeElement;
+    const options = {
+      IMEMode: true,
+    };
     try {
-      wanakana.bind(element);
+      wanakana.bind(element, options);
     } catch (e) {
       console.error(e);
     }
@@ -100,7 +103,6 @@ export class ReviewPage implements OnInit {
    * If incorrect, give 'bad' styling and show the correct answer.
    */
   checkAnswer(question: Question) {
-    console.log('Check answer for', question)
     question.checkAnswer();
 
     // If an answer is already given, go to the next question directly.

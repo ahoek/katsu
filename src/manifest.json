@@ -1,14 +1,24 @@
 {
   "name": "katsu",
   "short_name": "katsu",
+  "description": "Practise Japanese conjugation grammar.",
   "start_url": "index.html",
+  "scope": "index.html",
+  "icons": [
+    {
+      "src": "assets/icon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icon/largetile.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "default_locale": "en",
   "display": "standalone",
-  "icons": [{
-    "src": "assets/icon/largetile.png",
-    "sizes": "310x310",
-    "type": "image/png"
-  }],
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#FFF",
+  "theme_color": "#000",
   "orientation": "portrait"
 }

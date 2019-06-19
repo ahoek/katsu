@@ -175,10 +175,13 @@ export class Question {
    */
   checkAnswer() {
     this.correct = false;
-
     if (this.givenAnswer) {
       // Remove whitespace
       this.givenAnswer = this.givenAnswer.replace(/\s+/g, '');
+
+      // For some reason wanakana does not convert the last character. This
+      // gives problems for nn
+      this.givenAnswer = this.givenAnswer.replace(/nn$/g, 'ん');
 
       // Convert romaji to kana
       this.givenAnswer = wanakana.toKana(this.givenAnswer);

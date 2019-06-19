@@ -2,8 +2,8 @@
  * Review settings
  */
 import { Injectable } from '@angular/core';
-import {Storage} from '@ionic/storage';
-import {Question} from '../models/question';
+import { Storage } from '@ionic/storage';
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +16,17 @@ export class SettingsService {
 
   private _iAdjective = false;
   get iAdjective() { return this._iAdjective; }
-  set iAdjective(value) { this._iAdjective = value; }
+  set iAdjective(value) {
+    this._iAdjective = value;
+    this.needsAdjectiveConjugations();
+  }
 
   private _naAdjective = false;
   get naAdjective() { return this._naAdjective; }
-  set naAdjective(value) { this._naAdjective = value; }
+  set naAdjective(value) {
+    this._naAdjective = value;
+    this.needsAdjectiveConjugations();
+  }
 
   private _normal = true;
   get normal(): boolean {
@@ -185,15 +191,23 @@ export class SettingsService {
   private _amount = 10;
   get amount() { return this._amount; }
   set amount(value) { this._amount = value; }
+
   private _language: string;
-  get language() { return this._language; }
+  get language() {
+    if (this._language === undefined) {
+      this._language = this.translate.currentLang;
+    }
+    return this._language;
+  }
   set language(value) { this._language = value; }
+
   private _voice?: string;
   get voice() { return this._voice; }
   set voice(value) { this._voice = value; }
 
   constructor(
     private storage: Storage,
+    private translate: TranslateService,
   ) {
   }
 
@@ -227,11 +241,16 @@ export class SettingsService {
     }
   }
 
+  private needsAdjectiveConjugations() {
+    if (!this.normal && !this.teForm && !this.conditional) {
+      this.normal = true;
+    }
+  }
+
   userSettings(): Promise<SettingsService> {
     return new Promise(resolve => {
       this.storage.get('settings').then(settingsJson => {
         if (settingsJson) {
-          console.log(settingsJson);
           Object.assign(this, JSON.parse(settingsJson));
         } else {
           this.store();
@@ -248,10 +267,9 @@ export class SettingsService {
         settings[key.substring(1)] = this[key];
       }
     });
+    // console.log('store', settings);
     this.storage.set('settings', JSON.stringify(settings));
   }
-
-
 
   /**
    * Get the available question options
@@ -273,12 +291,6 @@ export class SettingsService {
 
     if (this.potential) {
       this.addNormalOptionsFor('potential', options);
-      // if (this.plain) {
-      //   options.push('potential-plain-positive-present');
-      // }
-      // if (this.polite) {
-      //   options.push('potential-polite-positive-present');
-      // }
     }
 
     if (this.imperative) {
