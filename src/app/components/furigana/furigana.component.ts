@@ -8,7 +8,8 @@ import {WordToken} from '../../models/word-token';
 })
 export class FuriganaComponent {
 
-  @Input('input') set input(value: any) {
+  @Input('input')
+  set input(value: { word: string; reading: string; }) {
     this.word = value.word;
     this.reading = value.reading;
     this.setOutput();
@@ -30,7 +31,7 @@ export class FuriganaComponent {
    * <furigana [input]="{word:'可愛い',reading:'かわいい'}"></furigana>
    */
   setOutput() {
-    if (!this.word || this.word == this.reading) {
+    if (!this.word || this.word === this.reading) {
       this.output = this.reading;
       return;
     }
