@@ -39,7 +39,9 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/gsap/src/uncompressed/TweenMax.js"
+            ]
           },
           "configurations": {
             "production": {
