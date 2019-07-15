@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 import * as wanakana from 'wanakana/wanakana.js';
+import { TimelineLite, TweenLite } from 'gsap';
+
 import { Question } from '../models/question';
 import { SettingsService} from '../shared/settings.service';
 import { SpeechService } from '../shared/speech.service';
@@ -24,6 +26,8 @@ export class ReviewPage implements OnInit {
     this.dataService.index = value;
   }
 
+  tl: TimelineLite;
+
   constructor(
     public navCtrl: NavController,
     public dataService: QuestionDataService,
@@ -39,7 +43,6 @@ export class ReviewPage implements OnInit {
    * Set up the review page
    */
   async ngOnInit() {
-    // this.settings = await this.settingsService.userSettings();
     this.dataService.load().then(questions => {
       if (questions.length > 0) {
         this.questions = questions;
@@ -47,6 +50,8 @@ export class ReviewPage implements OnInit {
       console.log('Loaded questions', this.questions);
       this.goToQuestion(this.index);
     });
+
+    this.initStar();
 
     this.platform.ready().then(() => {
       this.google.trackView('Review Page');
@@ -72,7 +77,6 @@ export class ReviewPage implements OnInit {
       this.answerInputNative.nativeElement.focus();
     }, 250);
   }
-
 
   nextQuestion() {
     if (this.index < this.questions.length - 1) {
@@ -115,6 +119,8 @@ export class ReviewPage implements OnInit {
 
     if (!question.correct) {
       this.speech.say(question.answers[0].reading);
+    } else {
+      this.animateStar();
     }
 
     this.platform.ready().then(() => {
@@ -162,5 +168,38 @@ export class ReviewPage implements OnInit {
     }
 
     return '';
+  }
+
+  public animateStar() {
+    this.tl.restart();
+  }
+
+  public initStar() {
+    TweenLite.set('.star', {
+      scale: 1,
+      x: 500, y: 1000,
+    });
+    this.tl = new TimelineLite({ paused: true });
+    this.tl.add('start');
+    this.tl.to('#star1', 1, {
+      opacity: 0,
+      x: 250, y: 300,
+      rotation: 270,
+      scale: 1.2,
+    }, '#start');
+    this.tl.to('#star2', 1, {
+      opacity: 0,
+      x: 700, y: 300,
+      rotation: 260,
+      scale: 1.5,
+    }, 'start+=.2');
+    this.tl.to('#star3', 1, {
+      opacity: 0,
+      x: 600, y: 300,
+      rotation: -260,
+      scale: 2,
+    }, 'start+=.5');
+
+    this.tl.timeScale(1.8);
   }
 }

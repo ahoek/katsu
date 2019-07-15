@@ -48,6 +48,10 @@ export class QuestionDataService {
     });
   }
 
+  resetAnsweredStatus() {
+    this.questions.forEach(question => question.answered = false);
+  }
+
   private getQuestionsFromDictionary(dictionary: Dictionary, options: string[]): Question[] {
     const numberOfQuestions = this.settings.amount || 10;
     const questions: Question[] = [];
