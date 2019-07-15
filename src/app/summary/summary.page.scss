@@ -15,7 +15,6 @@ ion-item {
   display: block;
 }
 
-
 .correct .given-answer {
   color: var(--ion-color-success);
 }
@@ -26,4 +25,10 @@ ion-item {
 
 answers ion-list.list-ios {
   margin-bottom: 0;
+}
+
+ion-item {
+  &:hover {
+    cursor: pointer;
+  }
 }

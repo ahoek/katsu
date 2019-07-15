@@ -20,9 +20,11 @@ export class SummaryPage implements OnInit {
     private google: GoogleAnalytics
   ) {
     this.questions = this.questionService.questions;
+    this.questionService.resetAnsweredStatus();
   }
 
   ngOnInit() {
+
     this.platform.ready().then(() => {
       this.google.trackView('Summary Page');
     });
