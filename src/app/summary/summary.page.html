@@ -14,13 +14,14 @@
 
 <ion-content>
   <ion-list>
+    <ion-item>{{ summaryText }}</ion-item>
     <ion-item *ngFor="let question of questions; let i = index;"
               (click)="goToQuestion(i)"
               [ngClass]="{
                 'correct': question.correct === true,
                 'incorrect': question.correct === false
             }">
-      <ion-label text-wra>
+      <ion-label text-wrap>
         <span class="number">{{i + 1}}</span>
 
         <span class="given-answer" lang="ja">

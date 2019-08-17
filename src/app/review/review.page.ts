@@ -78,6 +78,13 @@ export class ReviewPage implements OnInit {
     }, 250);
   }
 
+  getProgress(): number {
+    if (this.questions.length === 0) {
+      return 0;
+    }
+    return this.index / this.questions.length;
+  }
+
   nextQuestion() {
     if (this.index < this.questions.length - 1) {
       this.goToQuestion(this.index + 1);
@@ -117,9 +124,8 @@ export class ReviewPage implements OnInit {
 
     question.answered = true;
 
-    if (!question.correct) {
-      this.speech.say(question.answers[0].reading);
-    } else {
+    this.speech.say(question.answers[0].reading);
+    if (question.correct) {
       this.animateStar();
     }
 

@@ -21,7 +21,7 @@ export class SpeechService {
       this.synth.onvoiceschanged = () => {
         const voices = this.synth.getVoices();
         this.voices = voices.filter(voice => voice.lang === 'ja-JP');
-      }
+      };
       return this.voices;
   }
 
@@ -30,9 +30,10 @@ export class SpeechService {
   }
 
   say(text: string) {
-      // if (!this.voice || !this.synth) {
-      //     return;
-      // }
+      if (!this.voice || !this.synth) {
+          console.warn('No speech available');
+          return;
+      }
       const utterThis = new SpeechSynthesisUtterance(text);
       utterThis.voice = this.voice;
       this.synth.speak(utterThis);
