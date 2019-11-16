@@ -18,6 +18,9 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
+  <ion-progress-bar [value]="getProgress()"></ion-progress-bar>
+
+
 </ion-header>
 
 <ion-content [ngClass]="classNames()">
@@ -33,8 +36,6 @@
       [question]="questions[index]"
       [settings]="settings">
   </app-review-settings-list>
-
-
 
   <form (submit)="checkAnswer(questions[index])" class="answer-form">
     <svg class="animation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">

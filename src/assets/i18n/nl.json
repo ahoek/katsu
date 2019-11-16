@@ -62,6 +62,7 @@
   },
   "summary": {
     "title": "Samenvatting",
-    "close": "Klaar"
+    "close": "Klaar",
+    "text": "Je hebt {{correct}} van de {{total}} goed beantwoord"
   }
 }

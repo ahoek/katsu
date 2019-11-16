@@ -52,6 +52,15 @@ export class QuestionDataService {
     this.questions.forEach(question => question.answered = false);
   }
 
+  getTotalCorrect(): number {
+    return this.questions.reduce((total, question) => {
+      if (question.correct) {
+        total += 1;
+      }
+      return total;
+    }, 0);
+  }
+
   private getQuestionsFromDictionary(dictionary: Dictionary, options: string[]): Question[] {
     const numberOfQuestions = this.settings.amount || 10;
     const questions: Question[] = [];

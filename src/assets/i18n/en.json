@@ -62,6 +62,7 @@
   },
   "summary": {
     "title": "Summary",
-    "close": "Done"
+    "close": "Done",
+    "text": "You answered {{correct}} out of {{total}} correctly"
   }
 }
