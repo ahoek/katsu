@@ -15,7 +15,7 @@ import { QuestionDataService } from './question-data.service';
   styleUrls: ['./review.page.scss'],
 })
 export class ReviewPage implements OnInit {
-  @ViewChild('answerInputNative', {read: ElementRef}) answerInputNative: ElementRef;
+  @ViewChild('answerInputNative', { read: ElementRef, static: true }) answerInputNative: ElementRef;
 
   public questions: Question[] = [];
 
