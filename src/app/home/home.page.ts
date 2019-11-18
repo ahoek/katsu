@@ -3,7 +3,7 @@ import { SettingsService } from '../shared/settings.service';
 import { NavController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { SpeechService } from '../shared/speech.service';
-import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
+import { AnalyticsService } from '../shared/analytics.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +14,7 @@ export class HomePage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public platform: Platform,
-    private google: GoogleAnalytics,
+    private analytics: AnalyticsService,
     private translate: TranslateService,
     public speech: SpeechService,
     public settings: SettingsService,
@@ -33,12 +33,6 @@ export class HomePage implements OnInit {
     }
   }
 
-  ionViewDidEnter() {
-    this.platform.ready().then(() => {
-      this.google.trackView('Home Page');
-    });
-  }
-
   /**
    * Start the reviews with the correct settings
    */
@@ -50,7 +44,7 @@ export class HomePage implements OnInit {
     this.navCtrl.navigateForward('/review');
 
     this.platform.ready().then(() => {
-      this.google.trackEvent('Review', 'start', '', 1);
+      this.analytics.trackEvent('Review', 'start', '', 1);
     });
   }
 

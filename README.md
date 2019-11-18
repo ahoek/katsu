@@ -69,4 +69,3 @@ online dictionary [Jisho](http://jisho.org/).
     japanese: Array(1)
     0: {word: "加減", reading: "かげん"}
 - header height ios
-

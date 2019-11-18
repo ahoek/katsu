@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
-import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 import * as wanakana from 'wanakana/wanakana.js';
 import { TimelineLite, TweenLite } from 'gsap';
 
@@ -8,6 +7,7 @@ import { Question } from '../models/question';
 import { SettingsService} from '../shared/settings.service';
 import { SpeechService } from '../shared/speech.service';
 import { QuestionDataService } from './question-data.service';
+import { AnalyticsService } from '../shared/analytics.service';
 
 @Component({
   selector: 'app-review',
@@ -32,7 +32,7 @@ export class ReviewPage implements OnInit {
     public navCtrl: NavController,
     public dataService: QuestionDataService,
     public platform: Platform,
-    private google: GoogleAnalytics,
+    private analytics: AnalyticsService,
     private speech: SpeechService,
     public settings: SettingsService,
   ) {
@@ -52,10 +52,6 @@ export class ReviewPage implements OnInit {
     });
 
     this.initStar();
-
-    this.platform.ready().then(() => {
-      this.google.trackView('Review Page');
-    });
   }
 
   ionViewDidEnter() {
@@ -99,7 +95,7 @@ export class ReviewPage implements OnInit {
     this.speech.say(this.currentQuestion().reading);
 
     this.platform.ready().then(() => {
-      this.google.trackEvent('Question', 'show', this.questions[this.index].type, 1);
+      this.analytics.trackEvent('Question', 'show', this.questions[this.index].type, 1);
     });
   }
 
@@ -130,7 +126,7 @@ export class ReviewPage implements OnInit {
     }
 
     this.platform.ready().then(() => {
-      this.google.trackEvent('Question', 'answer-check', question.correct ? 'correct' : 'incorrect', 1);
+      this.analytics.trackEvent('Question', 'answer-check', question.correct ? 'correct' : 'incorrect', 1);
     });
   }
 
