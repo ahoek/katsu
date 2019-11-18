@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { TranslateService } from '@ngx-translate/core';
 import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 
@@ -11,7 +10,6 @@ import { GoogleAnalytics } from '@ionic-native/google-analytics/ngx';
 export class AppComponent {
   constructor(
     private platform: Platform,
-    private statusBar: StatusBar,
     private google: GoogleAnalytics,
     private readonly translate: TranslateService,
   ) {
@@ -20,8 +18,6 @@ export class AppComponent {
 
   async initializeApp() {
     await this.platform.ready();
-
-    // this.statusBar.styleDefault();
 
     this.translate.addLangs(['en', 'nl', 'ja']);
     this.translate.setDefaultLang('en');
