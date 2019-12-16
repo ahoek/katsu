@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import * as wanakana from 'wanakana/wanakana.js';
-import {WordToken} from '../../models/word-token';
+import { WordToken } from '../../models/word-token';
 
 @Component({
   selector: 'furigana',
@@ -14,6 +14,8 @@ export class FuriganaComponent {
     this.reading = value.reading;
     this.setOutput();
   }
+
+  @Input() mode = 'furigana';
 
   private word: string;
   private reading: string;
@@ -31,6 +33,22 @@ export class FuriganaComponent {
    * <furigana [input]="{word:'可愛い',reading:'かわいい'}"></furigana>
    */
   setOutput() {
+    // Rōmaji mode
+    if (this.mode === 'romaji') {
+      // todo https://github.com/lovell/hepburn
+      this.output = wanakana.toRomaji(this.reading, {
+          customRomajiMapping: {
+            おう: 'ō',
+            おお: 'ō',
+            こう: 'kō',
+            きょう: 'kyō',
+          }
+        }
+      );
+
+      return;
+    }
+
     if (!this.word || this.word === this.reading) {
       this.output = this.reading;
       return;

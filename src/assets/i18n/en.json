@@ -50,7 +50,8 @@
       "amount": "Amount of reviews",
       "language": "Language",
       "voice": "Voice",
-      "none": "None"
+      "none": "None",
+      "show-meaning": "Show meaning"
     }
   },
   "home": {

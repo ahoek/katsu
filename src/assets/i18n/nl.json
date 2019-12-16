@@ -50,7 +50,8 @@
       "amount": "Aantal vragen",
       "language": "Taal",
       "voice": "Stem",
-      "none": "Geen"
+      "none": "Geen",
+      "show-meaning": "Toon betekenis"
     }
   },
   "home": {

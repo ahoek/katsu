@@ -205,6 +205,10 @@ export class SettingsService {
   get voice() { return this._voice; }
   set voice(value) { this._voice = value; }
 
+  private _showMeaning = true;
+  get showMeaning() { return this._showMeaning; }
+  set showMeaning(value) { this._showMeaning = value; }
+
   constructor(
     private storage: Storage,
     private translate: TranslateService,
