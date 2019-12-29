@@ -36,6 +36,7 @@ export class ReviewPage implements OnInit {
     private speech: SpeechService,
     public settings: SettingsService,
   ) {
+    this.index = 0;
     this.questions[0] = new Question();
   }
 
