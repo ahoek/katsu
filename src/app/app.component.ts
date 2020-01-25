@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AnalyticsService } from './shared/analytics.service';
 import { NavigationStart, Router} from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +18,12 @@ export class AppComponent {
     private readonly translate: TranslateService,
     public router: Router,
     private title: Title,
+    @Inject(DOCUMENT) private doc: Document,
   ) {
     this.initializeApp();
   }
+
+  onLangChange: Subscription = undefined;
 
   async initializeApp() {
     await this.platform.ready();
@@ -29,10 +34,11 @@ export class AppComponent {
     const browserLang = this.translate.getBrowserLang();
     this.translate.use(browserLang.match(/en|nl/) ? browserLang : 'en');
 
+    this.onLangChange = this.translate.onLangChange.subscribe(() => {
+      this.updateLanguage();
+    });
+
     this.analytics.startTrackerWithId('UA-92834344-1');
-    // this.analytics.startTrackerWithId('G-4DHGVS97Z8');
-
-
     this.router.events
       .subscribe(event => {
         // Observe router and when it start navigation it will track the view
@@ -46,5 +52,9 @@ export class AppComponent {
           this.analytics.trackView(event.url, title);
         }
       });
+  }
+
+  updateLanguage(): void {
+    this.doc.documentElement.lang = this.translate.currentLang;
   }
 }

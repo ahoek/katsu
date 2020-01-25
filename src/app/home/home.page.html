@@ -249,10 +249,12 @@
             <ion-label>
               {{'setting.special.language'|translate}}
             </ion-label>
-            <ion-select [ngModel]="settings.language"
-                        (ngModelChange)="setLanguage($event)"
-                        interface="action-sheet"
-                        slot="end">
+            <ion-select
+              [ngModel]="settings.language"
+              (ngModelChange)="setLanguage($event)"
+              interface="action-sheet"
+              slot="end"
+            >
               <ion-select-option value="en">English</ion-select-option>
               <ion-select-option value="nl">Nederlands</ion-select-option>
             </ion-select>
@@ -280,8 +282,9 @@
           </ion-item>
           <ion-item>
             <ion-label>{{'setting.special.show-meaning'|translate}}</ion-label>
-            <ion-checkbox [(ngModel)]="settings.showMeaning"
-                          slot="end"></ion-checkbox>
+            <ion-checkbox
+              [(ngModel)]="settings.showMeaning"
+              slot="end"></ion-checkbox>
             <ion-icon name="barcode" slot="start"></ion-icon>
           </ion-item>
         </ion-list>
@@ -291,10 +294,12 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button (click)="startReview()"
-              expand="full"
-              size="large"
-              class="start-review">
+  <ion-button
+    (click)="startReview()"
+    expand="full"
+    size="large"
+    class="start-review"
+  >
     <span class="text">{{'home.start'|translate}}</span>
   </ion-button>
 </ion-footer>

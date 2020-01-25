@@ -56,7 +56,6 @@
 }
 
 ion-content.patterned {
---background: fuchsia;
   --background: var(--app-color-bg-dark) radial-gradient(circle at 100% 150%, var(--app-color-bg-dark) 24%, var(--app-color-bg-light) 25%, var(--app-color-bg-light) 28%, var(--app-color-bg-dark) 29%, var(--app-color-bg-dark) 36%, var(--app-color-bg-light) 36%, var(--app-color-bg-light) 40%, transparent 40%, transparent),
     radial-gradient(circle at 0    150%, var(--app-color-bg-dark) 24%, var(--app-color-bg-light) 25%, var(--app-color-bg-light) 28%, var(--app-color-bg-dark) 29%, var(--app-color-bg-dark) 36%, var(--app-color-bg-light) 36%, var(--app-color-bg-light) 40%, transparent 40%, transparent),
     radial-gradient(circle at 50%  100%, var(--app-color-bg-light) 10%, var(--app-color-bg-dark) 11%, var(--app-color-bg-dark) 23%, var(--app-color-bg-light) 24%, var(--app-color-bg-light) 30%, var(--app-color-bg-dark) 31%, var(--app-color-bg-dark) 43%, var(--app-color-bg-light) 44%, var(--app-color-bg-light) 50%, var(--app-color-bg-dark) 51%, var(--app-color-bg-dark) 63%, var(--app-color-bg-light) 64%, var(--app-color-bg-light) 71%, transparent 71%, transparent),
