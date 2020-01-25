@@ -14,13 +14,13 @@ export class Question {
   public meaning: string;
 
   // Answer
-  public type: string = '';
+  public type = '';
   public answers: Array<Answer> = [];
 
   // Result
   public correct?: boolean;
-  public givenAnswer?: string = '';
-  public answered: boolean = false;
+  public givenAnswer = '';
+  public answered = false;
 
   public reversed = false;
 

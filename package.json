@@ -22,7 +22,7 @@
     "@angular/pwa": "^0.803.19",
     "@angular/router": "^8.2.14",
     "@angular/service-worker": "^8.2.14",
-    "@ionic/angular": "^4.4.2",
+    "@ionic/angular": "^4.11.10",
     "@ionic/storage": "^2.2.0",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
