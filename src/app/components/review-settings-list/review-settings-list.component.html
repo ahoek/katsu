@@ -34,13 +34,13 @@
     {{'setting.form.passive'|translate}}
   </ion-item>
   <ion-item *ngIf="question.isOfType('causative')">
-    <ion-icon name="" slot="start"></ion-icon>
+    <ion-icon name="log-in" slot="start"></ion-icon>
     {{'setting.form.causative'|translate}}
   </ion-item>
 
   <!-- formal -->
   <ion-item *ngIf="question.isOfType('polite')">
-    <ion-icon name="bowtie" slot="start"></ion-icon>
+    <ion-icon name="briefcase" slot="start"></ion-icon>
     {{'setting.speech-level.formal'|translate}}
     <ion-note>{{'setting.speech-level.formal-note'|translate}}</ion-note>
   </ion-item>
@@ -64,13 +64,13 @@
 
   <!-- non-past -->
   <ion-item *ngIf="question.isOfType('present')">
-    <ion-icon name="fastforward" slot="start"></ion-icon>
+    <ion-icon name="play-forward" slot="start"></ion-icon>
     {{'setting.tense.nonpast'|translate}}
     <ion-note>{{'setting.tense.nonpast-note'|translate}}</ion-note>
   </ion-item>
   <!-- past -->
   <ion-item *ngIf="question.isOfType('past')">
-    <ion-icon name="rewind" slot="start"></ion-icon>
+    <ion-icon name="play-back" slot="start"></ion-icon>
     <ion-label>{{'setting.tense.past'|translate}}</ion-label>
   </ion-item>
 
