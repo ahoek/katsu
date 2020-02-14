@@ -1,4 +1,4 @@
-import {HiraganaColumnHelper} from './hiragana-column-helper';
+import { HiraganaColumnHelper } from './hiragana-column-helper';
 
 /**
  * This class helps in conjugating verbs
@@ -19,7 +19,7 @@ export class Verb {
     // English meaning
     public englishDefinition: string;
 
-    public notAVerb: boolean = false;
+    public notAVerb = false;
 
     // These parts of speech can be conjugated with this class
     public static verbPartOfSpeech = [

@@ -21,18 +21,3 @@ declare class wanakana {
   static toRomaji(input: string): string;
 }
 
-declare class JishoSense {
-  parts_of_speech: string[];
-  english_definitions: string[];
-}
-
-declare class JishoJapanese {
-  word?: string;
-  reading: string;
-}
-
-declare class JishoDefinition {
-  senses: Array<JishoSense>;
-  japanese: Array<JishoJapanese>;
-  level?: number;
-}

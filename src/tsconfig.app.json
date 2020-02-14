@@ -6,7 +6,8 @@
   },
   "files": [
     "main.ts",
-    "polyfills.ts"
+    "polyfills.ts",
+    "app/models/jisho-interfaces.ts"
   ],
   "include": [
     "src/**/*.d.ts"
