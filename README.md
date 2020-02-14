@@ -30,7 +30,7 @@ Use a web version of the app at http://katsu.arthurhoek.nl/
 Make sure you have the correct environment tools available.
 
 ```
-$ npm install -g ionic cordova
+$ npm install -g ionic
 $ git clone https://github.com/ahoek/katsu.git
 $ cd katsu
 $ ionic serve
@@ -68,4 +68,3 @@ online dictionary [Jisho](http://jisho.org/).
     definition:
     japanese: Array(1)
     0: {word: "加減", reading: "かげん"}
-- header height ios
