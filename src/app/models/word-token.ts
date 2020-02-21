@@ -2,9 +2,8 @@
  * Word token
  */
 export class WordToken {
-
-    content: string = '';
-    type: string = '';
+    content = '';
+    type = '';
     readingStart: number;
     readingStop: number;
 }

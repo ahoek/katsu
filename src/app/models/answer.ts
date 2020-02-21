@@ -1,13 +1,18 @@
 import * as wanakana from 'wanakana/wanakana.js';
 
-/**
- * Answer
- */
 export class Answer {
   constructor(
     public word: string,
     public reading: string
   ) {
+  }
+
+  static checkGivenAgainstCorrect(given: string, correct: string): boolean {
+    return (correct && this.cleanUpAnswer(correct).indexOf(given) !== -1);
+  }
+
+  static cleanUpAnswer(answer: string): string[] {
+    return [wanakana.toHiragana(answer), wanakana.toHiragana(wanakana.toRomaji(answer))];
   }
 
   /**
@@ -26,13 +31,4 @@ export class Answer {
 
     return false;
   }
-
-  static checkGivenAgainstCorrect(given: string, correct: string): boolean {
-    return (correct && this.cleanUpAnswer(correct).indexOf(given) !== -1);
-  }
-
-  static cleanUpAnswer(answer: string): string[] {
-    return [wanakana.toHiragana(answer), wanakana.toHiragana(wanakana.toRomaji(answer))];
-  }
-
 }

@@ -5,51 +5,6 @@ import { HiraganaColumnHelper } from './hiragana-column-helper';
  */
 export class Verb {
 
-    // Japanese word
-    public word: string;
-
-    // Reading in hiragana / katakana
-    public reading: string;
-
-    // Grammatical part of speech
-    public partOfSpeech: string;
-
-    public type: string;
-
-    // English meaning
-    public englishDefinition: string;
-
-    public notAVerb = false;
-
-    // These parts of speech can be conjugated with this class
-    public static verbPartOfSpeech = [
-        'Godan verb with u ending',
-        'Godan verb with tsu ending',
-        'Godan verb with ru ending',
-        'Godan verb with ru ending (irregular verb)',
-        'Godan verb - aru special class',
-        'Godan verb - Iku/Yuku special class',
-        'Godan verb with ku ending',
-        'Godan verb with gu ending',
-        'Godan verb with bu ending',
-        'Godan verb with mu ending',
-        'Godan verb with nu ending',
-        'Godan verb with su ending',
-        'Ichidan verb',
-        'Suru verb',
-        'Kuru verb - special class',
-        'Suru verb - irregular',
-        'Suru verb - special class',
-        'I-adjective',
-        'Na-adjective',
-    ];
-
-    private readonly dewa = 'では';
-    private readonly ja = 'じゃ';
-    private readonly nai = 'ない';
-    private readonly desu = 'です';
-    private readonly katta = 'かった';
-
     /**
      * Create a verb from a Jisho api-like object
      */
@@ -80,6 +35,64 @@ export class Verb {
         }
 
         this.type = Verb.getType(this.partOfSpeech);
+    }
+
+    // These parts of speech can be conjugated with this class
+    public static verbPartOfSpeech = [
+        'Godan verb with u ending',
+        'Godan verb with tsu ending',
+        'Godan verb with ru ending',
+        'Godan verb with ru ending (irregular verb)',
+        'Godan verb - aru special class',
+        'Godan verb - Iku/Yuku special class',
+        'Godan verb with ku ending',
+        'Godan verb with gu ending',
+        'Godan verb with bu ending',
+        'Godan verb with mu ending',
+        'Godan verb with nu ending',
+        'Godan verb with su ending',
+        'Ichidan verb',
+        'Suru verb',
+        'Kuru verb - special class',
+        'Suru verb - irregular',
+        'Suru verb - special class',
+        'I-adjective',
+        'Na-adjective',
+    ];
+
+    // Japanese word
+    public word: string;
+
+    // Reading in hiragana / katakana
+    public reading: string;
+
+    // Grammatical part of speech
+    public partOfSpeech: string;
+
+    public type: string;
+
+    // English meaning
+    public englishDefinition: string;
+
+    public notAVerb = false;
+
+    private readonly dewa = 'では';
+    private readonly ja = 'じゃ';
+    private readonly nai = 'ない';
+    private readonly desu = 'です';
+    private readonly katta = 'かった';
+
+    /**
+     * Get the type for part of speech
+     */
+    private static getType(partOfSpeech: string): string {
+        if (partOfSpeech === 'I-adjective') {
+            return 'i-adjective';
+        } else if (partOfSpeech === 'Na-adjective') {
+            return 'na-adjective';
+        } else {
+            return 'verb';
+        }
     }
 
     /**
@@ -123,19 +136,6 @@ export class Verb {
         }
 
         return true;
-    }
-
-    /**
-     * Get the type for part of speech
-     */
-    private static getType(partOfSpeech: string): string {
-        if (partOfSpeech === 'I-adjective') {
-            return 'i-adjective';
-        } else if (partOfSpeech === 'Na-adjective') {
-            return 'na-adjective';
-        } else {
-            return 'verb';
-        }
     }
 
     /**

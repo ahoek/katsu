@@ -1,20 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Question} from '../../models/question';
-import {SettingsService} from '../../shared/settings.service';
+import { Component, Input } from '@angular/core';
+import { Question } from '../../models/question';
+import { SettingsService } from '../../shared/settings.service';
 
 @Component({
   selector: 'app-review-settings-list',
   templateUrl: './review-settings-list.component.html',
   styleUrls: ['./review-settings-list.component.scss'],
 })
-export class ReviewSettingsListComponent implements OnInit {
+export class ReviewSettingsListComponent {
   @Input('question') question: Question;
   @Input('settings') settings: SettingsService;
-
-  constructor(
-  ) {
-  }
-
-  ngOnInit() {
-  }
 }

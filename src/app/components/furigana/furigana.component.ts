@@ -20,10 +20,7 @@ export class FuriganaComponent {
   private word: string;
   private reading: string;
 
-  public output: string = '';
-
-  constructor() {
-  }
+  public output = '';
 
   /**
    * Make text with furigana from word and reading

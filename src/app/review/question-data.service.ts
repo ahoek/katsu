@@ -1,19 +1,19 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Verb} from '../models/verb';
-import {Question} from '../models/question';
-import {SettingsService} from '../shared/settings.service';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Verb } from '../models/verb';
+import { Question } from '../models/question';
+import { SettingsService } from '../shared/settings.service';
 
-type Dictionary = {
+interface Dictionary {
   [id: string]: JishoDefinition[];
-};
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionDataService {
 
-  index: number = 0;
+  index = 0;
   questions: Question[] = [];
 
   constructor(

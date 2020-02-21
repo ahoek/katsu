@@ -16,107 +16,107 @@ const IKU = new Verb({
 });
 
 const TABERU = new Verb({
-  "japanese": [
+  'japanese': [
     {
-      "word": "食べる",
-      "reading": "たべる"
+      'word': '食べる',
+      'reading': 'たべる'
     },
     {
-      "word": "喰べる",
-      "reading": "たべる"
+      'word': '喰べる',
+      'reading': 'たべる'
     }
   ],
-  "senses": [
+  'senses': [
     {
-      "english_definitions": ["to eat"],
-      "parts_of_speech": [
-        "Ichidan verb",
-        "Transitive verb"
+      'english_definitions': ['to eat'],
+      'parts_of_speech': [
+        'Ichidan verb',
+        'Transitive verb'
       ]
     }
   ],
-  "level": 5
+  'level': 5
 });
 
 const KURU = new Verb({
-  "japanese": [
+  'japanese': [
     {
-      "word": "来る",
-      "reading": "くる"
+      'word': '来る',
+      'reading': 'くる'
     },
     {
-      "word": "來る",
-      "reading": "くる"
+      'word': '來る',
+      'reading': 'くる'
     }
   ],
-  "senses": [
+  'senses': [
     {
-      "english_definitions": [
-        "to come (spatially or temporally)"
+      'english_definitions': [
+        'to come (spatially or temporally)'
       ],
-      "parts_of_speech": [
-        "Kuru verb - special class",
-        "intransitive verb"
+      'parts_of_speech': [
+        'Kuru verb - special class',
+        'intransitive verb'
       ]
     },
   ],
-  "level": 5
+  'level': 5
 });
 
 const SURU = new Verb({
-  "japanese": [
+  'japanese': [
     {
-      "word": "為る",
-      "reading": "する"
+      'word': '為る',
+      'reading': 'する'
     }
   ],
-  "senses": [
+  'senses': [
     {
-      "english_definitions": [
-        "to do"
+      'english_definitions': [
+        'to do'
       ],
-      "parts_of_speech": [
-        "Suru verb - irregular"
+      'parts_of_speech': [
+        'Suru verb - irregular'
       ]
     },
   ],
-  "level": 3
+  'level': 3
 });
 
 const MURI = new Verb({
-  "japanese": [
+  'japanese': [
     {
-      "word": "無理",
-      "reading": "むり"
+      'word': '無理',
+      'reading': 'むり'
     }
   ],
-    "senses": [
+    'senses': [
     {
-      "english_definitions": [
-        "unreasonable"
+      'english_definitions': [
+        'unreasonable'
       ],
-      "parts_of_speech": [
-        "Na-adjective"
+      'parts_of_speech': [
+        'Na-adjective'
       ]
     },
     {
-      "english_definitions": [
-        "excessive (work, etc.)"
+      'english_definitions': [
+        'excessive (work, etc.)'
       ],
-      "parts_of_speech": [
-        "Na-adjective"
+      'parts_of_speech': [
+        'Na-adjective'
       ]
     },
     {
-      "english_definitions": [
-        "to work too hard"
+      'english_definitions': [
+        'to work too hard'
       ],
-      "parts_of_speech": [
-        "Suru verb"
+      'parts_of_speech': [
+        'Suru verb'
       ]
     }
   ],
-  "level": 4
+  'level': 4
 });
 
 describe('Verb model', () => {
@@ -135,7 +135,7 @@ describe('Verb model', () => {
   });
 
   it('te-form of いく', () => {
-    let verb = IKU;
+    const verb = IKU;
     expect(verb.teForm()).toBe('いって');
   });
 
@@ -158,20 +158,20 @@ describe('Verb model', () => {
 
   it('negative plain of ある', () => {
     const verb = new Verb({
-      "japanese": [
+      'japanese': [
         {
-          "word": "有る",
-          "reading": "ある"
+          'word': '有る',
+          'reading': 'ある'
         }
       ],
-      "senses": [
+      'senses': [
         {
-          "english_definitions": [
-            "to be (usu. of inanimate objects)"
+          'english_definitions': [
+            'to be (usu. of inanimate objects)'
           ],
-          "parts_of_speech": [
-            "Godan verb with ru ending (irregular verb)",
-            "intransitive verb"
+          'parts_of_speech': [
+            'Godan verb with ru ending (irregular verb)',
+            'intransitive verb'
           ]
         }
       ]
@@ -182,20 +182,20 @@ describe('Verb model', () => {
 
   it('formal negative nonpast of ふえる', () => {
     const verb = new Verb({
-      "japanese": [
+      'japanese': [
         {
-          "word": "増える",
-          "reading": "ふえる"
+          'word': '増える',
+          'reading': 'ふえる'
         }
       ],
-      "senses": [
+      'senses': [
         {
-          "english_definitions": [
-            "to increase"
+          'english_definitions': [
+            'to increase'
           ],
-          "parts_of_speech": [
-            "Ichidan verb",
-            "intransitive verb"
+          'parts_of_speech': [
+            'Ichidan verb',
+            'intransitive verb'
           ]
         }
       ]
@@ -205,24 +205,24 @@ describe('Verb model', () => {
 
   it('Tai form of na adjective 加減な', () => {
     const verb = new Verb({
-      "japanese": [
+      'japanese': [
         {
-          "word": "加減",
-          "reading": "かげん"
+          'word': '加減',
+          'reading': 'かげん'
         }
       ],
-      "senses": [
+      'senses': [
         {
-          "english_definitions": [
-            "degree"
+          'english_definitions': [
+            'degree'
           ],
-          "parts_of_speech": [
-            "Na-adjective",
-            "Noun - used as a suffix"
+          'parts_of_speech': [
+            'Na-adjective',
+            'Noun - used as a suffix'
           ]
         },
       ],
-      "level": 3
+      'level': 3
     });
     expect(verb.taiForm('negative', 'nonpast', 'polite')).toEqual(undefined);
   });

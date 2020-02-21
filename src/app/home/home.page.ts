@@ -40,7 +40,6 @@ export class HomePage implements OnInit {
     // Save the settings in storage
     this.settings.store();
 
-    // this.navCtrl.push('ReviewPage', {settings: this.settings});
     this.navCtrl.navigateForward('/review');
 
     this.platform.ready().then(() => {

@@ -1,6 +1,6 @@
 import * as wanakana from 'wanakana/wanakana.js';
-import {Verb} from './verb';
-import {Answer} from './answer';
+import { Verb } from './verb';
+import { Answer } from './answer';
 
 /**
  * Make a question from a verb and conjugation type
@@ -23,12 +23,6 @@ export class Question {
   public answered = false;
 
   public reversed = false;
-
-  /**
-   * Question
-   */
-  constructor() {
-  }
 
   static createFromVerb(verb: Verb): Question {
     const question = new Question();

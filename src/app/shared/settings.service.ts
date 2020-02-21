@@ -3,7 +3,7 @@
  */
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import {TranslateService} from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
