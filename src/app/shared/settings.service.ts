@@ -124,7 +124,7 @@ export class SettingsService {
   set tariForm(value) {
     this._tariForm = value;
     if (this._tariForm) {
-      this.needsVerb();
+      this.needsPartOfSpeech();
       this.needsModality();
     }
   }
@@ -313,11 +313,28 @@ export class SettingsService {
     }
 
     if (this.tariForm) {
+      const form = 'tari-form';
       if (this.positive) {
-        options.push('tari-form-positive');
+        if (this.verb) {
+          options.push(form + '-verb-positive');
+        }
+        if (this.iAdjective) {
+          options.push(form + '-i-adjective-positive');
+        }
+        if (this.naAdjective) {
+          options.push(form + '-na-adjective-positive');
+        }
       }
       if (this.negative) {
-        options.push('tari-form-negative');
+        if (this.verb) {
+          options.push(form + '-verb-negative');
+        }
+        if (this.iAdjective) {
+          options.push(form + '-i-adjective-negative');
+        }
+        if (this.naAdjective) {
+          options.push(form + '-na-adjective-negative');
+        }
       }
     }
 

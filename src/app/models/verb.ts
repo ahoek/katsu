@@ -429,7 +429,7 @@ export class Verb {
     }
 
     /**
-     * Plain past is the same as te form, but with an 'a' at the end.
+     * Plain past of verb is the same as te form, but with an 'a' at the end.
      */
     public plainPast(): string {
         const stem = this.teForm().slice(0, -1);
@@ -626,12 +626,10 @@ export class Verb {
     }
 
     public tariForm(modality: string): string[] {
-        const plain = modality === 'positive'
-            ? this.plainPast()
-            : this.plainNegativePast();
-        const conjugation = plain + 'り';
+        const pasts = this.normalForm('plain', modality === 'positive', false)
+        const conjugation = pasts.map((past) => past + 'り');
 
-        return [conjugation];
+        return conjugation;
     }
 
     public passive(speechLevel: string, positive: boolean, nonPast: boolean): string[] {

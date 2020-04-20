@@ -45,9 +45,9 @@
           </ion-item>
           <ion-item>
             <ion-label>{{'setting.form.tari-form'|translate}}</ion-label>
-            <ion-checkbox [(ngModel)]="settings.tariForm"
-                          [disabled]="settings.verb === false"
-                          slot="end"></ion-checkbox>
+            <ion-checkbox
+              [(ngModel)]="settings.tariForm"
+              slot="end"></ion-checkbox>
             <span name="tari" slot="start">たり</span>
           </ion-item>
           <ion-item>
