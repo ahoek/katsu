@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
 import * as wanakana from 'wanakana/wanakana.js';
-import { TimelineLite, TweenLite } from 'gsap';
+import { gsap } from 'gsap';
 
 import { Question } from '../models/question';
 import { SettingsService} from '../shared/settings.service';
@@ -26,7 +26,7 @@ export class ReviewPage implements OnInit {
     this.dataService.index = value;
   }
 
-  tl: TimelineLite;
+  tl: gsap.core.Timeline;
 
   constructor(
     public navCtrl: NavController,
@@ -154,12 +154,10 @@ export class ReviewPage implements OnInit {
     }
 
     const na = this.getNa(question);
-    const furigana = {
+    return {
       word: question.word + na,
       reading: question.reading + na,
     };
-
-    return furigana;
   }
 
   /**
@@ -178,25 +176,28 @@ export class ReviewPage implements OnInit {
   }
 
   public initStar() {
-    TweenLite.set('.star', {
+    gsap.set('.star', {
       scale: 1,
       x: 500, y: 1000,
     });
-    this.tl = new TimelineLite({ paused: true });
+    this.tl = gsap.timeline({ paused: true });
     this.tl.add('start');
-    this.tl.to('#star1', 1, {
+    this.tl.to('#star1', {
+      duration: 1,
       opacity: 0,
       x: 250, y: 300,
       rotation: 270,
       scale: 1.2,
     }, '#start');
-    this.tl.to('#star2', 1, {
+    this.tl.to('#star2', {
+      duration: 1,
       opacity: 0,
       x: 700, y: 300,
       rotation: 260,
       scale: 1.5,
     }, 'start+=.2');
-    this.tl.to('#star3', 1, {
+    this.tl.to('#star3', {
+      duration: 1,
       opacity: 0,
       x: 600, y: 300,
       rotation: -260,
