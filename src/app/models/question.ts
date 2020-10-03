@@ -143,16 +143,7 @@ export class Question {
       return;
     }
 
-    // Find the okurigana
-    let okurigana = '';
-    for (let i = this.word.length - 1; i >= 0; i--) {
-      if (wanakana.isHiragana(this.word[i])) {
-        okurigana = this.word[i] + okurigana;
-      } else {
-        break;
-      }
-    }
-
+    const okurigana = Question.getOkurigana(this.word);
     if (okurigana.length === 0) {
       return readingAnswer.replace(this.reading, this.word);
     }
@@ -161,7 +152,13 @@ export class Question {
     const readingBase = this.reading.slice(0, -1 * okurigana.length);
     const wordBase = this.word.slice(0, -1 * okurigana.length);
     const conjugation = readingAnswer.substring(readingBase.length);
-    return wordBase + conjugation;
+
+    return `${wordBase}${conjugation}`;
+  }
+
+  static getOkurigana(word: string): string {
+    const base = wanakana.stripOkurigana(word);
+    return word.substring(base.length);
   }
 
   /**

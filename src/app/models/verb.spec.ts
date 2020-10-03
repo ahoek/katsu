@@ -1,4 +1,4 @@
-import {Verb} from './verb';
+import { Verb } from './verb';
 
 /**
  * Note: test that anshin suru is not a na adjective
