@@ -626,10 +626,8 @@ export class Verb {
     }
 
     public tariForm(modality: string): string[] {
-        const pasts = this.normalForm('plain', modality === 'positive', false)
-        const conjugation = pasts.map((past) => past + 'り');
-
-        return conjugation;
+        return this.normalForm('plain', modality === 'positive', false)
+          .map((past) => past + 'り');
     }
 
     public passive(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
@@ -651,12 +649,15 @@ export class Verb {
         if (this.partOfSpeech === 'Kuru verb - special class') {
             stem = 'こら';
         }
-
+        if (this.partOfSpeech === 'Godan verb with ru ending (irregular verb)') {
+          stem = 'あら';
+        }
         const conjugation = stem + 'れる';
         const passive = this.getIchidanVerb(conjugation);
         return passive.verbNormalForm(speechLevel, positive, nonPast);
     }
 
+    // @todo double functionality from passive
     public causative(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
         // Find the 'A' stem
         let stem = '';
@@ -676,11 +677,11 @@ export class Verb {
         if (this.partOfSpeech === 'Kuru verb - special class') {
             stem = 'こさ';
         }
-
-        const conjugation = stem + 'せる';
-        const causative = this.getIchidanVerb(conjugation);
-
-        return causative.verbNormalForm(speechLevel, positive, nonPast);
+        if (this.partOfSpeech === 'Godan verb with ru ending (irregular verb)') {
+          stem = 'あら';
+        }
+        return this.getIchidanVerb(stem + 'せる')
+          .verbNormalForm(speechLevel, positive, nonPast);
     }
 
     /**

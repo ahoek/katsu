@@ -119,6 +119,25 @@ const MURI = new Verb({
   'level': 4
 });
 
+const ARU = new Verb({
+  'japanese': [
+    {
+      'word': '有る',
+      'reading': 'ある'
+    }
+  ],
+  'senses': [
+    {
+      'english_definitions': [
+        'to be (usu. of inanimate objects)'
+      ],
+      'parts_of_speech': [
+        'Godan verb with ru ending (irregular verb)',
+        'intransitive verb'
+      ]
+    }
+  ]
+});
 describe('Verb model', () => {
   it('te-form of magaru', () => {
     const verb = new Verb({
@@ -157,27 +176,9 @@ describe('Verb model', () => {
   });
 
   it('negative plain of ある', () => {
-    const verb = new Verb({
-      'japanese': [
-        {
-          'word': '有る',
-          'reading': 'ある'
-        }
-      ],
-      'senses': [
-        {
-          'english_definitions': [
-            'to be (usu. of inanimate objects)'
-          ],
-          'parts_of_speech': [
-            'Godan verb with ru ending (irregular verb)',
-            'intransitive verb'
-          ]
-        }
-      ]
-    });
-    expect(verb.normalForm('plain', false, true)).toEqual(['ない']);
-    expect(verb.normalForm('plain', false, false)).toEqual(['なかった']);
+
+    expect(ARU.normalForm('plain', false, true)).toEqual(['ない']);
+    expect(ARU.normalForm('plain', false, false)).toEqual(['なかった']);
   });
 
   it('formal negative nonpast of ふえる', () => {
@@ -228,32 +229,33 @@ describe('Verb model', () => {
   });
 
   it('Causative godan', () => {
-    const verb = IKU;
-    expect(verb.causative('plain', true, true)).toEqual(['いかせる']);
-    expect(verb.causative('polite', true, true)).toEqual(['いかせます']);
+    expect(IKU.causative('plain', true, true)).toEqual(['いかせる']);
+    expect(IKU.causative('polite', true, true)).toEqual(['いかせます']);
   });
 
   it('Causative ichidan', () => {
-    const verb = TABERU;
-    expect(verb.causative('plain', true, true)).toEqual(['たべさせる']);
-    expect(verb.causative('polite', true, true)).toEqual(['たべさせます']);
+    expect(TABERU.causative('plain', true, true)).toEqual(['たべさせる']);
+    expect(TABERU.causative('polite', true, true)).toEqual(['たべさせます']);
   });
 
   it('Causative 来る', () => {
-    const verb = KURU;
-    expect(verb.causative('plain', true, true)).toEqual(['こさせる']);
-    expect(verb.causative('polite', true, true)).toEqual(['こさせます']);
+    expect(KURU.causative('plain', true, true)).toEqual(['こさせる']);
+    expect(KURU.causative('polite', true, true)).toEqual(['こさせます']);
   });
 
   it('Causative する', () => {
-    const verb = SURU;
-    expect(verb.causative('plain', true, true)).toEqual(['させる']);
-    expect(verb.causative('polite', true, true)).toEqual(['させます']);
+    expect(SURU.causative('plain', true, true)).toEqual(['させる']);
+    expect(SURU.causative('polite', true, true)).toEqual(['させます']);
   });
 
   it('Na adjective - coll - past - neg', () => {
-    const verb = MURI;
-    expect(verb.normalForm('plain', false, false))
+    expect(MURI.normalForm('plain', false, false))
       .toEqual(['むりじゃなかった', 'むりではなかった']);
+  });
+
+  // 有る
+  it('有る - passive/causative formal negative past', () => {
+    expect(ARU.passive('polite', false, false)).toEqual(['あられませんでした']);
+    expect(ARU.causative('polite', false, false)).toEqual(['あらせませんでした']);
   });
 });
