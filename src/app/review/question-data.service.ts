@@ -68,13 +68,16 @@ export class QuestionDataService {
     if (options.length === 0) {
       return questions;
     }
-
     while (questions.length < numberOfQuestions) {
-      const questionType: string = this.getRandomItem(options, false);
-
-      const question = this.getQuestion(dictionary, questionType);
-      if (question) {
-        questions.push(question);
+      try {
+        const questionType: string = this.getRandomItem(options, false);
+        const question = this.getQuestion(dictionary, questionType);
+        if (question) {
+          questions.push(question);
+        }
+      } catch (e) {
+        console.warn(e);
+        break;
       }
     }
     return questions;
@@ -97,7 +100,7 @@ export class QuestionDataService {
     }
 
     if (!word) {
-      return;
+      throw new Error('No word of correct type found');
     }
 
     if (word.level < Number(this.settings.jlptLevel.slice(-1))) {
