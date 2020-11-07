@@ -16,9 +16,8 @@ class JishoScraper
 
     function __construct()
     {
-        
     }
-    
+
     public function getWords()
     {
         $dictionary = [];
@@ -27,7 +26,6 @@ class JishoScraper
         }
         $json = json_encode($dictionary, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
         file_put_contents(__DIR__ . '/../src/assets/data/questions/words.json', $json);
-
     }
 
     public function getWordsOfLevel($level = 5)
@@ -38,7 +36,7 @@ class JishoScraper
             'adj-i',
             'adj-na',
         ];
-        
+
         $dictionary = [];
         foreach ($types as $type) {
             $this->baseRequest = $this->baseUrl.'?keyword='
@@ -47,7 +45,7 @@ class JishoScraper
             echo $this->baseRequest."\n";
             $words = $this->getWordsFromPage(1);
             echo "# ".count($words)." $type\n";
-            
+
             $dictionary[$type] = $this->stripUnwantedInfo($words);
         }
 
@@ -56,7 +54,7 @@ class JishoScraper
 
     /**
      * Get the words from page $page and above
-     * 
+     *
      * @param int $page
      * @return array
      */
@@ -78,7 +76,7 @@ class JishoScraper
 
         return $words;
     }
-    
+
     protected function stripUnwantedInfo($words)
     {
         foreach ($words as $index => $word) {
@@ -116,12 +114,10 @@ class JishoScraper
                 unset($sense['info']);
                 $sense['english_definitions'] = [$sense['english_definitions'][0]];
                 $word['senses'][$key] =  $sense;
-                
             }
             $word['senses'] = array_values($word['senses']);
             $words[$index] = $word;
         }
         return $words;
     }
-
 }
