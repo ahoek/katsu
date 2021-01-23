@@ -28,7 +28,7 @@
     "@types/gsap": "^1.20.2",
     "@types/wanakana": "^4.0.2",
     "core-js": "^2.6.11",
-    "gsap": "^3.5.1",
+    "gsap": "^3.6.0",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.3",
     "wanakana": "^4.0.2",
