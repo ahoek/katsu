@@ -1,23 +1,24 @@
-import * as wanakana from 'wanakana/wanakana.js';
+import * as wanakana from 'wanakana';
 
 export class Answer {
   constructor(
-    public word: string,
+    public word: string | undefined,
     public reading: string
   ) {
+    if (word === undefined) {
+      this.word = reading;
+    }
   }
 
-  static checkGivenAgainstCorrect(given: string, correct: string): boolean {
-    return (correct && this.cleanUpAnswer(correct).indexOf(given) !== -1);
+  static checkGivenAgainstCorrect(given: string, correct: string | undefined): boolean {
+    return <boolean>(correct && this.cleanUpAnswer(correct).indexOf(given) !== -1);
   }
 
   static cleanUpAnswer(answer: string): string[] {
     return [wanakana.toHiragana(answer), wanakana.toHiragana(wanakana.toRomaji(answer))];
   }
 
-  /**
-   * Check if given answer is reading or word
-   */
+  // Check if given answer is reading or word
   checkGivenAnswer(givenAnswer: string): boolean {
     // Do not check the difference between hiragana and katakana
     givenAnswer = wanakana.toHiragana(givenAnswer);

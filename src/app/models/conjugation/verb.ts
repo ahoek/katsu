@@ -14,7 +14,7 @@ export class Verb {
 
     if (!this.partOfSpeech) {
       this.notAVerb = true;
-      return null;
+      return;
     }
 
     const japanese = definition.japanese[0];
@@ -57,18 +57,18 @@ export class Verb {
   ];
 
   // Japanese word
-  word: string;
+  word!: string;
 
   // Reading in hiragana / katakana
-  reading: string;
+  reading!: string;
 
   // Grammatical part of speech
-  partOfSpeech: string;
+  partOfSpeech!: string;
 
-  type: string;
+  type!: string;
 
   // English meaning
-  englishDefinition: string;
+  englishDefinition!: string;
 
   notAVerb = false;
 
@@ -91,6 +91,15 @@ export class Verb {
     }
   }
 
+  // Get a verb to conjugate as Ichidan
+  static getIchidanVerb(reading: string): Verb {
+    const definition = <JishoDefinition>{
+      senses: [{parts_of_speech: ['Ichidan verb'], english_definitions: ['']}],
+      japanese: [{reading: reading}],
+    };
+    return new Verb(definition);
+  }
+
   /**
    * Set the English definition and part of speech
    */
@@ -105,12 +114,14 @@ export class Verb {
 
             return true;
           }
+          return false;
         });
 
         if (this.englishDefinition) {
           return true;
         }
       }
+      return false;
     });
   }
 
@@ -157,7 +168,7 @@ export class Verb {
       return 'na-adjective';
     }
     // Not a word we can conjugate
-    return;
+    return 'unknown';
   }
 
   isVerb() {
@@ -168,7 +179,7 @@ export class Verb {
    * Get the masu stem (ren'youkei)
    */
   masuStem(): string {
-    let stem: string;
+    let stem = '';
     if (this.group() === '1') {
       let preMasu;
       if (this.partOfSpeech === 'Godan verb - aru special class') {
@@ -241,7 +252,7 @@ export class Verb {
   }
 
   // Get the normal verb or adjective ending
-  normalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+  normalForm(speechLevel = 'plain', positive: boolean, nonPast: boolean): string[] {
     if (this.type === 'i-adjective') {
       return this.iAdjectiveNormalForm(speechLevel, positive, nonPast);
     }
@@ -256,7 +267,7 @@ export class Verb {
 
   // Get the verbal adjective conjugation
   iAdjectiveNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
-    let ending = '';
+    let ending: string;
     if (nonPast) {
       // @todo Make exception for ii
       ending = positive ? 'い' : 'く' + this.nai;
@@ -283,7 +294,7 @@ export class Verb {
    * Conjugate de aru
    */
   deAruNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
-    let conjugations: string[];
+    let conjugations: string[] = [];
 
     // Polite negative forms can be made by plain negative forms + です
     switch (speechLevel) {
@@ -319,9 +330,7 @@ export class Verb {
     return conjugations;
   }
 
-  /**
-   * Get the normal verb conjugation
-   */
+  // Get the normal verb conjugation
   verbNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
     let conjugation = '';
     switch (speechLevel) {
@@ -420,14 +429,12 @@ export class Verb {
     return stem + HiraganaColumnHelper.change(ending, 'E', 'A');
   }
 
-  volitional(speechLevel: string): string[] {
+  volitional(speechLevel = 'plain'): string[] {
     let conjugation;
 
     if (speechLevel === 'polite') {
       conjugation = this.masuStem() + 'ましょう';
-    }
-
-    if (speechLevel === 'plain') {
+    } else {
       const you = 'よう';
       switch (this.group()) {
         case '1':
@@ -451,11 +458,11 @@ export class Verb {
       }
     }
 
-    return [conjugation];
+    return conjugation !== undefined ? [conjugation] : [];
   }
 
   // Tai form (desire)
-  taiForm(modality: string, tense: string, speechLevel: string): string[] {
+  taiForm(modality = 'positive', tense = 'nonPast', speechLevel = 'plain'): string[]|undefined {
     if (this.type !== 'verb') {
       return;
     }
@@ -483,12 +490,12 @@ export class Verb {
    *
    * Tense and modality are left out for now, because they conjugate like -eru
    */
-   potential(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+   potential(speechLevel = 'plain', positive = true, nonPast = true): string[] {
     const potentials: string[] = [];
     let stem = '';
 
     if (this.word === '分かる') {
-      return;
+      return [];
     }
 
     switch (this.group()) {
@@ -521,7 +528,7 @@ export class Verb {
     // Handle speech level, consider stem as ren'youkei
     for (stem of stems) {
       const conjugation = stem + 'る';
-      const dictVerb = this.getIchidanVerb(conjugation);
+      const dictVerb = Verb.getIchidanVerb(conjugation);
       const potential = dictVerb.verbNormalForm(speechLevel, positive, nonPast);
       potentials.push(potential[0]);
     }
@@ -533,7 +540,7 @@ export class Verb {
    *
    * @todo State verbs as aru, dekiru or wakaru do not have an imperative form
    */
-  imperative(modality: string): string[] {
+  imperative(modality = 'positive'): string[] {
     let conjugation = '';
     if (modality === 'positive') {
       switch (this.group()) {
@@ -562,7 +569,7 @@ export class Verb {
     return [conjugation];
   }
 
-  conditional(modality: string): string[] {
+  conditional(modality = 'positive'): string[] {
     let conjugation = '';
     if (modality === 'positive') {
       switch (this.group()) {
@@ -604,7 +611,7 @@ export class Verb {
       .map((past) => past + 'り');
   }
 
-  passive(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+  passive(speechLevel = 'plain', positive = true, nonPast = true): string[] {
     // Find the 'A' stem
     let stem = '';
     switch (this.group()) {
@@ -627,7 +634,7 @@ export class Verb {
       stem = 'あら';
     }
     const conjugation = stem + 'れる';
-    const passive = this.getIchidanVerb(conjugation);
+    const passive = Verb.getIchidanVerb(conjugation);
     return passive.verbNormalForm(speechLevel, positive, nonPast);
   }
 
@@ -654,18 +661,18 @@ export class Verb {
     if (this.partOfSpeech === 'Godan verb with ru ending (irregular verb)') {
       stem = 'あら';
     }
-    return this.getIchidanVerb(stem + 'せる')
+    return Verb.getIchidanVerb(stem + 'せる')
       .verbNormalForm(speechLevel, positive, nonPast);
   }
 
-  causativePassive(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+  causativePassive(speechLevel = 'plain', positive: boolean, nonPast: boolean): string[] {
     const causitive = this.causative();
-    const conj = this.getIchidanVerb(causitive[0]).passive('plain', true, true);
+    const conj = Verb.getIchidanVerb(causitive[0]).passive();
     if (this.group() === '1' && this.lastKana() !== 'す') {
       // replace せら with さ
       conj.push(conj[0].slice(0, -4) + 'される');
     }
-    return conj.map((c) => this.getIchidanVerb(c)
+    return conj.map((c) => Verb.getIchidanVerb(c)
       .verbNormalForm(speechLevel, positive, nonPast)[0]);
   }
 
@@ -682,14 +689,5 @@ export class Verb {
   // Change the ending vowel sound
   private changeLastVowel(from: string, to: string): string {
     return this.removeLast() + HiraganaColumnHelper.change(this.lastKana(), from, to);
-  }
-
-  // Get a verb to conjugate as Ichidan
-  private getIchidanVerb(reading: string): Verb {
-    const definition = <JishoDefinition>{
-      senses: [{parts_of_speech: ['Ichidan verb'], english_definitions: ['']}],
-      japanese: [{reading: reading}],
-    };
-    return new Verb(definition);
   }
 }

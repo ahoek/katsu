@@ -26,6 +26,7 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "@types/google.analytics": "0.0.40",
     "@types/gsap": "^1.20.2",
+    "@types/wanakana": "^4.0.2",
     "core-js": "^2.6.11",
     "gsap": "^3.5.1",
     "rxjs": "^6.6.3",

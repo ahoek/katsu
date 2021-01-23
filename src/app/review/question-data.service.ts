@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Verb } from '../models/verb';
+import { Verb } from '../models/conjugation/verb';
 import { Question } from '../models/question';
 import { SettingsService } from '../shared/settings.service';
 
@@ -14,6 +14,7 @@ interface Dictionary {
 export class QuestionDataService {
 
   index = 0;
+
   questions: Question[] = [];
 
   constructor(
@@ -40,7 +41,7 @@ export class QuestionDataService {
       const options = this.settings.getQuestionTypeOptions();
       console.log('question types', options);
 
-      this.http.get(url).subscribe((dictionary: Dictionary) => {
+      this.http.get(url).subscribe((dictionary: any) => {
         this.questions = this.getQuestionsFromDictionary(dictionary, options);
         this.index = 0;
         resolve(this.questions);
@@ -86,7 +87,7 @@ export class QuestionDataService {
   /**
    * Create a question from the dictionary
    */
-  private getQuestion(dictionary: Dictionary, type: string): Question {
+  private getQuestion(dictionary: Dictionary, type: string): Question | undefined {
     if (!type) {
       return;
     }
@@ -103,6 +104,7 @@ export class QuestionDataService {
       throw new Error('No word of correct type found');
     }
 
+    // @ts-ignore
     if (word.level < Number(this.settings.jlptLevel.slice(-1))) {
       return;
     }

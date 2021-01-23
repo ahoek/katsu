@@ -23,7 +23,7 @@ export class AppComponent {
     this.initializeApp();
   }
 
-  onLangChange: Subscription = undefined;
+  onLangChange?: Subscription;
 
   async initializeApp() {
     await this.platform.ready();
@@ -44,9 +44,10 @@ export class AppComponent {
         // Observe router and when it start navigation it will track the view
         if (event instanceof NavigationStart) {
           let title = this.title.getTitle();
+          const currentNav = this.router.getCurrentNavigation();
           // Get title if it was sent on state
-          if (this.router.getCurrentNavigation().extras.state) {
-            title = this.router.getCurrentNavigation().extras.state.title;
+          if (currentNav && currentNav.extras.state) {
+            title = currentNav.extras.state.title;
           }
           // Pass url and page title
           this.analytics.trackView(event.url, title);

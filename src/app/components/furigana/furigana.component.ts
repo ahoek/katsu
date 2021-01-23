@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import * as wanakana from 'wanakana/wanakana.js';
+import * as wanakana from 'wanakana';
 import { WordToken } from '../../models/word-token';
 
 @Component({
@@ -17,8 +17,8 @@ export class FuriganaComponent {
 
   @Input() mode = 'furigana';
 
-  private word: string;
-  private reading: string;
+  private word!: string;
+  private reading!: string;
 
   public output = '';
 

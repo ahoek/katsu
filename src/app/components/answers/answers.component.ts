@@ -6,10 +6,8 @@ import { Question } from '../../models/question';
   templateUrl: './answers.component.html',
   styleUrls: ['./answers.component.scss'],
 })
-export class AnswersComponent implements OnInit {
-  @Input() question: Question;
-  constructor() { }
+export class AnswersComponent {
+  @Input() question!: Question;
 
-  ngOnInit() {}
-
+  constructor() {}
 }

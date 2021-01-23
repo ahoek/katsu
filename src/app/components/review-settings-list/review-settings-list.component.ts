@@ -8,6 +8,9 @@ import { SettingsService } from '../../shared/settings.service';
   styleUrls: ['./review-settings-list.component.scss'],
 })
 export class ReviewSettingsListComponent {
-  @Input('question') question: Question;
-  @Input('settings') settings: SettingsService;
+  @Input()
+  question!: Question;
+
+  @Input()
+  settings!: SettingsService;
 }

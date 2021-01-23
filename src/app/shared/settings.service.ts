@@ -207,7 +207,7 @@ export class SettingsService {
   get amount() { return this._amount; }
   set amount(value) { this._amount = value; }
 
-  private _language: string;
+  private _language?: string;
   get language() {
     if (this._language === undefined) {
       this._language = this.translate.currentLang;
@@ -280,9 +280,10 @@ export class SettingsService {
   }
 
   store() {
-    const settings = {};
+    const settings: any = {};
     Object.keys(this).forEach((key: string) => {
       if (key.startsWith('_')) {
+        // @ts-ignore
         settings[key.substring(1)] = this[key];
       }
     });
@@ -290,9 +291,7 @@ export class SettingsService {
     this.storage.set('settings', JSON.stringify(settings));
   }
 
-  /**
-   * Get the available question options
-   */
+  // Get the available question options
   getQuestionTypeOptions(): string[] {
     const options: string[] = [];
 

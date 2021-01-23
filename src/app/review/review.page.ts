@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NavController, Platform } from '@ionic/angular';
-import * as wanakana from 'wanakana/wanakana.js';
+import * as wanakana from 'wanakana';
 import { gsap } from 'gsap';
 
 import { Question } from '../models/question';
@@ -15,9 +15,12 @@ import { AnalyticsService } from '../shared/analytics.service';
   styleUrls: ['./review.page.scss'],
 })
 export class ReviewPage implements OnInit {
-  @ViewChild('answerInputNative', { read: ElementRef, static: true }) answerInputNative: ElementRef;
+  questions: Question[] = [];
 
-  public questions: Question[] = [];
+  tl!: gsap.core.Timeline;
+
+  @ViewChild('answerInputNative', { read: ElementRef, static: true })
+  answerInputNative!: ElementRef;
 
   get index(): number {
     return this.dataService.index;
@@ -25,8 +28,6 @@ export class ReviewPage implements OnInit {
   set index(value: number) {
     this.dataService.index = value;
   }
-
-  tl: gsap.core.Timeline;
 
   constructor(
     public navCtrl: NavController,
@@ -40,9 +41,7 @@ export class ReviewPage implements OnInit {
     this.questions[0] = new Question();
   }
 
-  /**
-   * Set up the review page
-   */
+  // Set up the review page
   async ngOnInit() {
     this.dataService.load().then(questions => {
       if (questions.length > 0) {
@@ -139,8 +138,8 @@ export class ReviewPage implements OnInit {
       return {};
     }
     return {
-      'correct': this.questions[this.index].correct === true,
-      'incorrect': this.questions[this.index].correct === false
+      correct: this.questions[this.index].correct === true,
+      incorrect: this.questions[this.index].correct === false
     };
   }
 
@@ -160,14 +159,11 @@ export class ReviewPage implements OnInit {
     };
   }
 
-  /**
-   * Get な if this is a na-adjective
-   */
-  public getNa(question): string {
+  // Get な if this is a na-adjective
+  public getNa(question: Question): string {
     if (question.isOfType('na-adjective') && !this.settings.reverse) {
       return 'な';
     }
-
     return '';
   }
 

@@ -11,13 +11,3 @@
   For more info on type definition files, check out the Typescript docs here:
   https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html
 */
-
-declare class wanakana {
-  // static bind(element: any, options: any);
-  static isHiragana(input: string): boolean;
-  static isKanji(input: string): boolean;
-  static toKana(input: string): string;
-  static toHiragana(input: string): string;
-  static toRomaji(input: string): string;
-}
-

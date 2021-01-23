@@ -1,24 +1,19 @@
 import { Injectable } from '@angular/core';
-declare var ga;
+declare var ga: any;
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AnalyticsService {
-
-  constructor() { }
-
-  setTracker(tracker) {
-    if ( !localStorage.getItem('ga:clientId') ) {
+  setTracker(tracker: any) {
+    if (!localStorage.getItem('ga:clientId') ) {
       localStorage.setItem( 'ga:clientId', tracker.get('clientId') );
     }
   }
 
-  startTrackerWithId(id) {
+  startTrackerWithId(id: string) {
     ga('create', {
       storage: 'none',
       trackingId: id,
-      clientId: localStorage.getItem('ga:clientId')
+      clientId: localStorage.getItem('ga:clientId'),
     });
     ga('set', 'checkProtocolTask', null);
     ga('set', 'transportUrl', 'https://www.google-analytics.com/collect');
@@ -28,17 +23,17 @@ export class AnalyticsService {
   trackView(pageUrl: string, screenName: string) {
     ga('set', {
       page: pageUrl,
-      title: screenName
+      title: screenName,
     });
     ga('send', 'pageview');
   }
 
-  trackEvent(category, action, label?, value?) {
+  trackEvent(category: string, action: string, label?: string, value?: number) {
     ga('send', 'event', {
       eventCategory: category,
       eventLabel: label,
       eventAction: action,
-      eventValue: value
+      eventValue: value,
     });
   }
 }

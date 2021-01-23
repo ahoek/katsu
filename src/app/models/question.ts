@@ -1,5 +1,5 @@
-import * as wanakana from 'wanakana/wanakana.js';
-import { Verb } from './verb';
+import * as wanakana from 'wanakana';
+import { Verb } from './conjugation/verb';
 import { Answer } from './answer';
 
 /**
@@ -8,10 +8,10 @@ import { Answer } from './answer';
 export class Question {
 
   // From verb
-  public verb: Verb;
-  public word: string;
-  public reading: string;
-  public meaning: string;
+  public verb!: Verb;
+  public word!: string | undefined;
+  public reading!: string;
+  public meaning!: string;
 
   // Answer
   public type = '';
@@ -36,6 +36,14 @@ export class Question {
     question.setAnswers();
 
     return question;
+  }
+
+  static getOkurigana(word: string | undefined): string {
+    if (typeof word !== 'string') {
+      return '';
+    }
+    const base = wanakana.stripOkurigana(word);
+    return word.substring(base.length);
   }
 
   setVerb(verb: Verb) {
@@ -77,7 +85,7 @@ export class Question {
    * - Modality
    * - Tense
    */
-  getConjugations(): string[] {
+  getConjugations(): string[] | undefined {
     let speechLevel;
     if (this.isOfType('plain')) {
       speechLevel = 'plain';
@@ -133,35 +141,33 @@ export class Question {
     }
 
     conjugations.forEach(conjugation => {
-      const answer = new Answer(this.getWordAnswer(conjugation), conjugation);
-      this.answers.unshift(answer);
+      if (conjugation !== undefined) {
+        const answer = new Answer(this.getWordAnswer(conjugation), conjugation);
+        this.answers.unshift(answer);
+      }
     });
   }
 
   /**
    * Get the answer with kanji in it, for words that contain kanji
    */
-  getWordAnswer(readingAnswer: string): string {
+  getWordAnswer(readingAnswer: string): string | undefined {
     if (this.word === this.reading) {
       return;
     }
 
     const okurigana = Question.getOkurigana(this.word);
     if (okurigana.length === 0) {
-      return readingAnswer.replace(this.reading, this.word);
+      return readingAnswer.replace(this.reading, <string>this.word);
     }
 
     // Remove the okurigana from the word
     const readingBase = this.reading.slice(0, -1 * okurigana.length);
+    // @ts-ignore
     const wordBase = this.word.slice(0, -1 * okurigana.length);
     const conjugation = readingAnswer.substring(readingBase.length);
 
     return `${wordBase}${conjugation}`;
-  }
-
-  static getOkurigana(word: string): string {
-    const base = wanakana.stripOkurigana(word);
-    return word.substring(base.length);
   }
 
   /**
@@ -195,6 +201,7 @@ export class Question {
         this.correct = true;
         return true;
       }
+      return false;
     });
   }
 

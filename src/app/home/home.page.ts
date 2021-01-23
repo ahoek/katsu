@@ -37,17 +37,14 @@ export class HomePage implements OnInit {
    * Start the reviews with the correct settings
    */
   startReview() {
-    // Save the settings in storage
     this.settings.store();
-
     this.navCtrl.navigateForward('/review');
-
     this.platform.ready().then(() => {
       this.analytics.trackEvent('Review', 'start', '', 1);
     });
   }
 
-  setLanguage(language) {
+  setLanguage(language: string) {
     this.settings.language = language;
     this.translate.use(this.settings.language);
   }
