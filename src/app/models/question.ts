@@ -114,6 +114,9 @@ export class Question {
     if (this.isOfType('causative')) {
       return this.verb.causative(speechLevel, modality === 'positive', tense === 'non-past');
     }
+    if (this.isOfType('caus-pass')) {
+      return this.verb.causativePassive(speechLevel, modality === 'positive', tense === 'non-past');
+    }
 
     // The last is the 'normal' conjugation
     return this.verb.normalForm(speechLevel, modality === 'positive', tense === 'non-past');

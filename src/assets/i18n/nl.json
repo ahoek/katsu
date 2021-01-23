@@ -21,7 +21,8 @@
       "conditional": "Conditionalis",
       "conditional-note": "(eindigt op ば of なら)",
       "passive": "Passivum",
-      "causative": "Causativum"
+      "causative": "Causativum",
+      "causative-passive": "Causativum-passivum"
     },
     "part-of-speech": {
       "verb": "Werkwoord",

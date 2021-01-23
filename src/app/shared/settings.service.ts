@@ -158,6 +158,21 @@ export class SettingsService {
     }
   }
 
+  private _causativePassive = false;
+  get causativePassive(): boolean {
+    return this._causativePassive;
+  }
+
+  set causativePassive(value) {
+    this._causativePassive = value;
+    if (this._causativePassive) {
+      this.needsVerb();
+      this.needsSpeechLevel();
+      this.needsTense();
+      this.needsModality();
+    }
+  }
+
   private _polite = true;
   get polite() { return this._polite; }
   set polite(value) { this._polite = value; }
@@ -345,6 +360,10 @@ export class SettingsService {
     if (this.causative) {
       this.addCausative(options);
     }
+
+    if (this.causativePassive) {
+      this.addCausativePassive(options);
+    }
     console.log('options', options);
     return options;
   }
@@ -455,6 +474,10 @@ export class SettingsService {
 
   addCausative(options: string[]) {
     this.addNormalOptionsFor('causative-verb', options);
+  }
+
+  addCausativePassive(options: string[]) {
+    this.addNormalOptionsFor('caus-pass-verb', options);
   }
 
   getLanguage(): string {

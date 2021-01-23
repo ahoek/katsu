@@ -5,23 +5,23 @@
     {{'setting.form.te-form'|translate}}
   </ion-item>
   <ion-item *ngIf="question.isOfType('tai-form')">
-    <ion-icon name="heart" slot="start"></ion-icon>
+    <ion-icon name="heart-outline" slot="start"></ion-icon>
     {{'setting.form.tai-form'|translate}}
   </ion-item>
   <ion-item *ngIf="question.isOfType('volitional')">
-    <ion-icon name="walk" slot="start"></ion-icon>
+    <ion-icon name="walk-outline" slot="start"></ion-icon>
     {{'setting.form.volitional'|translate}}
   </ion-item>
   <ion-item *ngIf="question.isOfType('potential')">
-    <ion-icon name="flag" slot="start"></ion-icon>
+    <ion-icon name="flag-outline" slot="start"></ion-icon>
     {{'setting.form.potential'|translate}}
   </ion-item>
   <ion-item *ngIf="question.isOfType('imperative')">
-    <ion-icon name="megaphone" slot="start"></ion-icon>
+    <ion-icon name="megaphone-outline" slot="start"></ion-icon>
     {{'setting.form.imperative'|translate}}
   </ion-item>
   <ion-item *ngIf="question.isOfType('conditional')">
-    <ion-icon name="code-download" slot="start"></ion-icon>
+    <ion-icon name="code-download-outline" slot="start"></ion-icon>
     {{'setting.form.conditional'|translate}}
     <ion-note>{{'setting.form.conditional-note'|translate}}</ion-note>
   </ion-item>
@@ -30,35 +30,39 @@
     {{'setting.form.tari-form'|translate}}
   </ion-item>
   <ion-item *ngIf="question.isOfType('passive')">
-    <ion-icon name="bonfire" slot="start"></ion-icon>
+    <ion-icon name="bonfire-outline" slot="start"></ion-icon>
     {{'setting.form.passive'|translate}}
   </ion-item>
   <ion-item *ngIf="question.isOfType('causative')">
-    <ion-icon name="log-in" slot="start"></ion-icon>
+    <ion-icon name="log-in-outline" slot="start"></ion-icon>
     {{'setting.form.causative'|translate}}
+  </ion-item>
+  <ion-item *ngIf="question.isOfType('caus-pass')">
+    <ion-icon name="hammer-outline" slot="start"></ion-icon>
+    {{'setting.form.causative-passive'|translate}}
   </ion-item>
 
   <!-- formal -->
   <ion-item *ngIf="question.isOfType('polite')">
-    <ion-icon name="briefcase" slot="start"></ion-icon>
+    <ion-icon name="briefcase-outline" slot="start"></ion-icon>
     {{'setting.speech-level.formal'|translate}}
     <ion-note>{{'setting.speech-level.formal-note'|translate}}</ion-note>
   </ion-item>
   <!-- informal -->
   <ion-item *ngIf="question.isOfType('plain')">
-    <ion-icon name="shirt" slot="start"></ion-icon>
+    <ion-icon name="shirt-outline" slot="start"></ion-icon>
     {{'setting.speech-level.informal'|translate}}
     <ion-note>{{'setting.speech-level.informal-note'|translate}}</ion-note>
   </ion-item>
 
   <!-- positive -->
   <ion-item *ngIf="question.isOfType('positive')">
-    <ion-icon name="happy" slot="start"></ion-icon>
+    <ion-icon name="happy-outline" slot="start"></ion-icon>
     {{'setting.positive/negative.positive'|translate}}
   </ion-item>
   <!-- negative -->
   <ion-item *ngIf="question.isOfType('negative')">
-    <ion-icon name="sad" slot="start"></ion-icon>
+    <ion-icon name="sad-outline" slot="start"></ion-icon>
     {{'setting.positive/negative.negative'|translate}}
   </ion-item>
 

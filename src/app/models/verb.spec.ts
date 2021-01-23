@@ -5,7 +5,7 @@ import { Verb } from './verb';
  */
 
 const IKU = new Verb({
-  'japanese': [{
+  japanese: [{
     'word': '行く',
     'reading': 'いく'
   }],
@@ -15,16 +15,23 @@ const IKU = new Verb({
   }]
 });
 
+const HANASU = new Verb(        {
+  japanese: [{
+    word: '話す',
+    reading: 'はなす',
+  }],
+  senses: [{
+    english_definitions: ['to tell'],
+    parts_of_speech: ['Godan verb with su ending'],
+  }],
+});
+
 const TABERU = new Verb({
-  'japanese': [
+  japanese: [
     {
       'word': '食べる',
       'reading': 'たべる'
     },
-    {
-      'word': '喰べる',
-      'reading': 'たべる'
-    }
   ],
   'senses': [
     {
@@ -35,11 +42,10 @@ const TABERU = new Verb({
       ]
     }
   ],
-  'level': 5
 });
 
 const KURU = new Verb({
-  'japanese': [
+  japanese: [
     {
       'word': '来る',
       'reading': 'くる'
@@ -60,11 +66,10 @@ const KURU = new Verb({
       ]
     },
   ],
-  'level': 5
 });
 
 const SURU = new Verb({
-  'japanese': [
+  japanese: [
     {
       'word': '為る',
       'reading': 'する'
@@ -80,11 +85,10 @@ const SURU = new Verb({
       ]
     },
   ],
-  'level': 3
 });
 
 const MURI = new Verb({
-  'japanese': [
+  japanese: [
     {
       'word': '無理',
       'reading': 'むり'
@@ -94,14 +98,6 @@ const MURI = new Verb({
     {
       'english_definitions': [
         'unreasonable'
-      ],
-      'parts_of_speech': [
-        'Na-adjective'
-      ]
-    },
-    {
-      'english_definitions': [
-        'excessive (work, etc.)'
       ],
       'parts_of_speech': [
         'Na-adjective'
@@ -120,7 +116,7 @@ const MURI = new Verb({
 });
 
 const ARU = new Verb({
-  'japanese': [
+  japanese: [
     {
       'word': '有る',
       'reading': 'ある'
@@ -139,9 +135,9 @@ const ARU = new Verb({
   ]
 });
 describe('Verb model', () => {
-  it('te-form of magaru', () => {
+  it('te-form of 曲がる', () => {
     const verb = new Verb({
-      'japanese': [{
+      japanese: [{
         'word': '曲がる',
         'reading': 'まがる'
       }],
@@ -160,7 +156,7 @@ describe('Verb model', () => {
 
   it('"na-adjective-polite-negative-present" of そう', () => {
     const word = new Verb({
-      'japanese': [{
+      japanese: [{
         'reading': 'そう'
       }],
       'senses': [{
@@ -183,7 +179,7 @@ describe('Verb model', () => {
 
   it('formal negative nonpast of ふえる', () => {
     const verb = new Verb({
-      'japanese': [
+      japanese: [
         {
           'word': '増える',
           'reading': 'ふえる'
@@ -206,7 +202,7 @@ describe('Verb model', () => {
 
   it('Tai form of na adjective 加減な', () => {
     const verb = new Verb({
-      'japanese': [
+      japanese: [
         {
           'word': '加減',
           'reading': 'かげん'
@@ -246,6 +242,25 @@ describe('Verb model', () => {
   it('Causative する', () => {
     expect(SURU.causative('plain', true, true)).toEqual(['させる']);
     expect(SURU.causative('polite', true, true)).toEqual(['させます']);
+  });
+
+  it('Causative-passive godan', () => {
+    expect(IKU.causativePassive('polite', true, true))
+      .toEqual(['いかせられます', 'いかされます']);
+    expect(HANASU.causativePassive('polite', true, true))
+      .toEqual(['はなさせられます']);
+  });
+
+  it('Causative-passive ichidan', () => {
+    expect(TABERU.causativePassive('plain', true, true)).toEqual(['たべさせられる']);
+  });
+
+  it('Causative-passive 来る', () => {
+    expect(KURU.causativePassive('plain', true, true)).toEqual(['こさせられる']);
+  });
+
+  it('Causative-passive する', () => {
+    expect(SURU.causativePassive('plain', true, true)).toEqual(['させられる']);
   });
 
   it('Na adjective - coll - past - neg', () => {

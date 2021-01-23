@@ -21,7 +21,8 @@
       "conditional": "Conditional",
       "conditional-note": "(ends in ば or なら)",
       "passive": "Passive",
-      "causative": "Causative"
+      "causative": "Causative",
+      "causative-passive": "Causative-passive"
     },
     "part-of-speech": {
       "verb": "Verb",
