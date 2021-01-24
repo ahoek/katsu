@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { Verb } from './verb';
+import { JishoDefinition } from '../jisho-interfaces';
 
 /**
  * Note: test that anshin suru is not a na adjective
@@ -6,16 +9,16 @@ import { Verb } from './verb';
 
 const IKU = new Verb({
   japanese: [{
-    'word': '行く',
-    'reading': 'いく'
+    word: '行く',
+    reading: 'いく'
   }],
-  'senses': [{
-    'english_definitions': ['to go'],
-    'parts_of_speech': ['Godan verb - Iku/Yuku special class']
+  senses: [{
+    english_definitions: ['to go'],
+    parts_of_speech: ['Godan verb - Iku/Yuku special class']
   }]
-});
+} as JishoDefinition);
 
-const HANASU = new Verb(        {
+const HANASU = new Verb({
   japanese: [{
     word: '話す',
     reading: 'はなす',
@@ -27,60 +30,46 @@ const HANASU = new Verb(        {
 });
 
 const TABERU = new Verb({
-  japanese: [
-    {
-      'word': '食べる',
-      'reading': 'たべる'
-    },
-  ],
-  'senses': [
-    {
-      'english_definitions': ['to eat'],
-      'parts_of_speech': [
-        'Ichidan verb',
-        'Transitive verb'
-      ]
-    }
-  ],
+  japanese: [{
+    word: '食べる',
+    reading: 'たべる',
+  }],
+  senses: [{
+    english_definitions: ['to eat'],
+    parts_of_speech: [
+      'Ichidan verb',
+      'Transitive verb',
+    ],
+  }],
 });
 
 const KURU = new Verb({
-  japanese: [
-    {
-      'word': '来る',
-      'reading': 'くる'
-    },
-    {
-      'word': '來る',
-      'reading': 'くる'
-    }
-  ],
-  'senses': [
-    {
-      'english_definitions': [
-        'to come (spatially or temporally)'
-      ],
-      'parts_of_speech': [
-        'Kuru verb - special class',
-        'intransitive verb'
-      ]
-    },
-  ],
+  japanese: [{
+    word: '来る',
+    reading: 'くる'
+  }],
+  senses: [{
+    english_definitions: ['to come (spatially or temporally)'],
+    parts_of_speech: [
+      'Kuru verb - special class',
+      'intransitive verb',
+    ],
+  }],
 });
 
 const SURU = new Verb({
   japanese: [
     {
-      'word': '為る',
-      'reading': 'する'
+      word: '為る',
+      reading: 'する'
     }
   ],
-  'senses': [
+  senses: [
     {
-      'english_definitions': [
+      english_definitions: [
         'to do'
       ],
-      'parts_of_speech': [
+      parts_of_speech: [
         'Suru verb - irregular'
       ]
     },
@@ -90,44 +79,44 @@ const SURU = new Verb({
 const MURI = new Verb({
   japanese: [
     {
-      'word': '無理',
-      'reading': 'むり'
+      word: '無理',
+      reading: 'むり'
     }
   ],
-    'senses': [
+    senses: [
     {
-      'english_definitions': [
+      english_definitions: [
         'unreasonable'
       ],
-      'parts_of_speech': [
+      parts_of_speech: [
         'Na-adjective'
       ]
     },
     {
-      'english_definitions': [
+      english_definitions: [
         'to work too hard'
       ],
-      'parts_of_speech': [
+      parts_of_speech: [
         'Suru verb'
       ]
     }
   ],
-  'level': 4
+  level: 4
 });
 
 const ARU = new Verb({
   japanese: [
     {
-      'word': '有る',
-      'reading': 'ある'
+      word: '有る',
+      reading: 'ある'
     }
   ],
-  'senses': [
+  senses: [
     {
-      'english_definitions': [
+      english_definitions: [
         'to be (usu. of inanimate objects)'
       ],
-      'parts_of_speech': [
+      parts_of_speech: [
         'Godan verb with ru ending (irregular verb)',
         'intransitive verb'
       ]
@@ -138,12 +127,12 @@ describe('Verb model', () => {
   it('te-form of 曲がる', () => {
     const verb = new Verb({
       japanese: [{
-        'word': '曲がる',
-        'reading': 'まがる'
+        word: '曲がる',
+        reading: 'まがる'
       }],
-      'senses': [{
-        'english_definitions': ['to bend'],
-        'parts_of_speech': ['Godan verb with ru ending']
+      senses: [{
+        english_definitions: ['to bend'],
+        parts_of_speech: ['Godan verb with ru ending']
       }]
     });
     expect(verb.teForm()).toBe('まがって');
@@ -157,11 +146,11 @@ describe('Verb model', () => {
   it('"na-adjective-polite-negative-present" of そう', () => {
     const word = new Verb({
       japanese: [{
-        'reading': 'そう'
+        reading: 'そう'
       }],
-      'senses': [{
-        'english_definitions': ['appearing that'],
-        'parts_of_speech': ['Na-adjective']
+      senses: [{
+        english_definitions: ['appearing that'],
+        parts_of_speech: ['Na-adjective']
       }]
     });
     expect(word.normalForm('polite', false, true)).toEqual([
@@ -181,16 +170,16 @@ describe('Verb model', () => {
     const verb = new Verb({
       japanese: [
         {
-          'word': '増える',
-          'reading': 'ふえる'
+          word: '増える',
+          reading: 'ふえる'
         }
       ],
-      'senses': [
+      senses: [
         {
-          'english_definitions': [
+          english_definitions: [
             'to increase'
           ],
-          'parts_of_speech': [
+          parts_of_speech: [
             'Ichidan verb',
             'intransitive verb'
           ]
@@ -204,22 +193,22 @@ describe('Verb model', () => {
     const verb = new Verb({
       japanese: [
         {
-          'word': '加減',
-          'reading': 'かげん'
+          word: '加減',
+          reading: 'かげん'
         }
       ],
-      'senses': [
+      senses: [
         {
-          'english_definitions': [
+          english_definitions: [
             'degree'
           ],
-          'parts_of_speech': [
+          parts_of_speech: [
             'Na-adjective',
             'Noun - used as a suffix'
           ]
         },
       ],
-      'level': 3
+      level: 3
     });
     expect(verb.taiForm('negative', 'nonpast', 'polite')).toEqual(undefined);
   });

@@ -5,14 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ReviewPage } from './review.page';
+import { ReviewPageComponent } from './review-page.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {ComponentsModule} from '../components/components.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: ReviewPage
+    component: ReviewPageComponent
   }
 ];
 
@@ -25,6 +25,6 @@ const routes: Routes = [
     TranslateModule.forChild(),
     ComponentsModule,
   ],
-  declarations: [ReviewPage]
+  declarations: [ReviewPageComponent]
 })
 export class ReviewPageModule {}

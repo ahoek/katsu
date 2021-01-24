@@ -11,7 +11,7 @@ export class Answer {
   }
 
   static checkGivenAgainstCorrect(given: string, correct: string | undefined): boolean {
-    return <boolean>(correct && this.cleanUpAnswer(correct).indexOf(given) !== -1);
+    return (correct && this.cleanUpAnswer(correct).indexOf(given) !== -1) as boolean;
   }
 
   static cleanUpAnswer(answer: string): string[] {

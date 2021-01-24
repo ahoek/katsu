@@ -7,10 +7,10 @@ import { AnalyticsService } from '../shared/analytics.service';
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  templateUrl: 'home-page.component.html',
+  styleUrls: ['home-page.component.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePageComponent implements OnInit {
   constructor(
     public navCtrl: NavController,
     public platform: Platform,

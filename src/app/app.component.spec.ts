@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
 
-  let platformReadySpy, platformSpy;
+  let platformReadySpy; let platformSpy;
 
   beforeEach(waitForAsync(() => {
     platformReadySpy = Promise.resolve();

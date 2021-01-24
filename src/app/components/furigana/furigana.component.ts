@@ -3,13 +3,13 @@ import * as wanakana from 'wanakana';
 import { WordToken } from '../../models/word-token';
 
 @Component({
-  selector: 'furigana',
+  selector: 'app-furigana',
   templateUrl: 'furigana.component.html'
 })
 export class FuriganaComponent {
 
-  @Input('input')
-  set input(value: { word: string; reading: string; }) {
+  @Input()
+  set input(value: { word: string; reading: string }) {
     this.word = value.word;
     this.reading = value.reading;
     this.setOutput();
@@ -17,10 +17,10 @@ export class FuriganaComponent {
 
   @Input() mode = 'furigana';
 
+  output = '';
+
   private word!: string;
   private reading!: string;
-
-  public output = '';
 
   /**
    * Make text with furigana from word and reading
@@ -63,9 +63,7 @@ export class FuriganaComponent {
     let currentToken = new WordToken();
 
     const tokens: any[] = [];
-    for (let i = 0; i < this.word.length; i++) {
-      const wordPart = this.word[i];
-
+    for (const wordPart of this.word) {
       lastType = currentType;
 
       if (wanakana.isKanji(wordPart) || wordPart === '々') {

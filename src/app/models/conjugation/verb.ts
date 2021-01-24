@@ -1,37 +1,8 @@
 import { HiraganaColumnHelper } from './hiragana-column-helper';
+import { JishoDefinition, JishoSense } from '../jisho-interfaces';
 
 // This class helps in conjugating verbs
 export class Verb {
-
-  // Create a verb from a Jisho api-like object
-  constructor(public definition: JishoDefinition) {
-    if (!definition) {
-      return;
-    }
-
-    // Check all senses for part of speech and only allow words that can be conjugated
-    this.getDefinition(definition);
-
-    if (!this.partOfSpeech) {
-      this.notAVerb = true;
-      return;
-    }
-
-    const japanese = definition.japanese[0];
-    this.word = japanese.word
-      ? japanese.word
-      : japanese.reading;
-    this.reading = japanese.reading;
-
-    // Make a suru verb from a noun
-    if (this.partOfSpeech === 'Suru verb') {
-      this.word = this.word + 'する';
-      this.reading = this.reading + 'する';
-      this.englishDefinition = '[to do] ' + this.englishDefinition;
-    }
-
-    this.type = Verb.getType(this.partOfSpeech);
-  }
 
   // These parts of speech can be conjugated with this class
   static verbPartOfSpeech = [
@@ -78,6 +49,46 @@ export class Verb {
   private readonly desu = 'です';
   private readonly katta = 'かった';
 
+  // Create a verb from a Jisho api-like object
+  constructor(public definition: JishoDefinition) {
+    if (!definition) {
+      return;
+    }
+
+    // Check all senses for part of speech and only allow words that can be conjugated
+    this.getDefinition(definition);
+
+    if (!this.partOfSpeech) {
+      this.notAVerb = true;
+      return;
+    }
+
+    const japanese = definition.japanese[0];
+    this.word = japanese.word
+      ? japanese.word
+      : japanese.reading;
+    this.reading = japanese.reading;
+
+    // Make a suru verb from a noun
+    if (this.partOfSpeech === 'Suru verb') {
+      this.word = this.word + 'する';
+      this.reading = this.reading + 'する';
+      this.englishDefinition = '[to do] ' + this.englishDefinition;
+    }
+
+    this.type = Verb.getType(this.partOfSpeech);
+  }
+
+  // Get a verb to conjugate as Ichidan
+  static getIchidanVerb(reading: string): Verb {
+    const definition = {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      senses: [{parts_of_speech: ['Ichidan verb'], english_definitions: ['']}],
+      japanese: [{reading}],
+    } as JishoDefinition;
+    return new Verb(definition);
+  }
+
   /**
    * Get the type for part of speech
    */
@@ -89,40 +100,6 @@ export class Verb {
     } else {
       return 'verb';
     }
-  }
-
-  // Get a verb to conjugate as Ichidan
-  static getIchidanVerb(reading: string): Verb {
-    const definition = <JishoDefinition>{
-      senses: [{parts_of_speech: ['Ichidan verb'], english_definitions: ['']}],
-      japanese: [{reading: reading}],
-    };
-    return new Verb(definition);
-  }
-
-  /**
-   * Set the English definition and part of speech
-   */
-  private getDefinition(definition: JishoDefinition) {
-    definition.senses.some((sense: JishoSense) => {
-      if (sense.parts_of_speech.length > 0) {
-        sense.parts_of_speech.some((partOfSpeech) => {
-          if (this.isUsable(partOfSpeech, sense)) {
-            // Take the first definition
-            this.englishDefinition = sense.english_definitions[0];
-            this.partOfSpeech = partOfSpeech;
-
-            return true;
-          }
-          return false;
-        });
-
-        if (this.englishDefinition) {
-          return true;
-        }
-      }
-      return false;
-    });
   }
 
   /**
@@ -185,7 +162,7 @@ export class Verb {
       if (this.partOfSpeech === 'Godan verb - aru special class') {
         preMasu = 'い';
       } else {
-        preMasu = HiraganaColumnHelper.change(this.lastKana(), 'U', 'I');
+        preMasu = HiraganaColumnHelper.change(this.lastKana(), 'u', 'i');
       }
       stem = this.removeLast() + preMasu;
     }
@@ -196,23 +173,13 @@ export class Verb {
 
     if (this.group() === '3') {
       if (this.isSuru()) {
-        stem = this.removeSuru() + HiraganaColumnHelper.change(this.reading.slice(-2, -1), 'U', 'I');
+        stem = this.removeSuru() + HiraganaColumnHelper.change(this.reading.slice(-2, -1), 'u', 'i');
       } else {
-        stem = HiraganaColumnHelper.change(this.removeLast(), 'U', 'I');
+        stem = HiraganaColumnHelper.change(this.removeLast(), 'u', 'i');
       }
     }
 
     return stem;
-  }
-
-  /**
-   * Remove 'suru' from a suru verb
-   */
-  private removeSuru(): string {
-    if (!this.isSuru()) {
-      return this.reading;
-    }
-    return this.reading.slice(0, -2);
   }
 
   /**
@@ -228,7 +195,7 @@ export class Verb {
         } else if (this.lastKana() === 'う') {
           stem = this.removeLast() + 'わ';
         } else {
-          stem = this.changeLastVowel('U', 'A');
+          stem = this.changeLastVowel('u', 'a');
         }
         break;
       case '2':
@@ -426,7 +393,7 @@ export class Verb {
     const stem = this.teForm().slice(0, -1);
     const ending = this.teForm().slice(-1);
 
-    return stem + HiraganaColumnHelper.change(ending, 'E', 'A');
+    return stem + HiraganaColumnHelper.change(ending, 'e', 'a');
   }
 
   volitional(speechLevel = 'plain'): string[] {
@@ -438,7 +405,7 @@ export class Verb {
       const you = 'よう';
       switch (this.group()) {
         case '1':
-          const stem = this.changeLastVowel('U', 'O');
+          const stem = this.changeLastVowel('u', 'o');
           conjugation = stem + 'う';
           break;
         case '2':
@@ -462,7 +429,7 @@ export class Verb {
   }
 
   // Tai form (desire)
-  taiForm(modality = 'positive', tense = 'nonPast', speechLevel = 'plain'): string[]|undefined {
+  taiForm(modality = 'positive', tense = 'nonPast', speechLevel = 'plain'): string[] | undefined {
     if (this.type !== 'verb') {
       return;
     }
@@ -490,7 +457,7 @@ export class Verb {
    *
    * Tense and modality are left out for now, because they conjugate like -eru
    */
-   potential(speechLevel = 'plain', positive = true, nonPast = true): string[] {
+  potential(speechLevel = 'plain', positive = true, nonPast = true): string[] {
     const potentials: string[] = [];
     let stem = '';
 
@@ -500,7 +467,7 @@ export class Verb {
 
     switch (this.group()) {
       case '1':
-        stem = this.changeLastVowel('U', 'E');
+        stem = this.changeLastVowel('u', 'e');
         break;
       case '2':
         stem = this.removeLast() + 'られ';
@@ -545,7 +512,7 @@ export class Verb {
     if (modality === 'positive') {
       switch (this.group()) {
         case '1':
-          conjugation = this.changeLastVowel('U', 'E');
+          conjugation = this.changeLastVowel('u', 'e');
           break;
         case '2':
           conjugation = this.word !== '呉れる'
@@ -576,7 +543,7 @@ export class Verb {
         case '1':
         case '2':
         case '3':
-          conjugation = this.changeLastVowel('U', 'E') + 'ば';
+          conjugation = this.changeLastVowel('u', 'e') + 'ば';
           break;
         case 'i-adjective':
           conjugation = this.removeLast() + 'ければ';
@@ -674,6 +641,41 @@ export class Verb {
     }
     return conj.map((c) => Verb.getIchidanVerb(c)
       .verbNormalForm(speechLevel, positive, nonPast)[0]);
+  }
+
+  /**
+   * Set the English definition and part of speech
+   */
+  private getDefinition(definition: JishoDefinition) {
+    definition.senses.some((sense: JishoSense) => {
+      if (sense.parts_of_speech.length > 0) {
+        sense.parts_of_speech.some((partOfSpeech) => {
+          if (this.isUsable(partOfSpeech, sense)) {
+            // Take the first definition
+            this.englishDefinition = sense.english_definitions[0];
+            this.partOfSpeech = partOfSpeech;
+
+            return true;
+          }
+          return false;
+        });
+
+        if (this.englishDefinition) {
+          return true;
+        }
+      }
+      return false;
+    });
+  }
+
+  /**
+   * Remove 'suru' from a suru verb
+   */
+  private removeSuru(): string {
+    if (!this.isSuru()) {
+      return this.reading;
+    }
+    return this.reading.slice(0, -2);
   }
 
   // Return the word without the last character

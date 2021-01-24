@@ -12,6 +12,8 @@ import { DOCUMENT } from '@angular/common';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  onLangChange?: Subscription;
+
   constructor(
     private platform: Platform,
     private analytics: AnalyticsService,
@@ -22,8 +24,6 @@ export class AppComponent {
   ) {
     this.initializeApp();
   }
-
-  onLangChange?: Subscription;
 
   async initializeApp() {
     await this.platform.ready();

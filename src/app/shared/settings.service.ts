@@ -11,18 +11,26 @@ import { TranslateService } from '@ngx-translate/core';
 export class SettingsService {
 
   private _verb = true;
-  get verb() { return this._verb; }
-  set verb(value) { this._verb = value; }
+  get verb() {
+    return this._verb;
+  }
+  set verb(value) {
+    this._verb = value;
+  }
 
   private _iAdjective = false;
-  get iAdjective() { return this._iAdjective; }
+  get iAdjective() {
+    return this._iAdjective;
+  }
   set iAdjective(value) {
     this._iAdjective = value;
     this.needsAdjectiveConjugations();
   }
 
   private _naAdjective = false;
-  get naAdjective() { return this._naAdjective; }
+  get naAdjective() {
+    return this._naAdjective;
+  }
   set naAdjective(value) {
     this._naAdjective = value;
     this.needsAdjectiveConjugations();
@@ -174,38 +182,78 @@ export class SettingsService {
   }
 
   private _polite = true;
-  get polite() { return this._polite; }
-  set polite(value) { this._polite = value; }
+  get polite() {
+    return this._polite;
+  }
+  set polite(value) {
+    this._polite = value;
+  }
   private _plain = false;
-  get plain() { return this._plain; }
-  set plain(value) { this._plain = value; }
+  get plain() {
+    return this._plain;
+  }
+  set plain(value) {
+    this._plain = value;
+  }
 
   private _past = true;
-  get past() { return this._past; }
-  set past(value) { this._past = value; }
+  get past() {
+    return this._past;
+  }
+  set past(value) {
+    this._past = value;
+  }
   private _nonPast = true;
-  get nonPast() { return this._nonPast; }
-  set nonPast(value) { this._nonPast = value; }
+  get nonPast() {
+    return this._nonPast;
+  }
+  set nonPast(value) {
+    this._nonPast = value;
+  }
 
   private _positive = true;
-  get positive() { return this._positive; }
-  set positive(value) { this._positive = value; }
+  get positive() {
+    return this._positive;
+  }
+  set positive(value) {
+    this._positive = value;
+  }
   private _negative = true;
-  get negative() { return this._negative; }
-  set negative(value) { this._negative = value; }
+  get negative() {
+    return this._negative;
+  }
+  set negative(value) {
+    this._negative = value;
+  }
 
   private _jlptLevel = 'n3';
-  get jlptLevel() { return this._jlptLevel; }
-  set jlptLevel(value) { this._jlptLevel = value; }
+  get jlptLevel() {
+    return this._jlptLevel;
+  }
+  set jlptLevel(value) {
+    this._jlptLevel = value;
+  }
   private _leaveOutSuru = true;
-  get leaveOutSuru() { return this._leaveOutSuru; }
-  set leaveOutSuru(value) { this._leaveOutSuru = value; }
+  get leaveOutSuru() {
+    return this._leaveOutSuru;
+  }
+  set leaveOutSuru(value) {
+    this._leaveOutSuru = value;
+  }
   private _reverse = false;
-  get reverse() { return this._reverse; }
-  set reverse(value) { this._reverse = value; }
+  get reverse() {
+    return this._reverse;
+  }
+  set reverse(value) {
+    this._reverse = value;
+  }
   private _amount = 10;
-  get amount() { return this._amount; }
-  set amount(value) { this._amount = value; }
+  get amount() {
+    return this._amount;
+  }
+  set amount(value) {
+    this._amount = value;
+  }
 
   private _language?: string;
   get language() {
@@ -214,56 +262,30 @@ export class SettingsService {
     }
     return this._language;
   }
-  set language(value) { this._language = value; }
+  set language(value) {
+    this._language = value;
+  }
 
   private _voice?: string;
-  get voice() { return this._voice; }
-  set voice(value) { this._voice = value; }
+  get voice() {
+    return this._voice;
+  }
+  set voice(value) {
+    this._voice = value;
+  }
 
   private _showMeaning = true;
-  get showMeaning() { return this._showMeaning; }
-  set showMeaning(value) { this._showMeaning = value; }
+  get showMeaning() {
+    return this._showMeaning;
+  }
+  set showMeaning(value) {
+    this._showMeaning = value;
+  }
 
   constructor(
     private storage: Storage,
     private translate: TranslateService,
   ) {
-  }
-
-  private needsVerb() {
-    if (!this.verb) {
-      this.verb = true;
-    }
-  }
-
-  private needsPartOfSpeech() {
-    if (!this.verb && !this.iAdjective && !this.naAdjective) {
-      this.verb = true;
-    }
-  }
-
-  private needsSpeechLevel() {
-    if (!this.polite && !this.plain) {
-      this.polite = true;
-    }
-  }
-
-  private needsTense() {
-    if (!this.past && !this.nonPast) {
-      this.nonPast = true;
-    }
-  }
-
-  private needsModality() {
-    if (!this.positive && !this.negative) {
-      this.positive = true;
-    }
-  }
-
-  private needsAdjectiveConjugations() {
-    if (!this.normal && !this.teForm && !this.conditional) {
-      this.normal = true;
-    }
   }
 
   userSettings(): Promise<SettingsService> {
@@ -485,5 +507,41 @@ export class SettingsService {
 
   getVoice(): any {
     return this.voice;
+  }
+
+  private needsVerb() {
+    if (!this.verb) {
+      this.verb = true;
+    }
+  }
+
+  private needsPartOfSpeech() {
+    if (!this.verb && !this.iAdjective && !this.naAdjective) {
+      this.verb = true;
+    }
+  }
+
+  private needsSpeechLevel() {
+    if (!this.polite && !this.plain) {
+      this.polite = true;
+    }
+  }
+
+  private needsTense() {
+    if (!this.past && !this.nonPast) {
+      this.nonPast = true;
+    }
+  }
+
+  private needsModality() {
+    if (!this.positive && !this.negative) {
+      this.positive = true;
+    }
+  }
+
+  private needsAdjectiveConjugations() {
+    if (!this.normal && !this.teForm && !this.conditional) {
+      this.normal = true;
+    }
   }
 }

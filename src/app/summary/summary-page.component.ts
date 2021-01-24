@@ -6,10 +6,10 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-summary',
-  templateUrl: './summary.page.html',
-  styleUrls: ['./summary.page.scss'],
+  templateUrl: './summary-page.component.html',
+  styleUrls: ['./summary-page.component.scss'],
 })
-export class SummaryPage {
+export class SummaryPageComponent {
 
   questions: Question[];
 

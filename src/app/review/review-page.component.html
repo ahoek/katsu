@@ -28,7 +28,7 @@
     <ion-row>
       <ion-col>
         <ion-item class="dictionary">
-          <furigana [input]="currentQuestion()"></furigana>
+          <app-furigana [input]="currentQuestion()"></app-furigana>
 
           <ion-note slot="end" class="meaning note" *ngIf="settings.showMeaning">
             {{questions[index]?.meaning}}

@@ -158,7 +158,7 @@ export class Question {
 
     const okurigana = Question.getOkurigana(this.word);
     if (okurigana.length === 0) {
-      return readingAnswer.replace(this.reading, <string>this.word);
+      return readingAnswer.replace(this.reading, this.word as string);
     }
 
     // Remove the okurigana from the word

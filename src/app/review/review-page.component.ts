@@ -11,16 +11,16 @@ import { AnalyticsService } from '../shared/analytics.service';
 
 @Component({
   selector: 'app-review',
-  templateUrl: './review.page.html',
-  styleUrls: ['./review.page.scss'],
+  templateUrl: './review-page.component.html',
+  styleUrls: ['./review-page.component.scss'],
 })
-export class ReviewPage implements OnInit {
+export class ReviewPageComponent implements OnInit {
+  @ViewChild('answerInputNative', { read: ElementRef, static: true })
+  answerInputNative!: ElementRef;
+
   questions: Question[] = [];
 
   tl!: gsap.core.Timeline;
-
-  @ViewChild('answerInputNative', { read: ElementRef, static: true })
-  answerInputNative!: ElementRef;
 
   get index(): number {
     return this.dataService.index;
@@ -33,9 +33,9 @@ export class ReviewPage implements OnInit {
     public navCtrl: NavController,
     public dataService: QuestionDataService,
     public platform: Platform,
+    public settings: SettingsService,
     private analytics: AnalyticsService,
     private speech: SpeechService,
-    public settings: SettingsService,
   ) {
     this.index = 0;
     this.questions[0] = new Question();
@@ -58,6 +58,7 @@ export class ReviewPage implements OnInit {
     // Add IME to answer field
     const element = this.answerInputNative.nativeElement;
     const options = {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       IMEMode: true,
     };
     try {

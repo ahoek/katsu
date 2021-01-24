@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Verb } from '../models/conjugation/verb';
 import { Question } from '../models/question';
 import { SettingsService } from '../shared/settings.service';
+import { JishoDefinition } from '../models/jisho-interfaces';
 
 interface Dictionary {
   [id: string]: JishoDefinition[];

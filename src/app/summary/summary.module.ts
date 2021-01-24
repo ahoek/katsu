@@ -5,14 +5,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SummaryPage } from './summary.page';
+import { SummaryPageComponent } from './summary-page.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from '../components/components.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: SummaryPage
+    component: SummaryPageComponent
   }
 ];
 
@@ -26,6 +26,6 @@ const routes: Routes = [
     ComponentsModule,
 
   ],
-  declarations: [SummaryPage]
+  declarations: [SummaryPageComponent]
 })
 export class SummaryPageModule {}

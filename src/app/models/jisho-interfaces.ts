@@ -1,14 +1,16 @@
-interface JishoSense {
+export interface JishoSense {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   parts_of_speech: string[];
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   english_definitions: string[];
 }
 
-interface JishoJapanese {
+export interface JishoJapanese {
   word?: string;
   reading: string;
 }
 
-interface JishoDefinition {
+export interface JishoDefinition {
   senses: Array<JishoSense>;
   japanese: Array<JishoJapanese>;
   level?: number;

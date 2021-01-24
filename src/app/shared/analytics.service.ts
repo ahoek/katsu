@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-declare var ga: any;
+declare const ga: any;
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
