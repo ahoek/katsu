@@ -1,6 +1,7 @@
 {
   "setting": {
     "title": "Choose conjugation settings",
+    "info": "info",
     "group-title": {
       "form": "Form",
       "part-of-speech": "Part of speech",

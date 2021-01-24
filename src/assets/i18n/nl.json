@@ -1,6 +1,7 @@
 {
   "setting": {
     "title": "Kies instellingen",
+    "info": "info",
     "group-title": {
       "form": "Vorm",
       "part-of-speech": "Woordsoort",

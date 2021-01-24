@@ -20,6 +20,7 @@ The following forms can be practised:
 * Conditional
 * Passive
 * Causative
+* Causative-passive
 
 ## Demo
 
