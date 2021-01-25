@@ -19,8 +19,6 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-progress-bar [value]="getProgress()"></ion-progress-bar>
-
-
 </ion-header>
 
 <ion-content [ngClass]="classNames()" class="patterned">
@@ -28,9 +26,16 @@
     <ion-row>
       <ion-col>
         <ion-item class="dictionary">
-          <app-furigana [input]="currentQuestion()"></app-furigana>
+          <app-furigana
+            class="dictionary__word"
+            [input]="currentQuestion()"
+          ></app-furigana>
 
-          <ion-note slot="end" class="meaning note" *ngIf="settings.showMeaning">
+          <ion-note
+            slot="end"
+            class="dictionary__meaning note"
+            *ngIf="settings.showMeaning"
+          >
             {{questions[index]?.meaning}}
           </ion-note>
         </ion-item>
@@ -49,32 +54,37 @@
 
           <ion-item class="answer-item" lines="full">
             <input
-                #answerInput
-                #answerInputNative
-                lang="ja"
-                [(ngModel)]="questions[index].givenAnswer"
-                [ngModelOptions]="{standalone: true}"
-                class="answer-input native-input sc-ion-input-ios"
-                type="text"
-                placeholder="答え"
-                inputmode="kana"
-                autocomplete="off"
-                autocorrect="off"
-                autocapitalize="none"
-                spellcheck="false"
+              #answerInput
+              #answerInputNative
+              lang="ja"
+              [(ngModel)]="questions[index].givenAnswer"
+              [ngModelOptions]="{standalone: true}"
+              class="answer-input native-input sc-ion-input-ios"
+              type="text"
+              placeholder="答え"
+              inputmode="kana"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="none"
+              spellcheck="false"
             />
-            <ion-button slot="end" fill="clear" type="submit"
-                        [ngClass]="{pulse: questions[index]?.answered}">
+            <ion-button
+              slot="end"
+              fill="clear"
+              type="submit"
+              [ngClass]="{pulse: questions[index]?.answered}"
+            >
               <ion-icon name="arrow-forward"></ion-icon>
             </ion-button>
           </ion-item>
         </form>
 
         <!-- Show all allowed answers if given answer is incorrect -->
-        <app-answers [question]="questions[index]"
-                     *ngIf="questions[index]?.correct === false"></app-answers>
+        <app-answers
+          [question]="questions[index]"
+          *ngIf="questions[index]?.correct === false"
+        ></app-answers>
       </ion-col>
     </ion-row>
   </ion-grid>
-
 </ion-content>

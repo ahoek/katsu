@@ -9,7 +9,7 @@
 .dictionary {
   margin-top: 17px;
 
-  furigana {
+  &__word {
     max-width: 60%;
     font-size: 2.1em;
 
@@ -18,7 +18,7 @@
     }
   }
 
-  .note {
+  &__meaning {
     max-width: 40%;
     color: var(--ion-color-medium);
   }
