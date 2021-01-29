@@ -12,8 +12,8 @@ export class SpeechService {
   }
 
   // Get available Japanese voices
-  getVoices(): any[] {
-    if (this.voices) {
+  getVoices(): SpeechSynthesisVoice[] {
+    if (this.voices.length) {
       return this.voices;
     }
     this.synth.onvoiceschanged = () => {

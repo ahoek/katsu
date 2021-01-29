@@ -270,7 +270,7 @@ export class SettingsService {
   get voice() {
     return this._voice;
   }
-  set voice(value) {
+  set voice(value: string | undefined) {
     this._voice = value;
   }
 
@@ -505,7 +505,7 @@ export class SettingsService {
     return this.language;
   }
 
-  getVoice(): any {
+  getVoice(): string | undefined {
     return this.voice;
   }
 
