@@ -58,32 +58,24 @@ const KURU = new Verb({
 });
 
 const SURU = new Verb({
-  japanese: [
-    {
-      word: '為る',
-      reading: 'する'
-    }
-  ],
-  senses: [
-    {
-      english_definitions: [
-        'to do'
-      ],
-      parts_of_speech: [
-        'Suru verb - irregular'
-      ]
-    },
-  ],
+  japanese: [{
+    word: '為る',
+    reading: 'する'
+  }],
+  senses: [{
+    english_definitions: ['to do'],
+    parts_of_speech: [
+      'Suru verb - irregular'
+    ]
+  }],
 });
 
 const MURI = new Verb({
-  japanese: [
-    {
-      word: '無理',
-      reading: 'むり'
-    }
-  ],
-    senses: [
+  japanese: [{
+    word: '無理',
+    reading: 'むり'
+  }],
+  senses: [
     {
       english_definitions: [
         'unreasonable'
@@ -105,23 +97,19 @@ const MURI = new Verb({
 });
 
 const ARU = new Verb({
-  japanese: [
-    {
-      word: '有る',
-      reading: 'ある'
-    }
-  ],
-  senses: [
-    {
-      english_definitions: [
-        'to be (usu. of inanimate objects)'
-      ],
-      parts_of_speech: [
-        'Godan verb with ru ending (irregular verb)',
-        'intransitive verb'
-      ]
-    }
-  ]
+  japanese: [{
+    word: '有る',
+    reading: 'ある'
+  }],
+  senses: [{
+    english_definitions: [
+      'to be (usu. of inanimate objects)'
+    ],
+    parts_of_speech: [
+      'Godan verb with ru ending (irregular verb)',
+      'intransitive verb'
+    ]
+  }]
 });
 describe('Verb model', () => {
   it('te-form of 曲がる', () => {
@@ -143,7 +131,7 @@ describe('Verb model', () => {
     expect(verb.teForm()).toBe('いって');
   });
 
-  it('"na-adjective-polite-negative-present" of そう', () => {
+  it('"na-adjective-neutral-negative-present" of そう', () => {
     const word = new Verb({
       japanese: [{
         reading: 'そう'
@@ -153,7 +141,7 @@ describe('Verb model', () => {
         parts_of_speech: ['Na-adjective']
       }]
     });
-    expect(word.normalForm('polite', false, true)).toEqual([
+    expect(word.normalForm(true, true)).toEqual([
       'そうじゃないです',
       'そうじゃありません',
       'そうではないです',
@@ -162,8 +150,8 @@ describe('Verb model', () => {
 
   it('negative plain of ある', () => {
 
-    expect(ARU.normalForm('plain', false, true)).toEqual(['ない']);
-    expect(ARU.normalForm('plain', false, false)).toEqual(['なかった']);
+    expect(ARU.normalForm(false, true)).toEqual(['ない']);
+    expect(ARU.normalForm(false, true, true)).toEqual(['なかった']);
   });
 
   it('formal negative nonpast of ふえる', () => {
@@ -186,80 +174,76 @@ describe('Verb model', () => {
         }
       ]
     });
-    expect(verb.normalForm('polite', false, true)).toEqual(['ふえません']);
+    expect(verb.normalForm(true, true)).toEqual(['ふえません']);
   });
 
   it('Tai form of na adjective 加減な', () => {
     const verb = new Verb({
-      japanese: [
-        {
-          word: '加減',
-          reading: 'かげん'
-        }
-      ],
-      senses: [
-        {
-          english_definitions: [
-            'degree'
-          ],
-          parts_of_speech: [
-            'Na-adjective',
-            'Noun - used as a suffix'
-          ]
-        },
-      ],
+      japanese: [{
+        word: '加減',
+        reading: 'かげん'
+      }],
+      senses: [{
+        english_definitions: [
+          'degree'
+        ],
+        parts_of_speech: [
+          'Na-adjective',
+          'Noun - used as a suffix'
+        ]
+      }],
       level: 3
     });
-    expect(verb.taiForm('negative', 'nonpast', 'polite')).toEqual(undefined);
+    expect(verb.taiForm(true, true, true)).toEqual([]);
   });
 
   it('Causative godan', () => {
-    expect(IKU.causative('plain', true, true)).toEqual(['いかせる']);
-    expect(IKU.causative('polite', true, true)).toEqual(['いかせます']);
+    expect(IKU.causative()).toEqual(['いかせる']);
+    expect(IKU.causative(true)).toEqual(['いかせます']);
   });
 
   it('Causative ichidan', () => {
-    expect(TABERU.causative('plain', true, true)).toEqual(['たべさせる']);
-    expect(TABERU.causative('polite', true, true)).toEqual(['たべさせます']);
+    expect(TABERU.causative()).toEqual(['たべさせる']);
+    expect(TABERU.causative(true)).toEqual(['たべさせます']);
   });
 
   it('Causative 来る', () => {
-    expect(KURU.causative('plain', true, true)).toEqual(['こさせる']);
-    expect(KURU.causative('polite', true, true)).toEqual(['こさせます']);
+    expect(KURU.causative()).toEqual(['こさせる']);
+    expect(KURU.causative(true)).toEqual(['こさせます']);
   });
 
   it('Causative する', () => {
-    expect(SURU.causative('plain', true, true)).toEqual(['させる']);
-    expect(SURU.causative('polite', true, true)).toEqual(['させます']);
+    expect(SURU.causative()).toEqual(['させる']);
+    expect(SURU.causative(true)).toEqual(['させます']);
   });
 
   it('Causative-passive godan', () => {
-    expect(IKU.causativePassive('polite', true, true))
+    expect(IKU.causativePassive(true))
       .toEqual(['いかせられます', 'いかされます']);
-    expect(HANASU.causativePassive('polite', true, true))
+    expect(HANASU.causativePassive(true))
       .toEqual(['はなさせられます']);
   });
 
   it('Causative-passive ichidan', () => {
-    expect(TABERU.causativePassive('plain', true, true)).toEqual(['たべさせられる']);
+    expect(TABERU.causativePassive()).toEqual(['たべさせられる']);
   });
 
   it('Causative-passive 来る', () => {
-    expect(KURU.causativePassive('plain', true, true)).toEqual(['こさせられる']);
+    expect(KURU.causativePassive()).toEqual(['こさせられる']);
   });
 
   it('Causative-passive する', () => {
-    expect(SURU.causativePassive('plain', true, true)).toEqual(['させられる']);
+    expect(SURU.causativePassive()).toEqual(['させられる']);
   });
 
   it('Na adjective - coll - past - neg', () => {
-    expect(MURI.normalForm('plain', false, false))
+    expect(MURI.normalForm(false, true, true))
       .toEqual(['むりじゃなかった', 'むりではなかった']);
   });
 
   // 有る
-  it('有る - passive/causative formal negative past', () => {
-    expect(ARU.passive('polite', false, false)).toEqual(['あられませんでした']);
-    expect(ARU.causative('polite', false, false)).toEqual(['あらせませんでした']);
+  it('有る - passive/causative neutral negative past', () => {
+    expect(ARU.passive(true, true, true)).toEqual(['あられませんでした']);
+    expect(ARU.causative(true, true, true)).toEqual(['あらせませんでした']);
   });
 });

@@ -148,10 +148,6 @@ export class Verb {
     return 'unknown';
   }
 
-  isVerb() {
-    return;
-  }
-
   /**
    * Get the masu stem (ren'youkei)
    */
@@ -219,35 +215,35 @@ export class Verb {
   }
 
   // Get the normal verb or adjective ending
-  normalForm(speechLevel = 'plain', positive: boolean, nonPast: boolean): string[] {
+  normalForm(neutral = false, negative = false, past = false): string[] {
     if (this.type === 'i-adjective') {
-      return this.iAdjectiveNormalForm(speechLevel, positive, nonPast);
+      return this.iAdjectiveNormalForm(neutral, negative, past);
     }
 
     if (this.type === 'na-adjective') {
-      return this.naAdjectiveNormalForm(speechLevel, positive, nonPast);
+      return this.naAdjectiveNormalForm(neutral, negative, past);
     }
 
     // Verbs
-    return this.verbNormalForm(speechLevel, positive, nonPast);
+    return this.verbNormalForm(neutral, negative, past);
   }
 
   // Get the verbal adjective conjugation
-  iAdjectiveNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+  iAdjectiveNormalForm(neutral = false, negative = false, past = false): string[] {
     let ending: string;
-    if (nonPast) {
+    if (!past) {
       // @todo Make exception for ii
-      ending = positive ? 'い' : 'く' + this.nai;
+      ending = !negative ? 'い' : 'く' + this.nai;
     } else {
-      ending = positive ? '' : 'くな';
+      ending = !negative ? '' : 'くな';
       ending += this.katta;
     }
-    return [this.removeLast() + ending + (speechLevel === 'polite' ? this.desu : '')];
+    return [this.removeLast() + ending + (neutral ? this.desu : '')];
   }
 
   // Get the nominal adjective conjugation
-  naAdjectiveNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
-    const endings = this.deAruNormalForm(speechLevel, positive, nonPast);
+  naAdjectiveNormalForm(neutral = false, negative = false, past = false): string[] {
+    const endings = this.deAruNormalForm(neutral, negative, past);
 
     const conjugations: string[] = [];
     endings.forEach(ending => {
@@ -260,68 +256,61 @@ export class Verb {
   /**
    * Conjugate de aru
    */
-  deAruNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
-    let conjugations: string[] = [];
+  deAruNormalForm(neutral = false, negative = false, past = false): string[] {
+    let conjugations: string[];
 
     // Polite negative forms can be made by plain negative forms + です
-    switch (speechLevel) {
-      case 'polite':
-        conjugations = nonPast
-          ? (positive
-            ? [this.desu]
-            : [
-              this.dewa + 'ありません',
-              this.dewa + this.nai + this.desu,
-              this.ja + 'ありません',
-              this.ja + this.nai + this.desu])
-          : (positive
-            ? ['でした']
-            : [
-              this.dewa + 'ありませんでした',
-              this.dewa + 'な' + this.katta + this.desu,
-              this.ja + 'ありませんでした',
-              this.ja + 'な' + this.katta + this.desu]);
-
-        break;
-      case 'plain':
-        conjugations = nonPast
-          ? (positive
-            ? ['だ']
-            : [this.dewa + this.nai, this.ja + this.nai])
-          : (positive
-            ? ['だった']
-            : [this.dewa + 'な' + this.katta, this.ja + 'な' + this.katta]);
-        break;
+    if (neutral) {
+      conjugations = !past
+        ? (!negative
+          ? [this.desu]
+          : [
+            this.dewa + 'ありません',
+            this.dewa + this.nai + this.desu,
+            this.ja + 'ありません',
+            this.ja + this.nai + this.desu])
+        : (!negative
+          ? ['でした']
+          : [
+            this.dewa + 'ありませんでした',
+            this.dewa + 'な' + this.katta + this.desu,
+            this.ja + 'ありませんでした',
+            this.ja + 'な' + this.katta + this.desu]);
+    } else {
+      conjugations = !past
+        ? (!negative
+          ? ['だ']
+          : [this.dewa + this.nai, this.ja + this.nai])
+        : (!negative
+          ? ['だった']
+          : [this.dewa + 'な' + this.katta, this.ja + 'な' + this.katta]);
     }
 
     return conjugations;
   }
 
   // Get the normal verb conjugation
-  verbNormalForm(speechLevel: string, positive: boolean, nonPast: boolean): string[] {
+  verbNormalForm(neutral = false, negative = false, past = false): string[] {
     let conjugation = '';
-    switch (speechLevel) {
-      case 'polite':
-        const ending = nonPast
-          ? (positive ? 'ます' : 'ません')
-          : (positive ? 'ました' : 'ませんでした');
-        conjugation = this.masuStem() + ending;
-        break;
-      case 'plain':
-        if (nonPast) {
-          if (positive) {
-            conjugation = this.reading;
-          } else {
-            conjugation = this.plainNegative();
-          }
+    if (neutral) {
+      const ending = !past
+        ? (!negative ? 'ます' : 'ません')
+        : (!negative ? 'ました' : 'ませんでした');
+      conjugation = this.masuStem() + ending;
+    } else {
+      if (!past) {
+        if (!negative) {
+          conjugation = this.reading;
         } else {
-          if (positive) {
-            conjugation = this.plainPast();
-          } else {
-            conjugation = this.plainNegativePast();
-          }
+          conjugation = this.plainNegative();
         }
-        break;
+      } else {
+        if (!negative) {
+          conjugation = this.plainPast();
+        } else {
+          conjugation = this.plainNegativePast();
+        }
+      }
     }
 
     return [conjugation];
@@ -396,10 +385,10 @@ export class Verb {
     return stem + HiraganaColumnHelper.change(ending, 'e', 'a');
   }
 
-  volitional(speechLevel = 'plain'): string[] {
+  volitional(neutral: boolean = false): string[] {
     let conjugation;
 
-    if (speechLevel === 'polite') {
+    if (neutral) {
       conjugation = this.masuStem() + 'ましょう';
     } else {
       const you = 'よう';
@@ -429,23 +418,23 @@ export class Verb {
   }
 
   // Tai form (desire)
-  taiForm(modality = 'positive', tense = 'nonPast', speechLevel = 'plain'): string[] | undefined {
+  taiForm(negative = false, past = false, neutral = false): string[] {
     if (this.type !== 'verb') {
-      return;
+      return [];
     }
     let conjugation = this.masuStem() + 'たい';
 
-    if (modality === 'negative') {
+    if (negative) {
       // Remove i and add kunai
       conjugation = conjugation.slice(0, -1) + 'く' + this.nai;
     }
 
-    if (tense === 'past') {
+    if (past) {
       // Remove i and add katta
       conjugation = conjugation.slice(0, -1) + this.katta;
     }
 
-    if (speechLevel === 'polite') {
+    if (neutral) {
       conjugation += this.desu;
     }
 
@@ -457,7 +446,7 @@ export class Verb {
    *
    * Tense and modality are left out for now, because they conjugate like -eru
    */
-  potential(speechLevel = 'plain', positive = true, nonPast = true): string[] {
+  potential(neutral: boolean = false, negative = false, past = false): string[] {
     const potentials: string[] = [];
     let stem = '';
 
@@ -496,7 +485,7 @@ export class Verb {
     for (stem of stems) {
       const conjugation = stem + 'る';
       const dictVerb = Verb.getIchidanVerb(conjugation);
-      const potential = dictVerb.verbNormalForm(speechLevel, positive, nonPast);
+      const potential = dictVerb.verbNormalForm(neutral, negative, past);
       potentials.push(potential[0]);
     }
     return potentials;
@@ -507,9 +496,9 @@ export class Verb {
    *
    * @todo State verbs as aru, dekiru or wakaru do not have an imperative form
    */
-  imperative(modality = 'positive'): string[] {
+  imperative(negative = false): string[] {
     let conjugation = '';
-    if (modality === 'positive') {
+    if (!negative) {
       switch (this.group()) {
         case '1':
           conjugation = this.changeLastVowel('u', 'e');
@@ -536,9 +525,9 @@ export class Verb {
     return [conjugation];
   }
 
-  conditional(modality = 'positive'): string[] {
+  conditional(negative = false): string[] {
     let conjugation = '';
-    if (modality === 'positive') {
+    if (!negative) {
       switch (this.group()) {
         case '1':
         case '2':
@@ -573,12 +562,12 @@ export class Verb {
     return [conjugation];
   }
 
-  tariForm(modality: string): string[] {
-    return this.normalForm('plain', modality === 'positive', false)
+  tariForm(negative = false): string[] {
+    return this.normalForm(false, negative, false)
       .map((past) => past + 'り');
   }
 
-  passive(speechLevel = 'plain', positive = true, nonPast = true): string[] {
+  passive(neutral: boolean = false, negative = false, past = false): string[] {
     // Find the 'A' stem
     let stem = '';
     switch (this.group()) {
@@ -602,11 +591,11 @@ export class Verb {
     }
     const conjugation = stem + 'れる';
     const passive = Verb.getIchidanVerb(conjugation);
-    return passive.verbNormalForm(speechLevel, positive, nonPast);
+    return passive.verbNormalForm(neutral, negative, past);
   }
 
   // @todo double functionality from passive
-  causative(speechLevel = 'plain', positive = true, nonPast = true): string[] {
+  causative(neutral = false, negative = false, past = false): string[] {
     // Find the 'A' stem
     let stem = '';
     switch (this.group()) {
@@ -629,10 +618,10 @@ export class Verb {
       stem = 'あら';
     }
     return Verb.getIchidanVerb(stem + 'せる')
-      .verbNormalForm(speechLevel, positive, nonPast);
+      .verbNormalForm(neutral, negative, past);
   }
 
-  causativePassive(speechLevel = 'plain', positive: boolean, nonPast: boolean): string[] {
+  causativePassive(neutral = false, negative = false, past = false): string[] {
     const causitive = this.causative();
     const conj = Verb.getIchidanVerb(causitive[0]).passive();
     if (this.group() === '1' && this.lastKana() !== 'す') {
@@ -640,7 +629,7 @@ export class Verb {
       conj.push(conj[0].slice(0, -4) + 'される');
     }
     return conj.map((c) => Verb.getIchidanVerb(c)
-      .verbNormalForm(speechLevel, positive, nonPast)[0]);
+      .verbNormalForm(neutral, negative, past)[0]);
   }
 
   /**

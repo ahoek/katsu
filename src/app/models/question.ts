@@ -85,49 +85,44 @@ export class Question {
    * - Modality
    * - Tense
    */
-  getConjugations(): string[] | undefined {
-    let speechLevel;
-    if (this.isOfType('plain')) {
-      speechLevel = 'plain';
-    } else if (this.isOfType('polite')) {
-      speechLevel = 'polite';
-    }
-    const modality = this.isOfType('positive') ? 'positive' : 'negative';
-    const tense = this.isOfType('present') ? 'non-past' : 'past';
+  getConjugations(): string[] {
+    const neutral = this.isOfType('polite');
+    const negative = this.isOfType('negative');
+    const past = this.isOfType('past');
 
     if (this.isOfType('te-form')) {
       return [this.verb.teForm()];
     }
     if (this.isOfType('volitional')) {
-      return this.verb.volitional(speechLevel);
+      return this.verb.volitional(neutral);
     }
     if (this.isOfType('potential')) {
-      return this.verb.potential(speechLevel,  modality === 'positive', tense === 'non-past');
+      return this.verb.potential(neutral, negative, past);
     }
     if (this.isOfType('imperative')) {
-      return this.verb.imperative(modality);
+      return this.verb.imperative(negative);
     }
     if (this.isOfType('conditional')) {
-      return this.verb.conditional(modality);
+      return this.verb.conditional(negative);
     }
     if (this.isOfType('tai-form')) {
-      return this.verb.taiForm(modality, tense, speechLevel);
+      return this.verb.taiForm(negative, past, neutral);
     }
     if (this.isOfType('tari-form')) {
-      return this.verb.tariForm(modality);
+      return this.verb.tariForm(negative);
     }
     if (this.isOfType('passive')) {
-      return this.verb.passive(speechLevel, modality === 'positive', tense === 'non-past');
+      return this.verb.passive(neutral, negative, past);
     }
     if (this.isOfType('causative')) {
-      return this.verb.causative(speechLevel, modality === 'positive', tense === 'non-past');
+      return this.verb.causative(neutral, negative, past);
     }
     if (this.isOfType('caus-pass')) {
-      return this.verb.causativePassive(speechLevel, modality === 'positive', tense === 'non-past');
+      return this.verb.causativePassive(neutral, negative, past);
     }
 
     // The last is the 'normal' conjugation
-    return this.verb.normalForm(speechLevel, modality === 'positive', tense === 'non-past');
+    return this.verb.normalForm(neutral, negative, past);
   }
 
   /**
