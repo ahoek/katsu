@@ -563,7 +563,7 @@ export class Verb {
   }
 
   tariForm(negative = false): string[] {
-    return this.normalForm(false, negative, false)
+    return this.normalForm(false, negative, true)
       .map((past) => past + 'り');
   }
 

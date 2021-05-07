@@ -96,6 +96,22 @@ const MURI = new Verb({
   level: 4
 });
 
+const FUKAI = new Verb({
+  japanese: [{
+    word: '深い',
+    reading: 'ふかい'
+  }],
+  senses: [{
+    english_definitions: [
+      'deep'
+    ],
+    parts_of_speech: [
+      'I-adjective'
+    ]
+  }],
+  level: 4,
+});
+
 const ARU = new Verb({
   japanese: [{
     word: '有る',
@@ -111,6 +127,7 @@ const ARU = new Verb({
     ]
   }]
 });
+
 describe('Verb model', () => {
   it('te-form of 曲がる', () => {
     const verb = new Verb({
@@ -245,5 +262,9 @@ describe('Verb model', () => {
   it('有る - passive/causative neutral negative past', () => {
     expect(ARU.passive(true, true, true)).toEqual(['あられませんでした']);
     expect(ARU.causative(true, true, true)).toEqual(['あらせませんでした']);
+  });
+
+  it('I-adjective tari', () => {
+    expect(FUKAI.tariForm()).toEqual(['ふかかったり']);
   });
 });
