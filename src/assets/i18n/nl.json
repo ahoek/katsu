@@ -53,7 +53,8 @@
       "language": "Taal",
       "voice": "Stem",
       "none": "Geen",
-      "show-meaning": "Toon betekenis"
+      "show-meaning": "Toon betekenis",
+      "no-furigana": "Geen furigana"
     }
   },
   "home": {

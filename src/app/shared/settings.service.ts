@@ -282,6 +282,14 @@ export class SettingsService {
     this._showMeaning = value;
   }
 
+  private _noFurigana = false;
+  get noFurigana() {
+    return this._noFurigana;
+  }
+  set noFurigana(value) {
+    this._noFurigana = value;
+  }
+
   constructor(
     private storage: Storage,
     private translate: TranslateService,

@@ -53,7 +53,8 @@
       "language": "Language",
       "voice": "Voice",
       "none": "None",
-      "show-meaning": "Show meaning"
+      "show-meaning": "Show meaning",
+      "no-furigana": "No furigana"
     }
   },
   "home": {

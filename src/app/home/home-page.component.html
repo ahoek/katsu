@@ -308,6 +308,13 @@
               slot="end"></ion-checkbox>
             <ion-icon name="barcode-outline" slot="start"></ion-icon>
           </ion-item>
+          <ion-item>
+            <ion-label>{{'setting.special.no-furigana'|translate}}</ion-label>
+            <ion-checkbox
+              [(ngModel)]="settings.noFurigana"
+              slot="end"></ion-checkbox>
+            <ion-icon name="code-working-outline" slot="start"></ion-icon>
+          </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>

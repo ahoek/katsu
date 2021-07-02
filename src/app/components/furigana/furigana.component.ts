@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
 import * as wanakana from 'wanakana';
 import { WordToken } from '../../models/word-token';
+import {NavController, Platform} from '@ionic/angular';
+import {AnalyticsService} from '../../shared/analytics.service';
+import {TranslateService} from '@ngx-translate/core';
+import {SpeechService} from '../../shared/speech.service';
+import {SettingsService} from '../../shared/settings.service';
 
 @Component({
   selector: 'app-furigana',
@@ -22,6 +27,11 @@ export class FuriganaComponent {
   private word!: string;
   private reading!: string;
 
+  constructor(
+    public settings: SettingsService,
+  ) {
+  }
+
   /**
    * Make text with furigana from word and reading
    *
@@ -30,6 +40,10 @@ export class FuriganaComponent {
    * <furigana [input]="{word:'可愛い',reading:'かわいい'}"></furigana>
    */
   setOutput() {
+    if (this.settings.noFurigana) {
+      this.output = this.word;
+      return;
+    }
     // Rōmaji mode
     if (this.mode === 'romaji') {
       // todo https://github.com/lovell/hepburn
