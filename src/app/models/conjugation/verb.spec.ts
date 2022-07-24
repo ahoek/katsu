@@ -263,6 +263,9 @@ describe('Verb model', () => {
     expect(ARU.passive(true, true, true)).toEqual(['あられませんでした']);
     expect(ARU.causative(true, true, true)).toEqual(['あらせませんでした']);
   });
+  it('有る - passive', () => {
+    expect(ARU.passive(false, false, false)).toEqual(['あられる']);
+  });
 
   it('I-adjective tari', () => {
     expect(FUKAI.tariForm()).toEqual(['ふかかったり']);
