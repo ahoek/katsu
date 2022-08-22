@@ -1,19 +1,16 @@
-import { NgModule } from '@angular/core';
+import { NgModule} from '@angular/core';
+import { HashLocationStrategy, LocationStrategy} from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { RouteReuseStrategy} from '@angular/router';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
-
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
+import { IonicStorageModule } from '@ionic/storage';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpClient, HttpClientModule} from '@angular/common/http';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { IonicStorageModule } from '@ionic/storage';
 import { AnalyticsService } from './shared/analytics.service';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 export const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -22,7 +19,6 @@ export const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(h
   declarations: [
     AppComponent
   ],
-  entryComponents: [],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -38,13 +34,14 @@ export const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(h
     }),
     AppRoutingModule,
     IonicStorageModule.forRoot(),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     AnalyticsService,
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+}
