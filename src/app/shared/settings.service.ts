@@ -317,7 +317,6 @@ export class SettingsService {
         settings[key.substring(1)] = this[key];
       }
     });
-    // console.log('store', settings);
     this.storage.set('settings', JSON.stringify(settings));
   }
 
@@ -393,7 +392,7 @@ export class SettingsService {
     if (this.causativePassive) {
       this.addCausativePassive(options);
     }
-    console.log('options', options);
+    // console.log('options', options);
     return options;
   }
 

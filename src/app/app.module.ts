@@ -37,9 +37,10 @@ export const httpLoaderFactory = (http: HttpClient) => new TranslateHttpLoader(h
     ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
   ],
   providers: [
-    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: 'googleTagManagerId', useValue: 'GTM-5L96Z7Z' },
     AnalyticsService,
-    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
   bootstrap: [AppComponent]
 })

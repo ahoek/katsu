@@ -40,7 +40,7 @@ export class QuestionDataService {
     return new Promise<Question[]>(resolve => {
       const url = 'assets/data/questions/words.json';
       const options = this.settings.getQuestionTypeOptions();
-      console.log('question types', options);
+      // console.log('question types', options);
 
       this.http.get(url).subscribe((dictionary: any) => {
         this.questions = this.getQuestionsFromDictionary(dictionary, options);
@@ -128,7 +128,7 @@ export class QuestionDataService {
       question = question.reverse();
     }
 
-    console.log('answers', word.level, question.answers);
+    // console.log('answers', word.level, question.answers);
     return question;
   }
 

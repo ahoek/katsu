@@ -47,7 +47,7 @@ export class ReviewPageComponent implements OnInit {
       if (questions.length > 0) {
         this.questions = questions;
       }
-      console.log('Loaded questions', this.questions);
+      // console.log('Loaded questions', this.questions);
       this.goToQuestion(this.index);
     });
 
