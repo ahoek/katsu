@@ -36,6 +36,9 @@ import {
   walkOutline,
 } from 'ionicons/icons';
 
+import en from '../assets/i18n/en.json';
+import nl from '../assets/i18n/nl.json';
+
 import { AnalyticsService } from './shared/analytics.service';
 import { SettingsService } from './shared/settings.service';
 import { ThemeService } from './shared/theme.service';
@@ -77,6 +80,10 @@ export class AppComponent {
 
     this.settings.userSettings().then(() => this.theme.apply(this.settings.theme));
 
+    // Translations are bundled with the app so they can never be stale
+    // relative to the code (e.g. a service worker mid-update).
+    this.translate.setTranslation('en', en);
+    this.translate.setTranslation('nl', nl);
     this.translate.addLangs(['en', 'nl', 'ja']);
 
     const browserLang = (navigator.language || 'en').split('-')[0];
