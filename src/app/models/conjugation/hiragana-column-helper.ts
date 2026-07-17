@@ -1,6 +1,6 @@
 // Convert hiragana from one vowel to another
 export class HiraganaColumnHelper {
-  static rows: { [index: string]: string[] } = {
+  static rows: Record<string, string[]> = {
     a: ['あ', 'か', 'さ', 'た', 'な', 'は', 'ま', 'や', 'ら', 'わ', 'が', 'ざ', 'だ', 'ば', 'ぱ'],
     i: ['い', 'き', 'し', 'ち', 'に', 'ひ', 'み', '　', 'り', '　', 'ぎ', 'じ', 'ぢ', 'び', 'ぴ'],
     u: ['う', 'く', 'す', 'つ', 'ぬ', 'ふ', 'む', 'ゆ', 'る', '　', 'ぐ', 'ず', 'づ', 'ぶ', 'ぷ'],

@@ -1,29 +1,23 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Verb } from '../models/conjugation/verb';
 import { Question } from '../models/question';
 import { SettingsService } from '../shared/settings.service';
 import { JishoDefinition } from '../models/jisho-interfaces';
 
-interface Dictionary {
-  [id: string]: JishoDefinition[];
-}
+type Dictionary = Record<string, JishoDefinition[]>;
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionDataService {
+  http = inject(HttpClient);
+  settings = inject(SettingsService);
+
 
   index = 0;
 
   questions: Question[] = [];
-
-  constructor(
-    public http: HttpClient,
-    public settings: SettingsService,
-  ) {
-
-  }
 
   get currentQuestion(): Question {
     return this.questions[this.index];
@@ -42,7 +36,7 @@ export class QuestionDataService {
       const options = this.settings.getQuestionTypeOptions();
       // console.log('question types', options);
 
-      this.http.get(url).subscribe((dictionary: any) => {
+      this.http.get<Dictionary>(url).subscribe(dictionary => {
         this.questions = this.getQuestionsFromDictionary(dictionary, options);
         this.index = 0;
         resolve(this.questions);
@@ -105,8 +99,7 @@ export class QuestionDataService {
       throw new Error('No word of correct type found');
     }
 
-    // @ts-ignore
-    if (word.level < Number(this.settings.jlptLevel.slice(-1))) {
+    if ((word.level ?? 0) < Number(this.settings.jlptLevel.slice(-1))) {
       return;
     }
 
@@ -135,7 +128,7 @@ export class QuestionDataService {
   /**
    * Get a random item from an array and remove it from the array
    */
-  private getRandomItem<T>(items: Array<T>, removeItem: boolean = true): T {
+  private getRandomItem<T>(items: T[], removeItem = true): T {
     const randomIndex = Math.floor(Math.random() * items.length);
     if (removeItem === true) {
       const item = items.splice(randomIndex, 1);

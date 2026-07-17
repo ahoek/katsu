@@ -1,88 +1,122 @@
-<ion-list ngClass="settings-list">
+<ion-list class="settings-list">
   <!-- forms -->
-  <ion-item *ngIf="question.isOfType('te-form')">
-    <span slot="start">て</span>
-    <ion-label>{{'setting.form.te-form'|translate}}</ion-label>
-  </ion-item>
-  <ion-item *ngIf="question.isOfType('tai-form')">
-    <ion-icon name="heart-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.form.tai-form'|translate}}</ion-label>
-  </ion-item>
-  <ion-item *ngIf="question.isOfType('volitional')">
-    <ion-icon name="walk-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.form.volitional'|translate}}</ion-label>
-  </ion-item>
-  <ion-item *ngIf="question.isOfType('potential')">
-    <ion-icon name="flag-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.form.potential'|translate}}</ion-label>
-  </ion-item>
-  <ion-item *ngIf="question.isOfType('imperative')">
-    <ion-icon name="megaphone-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.form.imperative'|translate}}</ion-label>
-  </ion-item>
-  <ion-item *ngIf="question.isOfType('conditional')">
-    <ion-icon name="code-download-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.form.conditional'|translate}}</ion-label>
-    <ion-note>{{'setting.form.conditional-note'|translate}}</ion-note>
-  </ion-item>
-  <ion-item *ngIf="question.isOfType('tari-form')">
-    <span name="tari" slot="start">たり</span>
-    <ion-label>{{'setting.form.tari-form'|translate}}</ion-label>
-  </ion-item>
-  <ion-item *ngIf="question.isOfType('passive')">
-    <ion-icon name="bonfire-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.form.passive'|translate}}</ion-label>
-  </ion-item>
-  <ion-item *ngIf="question.isOfType('causative')">
-    <ion-icon name="log-in-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.form.causative'|translate}}</ion-label>
-  </ion-item>
-  <ion-item *ngIf="question.isOfType('caus-pass')">
-    <ion-icon name="hammer-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.form.causative-passive'|translate}}</ion-label>
-  </ion-item>
+  @if (question.isOfType('te-form')) {
+    <ion-item>
+      <span slot="start">て</span>
+      <ion-label>{{'setting.form.te-form'|translate}}</ion-label>
+    </ion-item>
+  }
+  @if (question.isOfType('tai-form')) {
+    <ion-item>
+      <ion-icon name="heart-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.form.tai-form'|translate}}</ion-label>
+    </ion-item>
+  }
+  @if (question.isOfType('volitional')) {
+    <ion-item>
+      <ion-icon name="walk-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.form.volitional'|translate}}</ion-label>
+    </ion-item>
+  }
+  @if (question.isOfType('potential')) {
+    <ion-item>
+      <ion-icon name="flag-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.form.potential'|translate}}</ion-label>
+    </ion-item>
+  }
+  @if (question.isOfType('imperative')) {
+    <ion-item>
+      <ion-icon name="megaphone-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.form.imperative'|translate}}</ion-label>
+    </ion-item>
+  }
+  @if (question.isOfType('conditional')) {
+    <ion-item>
+      <ion-icon name="code-download-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.form.conditional'|translate}}</ion-label>
+      <ion-note>{{'setting.form.conditional-note'|translate}}</ion-note>
+    </ion-item>
+  }
+  @if (question.isOfType('tari-form')) {
+    <ion-item>
+      <span name="tari" slot="start">たり</span>
+      <ion-label>{{'setting.form.tari-form'|translate}}</ion-label>
+    </ion-item>
+  }
+  @if (question.isOfType('passive')) {
+    <ion-item>
+      <ion-icon name="bonfire-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.form.passive'|translate}}</ion-label>
+    </ion-item>
+  }
+  @if (question.isOfType('causative')) {
+    <ion-item>
+      <ion-icon name="log-in-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.form.causative'|translate}}</ion-label>
+    </ion-item>
+  }
+  @if (question.isOfType('caus-pass')) {
+    <ion-item>
+      <ion-icon name="hammer-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.form.causative-passive'|translate}}</ion-label>
+    </ion-item>
+  }
 
   <!-- formal -->
-  <ion-item *ngIf="question.isOfType('polite')">
-    <ion-icon name="briefcase-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.speech-level.formal'|translate}}</ion-label>
-    <ion-note>{{'setting.speech-level.formal-note'|translate}}</ion-note>
-  </ion-item>
+  @if (question.isOfType('polite')) {
+    <ion-item>
+      <ion-icon name="briefcase-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.speech-level.formal'|translate}}</ion-label>
+      <ion-note>{{'setting.speech-level.formal-note'|translate}}</ion-note>
+    </ion-item>
+  }
   <!-- informal -->
-  <ion-item *ngIf="question.isOfType('plain')">
-    <ion-icon name="shirt-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.speech-level.informal'|translate}}</ion-label>
-    <ion-note>{{'setting.speech-level.informal-note'|translate}}</ion-note>
-  </ion-item>
+  @if (question.isOfType('plain')) {
+    <ion-item>
+      <ion-icon name="shirt-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.speech-level.informal'|translate}}</ion-label>
+      <ion-note>{{'setting.speech-level.informal-note'|translate}}</ion-note>
+    </ion-item>
+  }
 
   <!-- positive -->
-  <ion-item *ngIf="question.isOfType('positive')">
-    <ion-icon name="happy-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.positive/negative.positive'|translate}}</ion-label>
-  </ion-item>
+  @if (question.isOfType('positive')) {
+    <ion-item>
+      <ion-icon name="happy-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.positive/negative.positive'|translate}}</ion-label>
+    </ion-item>
+  }
   <!-- negative -->
-  <ion-item *ngIf="question.isOfType('negative')">
-    <ion-icon name="sad-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.positive/negative.negative'|translate}}</ion-label>
-  </ion-item>
+  @if (question.isOfType('negative')) {
+    <ion-item>
+      <ion-icon name="sad-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.positive/negative.negative'|translate}}</ion-label>
+    </ion-item>
+  }
 
   <!-- non-past -->
-  <ion-item *ngIf="question.isOfType('present')">
-    <ion-icon name="play-forward-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.tense.nonpast'|translate}}</ion-label>
-    <ion-note>{{'setting.tense.nonpast-note'|translate}}</ion-note>
-  </ion-item>
+  @if (question.isOfType('present')) {
+    <ion-item>
+      <ion-icon name="play-forward-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.tense.nonpast'|translate}}</ion-label>
+      <ion-note>{{'setting.tense.nonpast-note'|translate}}</ion-note>
+    </ion-item>
+  }
   <!-- past -->
-  <ion-item *ngIf="question.isOfType('past')">
-    <ion-icon name="play-back-outline" slot="start"></ion-icon>
-    <ion-label>{{'setting.tense.past'|translate}}</ion-label>
-  </ion-item>
+  @if (question.isOfType('past')) {
+    <ion-item>
+      <ion-icon name="play-back-outline" slot="start"></ion-icon>
+      <ion-label>{{'setting.tense.past'|translate}}</ion-label>
+    </ion-item>
+  }
 
   <!-- reverse -->
-  <ion-item *ngIf="settings?.reverse === true">
-    <ion-icon name="shuffle" slot="start"></ion-icon>
-    <ion-label>{{'setting.special.reverse'|translate}}</ion-label>
-    <ion-note>{{'setting.special.reverse-note'|translate}}</ion-note>
-  </ion-item>
+  @if (settings?.reverse === true) {
+    <ion-item>
+      <ion-icon name="shuffle" slot="start"></ion-icon>
+      <ion-label>{{'setting.special.reverse'|translate}}</ion-label>
+      <ion-note>{{'setting.special.reverse-note'|translate}}</ion-note>
+    </ion-item>
+  }
 
 </ion-list>

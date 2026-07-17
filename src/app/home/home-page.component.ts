@@ -1,7 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import {
+  IonButton,
+  IonButtons,
+  IonCheckbox,
+  IonCol,
+  IonContent,
+  IonFooter,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonNote,
+  IonRouterLink,
+  IonRow,
+  IonSelect,
+  IonSelectOption,
+  IonTitle,
+  IonToolbar,
+  NavController,
+} from '@ionic/angular/standalone';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+
 import { SettingsService } from '../shared/settings.service';
-import { NavController, Platform } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
 import { SpeechService } from '../shared/speech.service';
 import { AnalyticsService } from '../shared/analytics.service';
 
@@ -9,23 +34,45 @@ import { AnalyticsService } from '../shared/analytics.service';
   selector: 'app-home',
   templateUrl: 'home-page.component.html',
   styleUrls: ['home-page.component.scss'],
+  imports: [
+    FormsModule,
+    RouterLink,
+    IonRouterLink,
+    IonButton,
+    IonButtons,
+    IonCheckbox,
+    IonCol,
+    IonContent,
+    IonFooter,
+    IonGrid,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonListHeader,
+    IonNote,
+    IonRow,
+    IonSelect,
+    IonSelectOption,
+    IonTitle,
+    IonToolbar,
+    TranslatePipe,
+  ],
 })
 export class HomePageComponent implements OnInit {
-  constructor(
-    public navCtrl: NavController,
-    public platform: Platform,
-    private analytics: AnalyticsService,
-    private translate: TranslateService,
-    public speech: SpeechService,
-    public settings: SettingsService,
-  ) {
-  }
+  navCtrl = inject(NavController);
+  private analytics = inject(AnalyticsService);
+  private translate = inject(TranslateService);
+  speech = inject(SpeechService);
+  settings = inject(SettingsService);
+
 
   async ngOnInit() {
     // Default settings
     await this.settings.userSettings();
 
-    if (this.settings.language !== this.translate.currentLang) {
+    if (this.settings.language !== this.translate.getCurrentLang()) {
       this.setLanguage(this.settings.language);
     }
     if (this.settings.voice) {
@@ -39,9 +86,7 @@ export class HomePageComponent implements OnInit {
   startReview() {
     this.settings.store();
     this.navCtrl.navigateForward('/review');
-    this.platform.ready().then(() => {
-      this.analytics.trackEvent('Review', 'start', '', 1);
-    });
+    this.analytics.trackEvent('Review', 'start', '', 1);
   }
 
   setLanguage(language: string) {

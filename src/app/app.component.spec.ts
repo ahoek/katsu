@@ -1,27 +1,26 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TestBed, waitForAsync } from '@angular/core/testing';
-
-import { Platform } from '@ionic/angular';
+import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideIonicAngular } from '@ionic/angular/standalone';
+import { provideTranslateService } from '@ngx-translate/core';
 
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
 
-  let platformReadySpy; let platformSpy;
-
-  beforeEach(waitForAsync(() => {
-    platformReadySpy = Promise.resolve();
-    platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
-
-    TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [AppComponent],
       providers: [
-        { provide: Platform, useValue: platformSpy },
+        provideRouter([]),
+        provideIonicAngular(),
+        provideTranslateService(),
       ],
     }).compileComponents();
-  }));
+  });
 
-  // TODO: add more tests!
+  it('should create the app', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    expect(fixture.componentInstance).toBeTruthy();
+  });
 
 });

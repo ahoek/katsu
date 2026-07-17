@@ -1,20 +1,66 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { NavController, Platform } from '@ionic/angular';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {
+  IonButton,
+  IonButtons,
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonNote,
+  IonProgressBar,
+  IonRow,
+  IonTitle,
+  IonToolbar,
+  NavController,
+} from '@ionic/angular/standalone';
+import { TranslatePipe } from '@ngx-translate/core';
 import * as wanakana from 'wanakana';
 import { gsap } from 'gsap';
 
 import { Question } from '../models/question';
-import { SettingsService} from '../shared/settings.service';
+import { SettingsService } from '../shared/settings.service';
 import { SpeechService } from '../shared/speech.service';
 import { QuestionDataService } from './question-data.service';
 import { AnalyticsService } from '../shared/analytics.service';
+import { AnswersComponent } from '../components/answers/answers.component';
+import { FuriganaComponent } from '../components/furigana/furigana.component';
+import { ReviewSettingsListComponent } from '../components/review-settings-list/review-settings-list.component';
 
 @Component({
   selector: 'app-review',
   templateUrl: './review-page.component.html',
   styleUrls: ['./review-page.component.scss'],
+  imports: [
+    FormsModule,
+    IonButton,
+    IonButtons,
+    IonCol,
+    IonContent,
+    IonGrid,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonNote,
+    IonProgressBar,
+    IonRow,
+    IonTitle,
+    IonToolbar,
+    TranslatePipe,
+    AnswersComponent,
+    FuriganaComponent,
+    ReviewSettingsListComponent,
+  ],
 })
 export class ReviewPageComponent implements OnInit {
+  navCtrl = inject(NavController);
+  dataService = inject(QuestionDataService);
+  settings = inject(SettingsService);
+  private analytics = inject(AnalyticsService);
+  private speech = inject(SpeechService);
+
   @ViewChild('answerInputNative', { read: ElementRef, static: true })
   answerInputNative!: ElementRef;
 
@@ -29,14 +75,7 @@ export class ReviewPageComponent implements OnInit {
     this.dataService.index = value;
   }
 
-  constructor(
-    public navCtrl: NavController,
-    public dataService: QuestionDataService,
-    public platform: Platform,
-    public settings: SettingsService,
-    private analytics: AnalyticsService,
-    private speech: SpeechService,
-  ) {
+  constructor() {
     this.index = 0;
     this.questions[0] = new Question();
   }
@@ -47,7 +86,6 @@ export class ReviewPageComponent implements OnInit {
       if (questions.length > 0) {
         this.questions = questions;
       }
-      // console.log('Loaded questions', this.questions);
       this.goToQuestion(this.index);
     });
 
@@ -58,7 +96,6 @@ export class ReviewPageComponent implements OnInit {
     // Add IME to answer field
     const element = this.answerInputNative.nativeElement;
     const options = {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       IMEMode: true,
     };
     try {
@@ -95,9 +132,7 @@ export class ReviewPageComponent implements OnInit {
 
     this.speech.say(this.currentQuestion().reading);
 
-    this.platform.ready().then(() => {
-      this.analytics.trackEvent('Question', 'show', this.questions[this.index].type, 1);
-    });
+    this.analytics.trackEvent('Question', 'show', this.questions[this.index].type, 1);
   }
 
   showSummary() {
@@ -126,15 +161,13 @@ export class ReviewPageComponent implements OnInit {
       this.animateStar();
     }
 
-    this.platform.ready().then(() => {
-      this.analytics.trackEvent('Question', 'answer-check', question.correct ? 'correct' : 'incorrect', 1);
-    });
+    this.analytics.trackEvent('Question', 'answer-check', question.correct ? 'correct' : 'incorrect', 1);
   }
 
   /**
    * Get the 'correct' and 'incorrect' class names
    */
-  public classNames(): any {
+  public classNames(): Record<string, boolean> {
     if (!this.questions[this.index]) {
       return {};
     }
@@ -147,10 +180,10 @@ export class ReviewPageComponent implements OnInit {
   /**
    * Get the word to ask the conjugation
    */
-  public currentQuestion(): any {
+  public currentQuestion(): { word: string; reading: string } {
     const question = this.questions[this.index];
     if (!question) {
-      return;
+      return { word: '', reading: '' };
     }
 
     const na = this.getNa(question);

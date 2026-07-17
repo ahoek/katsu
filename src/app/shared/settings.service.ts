@@ -1,7 +1,7 @@
 /**
  * Review settings
  */
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -258,7 +258,7 @@ export class SettingsService {
   private _language?: string;
   get language() {
     if (this._language === undefined) {
-      this._language = this.translate.currentLang;
+      this._language = this.translate.getCurrentLang() ?? 'en';
     }
     return this._language;
   }
@@ -290,34 +290,30 @@ export class SettingsService {
     this._noFurigana = value;
   }
 
-  constructor(
-    private storage: Storage,
-    private translate: TranslateService,
-  ) {
-  }
+  private readonly translate = inject(TranslateService);
 
-  userSettings(): Promise<SettingsService> {
-    return new Promise(resolve => {
-      this.storage.get('settings').then(settingsJson => {
-        if (settingsJson) {
-          Object.assign(this, JSON.parse(settingsJson));
-        } else {
-          this.store();
-        }
-        resolve(this);
-      });
-    });
+  private readonly storage = new Storage();
+  private readonly storageReady = this.storage.create();
+
+  async userSettings(): Promise<SettingsService> {
+    await this.storageReady;
+    const settingsJson = await this.storage.get('settings');
+    if (settingsJson) {
+      Object.assign(this, JSON.parse(settingsJson));
+    } else {
+      this.store();
+    }
+    return this;
   }
 
   store() {
-    const settings: any = {};
+    const settings: Record<string, unknown> = {};
     Object.keys(this).forEach((key: string) => {
       if (key.startsWith('_')) {
-        // @ts-ignore
-        settings[key.substring(1)] = this[key];
+        settings[key.substring(1)] = (this as unknown as Record<string, unknown>)[key];
       }
     });
-    this.storage.set('settings', JSON.stringify(settings));
+    this.storageReady.then(() => this.storage.set('settings', JSON.stringify(settings)));
   }
 
   // Get the available question options
