@@ -21,13 +21,33 @@ import * as wanakana from 'wanakana';
 import { gsap } from 'gsap';
 
 import { Question } from '../models/question';
+import { Verb } from '../models/conjugation/verb';
+import { JishoDefinition } from '../models/jisho-interfaces';
 import { SettingsService } from '../shared/settings.service';
 import { SpeechService } from '../shared/speech.service';
 import { QuestionDataService } from './question-data.service';
 import { AnalyticsService } from '../shared/analytics.service';
 import { AnswersComponent } from '../components/answers/answers.component';
 import { FuriganaComponent } from '../components/furigana/furigana.component';
-import { ReviewSettingsListComponent } from '../components/review-settings-list/review-settings-list.component';
+
+// Well-known words used to demonstrate the asked form
+const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
+  verb: {
+    japanese: [{ word: '食べる', reading: 'たべる' }],
+    senses: [{ english_definitions: ['to eat'], parts_of_speech: ['Ichidan verb'] }],
+    level: 5,
+  } as JishoDefinition,
+  iAdjective: {
+    japanese: [{ word: '高い', reading: 'たかい' }],
+    senses: [{ english_definitions: ['expensive'], parts_of_speech: ['I-adjective'] }],
+    level: 5,
+  } as JishoDefinition,
+  naAdjective: {
+    japanese: [{ word: '静か', reading: 'しずか' }],
+    senses: [{ english_definitions: ['quiet'], parts_of_speech: ['Na-adjective'] }],
+    level: 5,
+  } as JishoDefinition,
+};
 
 @Component({
   selector: 'app-review',
@@ -51,7 +71,6 @@ import { ReviewSettingsListComponent } from '../components/review-settings-list/
     TranslatePipe,
     AnswersComponent,
     FuriganaComponent,
-    ReviewSettingsListComponent,
   ],
 })
 export class ReviewPageComponent implements OnInit, AfterViewInit {
@@ -65,6 +84,8 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
 
   @ViewChild('answerInputNative', { read: ElementRef, static: true })
   answerInputNative!: ElementRef;
+
+  exampleVisible = false;
 
   tl!: gsap.core.Timeline;
 
@@ -134,6 +155,35 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
     return this.translate.instant('review.prompt', { terms }) as string;
   }
 
+  toggleExample() {
+    this.exampleVisible = !this.exampleVisible;
+  }
+
+  /**
+   * The asked form applied to a well-known example word
+   */
+  get example(): { from: { word: string; reading: string }; to: { word: string; reading: string } } | undefined {
+    const question = this.questions[this.index];
+    if (!question?.type) {
+      return undefined;
+    }
+    let definition = EXAMPLE_WORDS['verb'];
+    if (question.isOfType('i-adjective')) {
+      definition = EXAMPLE_WORDS['iAdjective'];
+    } else if (question.isOfType('na-adjective')) {
+      definition = EXAMPLE_WORDS['naAdjective'];
+    }
+
+    const exampleQuestion = Question.createFromVerbWithType(new Verb(definition), question.type);
+    if (!exampleQuestion.isValid()) {
+      return undefined;
+    }
+    const from = { word: exampleQuestion.word as string, reading: exampleQuestion.reading as string };
+    const answer = exampleQuestion.answers[0];
+    const to = { word: answer.word ?? answer.reading, reading: answer.reading };
+    return this.settings.reverse ? { from: to, to: from } : { from, to };
+  }
+
   getProgress(): number {
     if (this.questions.length === 0) {
       return 0;
@@ -151,6 +201,7 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
 
   goToQuestion(index: number) {
     this.index = index;
+    this.exampleVisible = false;
 
     this.speech.say(this.currentQuestion().reading);
 

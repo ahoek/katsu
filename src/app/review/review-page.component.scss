@@ -134,3 +134,30 @@
   font-size: .9rem;
   color: var(--ion-color-medium);
 }
+
+.example-toggle {
+  background: none;
+  border: none;
+  padding: 0 4px;
+  vertical-align: middle;
+  color: var(--ion-color-primary);
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 1.25rem;
+    display: block;
+  }
+}
+
+.example {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 16px 8px;
+  font-size: 1.1rem;
+
+  ion-icon {
+    color: var(--ion-color-medium);
+    flex-shrink: 0;
+  }
+}

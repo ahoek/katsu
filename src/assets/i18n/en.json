@@ -75,7 +75,8 @@
     "correct": "Correct!",
     "incorrect": "Incorrect. The correct answer:",
     "prompt": "Give this form: {{terms}}",
-    "prompt-reverse": "Give the dictionary form:"
+    "prompt-reverse": "Give the dictionary form:",
+    "example": "Example"
   },
   "summary": {
     "title": "Summary",

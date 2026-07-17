@@ -75,7 +75,8 @@
     "correct": "Goed!",
     "incorrect": "Helaas, het juiste antwoord:",
     "prompt": "Geef de vorm: {{terms}}",
-    "prompt-reverse": "Geef de woordenboekvorm:"
+    "prompt-reverse": "Geef de woordenboekvorm:",
+    "example": "Voorbeeld"
   },
   "summary": {
     "title": "Samenvatting",
