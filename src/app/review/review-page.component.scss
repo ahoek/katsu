@@ -62,23 +62,34 @@
 
 .correct {
   .answer-item {
-    --background: var(--ion-color-success);
-    --color: var(--ion-color-success-contrast);
+    --background: var(--app-answer-correct-background);
+    --color: var(--app-answer-correct-color);
   }
 
   [type='submit'] {
-    color: var(--ion-color-success-contrast);
+    color: var(--app-answer-correct-color);
   }
 }
 
 .incorrect {
   .answer-item {
-    --background: var(--ion-color-danger);
-    --color: var(--ion-color-danger-contrast);
+    --background: var(--app-answer-incorrect-background);
+    --color: var(--app-answer-incorrect-color);
   }
 
   [type='submit'] {
-    color: var(--ion-color-danger-contrast);
+    color: var(--app-answer-incorrect-color);
+  }
+}
+
+.invalid {
+  .answer-item {
+    --background: var(--app-answer-invalid-background);
+    --color: var(--app-answer-invalid-color);
+  }
+
+  [type='submit'] {
+    color: var(--app-answer-invalid-color);
   }
 }
 
@@ -129,6 +140,10 @@
   color: var(--ion-color-danger);
 }
 
+.feedback--invalid {
+  color: var(--ion-color-warning-shade);
+}
+
 .question-prompt {
   margin: 10px 16px 2px;
   font-size: .9rem;
@@ -150,14 +165,24 @@
 }
 
 .example {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   margin: 4px 16px 8px;
-  font-size: 1.1rem;
 
-  ion-icon {
+  &__explanation {
+    margin: 0 0 4px;
+    font-size: .9rem;
     color: var(--ion-color-medium);
-    flex-shrink: 0;
+  }
+
+  &__pair {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 1.1rem;
+
+    ion-icon {
+      color: var(--ion-color-medium);
+      flex-shrink: 0;
+    }
   }
 }

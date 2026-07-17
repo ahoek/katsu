@@ -69,8 +69,7 @@ export class HomePageComponent implements OnInit {
 
 
   /**
-   * Session summary shown above the start button,
-   * e.g. "10 questions · N3 · 2 forms"
+   * Session summary shown above the start button, e.g. "N3 · 2 forms"
    */
   get summary(): string {
     const s = this.settings;
@@ -78,9 +77,8 @@ export class HomePageComponent implements OnInit {
       s.normal, s.teForm, s.volitional, s.taiForm, s.tariForm, s.potential,
       s.imperative, s.conditional, s.passive, s.causative, s.causativePassive,
     ].filter(Boolean).length;
-    const questions = this.translate.instant('home.summary.questions');
     const forms = this.translate.instant(formCount === 1 ? 'home.summary.form' : 'home.summary.forms');
-    return `${s.amount} ${questions} · ${s.jlptLevel.toUpperCase()} · ${formCount} ${forms}`;
+    return `${s.jlptLevel.toUpperCase()} · ${formCount} ${forms}`;
   }
 
   async ngOnInit() {

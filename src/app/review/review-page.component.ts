@@ -10,7 +10,6 @@ import {
   IonIcon,
   IonItem,
   IonNote,
-  IonProgressBar,
   IonRow,
   IonTitle,
   IonToolbar,
@@ -64,7 +63,6 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
     IonIcon,
     IonItem,
     IonNote,
-    IonProgressBar,
     IonRow,
     IonTitle,
     IonToolbar,
@@ -184,18 +182,13 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
     return this.settings.reverse ? { from: to, to: from } : { from, to };
   }
 
-  getProgress(): number {
-    if (this.questions.length === 0) {
-      return 0;
-    }
-    return this.index / this.questions.length;
-  }
-
   nextQuestion() {
     if (this.index < this.questions.length - 1) {
+      // Came back from the summary to an earlier question
       this.goToQuestion(this.index + 1);
-    } else {
-      this.showSummary();
+    } else if (this.dataService.next()) {
+      // Endless: generate a fresh question and move to it
+      this.goToQuestion(this.index + 1);
     }
   }
 
@@ -218,8 +211,21 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
    * If correct, give good styling.
    * If incorrect, give 'bad' styling and show the correct answer.
    */
+  // Clear the invalid-input warning as soon as the answer is edited
+  onAnswerChange() {
+    const question = this.questions[this.index];
+    if (question?.invalid) {
+      question.invalid = false;
+    }
+  }
+
   checkAnswer(question: Question) {
     question.checkAnswer();
+
+    // The answer could not be read as Japanese: show an error and wait.
+    if (question.invalid) {
+      return;
+    }
 
     // If an answer is already given, go to the next question directly.
     if (question.answered === true) {
@@ -246,7 +252,8 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
     }
     return {
       correct: this.questions[this.index].correct === true,
-      incorrect: this.questions[this.index].correct === false
+      incorrect: this.questions[this.index].correct === false,
+      invalid: this.questions[this.index].invalid === true
     };
   }
 

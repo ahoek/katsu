@@ -8,7 +8,7 @@
     </ion-buttons>
 
     <ion-title>
-      {{index + 1}} / {{questions.length}}
+      {{'summary.question'|translate}} {{index + 1}}
     </ion-title>
 
     <ion-buttons slot="end">
@@ -18,7 +18,6 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-progress-bar [value]="getProgress()"></ion-progress-bar>
 </ion-header>
 
 <ion-content [class]="classNames()" class="patterned">
@@ -38,11 +37,14 @@
           </button>
         </p>
         @if (exampleVisible && example; as ex) {
-          <p class="example" lang="ja">
-            <app-furigana [input]="ex.from"></app-furigana>
-            <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-            <app-furigana [input]="ex.to"></app-furigana>
-          </p>
+          <div class="example">
+            <p class="example__explanation">{{'review.example-explanation'|translate}}</p>
+            <p class="example__pair" lang="ja">
+              <app-furigana [input]="ex.from"></app-furigana>
+              <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+              <app-furigana [input]="ex.to"></app-furigana>
+            </p>
+          </div>
         }
         <ion-item class="dictionary">
           <app-furigana
@@ -73,6 +75,7 @@
               #answerInputNative
               lang="ja"
               [(ngModel)]="questions[index].givenAnswer"
+              (ngModelChange)="onAnswerChange()"
               [ngModelOptions]="{standalone: true}"
               class="answer-input native-input sc-ion-input-ios"
               type="text"
@@ -95,6 +98,12 @@
 
         <!-- Answer feedback, also announced to screen readers -->
         <div aria-live="polite">
+          @if (questions[index]?.invalid) {
+            <p class="feedback feedback--invalid">
+              <ion-icon name="alert-circle" aria-hidden="true"></ion-icon>
+              {{'review.invalid'|translate}}
+            </p>
+          }
           @if (questions[index]?.correct === true) {
             <p class="feedback feedback--correct">
               <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>

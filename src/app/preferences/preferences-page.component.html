@@ -56,23 +56,6 @@
       </ion-select>
     </ion-item>
     <ion-item>
-      <span slot="start">#</span>
-      <ion-select
-        [ngModel]="settings.amount"
-        (ngModelChange)="settings.amount = $event; store()"
-        [selectedText]="settings.amount"
-        [label]="'setting.special.amount'|translate"
-        interface="action-sheet"
-        justify="space-between"
-      >
-        <ion-select-option value="10">10</ion-select-option>
-        <ion-select-option value="20">20</ion-select-option>
-        <ion-select-option value="30">30</ion-select-option>
-        <ion-select-option value="40">40</ion-select-option>
-        <ion-select-option value="50">50</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
       <ion-icon name="barcode-outline" slot="start"></ion-icon>
       <ion-checkbox
         [(ngModel)]="settings.showMeaning"

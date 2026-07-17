@@ -247,14 +247,6 @@ export class SettingsService {
   set reverse(value) {
     this._reverse = value;
   }
-  private _amount = 10;
-  get amount() {
-    return this._amount;
-  }
-  set amount(value) {
-    this._amount = value;
-  }
-
   private _language?: string;
   get language() {
     // Fall back to the active language without persisting it: only an

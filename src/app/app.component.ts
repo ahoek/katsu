@@ -5,6 +5,7 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import {
+  alertCircle,
   arrowBack,
   arrowForward,
   barcodeOutline,
@@ -63,7 +64,7 @@ export class AppComponent {
   constructor() {
     this.updates.start();
     addIcons({
-      arrowBack, arrowForward, barcodeOutline, bonfireOutline, briefcaseOutline,
+      alertCircle, arrowBack, arrowForward, barcodeOutline, bonfireOutline, briefcaseOutline,
       chatboxEllipsesOutline, checkmarkCircle, closeCircle, codeDownloadOutline,
       codeWorkingOutline, flagOutline, hammerOutline, happyOutline, heartOutline,
       helpCircleOutline, languageOutline, logInOutline, logoPaypal, megaphoneOutline, moonOutline, playBackOutline,

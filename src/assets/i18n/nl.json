@@ -49,7 +49,6 @@
       "reverse": "Omgekeerd",
       "reverse-note": "(antwoord in woordenboekvorm)",
       "no-suru": "Laat ‘suru’ werkwoorden weg",
-      "amount": "Aantal vragen",
       "language": "Taal",
       "voice": "Stem",
       "none": "Geen",
@@ -64,7 +63,6 @@
   "home": {
     "start": "Begin met oefenen!",
     "summary": {
-      "questions": "vragen",
       "form": "vorm",
       "forms": "vormen"
     }
@@ -76,12 +74,16 @@
     "incorrect": "Helaas, het juiste antwoord:",
     "prompt": "Geef de vorm: {{terms}}",
     "prompt-reverse": "Geef de woordenboekvorm:",
-    "example": "Voorbeeld"
+    "example": "Voorbeeld",
+    "example-explanation": "Vervoeg het woord zoals in dit voorbeeld:",
+    "invalid": "Antwoord in het Japans (hiragana, katakana of kanji)."
   },
   "summary": {
     "title": "Samenvatting",
     "close": "Klaar",
-    "text": "Je hebt {{correct}} van de {{total}} goed beantwoord"
+    "text": "Je hebt {{correct}} van de {{total}} goed beantwoord",
+    "question": "Vraag",
+    "skipped": "Overgeslagen"
   },
   "preferences": {
     "title": "Opties"
