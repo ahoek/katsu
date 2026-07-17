@@ -257,10 +257,9 @@ export class SettingsService {
 
   private _language?: string;
   get language() {
-    if (this._language === undefined) {
-      this._language = this.translate.getCurrentLang() ?? 'en';
-    }
-    return this._language;
+    // Fall back to the active language without persisting it: only an
+    // explicit choice (the preferences page) should be stored.
+    return this._language ?? this.translate.getCurrentLang() ?? 'en';
   }
   set language(value) {
     this._language = value;
