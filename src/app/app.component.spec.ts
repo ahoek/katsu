@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { provideServiceWorker } from '@angular/service-worker';
 import { provideIonicAngular } from '@ionic/angular/standalone';
 import { provideTranslateService } from '@ngx-translate/core';
 
@@ -14,6 +15,7 @@ describe('AppComponent', () => {
         provideRouter([]),
         provideIonicAngular(),
         provideTranslateService(),
+        provideServiceWorker('ngsw-worker.js', { enabled: false }),
       ],
     }).compileComponents();
   });
