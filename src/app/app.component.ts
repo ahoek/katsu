@@ -19,6 +19,7 @@ import {
   hammerOutline,
   happyOutline,
   heartOutline,
+  helpCircleOutline,
   languageOutline,
   logInOutline,
   logoPaypal,
@@ -65,7 +66,7 @@ export class AppComponent {
       arrowBack, arrowForward, barcodeOutline, bonfireOutline, briefcaseOutline,
       chatboxEllipsesOutline, checkmarkCircle, closeCircle, codeDownloadOutline,
       codeWorkingOutline, flagOutline, hammerOutline, happyOutline, heartOutline,
-      languageOutline, logInOutline, logoPaypal, megaphoneOutline, moonOutline, playBackOutline,
+      helpCircleOutline, languageOutline, logInOutline, logoPaypal, megaphoneOutline, moonOutline, playBackOutline,
       playForwardOutline, sadOutline, settingsOutline, shirtOutline, shuffle,
       shuffleOutline, trendingUp, volumeHighOutline, walkOutline,
     });

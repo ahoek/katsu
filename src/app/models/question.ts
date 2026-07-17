@@ -77,6 +77,34 @@ export class Question {
   }
 
   /**
+   * Translation keys of the attributes that make up this question type,
+   * in display order: form, speech level, polarity, tense.
+   */
+  attributeTranslationKeys(): string[] {
+    const attributes: [string, string][] = [
+      ['te-form', 'setting.form.te-form'],
+      ['tai-form', 'setting.form.tai-form'],
+      ['volitional', 'setting.form.volitional'],
+      ['potential', 'setting.form.potential'],
+      ['imperative', 'setting.form.imperative'],
+      ['conditional', 'setting.form.conditional'],
+      ['tari-form', 'setting.form.tari-form'],
+      ['passive', 'setting.form.passive'],
+      ['causative', 'setting.form.causative'],
+      ['caus-pass', 'setting.form.causative-passive'],
+      ['polite', 'setting.speech-level.formal'],
+      ['plain', 'setting.speech-level.informal'],
+      ['positive', 'setting.positive/negative.positive'],
+      ['negative', 'setting.positive/negative.negative'],
+      ['present', 'setting.tense.nonpast'],
+      ['past', 'setting.tense.past'],
+    ];
+    return attributes
+      .filter(([type]) => this.isOfType(type))
+      .map(([, key]) => key);
+  }
+
+  /**
    * Get the verb conjugation(s)
    *
    * Based on
