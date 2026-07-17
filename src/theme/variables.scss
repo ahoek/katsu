@@ -64,6 +64,15 @@
 
   --app-color-bg-dark: #ebebec;
   --app-color-bg-light: #ededf0;
+
+  // Answer field state colours. Light mode uses the bright brand colours;
+  // amber needs dark text for legibility.
+  --app-answer-correct-background: var(--ion-color-success);
+  --app-answer-correct-color: #fff;
+  --app-answer-incorrect-background: var(--ion-color-danger);
+  --app-answer-incorrect-color: #fff;
+  --app-answer-invalid-background: var(--ion-color-warning);
+  --app-answer-invalid-color: #000;
 }
 
 // Dark theme values, applied when the user forces dark mode or when
@@ -74,6 +83,15 @@
     --ion-background-color-rgb: var(--ion-color-dark-rgb);
     --ion-text-color: var(--ion-color-light);
     --ion-text-color-rgb: var(--ion-color-light-rgb);
+
+    // Darker, higher-contrast state colours so white text stays legible
+    // on the answer field in dark mode. color-mix keeps the brand hue.
+    --app-answer-correct-background: color-mix(in srgb, var(--ion-color-success), #000 62%);
+    --app-answer-correct-color: #fff;
+    --app-answer-incorrect-background: color-mix(in srgb, var(--ion-color-danger), #000 55%);
+    --app-answer-incorrect-color: #fff;
+    --app-answer-invalid-background: color-mix(in srgb, var(--ion-color-warning), #000 60%);
+    --app-answer-invalid-color: #fff;
 
     /* Ionic 8 step variables (bg steps go background -> text,
        text steps go text -> background) */

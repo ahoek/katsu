@@ -62,34 +62,34 @@
 
 .correct {
   .answer-item {
-    --background: var(--ion-color-success);
-    --color: var(--ion-color-success-contrast);
+    --background: var(--app-answer-correct-background);
+    --color: var(--app-answer-correct-color);
   }
 
   [type='submit'] {
-    color: var(--ion-color-success-contrast);
+    color: var(--app-answer-correct-color);
   }
 }
 
 .incorrect {
   .answer-item {
-    --background: var(--ion-color-danger);
-    --color: var(--ion-color-danger-contrast);
+    --background: var(--app-answer-incorrect-background);
+    --color: var(--app-answer-incorrect-color);
   }
 
   [type='submit'] {
-    color: var(--ion-color-danger-contrast);
+    color: var(--app-answer-incorrect-color);
   }
 }
 
 .invalid {
   .answer-item {
-    --background: var(--ion-color-warning);
-    --color: var(--ion-color-warning-contrast);
+    --background: var(--app-answer-invalid-background);
+    --color: var(--app-answer-invalid-color);
   }
 
   [type='submit'] {
-    color: var(--ion-color-warning-contrast);
+    color: var(--app-answer-invalid-color);
   }
 }
 
