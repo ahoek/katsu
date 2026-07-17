@@ -54,7 +54,11 @@
       "voice": "Stem",
       "none": "Geen",
       "show-meaning": "Toon betekenis",
-      "no-furigana": "Geen furigana"
+      "no-furigana": "Geen furigana",
+      "theme": "Thema",
+      "theme-auto": "Automatisch",
+      "theme-light": "Licht",
+      "theme-dark": "Donker"
     }
   },
   "home": {

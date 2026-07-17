@@ -10,6 +10,20 @@
 <ion-content>
   <ion-list>
     <ion-item>
+      <ion-icon name="moon-outline" slot="start"></ion-icon>
+      <ion-select
+        [ngModel]="settings.theme"
+        (ngModelChange)="setTheme($event)"
+        [label]="'setting.special.theme'|translate"
+        interface="action-sheet"
+        justify="space-between"
+      >
+        <ion-select-option value="auto">{{'setting.special.theme-auto'|translate}}</ion-select-option>
+        <ion-select-option value="light">{{'setting.special.theme-light'|translate}}</ion-select-option>
+        <ion-select-option value="dark">{{'setting.special.theme-dark'|translate}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
       <ion-icon name="language-outline" slot="start"></ion-icon>
       <ion-select
         [ngModel]="settings.language"

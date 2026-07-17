@@ -54,7 +54,11 @@
       "voice": "Voice",
       "none": "None",
       "show-meaning": "Show meaning",
-      "no-furigana": "No furigana"
+      "no-furigana": "No furigana",
+      "theme": "Theme",
+      "theme-auto": "Auto",
+      "theme-light": "Light",
+      "theme-dark": "Dark"
     }
   },
   "home": {
