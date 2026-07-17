@@ -79,10 +79,22 @@
           </ion-item>
         </form>
 
-        <!-- Show all allowed answers if given answer is incorrect -->
-        @if (questions[index]?.correct === false) {
-          <app-answers [question]="questions[index]"></app-answers>
-        }
+        <!-- Answer feedback, also announced to screen readers -->
+        <div aria-live="polite">
+          @if (questions[index]?.correct === true) {
+            <p class="feedback feedback--correct">
+              <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+              {{'review.correct'|translate}}
+            </p>
+          }
+          @if (questions[index]?.correct === false) {
+            <p class="feedback feedback--incorrect">
+              <ion-icon name="close-circle" aria-hidden="true"></ion-icon>
+              {{'review.incorrect'|translate}}
+            </p>
+            <app-answers [question]="questions[index]"></app-answers>
+          }
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -71,7 +71,9 @@
   },
   "review": {
     "stop": "Stop",
-    "skip": "Sla over"
+    "skip": "Sla over",
+    "correct": "Goed!",
+    "incorrect": "Helaas, het juiste antwoord:"
   },
   "summary": {
     "title": "Samenvatting",

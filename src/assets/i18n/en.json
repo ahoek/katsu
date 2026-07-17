@@ -71,7 +71,9 @@
   },
   "review": {
     "stop": "Stop",
-    "skip": "Skip"
+    "skip": "Skip",
+    "correct": "Correct!",
+    "incorrect": "Incorrect. The correct answer:"
   },
   "summary": {
     "title": "Summary",
