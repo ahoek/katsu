@@ -150,14 +150,24 @@
 }
 
 .example {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   margin: 4px 16px 8px;
-  font-size: 1.1rem;
 
-  ion-icon {
+  &__explanation {
+    margin: 0 0 4px;
+    font-size: .9rem;
     color: var(--ion-color-medium);
-    flex-shrink: 0;
+  }
+
+  &__pair {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 1.1rem;
+
+    ion-icon {
+      color: var(--ion-color-medium);
+      flex-shrink: 0;
+    }
   }
 }

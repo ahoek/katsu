@@ -49,7 +49,6 @@
       "reverse": "Reverse",
       "reverse-note": "(answer with dictionary form)",
       "no-suru": "Leave out ‘suru’ verbs",
-      "amount": "Amount of reviews",
       "language": "Language",
       "voice": "Voice",
       "none": "None",
@@ -64,7 +63,6 @@
   "home": {
     "start": "Start reviews!",
     "summary": {
-      "questions": "questions",
       "form": "form",
       "forms": "forms"
     }
@@ -76,7 +74,8 @@
     "incorrect": "Incorrect. The correct answer:",
     "prompt": "Give this form: {{terms}}",
     "prompt-reverse": "Give the dictionary form:",
-    "example": "Example"
+    "example": "Example",
+    "example-explanation": "Conjugate the word like this example:"
   },
   "summary": {
     "title": "Summary",
