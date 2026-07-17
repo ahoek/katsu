@@ -23,9 +23,11 @@ import {
   logInOutline,
   logoPaypal,
   megaphoneOutline,
+  moonOutline,
   playBackOutline,
   playForwardOutline,
   sadOutline,
+  settingsOutline,
   shirtOutline,
   shuffle,
   shuffleOutline,
@@ -35,6 +37,8 @@ import {
 } from 'ionicons/icons';
 
 import { AnalyticsService } from './shared/analytics.service';
+import { SettingsService } from './shared/settings.service';
+import { ThemeService } from './shared/theme.service';
 import { UpdateService } from './shared/update.service';
 
 @Component({
@@ -49,6 +53,8 @@ export class AppComponent {
   private readonly title = inject(Title);
   private readonly doc = inject(DOCUMENT);
   private readonly updates = inject(UpdateService);
+  private readonly settings = inject(SettingsService);
+  private readonly theme = inject(ThemeService);
 
   constructor() {
     this.updates.start();
@@ -56,9 +62,9 @@ export class AppComponent {
       arrowBack, arrowForward, barcodeOutline, bonfireOutline, briefcaseOutline,
       chatboxEllipsesOutline, checkmarkCircle, closeCircle, codeDownloadOutline,
       codeWorkingOutline, flagOutline, hammerOutline, happyOutline, heartOutline,
-      languageOutline, logInOutline, logoPaypal, megaphoneOutline, playBackOutline,
-      playForwardOutline, sadOutline, shirtOutline, shuffle, shuffleOutline,
-      trendingUp, volumeHighOutline, walkOutline,
+      languageOutline, logInOutline, logoPaypal, megaphoneOutline, moonOutline, playBackOutline,
+      playForwardOutline, sadOutline, settingsOutline, shirtOutline, shuffle,
+      shuffleOutline, trendingUp, volumeHighOutline, walkOutline,
     });
     this.initializeApp();
   }
@@ -68,6 +74,8 @@ export class AppComponent {
     if (location.hash.startsWith('#/')) {
       this.router.navigateByUrl(location.hash.substring(1), { replaceUrl: true });
     }
+
+    this.settings.userSettings().then(() => this.theme.apply(this.settings.theme));
 
     this.translate.addLangs(['en', 'nl', 'ja']);
 

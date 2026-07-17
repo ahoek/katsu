@@ -66,8 +66,9 @@
   --app-color-bg-light: #ededf0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
+// Dark theme values, applied when the user forces dark mode or when
+// the OS prefers dark and the user has not forced light mode.
+@mixin dark-theme {
     --ion-border-color: var(--ion-color-dark-shade);
     --ion-background-color: var(--ion-color-dark);
     --ion-background-color-rgb: var(--ion-color-dark-rgb);
@@ -118,5 +119,14 @@
 
     --app-color-bg-dark: #131300;
     --app-color-bg-light: #152524;
+}
+
+html.theme-dark {
+  @include dark-theme;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light) {
+    @include dark-theme;
   }
 }

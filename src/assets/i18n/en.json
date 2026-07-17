@@ -54,11 +54,20 @@
       "voice": "Voice",
       "none": "None",
       "show-meaning": "Show meaning",
-      "no-furigana": "No furigana"
+      "no-furigana": "No furigana",
+      "theme": "Theme",
+      "theme-auto": "Auto",
+      "theme-light": "Light",
+      "theme-dark": "Dark"
     }
   },
   "home": {
-    "start": "Start reviews!"
+    "start": "Start reviews!",
+    "summary": {
+      "questions": "questions",
+      "form": "form",
+      "forms": "forms"
+    }
   },
   "review": {
     "stop": "Stop",
@@ -68,5 +77,8 @@
     "title": "Summary",
     "close": "Done",
     "text": "You answered {{correct}} out of {{total}} correctly"
+  },
+  "preferences": {
+    "title": "Options"
   }
 }

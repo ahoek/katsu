@@ -290,6 +290,14 @@ export class SettingsService {
     this._noFurigana = value;
   }
 
+  private _theme: 'auto' | 'light' | 'dark' = 'auto';
+  get theme() {
+    return this._theme;
+  }
+  set theme(value) {
+    this._theme = value;
+  }
+
   private readonly translate = inject(TranslateService);
 
   private readonly storage = new Storage();

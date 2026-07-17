@@ -8,6 +8,11 @@ export const routes: Routes = [
     loadComponent: () => import('./home/home-page.component').then(m => m.HomePageComponent),
   },
   {
+    path: 'preferences',
+    title: 'Options - Katsu',
+    loadComponent: () => import('./preferences/preferences-page.component').then(m => m.PreferencesPageComponent),
+  },
+  {
     path: 'information',
     title: 'Information - Katsu',
     loadComponent: () => import('./information/information-page.component').then(m => m.InformationPageComponent),

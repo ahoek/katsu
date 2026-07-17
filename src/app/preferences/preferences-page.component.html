@@ -1,0 +1,120 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'preferences.title'|translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="moon-outline" slot="start"></ion-icon>
+      <ion-select
+        [ngModel]="settings.theme"
+        (ngModelChange)="setTheme($event)"
+        [label]="'setting.special.theme'|translate"
+        interface="action-sheet"
+        justify="space-between"
+      >
+        <ion-select-option value="auto">{{'setting.special.theme-auto'|translate}}</ion-select-option>
+        <ion-select-option value="light">{{'setting.special.theme-light'|translate}}</ion-select-option>
+        <ion-select-option value="dark">{{'setting.special.theme-dark'|translate}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="language-outline" slot="start"></ion-icon>
+      <ion-select
+        [ngModel]="settings.language"
+        (ngModelChange)="setLanguage($event)"
+        [label]="'setting.special.language'|translate"
+        interface="action-sheet"
+        justify="space-between"
+      >
+        <ion-select-option value="en">English</ion-select-option>
+        <ion-select-option value="nl">Nederlands</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="volume-high-outline" slot="start"></ion-icon>
+      <ion-select
+        [ngModel]="settings.voice"
+        (ngModelChange)="setVoice($event)"
+        [label]="'setting.special.voice'|translate"
+        interface="action-sheet"
+        justify="space-between"
+      >
+        <ion-select-option value="">
+          {{'setting.special.none'|translate}}
+        </ion-select-option>
+        @for (voice of speech.getVoices(); track voice.name) {
+          <ion-select-option [value]="voice.name">
+            {{voice.name}}
+          </ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <span slot="start">#</span>
+      <ion-select
+        [ngModel]="settings.amount"
+        (ngModelChange)="settings.amount = $event; store()"
+        [selectedText]="settings.amount"
+        [label]="'setting.special.amount'|translate"
+        interface="action-sheet"
+        justify="space-between"
+      >
+        <ion-select-option value="10">10</ion-select-option>
+        <ion-select-option value="20">20</ion-select-option>
+        <ion-select-option value="30">30</ion-select-option>
+        <ion-select-option value="40">40</ion-select-option>
+        <ion-select-option value="50">50</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="barcode-outline" slot="start"></ion-icon>
+      <ion-checkbox
+        [(ngModel)]="settings.showMeaning"
+        (ngModelChange)="store()"
+        justify="space-between"
+      >
+        {{'setting.special.show-meaning'|translate}}
+      </ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="code-working-outline" slot="start"></ion-icon>
+      <ion-checkbox
+        [(ngModel)]="settings.noFurigana"
+        (ngModelChange)="store()"
+        justify="space-between"
+      >
+        {{'setting.special.no-furigana'|translate}}
+      </ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <span name="no-suru" slot="start">する</span>
+      <ion-checkbox
+        [(ngModel)]="settings.leaveOutSuru"
+        (ngModelChange)="store()"
+        [disabled]="settings.verb === false"
+        justify="space-between"
+      >
+        {{'setting.special.no-suru'|translate}}
+      </ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="shuffle-outline" slot="start"></ion-icon>
+      <ion-checkbox
+        [(ngModel)]="settings.reverse"
+        (ngModelChange)="store()"
+        justify="space-between"
+      >
+        <ion-label>
+          {{'setting.special.reverse'|translate}}
+          <ion-note>{{'setting.special.reverse-note'|translate}}</ion-note>
+        </ion-label>
+      </ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>
