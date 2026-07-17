@@ -35,6 +35,7 @@ import {
 } from 'ionicons/icons';
 
 import { AnalyticsService } from './shared/analytics.service';
+import { UpdateService } from './shared/update.service';
 
 @Component({
   selector: 'app-root',
@@ -47,8 +48,10 @@ export class AppComponent {
   private readonly router = inject(Router);
   private readonly title = inject(Title);
   private readonly doc = inject(DOCUMENT);
+  private readonly updates = inject(UpdateService);
 
   constructor() {
+    this.updates.start();
     addIcons({
       arrowBack, arrowForward, barcodeOutline, bonfireOutline, briefcaseOutline,
       chatboxEllipsesOutline, checkmarkCircle, closeCircle, codeDownloadOutline,
