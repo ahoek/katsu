@@ -15,7 +15,7 @@ export class Question {
 
   // Answer
   public type = '';
-  public answers: Array<Answer> = [];
+  public answers: Answer[] = [];
 
   // Result
   public correct?: boolean;
@@ -158,8 +158,7 @@ export class Question {
 
     // Remove the okurigana from the word
     const readingBase = this.reading.slice(0, -1 * okurigana.length);
-    // @ts-ignore
-    const wordBase = this.word.slice(0, -1 * okurigana.length);
+    const wordBase = (this.word as string).slice(0, -1 * okurigana.length);
     const conjugation = readingAnswer.substring(readingBase.length);
 
     return `${wordBase}${conjugation}`;

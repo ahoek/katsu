@@ -1,21 +1,20 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import * as wanakana from 'wanakana';
+
 import { WordToken } from '../../models/word-token';
-import {NavController, Platform} from '@ionic/angular';
-import {AnalyticsService} from '../../shared/analytics.service';
-import {TranslateService} from '@ngx-translate/core';
-import {SpeechService} from '../../shared/speech.service';
-import {SettingsService} from '../../shared/settings.service';
+import { SettingsService } from '../../shared/settings.service';
 
 @Component({
   selector: 'app-furigana',
-  templateUrl: 'furigana.component.html'
+  templateUrl: 'furigana.component.html',
 })
 export class FuriganaComponent {
+  settings = inject(SettingsService);
+
 
   @Input()
-  set input(value: { word: string; reading: string }) {
-    this.word = value.word;
+  set input(value: { word?: string; reading: string }) {
+    this.word = value.word ?? value.reading;
     this.reading = value.reading;
     this.setOutput();
   }
@@ -26,11 +25,6 @@ export class FuriganaComponent {
 
   private word!: string;
   private reading!: string;
-
-  constructor(
-    public settings: SettingsService,
-  ) {
-  }
 
   /**
    * Make text with furigana from word and reading
@@ -76,7 +70,7 @@ export class FuriganaComponent {
     let lastType;
     let currentToken = new WordToken();
 
-    const tokens: any[] = [];
+    const tokens: WordToken[] = [];
     for (const wordPart of this.word) {
       lastType = currentType;
 

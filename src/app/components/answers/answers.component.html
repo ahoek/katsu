@@ -1,4 +1,6 @@
 <!-- Correct question answers -->
-<div class="answer" *ngFor="let answer of question.answers">
-  <app-furigana [input]="answer"></app-furigana>
-</div>
+@for (answer of question.answers; track $index) {
+  <div class="answer">
+    <app-furigana [input]="answer"></app-furigana>
+  </div>
+}

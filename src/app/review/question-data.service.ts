@@ -1,32 +1,28 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { Verb } from '../models/conjugation/verb';
 import { Question } from '../models/question';
 import { SettingsService } from '../shared/settings.service';
 import { JishoDefinition } from '../models/jisho-interfaces';
 
-interface Dictionary {
-  [id: string]: JishoDefinition[];
-}
+type Dictionary = Record<string, JishoDefinition[]>;
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionDataService {
+  http = inject(HttpClient);
+  settings = inject(SettingsService);
 
-  index = 0;
+  // Signals so views update even when questions resolve outside the
+  // Angular zone (the settings storage is IndexedDB-backed).
+  readonly index = signal(0);
 
-  questions: Question[] = [];
-
-  constructor(
-    public http: HttpClient,
-    public settings: SettingsService,
-  ) {
-
-  }
+  readonly questions = signal<Question[]>([]);
 
   get currentQuestion(): Question {
-    return this.questions[this.index];
+    return this.questions()[this.index()];
   }
 
   /**
@@ -37,25 +33,24 @@ export class QuestionDataService {
   async load(): Promise<Question[]> {
     await this.settings.userSettings();
 
-    return new Promise<Question[]>(resolve => {
-      const url = 'assets/data/questions/words.json';
-      const options = this.settings.getQuestionTypeOptions();
-      // console.log('question types', options);
+    const url = 'assets/data/questions/words.json';
+    const options = this.settings.getQuestionTypeOptions();
 
-      this.http.get(url).subscribe((dictionary: any) => {
-        this.questions = this.getQuestionsFromDictionary(dictionary, options);
-        this.index = 0;
-        resolve(this.questions);
-      });
-    });
+    const dictionary = await firstValueFrom(this.http.get<Dictionary>(url));
+    const questions = this.getQuestionsFromDictionary(dictionary, options);
+    if (questions.length > 0) {
+      this.questions.set(questions);
+    }
+    this.index.set(0);
+    return questions;
   }
 
   resetAnsweredStatus() {
-    this.questions.forEach(question => question.answered = false);
+    this.questions().forEach(question => question.answered = false);
   }
 
   getTotalCorrect(): number {
-    return this.questions.reduce((total, question) => {
+    return this.questions().reduce((total, question) => {
       if (question.correct) {
         total += 1;
       }
@@ -105,8 +100,7 @@ export class QuestionDataService {
       throw new Error('No word of correct type found');
     }
 
-    // @ts-ignore
-    if (word.level < Number(this.settings.jlptLevel.slice(-1))) {
+    if ((word.level ?? 0) < Number(this.settings.jlptLevel.slice(-1))) {
       return;
     }
 
@@ -135,7 +129,7 @@ export class QuestionDataService {
   /**
    * Get a random item from an array and remove it from the array
    */
-  private getRandomItem<T>(items: Array<T>, removeItem: boolean = true): T {
+  private getRandomItem<T>(items: T[], removeItem = true): T {
     const randomIndex = Math.floor(Math.random() * items.length);
     if (removeItem === true) {
       const item = items.splice(randomIndex, 1);

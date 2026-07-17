@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+ 
 
 import { Verb } from './verb';
 import { JishoDefinition } from '../jisho-interfaces';

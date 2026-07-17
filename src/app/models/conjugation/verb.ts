@@ -82,7 +82,7 @@ export class Verb {
   // Get a verb to conjugate as Ichidan
   static getIchidanVerb(reading: string): Verb {
     const definition = {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
+       
       senses: [{parts_of_speech: ['Ichidan verb'], english_definitions: ['']}],
       japanese: [{reading}],
     } as JishoDefinition;
@@ -291,7 +291,7 @@ export class Verb {
 
   // Get the normal verb conjugation
   verbNormalForm(neutral = false, negative = false, past = false): string[] {
-    let conjugation = '';
+    let conjugation: string;
     if (neutral) {
       const ending = !past
         ? (!negative ? 'ます' : 'ません')
@@ -385,7 +385,7 @@ export class Verb {
     return stem + HiraganaColumnHelper.change(ending, 'e', 'a');
   }
 
-  volitional(neutral: boolean = false): string[] {
+  volitional(neutral = false): string[] {
     let conjugation;
 
     if (neutral) {
@@ -393,10 +393,11 @@ export class Verb {
     } else {
       const you = 'よう';
       switch (this.group()) {
-        case '1':
+        case '1': {
           const stem = this.changeLastVowel('u', 'o');
           conjugation = stem + 'う';
           break;
+        }
         case '2':
           conjugation = this.removeLast() + you;
           break;
@@ -446,7 +447,7 @@ export class Verb {
    *
    * Tense and modality are left out for now, because they conjugate like -eru
    */
-  potential(neutral: boolean = false, negative = false, past = false): string[] {
+  potential(neutral = false, negative = false, past = false): string[] {
     const potentials: string[] = [];
     let stem = '';
 
@@ -567,7 +568,7 @@ export class Verb {
       .map((past) => past + 'り');
   }
 
-  passive(neutral: boolean = false, negative = false, past = false): string[] {
+  passive(neutral = false, negative = false, past = false): string[] {
     // Find the 'A' stem
     let stem = '';
     switch (this.group()) {

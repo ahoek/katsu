@@ -21,8 +21,8 @@
   <ion-progress-bar [value]="getProgress()"></ion-progress-bar>
 </ion-header>
 
-<ion-content [ngClass]="classNames()" class="patterned">
-  <ion-grid fixed="700">
+<ion-content [class]="classNames()" class="patterned">
+  <ion-grid fixed="true">
     <ion-row>
       <ion-col>
         <ion-item class="dictionary">
@@ -31,13 +31,14 @@
             [input]="currentQuestion()"
           ></app-furigana>
 
-          <ion-note
-            slot="end"
-            class="dictionary__meaning note"
-            *ngIf="settings.showMeaning"
-          >
-            {{questions[index]?.meaning}}
-          </ion-note>
+          @if (settings.showMeaning) {
+            <ion-note
+              slot="end"
+              class="dictionary__meaning note"
+            >
+              {{questions[index]?.meaning}}
+            </ion-note>
+          }
         </ion-item>
 
         <app-review-settings-list
@@ -62,7 +63,6 @@
               class="answer-input native-input sc-ion-input-ios"
               type="text"
               placeholder="答え"
-              inputmode="kana"
               autocomplete="off"
               autocorrect="off"
               autocapitalize="none"
@@ -72,7 +72,7 @@
               slot="end"
               fill="clear"
               type="submit"
-              [ngClass]="{pulse: questions[index]?.answered}"
+              [class.pulse]="questions[index]?.answered"
             >
               <ion-icon name="arrow-forward"></ion-icon>
             </ion-button>
@@ -80,10 +80,9 @@
         </form>
 
         <!-- Show all allowed answers if given answer is incorrect -->
-        <app-answers
-          [question]="questions[index]"
-          *ngIf="questions[index]?.correct === false"
-        ></app-answers>
+        @if (questions[index]?.correct === false) {
+          <app-answers [question]="questions[index]"></app-answers>
+        }
       </ion-col>
     </ion-row>
   </ion-grid>
