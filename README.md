@@ -1,6 +1,6 @@
-# katsu 
+# katsu
 
-Katsu is a mobile conjugation practise app for Japanese verbs and adjectives.
+Katsu is a conjugation practice web app for Japanese verbs and adjectives.
 
 The name is an abbreviation of the Japanese word 活用 (katsuyō), which means conjugation.
 
@@ -16,7 +16,7 @@ The following forms can be practised:
 * Tai-form
 * Tari-form
 * Potential
-* Imperative / prohibitive 
+* Imperative / prohibitive
 * Conditional
 * Passive
 * Causative
@@ -24,48 +24,51 @@ The following forms can be practised:
 
 ## Demo
 
-Use a web version of the app at http://katsu.arthurhoek.nl/
+Use the app at [katsu.arthurhoek.nl](https://katsu.arthurhoek.nl/).
 
-## Installation and run
+## Tech stack
 
-Make sure you have the correct environment tools available.
+* [Angular](https://angular.dev/) 22 with standalone components
+* [Ionic](https://ionicframework.com/) 8 for the UI
+* [wanakana](https://wanakana.com/) for kana input and conversion
+* [ngx-translate](https://github.com/ngx-translate/core) for i18n (English, Dutch)
+* Installable as a PWA with offline support (Angular service worker)
 
+## Development
+
+Requires Node.js 24 or newer (`nvm use` picks the right version).
+
+```sh
+git clone https://github.com/ahoek/katsu.git
+cd katsu
+npm install
+npm start
 ```
-$ npm install -g ionic
-$ git clone https://github.com/ahoek/katsu.git
-$ cd katsu
-$ ionic serve
+
+The app is served at `http://localhost:4200/`.
+
+## Tests and lint
+
+```sh
+npm test    # unit tests (vitest)
+npm run lint
 ```
 
-## Tests
+## Build and deployment
 
-Install the testing tool
-
-```
-npm install -g karma-cli
+```sh
+npm run build
 ```
 
-Run the tests
+The production build is written to `dist/browser`.
 
-```
-npm test
-```
+Every push to `master` is built and deployed to GitHub Pages automatically by the
+[deploy workflow](.github/workflows/deploy.yml).
 
 ## Acknowledgements
 
-The app is based on the Ionic framework. The word definitions were retrieved from the 
-online dictionary [Jisho](http://jisho.org/).
+The word definitions were retrieved from the online dictionary [Jisho](https://jisho.org/).
 
+## License
 
-## To do
-
-- Add complete dutch translation
-- Make start screen easier (disable if not correct settings, never allow incorrect setting combinations)
-- Option to resume quiz
-- If potential form contains dekiru in reading, don't show readings with kanji
-- Fix bug where na adjective is shown as verb:
-    type: "potential-plain-negative-past"
-    verb: Verb
-    definition:
-    japanese: Array(1)
-    0: {word: "加減", reading: "かげん"}
+[MIT](LICENSE)
