@@ -1,5 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { Verb } from '../models/conjugation/verb';
 import { Question } from '../models/question';
 import { SettingsService } from '../shared/settings.service';
@@ -14,13 +15,14 @@ export class QuestionDataService {
   http = inject(HttpClient);
   settings = inject(SettingsService);
 
+  // Signals so views update even when questions resolve outside the
+  // Angular zone (the settings storage is IndexedDB-backed).
+  readonly index = signal(0);
 
-  index = 0;
-
-  questions: Question[] = [];
+  readonly questions = signal<Question[]>([]);
 
   get currentQuestion(): Question {
-    return this.questions[this.index];
+    return this.questions()[this.index()];
   }
 
   /**
@@ -31,25 +33,24 @@ export class QuestionDataService {
   async load(): Promise<Question[]> {
     await this.settings.userSettings();
 
-    return new Promise<Question[]>(resolve => {
-      const url = 'assets/data/questions/words.json';
-      const options = this.settings.getQuestionTypeOptions();
-      // console.log('question types', options);
+    const url = 'assets/data/questions/words.json';
+    const options = this.settings.getQuestionTypeOptions();
 
-      this.http.get<Dictionary>(url).subscribe(dictionary => {
-        this.questions = this.getQuestionsFromDictionary(dictionary, options);
-        this.index = 0;
-        resolve(this.questions);
-      });
-    });
+    const dictionary = await firstValueFrom(this.http.get<Dictionary>(url));
+    const questions = this.getQuestionsFromDictionary(dictionary, options);
+    if (questions.length > 0) {
+      this.questions.set(questions);
+    }
+    this.index.set(0);
+    return questions;
   }
 
   resetAnsweredStatus() {
-    this.questions.forEach(question => question.answered = false);
+    this.questions().forEach(question => question.answered = false);
   }
 
   getTotalCorrect(): number {
-    return this.questions.reduce((total, question) => {
+    return this.questions().reduce((total, question) => {
       if (question.correct) {
         total += 1;
       }

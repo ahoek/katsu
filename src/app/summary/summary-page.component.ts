@@ -52,7 +52,7 @@ export class SummaryPageComponent {
   summaryText = '';
 
   constructor() {
-    this.questions = this.questionService.questions;
+    this.questions = this.questionService.questions();
     this.questionService.resetAnsweredStatus();
     this.setSummaryText();
   }
@@ -68,7 +68,7 @@ export class SummaryPageComponent {
    * Return to a review question
    */
   goToQuestion(index: number) {
-    this.questionService.index = index;
+    this.questionService.index.set(index);
     this.navCtrl.navigateBack('/review');
   }
 }

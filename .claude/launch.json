@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "katsu",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "source \"$HOME/.nvm/nvm.sh\" && nvm use 24 >/dev/null && npm start"],
+      "port": 4200
+    }
+  ]
+}

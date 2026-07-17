@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonButton,
@@ -54,41 +54,44 @@ import { ReviewSettingsListComponent } from '../components/review-settings-list/
     ReviewSettingsListComponent,
   ],
 })
-export class ReviewPageComponent implements OnInit {
+export class ReviewPageComponent implements OnInit, AfterViewInit {
   navCtrl = inject(NavController);
   dataService = inject(QuestionDataService);
   settings = inject(SettingsService);
   private analytics = inject(AnalyticsService);
   private speech = inject(SpeechService);
+  private hostRef = inject(ElementRef);
 
   @ViewChild('answerInputNative', { read: ElementRef, static: true })
   answerInputNative!: ElementRef;
 
-  questions: Question[] = [];
-
   tl!: gsap.core.Timeline;
 
+  get questions(): Question[] {
+    return this.dataService.questions();
+  }
+
   get index(): number {
-    return this.dataService.index;
+    return this.dataService.index();
   }
   set index(value: number) {
-    this.dataService.index = value;
+    this.dataService.index.set(value);
   }
 
   constructor() {
     this.index = 0;
-    this.questions[0] = new Question();
+    this.dataService.questions.set([new Question()]);
   }
 
   // Set up the review page
   async ngOnInit() {
-    this.dataService.load().then(questions => {
-      if (questions.length > 0) {
-        this.questions = questions;
-      }
+    this.dataService.load().then(() => {
       this.goToQuestion(this.index);
     });
+  }
 
+  ngAfterViewInit() {
+    // The star elements exist in the DOM only after the view is created
     this.initStar();
   }
 
@@ -206,27 +209,30 @@ export class ReviewPageComponent implements OnInit {
   }
 
   public initStar() {
-    gsap.set('.star', {
+    // Query from the host element: Ionic attaches the page to the
+    // document asynchronously, so global selectors can miss it here.
+    const host: HTMLElement = this.hostRef.nativeElement;
+    gsap.set(host.querySelectorAll('.star'), {
       scale: 1,
       x: 500, y: 1000,
     });
     this.tl = gsap.timeline({ paused: true });
     this.tl.add('start');
-    this.tl.to('#star1', {
+    this.tl.to(host.querySelector('#star1'), {
       duration: 1,
       opacity: 0,
       x: 250, y: 300,
       rotation: 270,
       scale: 1.2,
     }, '#start');
-    this.tl.to('#star2', {
+    this.tl.to(host.querySelector('#star2'), {
       duration: 1,
       opacity: 0,
       x: 700, y: 300,
       rotation: 260,
       scale: 1.5,
     }, 'start+=.2');
-    this.tl.to('#star3', {
+    this.tl.to(host.querySelector('#star3'), {
       duration: 1,
       opacity: 0,
       x: 600, y: 300,
