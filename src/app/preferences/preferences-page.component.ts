@@ -25,6 +25,7 @@ import { ThemePreference, ThemeService } from '../shared/theme.service';
 @Component({
   selector: 'app-preferences',
   templateUrl: './preferences-page.component.html',
+  styleUrls: ['./preferences-page.component.scss'],
   imports: [
     FormsModule,
     IonBackButton,
