@@ -41,8 +41,13 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Add SPA fallback
-        run: cp dist/browser/index.html dist/browser/404.html
+      - name: Add SPA fallback and route pages
+        run: |
+          cp dist/browser/index.html dist/browser/404.html
+          for route in home information review summary; do
+            mkdir -p "dist/browser/$route"
+            cp dist/browser/index.html "dist/browser/$route/index.html"
+          done
 
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request'
