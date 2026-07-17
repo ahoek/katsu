@@ -61,6 +61,11 @@ export class AppComponent {
   }
 
   initializeApp() {
+    // Redirect old hash URLs (e.g. /#/information) to their path equivalent
+    if (location.hash.startsWith('#/')) {
+      this.router.navigateByUrl(location.hash.substring(1), { replaceUrl: true });
+    }
+
     this.translate.addLangs(['en', 'nl', 'ja']);
 
     const browserLang = (navigator.language || 'en').split('-')[0];

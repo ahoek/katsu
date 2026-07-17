@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /review
+Disallow: /summary
+
+Sitemap: https://katsu.arthurhoek.nl/sitemap.xml
