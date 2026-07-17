@@ -15,28 +15,28 @@
 <ion-content>
   <ion-list>
     <ion-item>{{ summaryText }}</ion-item>
-    @for (question of questions; track $index) {
+    @for (item of items; track $index) {
       <ion-item
-        (click)="goToQuestion($index)"
-        [class.correct]="question.correct === true"
-        [class.incorrect]="question.correct === false"
+        (click)="goToQuestion(item.index)"
+        [class.correct]="item.question.correct === true"
+        [class.incorrect]="item.question.correct === false"
       >
         <ion-label class="ion-text-wrap">
           <span class="number">{{$index + 1}}</span>
 
           <span class="given-answer" lang="ja">
-            {{question.givenAnswer}}
+            {{item.question.givenAnswer}}
           </span>
-          <app-answers [question]="question"></app-answers>
+          <app-answers [question]="item.question"></app-answers>
         </ion-label>
 
-        @if (question.correct === true) {
+        @if (item.question.correct === true) {
           <ion-icon
             name="checkmark-circle"
             color="success"
             slot="end"></ion-icon>
         }
-        @if (question.correct === false) {
+        @if (item.question.correct === false) {
           <ion-icon
             name="close-circle"
             color="danger"

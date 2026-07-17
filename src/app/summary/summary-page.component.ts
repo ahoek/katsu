@@ -47,12 +47,16 @@ export class SummaryPageComponent {
   private readonly translate = inject(TranslateService);
 
 
-  questions: Question[];
+  // Answered questions with their original index, so the summary can skip
+  // unanswered/skipped questions yet still navigate back to the right one.
+  items: { question: Question; index: number }[];
 
   summaryText = '';
 
   constructor() {
-    this.questions = this.questionService.questions();
+    this.items = this.questionService.questions()
+      .map((question, index) => ({ question, index }))
+      .filter(item => item.question.correct !== undefined);
     this.questionService.resetAnsweredStatus();
     this.setSummaryText();
   }
@@ -60,7 +64,7 @@ export class SummaryPageComponent {
   setSummaryText() {
     this.summaryText = this.translate.instant('summary.text', {
       correct: this.questionService.getTotalCorrect(),
-      total: this.questions.length,
+      total: this.items.length,
     }) as string;
   }
 

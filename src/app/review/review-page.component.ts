@@ -10,7 +10,6 @@ import {
   IonIcon,
   IonItem,
   IonNote,
-  IonProgressBar,
   IonRow,
   IonTitle,
   IonToolbar,
@@ -64,7 +63,6 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
     IonIcon,
     IonItem,
     IonNote,
-    IonProgressBar,
     IonRow,
     IonTitle,
     IonToolbar,
@@ -184,18 +182,13 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
     return this.settings.reverse ? { from: to, to: from } : { from, to };
   }
 
-  getProgress(): number {
-    if (this.questions.length === 0) {
-      return 0;
-    }
-    return this.index / this.questions.length;
-  }
-
   nextQuestion() {
     if (this.index < this.questions.length - 1) {
+      // Came back from the summary to an earlier question
       this.goToQuestion(this.index + 1);
-    } else {
-      this.showSummary();
+    } else if (this.dataService.next()) {
+      // Endless: generate a fresh question and move to it
+      this.goToQuestion(this.index + 1);
     }
   }
 

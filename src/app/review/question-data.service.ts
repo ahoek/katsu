@@ -21,28 +21,43 @@ export class QuestionDataService {
 
   readonly questions = signal<Question[]>([]);
 
+  // Working copy of the word lists, depleted as questions are generated,
+  // and the pristine copy used to refill it for an endless session.
+  private pool: Dictionary = {};
+  private pristine: Dictionary = {};
+  private options: string[] = [];
+
   get currentQuestion(): Question {
     return this.questions()[this.index()];
   }
 
   /**
-   * Provider of question data
-   *
-   * SettingsService to create the answers
+   * Load the word data and produce the first question. Questions are then
+   * generated on demand via next(), for an endless practice session.
    */
   async load(): Promise<Question[]> {
     await this.settings.userSettings();
 
     const url = 'assets/data/questions/words.json';
-    const options = this.settings.getQuestionTypeOptions();
+    this.options = this.settings.getQuestionTypeOptions();
+    this.pristine = await firstValueFrom(this.http.get<Dictionary>(url));
+    this.refillPool();
 
-    const dictionary = await firstValueFrom(this.http.get<Dictionary>(url));
-    const questions = this.getQuestionsFromDictionary(dictionary, options);
-    if (questions.length > 0) {
-      this.questions.set(questions);
-    }
+    const first = this.generateQuestion();
+    this.questions.set(first ? [first] : []);
     this.index.set(0);
-    return questions;
+    return this.questions();
+  }
+
+  /**
+   * Generate the next question and append it. There is always a next one.
+   */
+  next(): Question | undefined {
+    const question = this.generateQuestion();
+    if (question) {
+      this.questions.update(questions => [...questions, question]);
+    }
+    return question;
   }
 
   resetAnsweredStatus() {
@@ -58,26 +73,33 @@ export class QuestionDataService {
     }, 0);
   }
 
-  private getQuestionsFromDictionary(dictionary: Dictionary, options: string[]): Question[] {
-    const numberOfQuestions = this.settings.amount || 10;
-    const questions: Question[] = [];
-
-    if (options.length === 0) {
-      return questions;
+  // Restore the working pool from the pristine copy (arrays are copied so
+  // that depletion never mutates the original).
+  private refillPool() {
+    this.pool = {};
+    for (const key of Object.keys(this.pristine)) {
+      this.pool[key] = [...this.pristine[key]];
     }
-    while (questions.length < numberOfQuestions) {
+  }
+
+  private generateQuestion(): Question | undefined {
+    if (this.options.length === 0) {
+      return undefined;
+    }
+    // Most attempts fail the JLPT-level filter, so allow generous retries;
+    // when a word pool is exhausted, refill it and keep going.
+    for (let attempt = 0; attempt < 500; attempt++) {
+      const questionType: string = this.getRandomItem(this.options, false);
       try {
-        const questionType: string = this.getRandomItem(options, false);
-        const question = this.getQuestion(dictionary, questionType);
+        const question = this.getQuestion(this.pool, questionType);
         if (question) {
-          questions.push(question);
+          return question;
         }
-      } catch (e) {
-        console.warn(e);
-        break;
+      } catch {
+        this.refillPool();
       }
     }
-    return questions;
+    return undefined;
   }
 
   /**
