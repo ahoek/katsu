@@ -22,11 +22,13 @@
         [class.incorrect]="item.question.correct === false"
       >
         <ion-label class="ion-text-wrap">
-          <span class="number">{{$index + 1}}</span>
+          <p class="question-title">{{'summary.question'|translate}} {{$index + 1}}</p>
 
-          <span class="given-answer" lang="ja">
-            {{item.question.givenAnswer}}
-          </span>
+          @if (item.question.givenAnswer) {
+            <p class="given-answer" lang="ja">{{item.question.givenAnswer}}</p>
+          } @else {
+            <p class="given-answer given-answer--skipped">{{'summary.skipped'|translate}}</p>
+          }
           <app-answers [question]="item.question"></app-answers>
         </ion-label>
 

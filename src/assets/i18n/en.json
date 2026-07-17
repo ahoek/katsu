@@ -80,7 +80,9 @@
   "summary": {
     "title": "Summary",
     "close": "Done",
-    "text": "You answered {{correct}} out of {{total}} correctly"
+    "text": "You answered {{correct}} out of {{total}} correctly",
+    "question": "Question",
+    "skipped": "Skipped"
   },
   "preferences": {
     "title": "Options"

@@ -80,7 +80,9 @@
   "summary": {
     "title": "Samenvatting",
     "close": "Klaar",
-    "text": "Je hebt {{correct}} van de {{total}} goed beantwoord"
+    "text": "Je hebt {{correct}} van de {{total}} goed beantwoord",
+    "question": "Vraag",
+    "skipped": "Overgeslagen"
   },
   "preferences": {
     "title": "Opties"
