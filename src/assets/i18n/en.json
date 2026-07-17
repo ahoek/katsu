@@ -73,7 +73,9 @@
     "stop": "Stop",
     "skip": "Skip",
     "correct": "Correct!",
-    "incorrect": "Incorrect. The correct answer:"
+    "incorrect": "Incorrect. The correct answer:",
+    "prompt": "Give this form: {{terms}}",
+    "prompt-reverse": "Give the dictionary form:"
   },
   "summary": {
     "title": "Summary",

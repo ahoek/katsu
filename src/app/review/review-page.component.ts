@@ -16,7 +16,7 @@ import {
   IonToolbar,
   NavController,
 } from '@ionic/angular/standalone';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import * as wanakana from 'wanakana';
 import { gsap } from 'gsap';
 
@@ -61,6 +61,7 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
   private analytics = inject(AnalyticsService);
   private speech = inject(SpeechService);
   private hostRef = inject(ElementRef);
+  private translate = inject(TranslateService);
 
   @ViewChild('answerInputNative', { read: ElementRef, static: true })
   answerInputNative!: ElementRef;
@@ -113,6 +114,24 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.answerInputNative.nativeElement.focus();
     }, 250);
+  }
+
+  /**
+   * The question sentence, composed from the question type attributes
+   * using the same terms as the settings screen.
+   */
+  get prompt(): string {
+    const question = this.questions[this.index];
+    if (!question?.type) {
+      return '';
+    }
+    if (this.settings.reverse) {
+      return this.translate.instant('review.prompt-reverse') as string;
+    }
+    const terms = question.attributeTranslationKeys()
+      .map(key => this.translate.instant(key) as string)
+      .join(' \u00b7 ');
+    return this.translate.instant('review.prompt', { terms }) as string;
   }
 
   getProgress(): number {
