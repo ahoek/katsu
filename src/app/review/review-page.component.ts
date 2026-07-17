@@ -211,8 +211,21 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
    * If correct, give good styling.
    * If incorrect, give 'bad' styling and show the correct answer.
    */
+  // Clear the invalid-input warning as soon as the answer is edited
+  onAnswerChange() {
+    const question = this.questions[this.index];
+    if (question?.invalid) {
+      question.invalid = false;
+    }
+  }
+
   checkAnswer(question: Question) {
     question.checkAnswer();
+
+    // The answer could not be read as Japanese: show an error and wait.
+    if (question.invalid) {
+      return;
+    }
 
     // If an answer is already given, go to the next question directly.
     if (question.answered === true) {
@@ -239,7 +252,8 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
     }
     return {
       correct: this.questions[this.index].correct === true,
-      incorrect: this.questions[this.index].correct === false
+      incorrect: this.questions[this.index].correct === false,
+      invalid: this.questions[this.index].invalid === true
     };
   }
 

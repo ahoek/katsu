@@ -75,6 +75,7 @@
               #answerInputNative
               lang="ja"
               [(ngModel)]="questions[index].givenAnswer"
+              (ngModelChange)="onAnswerChange()"
               [ngModelOptions]="{standalone: true}"
               class="answer-input native-input sc-ion-input-ios"
               type="text"
@@ -97,6 +98,12 @@
 
         <!-- Answer feedback, also announced to screen readers -->
         <div aria-live="polite">
+          @if (questions[index]?.invalid) {
+            <p class="feedback feedback--invalid">
+              <ion-icon name="alert-circle" aria-hidden="true"></ion-icon>
+              {{'review.invalid'|translate}}
+            </p>
+          }
           @if (questions[index]?.correct === true) {
             <p class="feedback feedback--correct">
               <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>

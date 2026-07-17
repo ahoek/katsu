@@ -75,7 +75,8 @@
     "prompt": "Geef de vorm: {{terms}}",
     "prompt-reverse": "Geef de woordenboekvorm:",
     "example": "Voorbeeld",
-    "example-explanation": "Vervoeg het woord zoals in dit voorbeeld:"
+    "example-explanation": "Vervoeg het woord zoals in dit voorbeeld:",
+    "invalid": "Antwoord in het Japans (hiragana, katakana of kanji)."
   },
   "summary": {
     "title": "Samenvatting",

@@ -75,7 +75,8 @@
     "prompt": "Give this form: {{terms}}",
     "prompt-reverse": "Give the dictionary form:",
     "example": "Example",
-    "example-explanation": "Conjugate the word like this example:"
+    "example-explanation": "Conjugate the word like this example:",
+    "invalid": "Please answer in Japanese (hiragana, katakana or kanji)."
   },
   "summary": {
     "title": "Summary",

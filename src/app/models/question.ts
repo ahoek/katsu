@@ -22,6 +22,9 @@ export class Question {
   public givenAnswer = '';
   public answered = false;
 
+  // The answer could not be read as Japanese (e.g. leftover latin letters)
+  public invalid = false;
+
   public reversed = false;
 
   static createFromVerb(verb: Verb): Question {
@@ -197,6 +200,7 @@ export class Question {
    */
   checkAnswer() {
     this.correct = false;
+    this.invalid = false;
     if (this.givenAnswer) {
       // Remove whitespace
       this.givenAnswer = this.givenAnswer.replace(/\s+/g, '');
@@ -210,9 +214,10 @@ export class Question {
     }
 
     // Check if given answer still contains romaji. If so, it was probably
-    // a typo.
+    // a typo and cannot be a valid Japanese answer.
     if (this.givenAnswer.match(/\w/)) {
       this.answered = false;
+      this.invalid = true;
       delete this.correct;
       return;
     }

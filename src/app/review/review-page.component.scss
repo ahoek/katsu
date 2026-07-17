@@ -82,6 +82,17 @@
   }
 }
 
+.invalid {
+  .answer-item {
+    --background: var(--ion-color-warning);
+    --color: var(--ion-color-warning-contrast);
+  }
+
+  [type='submit'] {
+    color: var(--ion-color-warning-contrast);
+  }
+}
+
 .answer-form {
   position: relative;
 }
@@ -127,6 +138,10 @@
 
 .feedback--incorrect {
   color: var(--ion-color-danger);
+}
+
+.feedback--invalid {
+  color: var(--ion-color-warning-shade);
 }
 
 .question-prompt {
