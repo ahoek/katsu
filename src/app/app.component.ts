@@ -26,6 +26,7 @@ import {
   playBackOutline,
   playForwardOutline,
   sadOutline,
+  settingsOutline,
   shirtOutline,
   shuffle,
   shuffleOutline,
@@ -57,8 +58,8 @@ export class AppComponent {
       chatboxEllipsesOutline, checkmarkCircle, closeCircle, codeDownloadOutline,
       codeWorkingOutline, flagOutline, hammerOutline, happyOutline, heartOutline,
       languageOutline, logInOutline, logoPaypal, megaphoneOutline, playBackOutline,
-      playForwardOutline, sadOutline, shirtOutline, shuffle, shuffleOutline,
-      trendingUp, volumeHighOutline, walkOutline,
+      playForwardOutline, sadOutline, settingsOutline, shirtOutline, shuffle,
+      shuffleOutline, trendingUp, volumeHighOutline, walkOutline,
     });
     this.initializeApp();
   }

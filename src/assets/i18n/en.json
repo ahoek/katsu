@@ -58,7 +58,12 @@
     }
   },
   "home": {
-    "start": "Start reviews!"
+    "start": "Start reviews!",
+    "summary": {
+      "questions": "questions",
+      "form": "form",
+      "forms": "forms"
+    }
   },
   "review": {
     "stop": "Stop",
@@ -68,5 +73,8 @@
     "title": "Summary",
     "close": "Done",
     "text": "You answered {{correct}} out of {{total}} correctly"
+  },
+  "preferences": {
+    "title": "Options"
   }
 }

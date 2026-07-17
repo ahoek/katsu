@@ -44,7 +44,7 @@ jobs:
       - name: Add SPA fallback and route pages
         run: |
           cp dist/browser/index.html dist/browser/404.html
-          for route in home information review summary; do
+          for route in home information preferences review summary; do
             mkdir -p "dist/browser/$route"
             cp dist/browser/index.html "dist/browser/$route/index.html"
           done

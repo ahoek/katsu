@@ -7,6 +7,9 @@
       <ion-button routerLink="/information" routerDirection="forward">
         {{ 'setting.info'|translate }}
       </ion-button>
+      <ion-button routerLink="/preferences" routerDirection="forward" [attr.aria-label]="'preferences.title'|translate">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -141,6 +144,21 @@
               {{'setting.part-of-speech.na-adjective'|translate}}
             </ion-checkbox>
           </ion-item>
+          <ion-item>
+            <ion-icon name="trending-up" slot="start"></ion-icon>
+            <ion-select
+              [(ngModel)]="settings.jlptLevel"
+              [label]="'setting.group-title.jlpt-level'|translate"
+              interface="action-sheet"
+              justify="space-between"
+            >
+              <ion-select-option value="n5">N5</ion-select-option>
+              <ion-select-option value="n4">N4</ion-select-option>
+              <ion-select-option value="n3">N3</ion-select-option>
+              <ion-select-option value="n2">N2</ion-select-option>
+              <ion-select-option value="n1">N1</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-list>
       </ion-col>
       <ion-col>
@@ -207,112 +225,12 @@
           </ion-item>
         </ion-list>
       </ion-col>
-      <ion-col>
-        <ion-list>
-          <ion-list-header>
-            {{'setting.group-title.special-options'|translate}}
-          </ion-list-header>
-          <ion-item>
-            <ion-icon name="trending-up" slot="start"></ion-icon>
-            <ion-select
-              [(ngModel)]="settings.jlptLevel"
-              [label]="'setting.group-title.jlpt-level'|translate"
-              interface="action-sheet"
-              justify="space-between"
-            >
-              <ion-select-option value="n5">N5</ion-select-option>
-              <ion-select-option value="n4">N4</ion-select-option>
-              <ion-select-option value="n3">N3</ion-select-option>
-              <ion-select-option value="n2">N2</ion-select-option>
-              <ion-select-option value="n1">N1</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <span name="no-suru" slot="start">する</span>
-            <ion-checkbox
-              [(ngModel)]="settings.leaveOutSuru"
-              [disabled]="settings.verb === false"
-              justify="space-between"
-            >
-              {{'setting.special.no-suru'|translate}}
-            </ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-icon name="shuffle-outline" slot="start"></ion-icon>
-            <ion-checkbox [(ngModel)]="settings.reverse" justify="space-between">
-              <ion-label>
-                {{'setting.special.reverse'|translate}}
-                <ion-note>{{'setting.special.reverse-note'|translate}}</ion-note>
-              </ion-label>
-            </ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <span slot="start">#</span>
-            <ion-select
-              [(ngModel)]="settings.amount"
-              [selectedText]="settings.amount"
-              [label]="'setting.special.amount'|translate"
-              interface="action-sheet"
-              justify="space-between"
-            >
-              <ion-select-option value="10">10</ion-select-option>
-              <ion-select-option value="20">20</ion-select-option>
-              <ion-select-option value="30">30</ion-select-option>
-              <ion-select-option value="40">40</ion-select-option>
-              <ion-select-option value="50">50</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-icon name="language-outline" slot="start"></ion-icon>
-            <ion-select
-              [ngModel]="settings.language"
-              (ngModelChange)="setLanguage($event)"
-              [label]="'setting.special.language'|translate"
-              interface="action-sheet"
-              justify="space-between"
-            >
-              <ion-select-option value="en">English</ion-select-option>
-              <ion-select-option value="nl">Nederlands</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-icon name="volume-high-outline" slot="start"></ion-icon>
-            <ion-select
-              [ngModel]="settings.voice"
-              (ngModelChange)="setVoice($event)"
-              [label]="'setting.special.voice'|translate"
-              interface="action-sheet"
-              justify="space-between"
-            >
-              <ion-select-option value="">
-                {{'setting.special.none'|translate}}
-              </ion-select-option>
-              @for (voice of speech.getVoices(); track voice.name) {
-                <ion-select-option [value]="voice.name">
-                  {{voice.name}}
-                </ion-select-option>
-              }
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-icon name="barcode-outline" slot="start"></ion-icon>
-            <ion-checkbox [(ngModel)]="settings.showMeaning" justify="space-between">
-              {{'setting.special.show-meaning'|translate}}
-            </ion-checkbox>
-          </ion-item>
-          <ion-item>
-            <ion-icon name="code-working-outline" slot="start"></ion-icon>
-            <ion-checkbox [(ngModel)]="settings.noFurigana" justify="space-between">
-              {{'setting.special.no-furigana'|translate}}
-            </ion-checkbox>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
+          </ion-row>
   </ion-grid>
 </ion-content>
 
 <ion-footer>
+  <p class="session-summary">{{ summary }}</p>
   <ion-button
     (click)="startReview()"
     expand="full"

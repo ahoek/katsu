@@ -68,6 +68,21 @@ export class HomePageComponent implements OnInit {
   settings = inject(SettingsService);
 
 
+  /**
+   * Session summary shown above the start button,
+   * e.g. "10 questions · N3 · 2 forms"
+   */
+  get summary(): string {
+    const s = this.settings;
+    const formCount = [
+      s.normal, s.teForm, s.volitional, s.taiForm, s.tariForm, s.potential,
+      s.imperative, s.conditional, s.passive, s.causative, s.causativePassive,
+    ].filter(Boolean).length;
+    const questions = this.translate.instant('home.summary.questions');
+    const forms = this.translate.instant(formCount === 1 ? 'home.summary.form' : 'home.summary.forms');
+    return `${s.amount} ${questions} · ${s.jlptLevel.toUpperCase()} · ${formCount} ${forms}`;
+  }
+
   async ngOnInit() {
     // Default settings
     await this.settings.userSettings();
@@ -92,10 +107,5 @@ export class HomePageComponent implements OnInit {
   setLanguage(language: string) {
     this.settings.language = language;
     this.translate.use(this.settings.language);
-  }
-
-  setVoice(name: string) {
-    this.settings.voice = name;
-    this.speech.setVoiceByName(name);
   }
 }
