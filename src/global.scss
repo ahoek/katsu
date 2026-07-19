@@ -34,6 +34,13 @@
   font-weight: normal;
 }
 
+@supports (-moz-appearance:none) {
+  [lang="ja"],
+  [lang="ja"] * {
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+}
+
 @keyframes spin {
   100% {
     transform: rotate(360deg);
