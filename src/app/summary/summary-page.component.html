@@ -29,7 +29,10 @@
           } @else {
             <p class="given-answer given-answer--skipped">{{'summary.skipped'|translate}}</p>
           }
-          <app-answers [question]="item.question"></app-answers>
+          <!-- The correct answer and its explanation, when the user got it wrong -->
+          @if (item.question.correct !== true) {
+            <app-answers [question]="item.question"></app-answers>
+          }
         </ion-label>
 
         @if (item.question.correct === true) {

@@ -1,21 +1,61 @@
 :host {
   display: block;
-  overflow: auto;
-  white-space: nowrap;
-  margin: 7px 10px 5px;
+  margin: 4px 16px 12px;
 }
 
-.answer {
-  padding: 10px 5px 0 5px;
-  margin-right: 5px;
-  border: .55px solid #ccc;
-  border-radius: 5px;
-  display: inline-block;
+.correct-answer {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--ion-border-color, #ddd);
+  background: var(--ion-background-color-step-50, #fff);
+}
+
+.correct-answer__values {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 18px;
+}
+
+.correct-answer__value {
   font-size: 1.8rem;
+
+  // Alternative accepted answers are less prominent
+  &:not(:first-child) {
+    font-size: 1.2rem;
+    color: var(--ion-color-medium);
+  }
 }
 
-ruby {
-  rt {
-    font-size: .6em;
+.correct-answer__steps {
+  margin: 10px 0 2px;
+  padding-left: 1.3em;
+  font-size: 1.05rem;
+  color: var(--ion-color-medium);
+
+  li {
+    margin: 6px 0;
+    line-height: 1.7;
+
+    &::marker {
+      color: var(--ion-color-primary);
+    }
   }
+}
+
+ruby rt {
+  font-size: .6em;
+}
+
+.step-labels {
+  color: var(--ion-color-medium);
+}
+
+.step-chain {
+  white-space: nowrap;
+}
+
+.step-arrow {
+  margin: 0 2px;
+  color: var(--ion-color-primary);
 }

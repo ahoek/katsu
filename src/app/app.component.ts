@@ -9,33 +9,21 @@ import {
   arrowBack,
   arrowForward,
   barcodeOutline,
-  bonfireOutline,
   briefcaseOutline,
-  chatboxEllipsesOutline,
   checkmarkCircle,
   closeCircle,
-  codeDownloadOutline,
   codeWorkingOutline,
-  flagOutline,
-  hammerOutline,
-  happyOutline,
-  heartOutline,
   helpCircleOutline,
   languageOutline,
-  logInOutline,
   logoPaypal,
-  megaphoneOutline,
   moonOutline,
+  optionsOutline,
   playBackOutline,
   playForwardOutline,
-  sadOutline,
   settingsOutline,
   shirtOutline,
-  shuffle,
   shuffleOutline,
-  trendingUp,
   volumeHighOutline,
-  walkOutline,
 } from 'ionicons/icons';
 
 import en from '../assets/i18n/en.json';
@@ -64,12 +52,11 @@ export class AppComponent {
   constructor() {
     this.updates.start();
     addIcons({
-      alertCircle, arrowBack, arrowForward, barcodeOutline, bonfireOutline, briefcaseOutline,
-      chatboxEllipsesOutline, checkmarkCircle, closeCircle, codeDownloadOutline,
-      codeWorkingOutline, flagOutline, hammerOutline, happyOutline, heartOutline,
-      helpCircleOutline, languageOutline, logInOutline, logoPaypal, megaphoneOutline, moonOutline, playBackOutline,
-      playForwardOutline, sadOutline, settingsOutline, shirtOutline, shuffle,
-      shuffleOutline, trendingUp, volumeHighOutline, walkOutline,
+      alertCircle, arrowBack, arrowForward, barcodeOutline, briefcaseOutline,
+      checkmarkCircle, closeCircle, codeWorkingOutline, helpCircleOutline,
+      languageOutline, logoPaypal, moonOutline, optionsOutline, playBackOutline,
+      playForwardOutline, settingsOutline, shirtOutline, shuffleOutline,
+      volumeHighOutline,
     });
     this.initializeApp();
   }

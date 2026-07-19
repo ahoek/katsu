@@ -87,5 +87,77 @@
   },
   "preferences": {
     "title": "Options"
+  },
+  "explanation": {
+    "group": {
+      "1": "is a godan verb",
+      "2": "is an ichidan verb",
+      "3": "is an irregular verb",
+      "i-adjective": "is an i-adjective",
+      "na-adjective": "is a na-adjective"
+    },
+    "dictionary": "The informal positive nonpast is the dictionary form itself.",
+    "reverse": "Answer with the dictionary form.",
+    "past-plain": "The informal past is the te-form with the last vowel changed to an a-sound (て → た, で → だ).",
+    "imperative-negative": "Prohibitive: dictionary form + な.",
+    "conditional-negative": "Negative conditional: negative form with ない → なければ.",
+    "te-form": {
+      "1": "The te-form of a godan verb depends on the last syllable: う・つ・る → って, く → いて, ぐ → いで, ぶ・む・ぬ → んで, す → して.",
+      "2": "Te-form: replace る with て.",
+      "3": "Irregular: する → して, くる → きて.",
+      "i-adjective": "Te-form: replace い with くて.",
+      "na-adjective": "Te-form: add で."
+    },
+    "tai-form": {
+      "all": "Tai-form: masu-stem + たい, which then conjugates like an i-adjective."
+    },
+    "tari-form": {
+      "all": "Tari-form: informal past + り (…たり).",
+      "i-adjective": "Tari-form: replace い with かったり.",
+      "na-adjective": "Tari-form: add だったり."
+    },
+    "volitional": {
+      "1": "Volitional: change the final u-sound to the o-row and add う (う → おう).",
+      "2": "Volitional: replace る with よう.",
+      "3": "Irregular: する → しよう, くる → こよう."
+    },
+    "potential": {
+      "1": "Potential: change the final u-sound to the e-row and add る (う → える).",
+      "2": "Potential: replace る with られる.",
+      "3": "Irregular: する → できる, くる → こられる."
+    },
+    "imperative": {
+      "1": "Imperative: change the final u-sound to the e-row (う → え).",
+      "2": "Imperative: replace る with ろ.",
+      "3": "Irregular: する → しろ, くる → こい."
+    },
+    "conditional": {
+      "all": "Conditional: change the final u-sound to the e-row and add ば (…れば).",
+      "i-adjective": "Conditional: replace い with ければ.",
+      "na-adjective": "Conditional: add なら."
+    },
+    "passive": {
+      "1": "Passive: negative stem + れる.",
+      "2": "Passive: replace る with られる.",
+      "3": "Irregular: する → される, くる → こられる."
+    },
+    "causative": {
+      "1": "Causative: negative stem + せる.",
+      "2": "Causative: replace る with させる.",
+      "3": "Irregular: する → させる, くる → こさせる."
+    },
+    "caus-pass": {
+      "1": "Causative-passive: negative stem + せられる.",
+      "2": "Causative-passive: replace る with させられる.",
+      "3": "Irregular: する → させられる, くる → こさせられる."
+    },
+    "label": {
+      "masu-stem": "Masu-stem",
+      "nai-stem": "Negative stem"
+    },
+    "polite-endings": "Formal endings: ます, ません (negative), ました (past), ませんでした (negative past).",
+    "nai-endings": "Negative: stem + ない; negative past: なかった.",
+    "i-adjective-normal": "I-adjective endings: い → くない (negative), かった (past), くなかった (negative past); formal adds です.",
+    "na-adjective-normal": "Na-adjective: the copula is conjugated: だ, ではない, だった, ではなかった; formal です, ではありません, でした, ではありませんでした."
   }
 }

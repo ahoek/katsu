@@ -1,0 +1,111 @@
+<div class="settings-groups">
+  <section class="settings-group settings-group--wide" role="group" [attr.aria-label]="'setting.group-title.form'|translate">
+    <h2 class="settings-group__title">{{'setting.group-title.form'|translate}}</h2>
+    <div class="chips">
+      @for (chip of forms; track chip.key) {
+        <button
+          type="button"
+          class="chip"
+          [class.chip--selected]="isOn(chip.key)"
+          [attr.aria-pressed]="isOn(chip.key)"
+          [disabled]="isDisabled(chip)"
+          [title]="chip.note ? (chip.note|translate) : null"
+          (click)="toggle(chip.key)"
+        >
+          <span class="chip__glyph" lang="ja" aria-hidden="true">{{chip.glyph}}</span>
+          {{chip.label|translate}}
+        </button>
+      }
+    </div>
+  </section>
+
+  <section class="settings-group" role="group" [attr.aria-label]="'setting.group-title.part-of-speech'|translate">
+    <h2 class="settings-group__title">{{'setting.group-title.part-of-speech'|translate}}</h2>
+    <div class="chips">
+      @for (chip of wordTypes; track chip.key) {
+        <button
+          type="button"
+          class="chip"
+          [class.chip--selected]="isOn(chip.key)"
+          [attr.aria-pressed]="isOn(chip.key)"
+          (click)="toggle(chip.key)"
+        >
+          <span class="chip__glyph" lang="ja" aria-hidden="true">{{chip.glyph}}</span>
+          {{chip.label|translate}}
+        </button>
+      }
+    </div>
+  </section>
+
+  <section class="settings-group" role="group" [attr.aria-label]="'setting.group-title.speech-level'|translate">
+    <h2 class="settings-group__title">{{'setting.group-title.speech-level'|translate}}</h2>
+    <div class="chips">
+      @for (chip of speechLevels; track chip.key) {
+        <button
+          type="button"
+          class="chip"
+          [class.chip--selected]="isOn(chip.key)"
+          [attr.aria-pressed]="isOn(chip.key)"
+          (click)="toggle(chip.key)"
+        >
+          <ion-icon class="chip__icon" [name]="chip.icon" aria-hidden="true"></ion-icon>
+          {{chip.label|translate}}
+        </button>
+      }
+    </div>
+  </section>
+
+  <section class="settings-group" role="group" [attr.aria-label]="'setting.group-title.tense'|translate">
+    <h2 class="settings-group__title">{{'setting.group-title.tense'|translate}}</h2>
+    <div class="chips">
+      @for (chip of tenses; track chip.key) {
+        <button
+          type="button"
+          class="chip"
+          [class.chip--selected]="isOn(chip.key)"
+          [attr.aria-pressed]="isOn(chip.key)"
+          [title]="chip.note ? (chip.note|translate) : null"
+          (click)="toggle(chip.key)"
+        >
+          <ion-icon class="chip__icon" [name]="chip.icon" aria-hidden="true"></ion-icon>
+          {{chip.label|translate}}
+        </button>
+      }
+    </div>
+  </section>
+
+  <section class="settings-group" role="group" [attr.aria-label]="'setting.group-title.positive/negative'|translate">
+    <h2 class="settings-group__title">{{'setting.group-title.positive/negative'|translate}}</h2>
+    <div class="chips">
+      @for (chip of polarities; track chip.key) {
+        <button
+          type="button"
+          class="chip"
+          [class.chip--selected]="isOn(chip.key)"
+          [attr.aria-pressed]="isOn(chip.key)"
+          (click)="toggle(chip.key)"
+        >
+          <span class="chip__glyph" lang="ja" aria-hidden="true">{{chip.glyph}}</span>
+          {{chip.label|translate}}
+        </button>
+      }
+    </div>
+  </section>
+
+  <section class="settings-group" role="group" [attr.aria-label]="'setting.group-title.jlpt-level'|translate">
+    <h2 class="settings-group__title">{{'setting.group-title.jlpt-level'|translate}}</h2>
+    <div class="chips">
+      @for (level of levels; track level) {
+        <button
+          type="button"
+          class="chip chip--level"
+          [class.chip--selected]="settings.jlptLevel === level"
+          [attr.aria-pressed]="settings.jlptLevel === level"
+          (click)="setLevel(level)"
+        >
+          {{level.toUpperCase()}}
+        </button>
+      }
+    </div>
+  </section>
+</div>

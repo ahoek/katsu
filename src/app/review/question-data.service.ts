@@ -25,7 +25,6 @@ export class QuestionDataService {
   // and the pristine copy used to refill it for an endless session.
   private pool: Dictionary = {};
   private pristine: Dictionary = {};
-  private options: string[] = [];
 
   get currentQuestion(): Question {
     return this.questions()[this.index()];
@@ -39,7 +38,6 @@ export class QuestionDataService {
     await this.settings.userSettings();
 
     const url = 'assets/data/questions/words.json';
-    this.options = this.settings.getQuestionTypeOptions();
     this.pristine = await firstValueFrom(this.http.get<Dictionary>(url));
     this.refillPool();
 
@@ -83,13 +81,16 @@ export class QuestionDataService {
   }
 
   private generateQuestion(): Question | undefined {
-    if (this.options.length === 0) {
+    // Read the settings per question, so changes made during the session
+    // apply to the next generated question.
+    const options = this.settings.getQuestionTypeOptions();
+    if (options.length === 0) {
       return undefined;
     }
     // Most attempts fail the JLPT-level filter, so allow generous retries;
     // when a word pool is exhausted, refill it and keep going.
     for (let attempt = 0; attempt < 500; attempt++) {
-      const questionType: string = this.getRandomItem(this.options, false);
+      const questionType: string = this.getRandomItem(options, false);
       try {
         const question = this.getQuestion(this.pool, questionType);
         if (question) {

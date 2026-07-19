@@ -87,5 +87,77 @@
   },
   "preferences": {
     "title": "Opties"
+  },
+  "explanation": {
+    "group": {
+      "1": "is een godan-werkwoord",
+      "2": "is een ichidan-werkwoord",
+      "3": "is een onregelmatig werkwoord",
+      "i-adjective": "is een i-adjectief",
+      "na-adjective": "is een na-adjectief"
+    },
+    "dictionary": "De colloquiale bevestigende tegenwoordige tijd is de woordenboekvorm zelf.",
+    "reverse": "Antwoord met de woordenboekvorm.",
+    "past-plain": "De colloquiale verleden tijd is de て-vorm met de laatste klinker als a-klank (て → た, で → だ).",
+    "imperative-negative": "Verbiedende wijs: woordenboekvorm + な.",
+    "conditional-negative": "Ontkennende conditionalis: ontkennende vorm met ない → なければ.",
+    "te-form": {
+      "1": "De て-vorm van een godan-werkwoord hangt af van de laatste lettergreep: う・つ・る → って, く → いて, ぐ → いで, ぶ・む・ぬ → んで, す → して.",
+      "2": "Te-vorm: vervang る door て.",
+      "3": "Onregelmatig: する → して, くる → きて.",
+      "i-adjective": "Te-vorm: vervang い door くて.",
+      "na-adjective": "Te-vorm: voeg で toe."
+    },
+    "tai-form": {
+      "all": "Tai-vorm: masu-stam + たい, daarna vervoegd als een i-adjectief."
+    },
+    "tari-form": {
+      "all": "Tari-vorm: colloquiale verleden tijd + り (…たり).",
+      "i-adjective": "Tari-vorm: vervang い door かったり.",
+      "na-adjective": "Tari-vorm: voeg だったり toe."
+    },
+    "volitional": {
+      "1": "Aansporende wijs: verander de laatste u-klank in de o-rij en voeg う toe (う → おう).",
+      "2": "Aansporende wijs: vervang る door よう.",
+      "3": "Onregelmatig: する → しよう, くる → こよう."
+    },
+    "potential": {
+      "1": "Potentialis: verander de laatste u-klank in de e-rij en voeg る toe (う → える).",
+      "2": "Potentialis: vervang る door られる.",
+      "3": "Onregelmatig: する → できる, くる → こられる."
+    },
+    "imperative": {
+      "1": "Gebiedende wijs: verander de laatste u-klank in de e-rij (う → え).",
+      "2": "Gebiedende wijs: vervang る door ろ.",
+      "3": "Onregelmatig: する → しろ, くる → こい."
+    },
+    "conditional": {
+      "all": "Conditionalis: verander de laatste u-klank in de e-rij en voeg ば toe (…れば).",
+      "i-adjective": "Conditionalis: vervang い door ければ.",
+      "na-adjective": "Conditionalis: voeg なら toe."
+    },
+    "passive": {
+      "1": "Passivum: ontkennende stam + れる.",
+      "2": "Passivum: vervang る door られる.",
+      "3": "Onregelmatig: する → される, くる → こられる."
+    },
+    "causative": {
+      "1": "Causativum: ontkennende stam + せる.",
+      "2": "Causativum: vervang る door させる.",
+      "3": "Onregelmatig: する → させる, くる → こさせる."
+    },
+    "caus-pass": {
+      "1": "Causativum-passivum: ontkennende stam + せられる.",
+      "2": "Causativum-passivum: vervang る door させられる.",
+      "3": "Onregelmatig: する → させられる, くる → こさせられる."
+    },
+    "label": {
+      "masu-stem": "Masu-stam",
+      "nai-stem": "Ontkennende stam"
+    },
+    "polite-endings": "Neutrale uitgangen: ます, ません (ontkennend), ました (verleden tijd), ませんでした (ontkennend verleden).",
+    "nai-endings": "Ontkennend: stam + ない; ontkennend verleden: なかった.",
+    "i-adjective-normal": "Uitgangen van een i-adjectief: い → くない (ontkennend), かった (verleden tijd), くなかった (ontkennend verleden); neutraal krijgt です erbij.",
+    "na-adjective-normal": "Na-adjectief: het koppelwoord wordt vervoegd: だ, ではない, だった, ではなかった; neutraal です, ではありません, でした, ではありませんでした."
   }
 }

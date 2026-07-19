@@ -1,6 +1,33 @@
-<!-- Correct question answers -->
-@for (answer of question.answers; track $index) {
-  <div class="answer">
-    <app-furigana [input]="answer"></app-furigana>
+<div class="correct-answer">
+  <div class="correct-answer__values" lang="ja">
+    @for (answer of question.answers; track $index) {
+      <div class="correct-answer__value">
+        <app-furigana [input]="answer"></app-furigana>
+      </div>
+    }
   </div>
-}
+
+  @if (showExplanation && steps.length > 0) {
+    <ol class="correct-answer__steps">
+      @for (step of steps; track $index) {
+        <li>
+          @if (step.from && step.to) {
+            <span class="step-labels">
+              @for (labelKey of step.labelKeys; track labelKey) {@if (!$first) { · }{{ labelKey | translate }}}:
+            </span>
+            <span class="step-chain" lang="ja">
+              <app-furigana [input]="step.from"></app-furigana>
+              <span class="step-arrow" aria-hidden="true">→</span>
+              <app-furigana [input]="step.to"></app-furigana>
+            </span>
+          } @else {
+            @if (step.word) {
+              <app-furigana lang="ja" [input]="step.word"></app-furigana>
+            }
+            {{ step.key | translate:step.params }}
+          }
+        </li>
+      }
+    </ol>
+  }
+</div>
