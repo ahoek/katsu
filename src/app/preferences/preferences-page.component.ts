@@ -21,6 +21,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SettingsService } from '../shared/settings.service';
 import { SpeechService } from '../shared/speech.service';
 import { ThemePreference, ThemeService } from '../shared/theme.service';
+import { CreditComponent } from '../components/credit/credit.component';
 
 @Component({
   selector: 'app-preferences',
@@ -43,6 +44,7 @@ import { ThemePreference, ThemeService } from '../shared/theme.service';
     IonTitle,
     IonToolbar,
     TranslatePipe,
+    CreditComponent,
   ],
 })
 export class PreferencesPageComponent {

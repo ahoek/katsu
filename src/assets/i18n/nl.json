@@ -166,7 +166,8 @@
     "preferences": "Opties - Katsu",
     "information": "Informatie - Katsu",
     "review": "Oefenen - Katsu",
-    "summary": "Samenvatting - Katsu"
+    "summary": "Samenvatting - Katsu",
+    "about": "Over de maker - Katsu"
   },
   "information": {
     "title": "Zo werkt Katsu",
@@ -180,15 +181,31 @@
     "guide": {
       "title": "Vervoegingsgids",
       "lead": "Alle vormen die Katsu vraagt, met de regel en een voorbeeld met het werkwoord 書く (schrijven)."
-    },
-    "about": {
-      "title": "Over Katsu",
-      "text": "Katsu is gemaakt door Arthur Hoek. Vragen, problemen of suggesties zijn welkom:",
-      "tip": "Vind je Katsu leuk? Je kunt een fooi achterlaten:"
     }
   },
   "description": {
     "home": "Katsu is een gratis oefenapp voor de vervoeging van Japanse werkwoorden en adjectieven. Oefen de te-vorm, potentialis, passivum, causativum en meer, van JLPT N5 tot N1.",
-    "information": "Zo werkt Japanse vervoeging: regels en voorbeelden voor de te-vorm, potentialis, passivum, causativum, conditionalis en meer — de gids achter de oefenapp Katsu."
+    "information": "Zo werkt Japanse vervoeging: regels en voorbeelden voor de te-vorm, potentialis, passivum, causativum, conditionalis en meer. De gids achter de oefenapp Katsu.",
+    "about": "Katsu is gemaakt door Arthur Hoek, ontwikkelaar uit Nederland. De app is gratis en open source (MIT). Contact, GitHub en fooi."
+  },
+  "about": {
+    "title": "Over de maker",
+    "lead": "Hoi! Ik ben Arthur Hoek, ontwikkelaar uit Nederland. Ik heb Katsu gemaakt om het stampen van Japanse vervoegingen minder saai te maken (en omdat ik het zelf nodig had).",
+    "contact": {
+      "title": "Zeg hallo",
+      "text": "Vragen, ideeën, foutmeldingen of gewoon een hallo, mail is altijd welkom:"
+    },
+    "open-source": {
+      "title": "Open source",
+      "text": "Katsu is open source onder de MIT-licentie. Bekijk de code, meld een probleem of draag bij:",
+      "more": "Meer van mijn projecten:"
+    },
+    "tip": {
+      "title": "Fooi geven",
+      "text": "Katsu is gratis en zonder advertenties. Helpt het je? Dan kun je een kopje koffie doneren:"
+    }
+  },
+  "credit": {
+    "by": "gemaakt door Arthur Hoek"
   }
 }

@@ -166,7 +166,8 @@
     "preferences": "Options - Katsu",
     "information": "Information - Katsu",
     "review": "Practice - Katsu",
-    "summary": "Summary - Katsu"
+    "summary": "Summary - Katsu",
+    "about": "About the maker - Katsu"
   },
   "information": {
     "title": "How Katsu works",
@@ -180,15 +181,31 @@
     "guide": {
       "title": "Conjugation guide",
       "lead": "Every form Katsu asks, with its rule and an example based on the verb 書く (to write)."
-    },
-    "about": {
-      "title": "About",
-      "text": "Katsu was created by Arthur Hoek. Questions, issues or suggestions are welcome:",
-      "tip": "Enjoying Katsu? You can leave a tip:"
     }
   },
   "description": {
     "home": "Katsu is a free practice app for Japanese verb and adjective conjugation. Drill the te-form, potential, passive, causative and more, from JLPT N5 to N1.",
-    "information": "How Japanese conjugation works: rules and examples for the te-form, potential, passive, causative, conditional and more — the guide behind the Katsu practice app."
+    "information": "How Japanese conjugation works: rules and examples for the te-form, potential, passive, causative, conditional and more. The guide behind the Katsu practice app.",
+    "about": "Katsu is made by Arthur Hoek, a Dutch developer. The app is free and open source (MIT). Contact, GitHub and tip links."
+  },
+  "about": {
+    "title": "About the maker",
+    "lead": "Hi! I'm Arthur Hoek, a developer from the Netherlands. I built Katsu to make drilling Japanese conjugation less of a chore (and because I needed it myself).",
+    "contact": {
+      "title": "Say hello",
+      "text": "Questions, ideas, bug reports or just a hello, mail is always welcome:"
+    },
+    "open-source": {
+      "title": "Open source",
+      "text": "Katsu is open source under the MIT license. Browse the code, report an issue or contribute:",
+      "more": "More of my projects:"
+    },
+    "tip": {
+      "title": "Leave a tip",
+      "text": "Katsu is free and has no ads. If it helps you, you can buy me a coffee:"
+    }
+  },
+  "credit": {
+    "by": "made by Arthur Hoek"
   }
 }

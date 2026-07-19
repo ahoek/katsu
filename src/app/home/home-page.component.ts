@@ -18,6 +18,7 @@ import { SettingsService } from '../shared/settings.service';
 import { SpeechService } from '../shared/speech.service';
 import { AnalyticsService } from '../shared/analytics.service';
 import { ReviewSettingsComponent } from '../components/review-settings/review-settings.component';
+import { CreditComponent } from '../components/credit/credit.component';
 
 @Component({
   selector: 'app-home',
@@ -36,6 +37,7 @@ import { ReviewSettingsComponent } from '../components/review-settings/review-se
     IonToolbar,
     TranslatePipe,
     ReviewSettingsComponent,
+    CreditComponent,
   ],
 })
 export class HomePageComponent implements OnInit {

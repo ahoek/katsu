@@ -19,6 +19,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { QuestionDataService } from '../review/question-data.service';
 import { Question } from '../models/question';
 import { AnswersComponent } from '../components/answers/answers.component';
+import { CreditComponent } from '../components/credit/credit.component';
 
 @Component({
   selector: 'app-summary',
@@ -39,6 +40,7 @@ import { AnswersComponent } from '../components/answers/answers.component';
     IonToolbar,
     TranslatePipe,
     AnswersComponent,
+    CreditComponent,
   ],
 })
 export class SummaryPageComponent {

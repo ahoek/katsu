@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import {
   IonBackButton,
-  IonButton,
   IonButtons,
   IonContent,
   IonHeader,
-  IonIcon,
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
@@ -15,6 +13,7 @@ import { Question } from '../models/question';
 import { Verb } from '../models/conjugation/verb';
 import { JishoDefinition } from '../models/jisho-interfaces';
 import { FuriganaComponent } from '../components/furigana/furigana.component';
+import { CreditComponent } from '../components/credit/credit.component';
 
 // The example verb of the conjugation guide: a godan verb, so the
 // guide shows the most interesting rules.
@@ -38,15 +37,14 @@ interface GuideCard {
   styleUrls: ['./information-page.component.scss'],
   imports: [
     IonBackButton,
-    IonButton,
     IonButtons,
     IonContent,
     IonHeader,
-    IonIcon,
     IonTitle,
     IonToolbar,
     TranslatePipe,
     FuriganaComponent,
+    CreditComponent,
   ],
 })
 export class InformationPageComponent {
