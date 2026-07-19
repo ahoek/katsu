@@ -50,6 +50,10 @@
               <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
               <app-furigana [input]="ex.to"></app-furigana>
             </p>
+            <a class="example__more" routerLink="/information">
+              {{'review.example-more'|translate}}
+              <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
+            </a>
           </div>
         }
         <ion-item class="dictionary">
@@ -127,6 +131,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <app-credit></app-credit>
 </ion-content>
 
 <!-- In-session settings; newly generated questions use the changed values -->

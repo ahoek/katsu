@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{'about.title'|translate}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="page">
+    <h1>{{'about.title'|translate}}</h1>
+    <p class="lead">{{'about.lead'|translate}}</p>
+
+    <h2>{{'about.contact.title'|translate}}</h2>
+    <p>{{'about.contact.text'|translate}}</p>
+    <p>
+      <ion-button href="mailto:katsu@arthurhoek.nl" fill="outline" color="secondary">
+        <ion-icon slot="start" name="mail-outline"></ion-icon>
+        katsu&#64;arthurhoek.nl
+      </ion-button>
+    </p>
+
+    <h2>{{'about.open-source.title'|translate}}</h2>
+    <p>{{'about.open-source.text'|translate}}</p>
+    <p>
+      <ion-button href="https://github.com/ahoek/katsu" target="_blank" rel="noopener" fill="outline" color="secondary">
+        <ion-icon slot="start" name="logo-github"></ion-icon>
+        github.com/ahoek/katsu
+      </ion-button>
+    </p>
+
+    <h2>{{'about.tip.title'|translate}}</h2>
+    <p>{{'about.tip.text'|translate}}</p>
+    <p>
+      <ion-button href="https://paypal.me/ArthurHoek" target="_blank" rel="noopener" color="secondary">
+        <ion-icon slot="start" name="logo-paypal"></ion-icon>
+        PayPal
+      </ion-button>
+    </p>
+  </div>
+</ion-content>

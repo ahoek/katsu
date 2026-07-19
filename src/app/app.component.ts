@@ -15,7 +15,9 @@ import {
   codeWorkingOutline,
   helpCircleOutline,
   languageOutline,
+  logoGithub,
   logoPaypal,
+  mailOutline,
   moonOutline,
   optionsOutline,
   playBackOutline,
@@ -54,7 +56,7 @@ export class AppComponent {
     addIcons({
       alertCircle, arrowBack, arrowForward, barcodeOutline, briefcaseOutline,
       checkmarkCircle, closeCircle, codeWorkingOutline, helpCircleOutline,
-      languageOutline, logoPaypal, moonOutline, optionsOutline, playBackOutline,
+      languageOutline, logoGithub, logoPaypal, mailOutline, moonOutline, optionsOutline, playBackOutline,
       playForwardOutline, settingsOutline, shirtOutline, shuffleOutline,
       volumeHighOutline,
     });

@@ -5,6 +5,7 @@
     </ion-title>
     <ion-buttons slot="end">
       <ion-button routerLink="/information" routerDirection="forward">
+        <ion-icon slot="start" name="help-circle-outline"></ion-icon>
         {{ 'setting.info'|translate }}
       </ion-button>
       <ion-button routerLink="/preferences" routerDirection="forward" [attr.aria-label]="'preferences.title'|translate">
@@ -17,6 +18,7 @@
 <ion-content>
   <h1 class="sr-only">Katsu: practise Japanese conjugation - 活用</h1>
   <app-review-settings></app-review-settings>
+  <app-credit></app-credit>
 </ion-content>
 
 <ion-footer>

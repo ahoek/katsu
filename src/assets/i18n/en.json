@@ -1,7 +1,7 @@
 {
   "setting": {
     "title": "Choose conjugation settings",
-    "info": "info",
+    "info": "Guide",
     "group-title": {
       "form": "Form",
       "part-of-speech": "Part of speech",
@@ -76,7 +76,8 @@
     "prompt-reverse": "Give the dictionary form:",
     "example": "Example",
     "example-explanation": "Conjugate the word like this example:",
-    "invalid": "Please answer in Japanese (hiragana, katakana or kanji)."
+    "invalid": "Please answer in Japanese (hiragana, katakana or kanji).",
+    "example-more": "More in the guide"
   },
   "summary": {
     "title": "Summary",
@@ -159,5 +160,52 @@
     "nai-endings": "Negative: stem + ない; negative past: なかった.",
     "i-adjective-normal": "I-adjective endings: い → くない (negative), かった (past), くなかった (negative past); formal adds です.",
     "na-adjective-normal": "Na-adjective: the copula is conjugated: だ, ではない, だった, ではなかった; formal です, ではありません, でした, ではありませんでした."
+  },
+  "title": {
+    "home": "Katsu: practise Japanese conjugation - 活用",
+    "preferences": "Options - Katsu",
+    "information": "Information - Katsu",
+    "review": "Practice - Katsu",
+    "summary": "Summary - Katsu",
+    "about": "About the maker - Katsu"
+  },
+  "information": {
+    "title": "How Katsu works",
+    "lead": "Katsu (活用, katsuyō: conjugation) lets you practise Japanese verb and adjective conjugation with an endless stream of questions. Free, no account, works offline.",
+    "how": {
+      "title": "Practising in three steps",
+      "step1": "Choose what to practise: forms, word types and your JLPT level. You can change them at any time, even mid-session.",
+      "step2": "Type your answer in the 答え field. Romaji is converted to hiragana as you type, so a Japanese keyboard is not needed. Hiragana, katakana and kanji are all accepted.",
+      "step3": "Press enter to check. Correct answers turn green; mistakes show the right answer with a step-by-step explanation. Press enter again for the next question."
+    },
+    "guide": {
+      "title": "Conjugation guide",
+      "lead": "Every form Katsu asks, with its rule and an example based on the verb 書く (to write)."
+    }
+  },
+  "description": {
+    "home": "Katsu is a free practice app for Japanese verb and adjective conjugation. Drill the te-form, potential, passive, causative and more, from JLPT N5 to N1.",
+    "information": "How Japanese conjugation works: rules and examples for the te-form, potential, passive, causative, conditional and more. The guide behind the Katsu practice app.",
+    "about": "Katsu is made by Arthur Hoek, a Dutch developer. The app is free and open source (MIT). Contact, GitHub and tip links."
+  },
+  "about": {
+    "title": "About the maker",
+    "lead": "Hi! I'm Arthur Hoek, a developer from the Netherlands. I built Katsu to make drilling Japanese conjugation less of a chore (and because I needed it myself).",
+    "contact": {
+      "title": "Say hello",
+      "text": "Questions, ideas, bug reports or just a hello, mail is always welcome:"
+    },
+    "open-source": {
+      "title": "Open source",
+      "text": "Katsu is open source under the MIT license. Browse the code, report an issue or contribute:",
+      "more": "More of my projects:"
+    },
+    "tip": {
+      "title": "Leave a tip",
+      "text": "Katsu is free and has no ads. If it helps you, you can buy me a coffee:"
+    }
+  },
+  "credit": {
+    "by": "made by Arthur Hoek"
   }
 }

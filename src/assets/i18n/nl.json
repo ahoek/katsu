@@ -1,7 +1,7 @@
 {
   "setting": {
     "title": "Kies instellingen",
-    "info": "info",
+    "info": "Uitleg",
     "group-title": {
       "form": "Vorm",
       "part-of-speech": "Woordsoort",
@@ -76,7 +76,8 @@
     "prompt-reverse": "Geef de woordenboekvorm:",
     "example": "Voorbeeld",
     "example-explanation": "Vervoeg het woord zoals in dit voorbeeld:",
-    "invalid": "Antwoord in het Japans (hiragana, katakana of kanji)."
+    "invalid": "Antwoord in het Japans (hiragana, katakana of kanji).",
+    "example-more": "Meer in de uitleg"
   },
   "summary": {
     "title": "Samenvatting",
@@ -159,5 +160,52 @@
     "nai-endings": "Ontkennend: stam + ない; ontkennend verleden: なかった.",
     "i-adjective-normal": "Uitgangen van een i-adjectief: い → くない (ontkennend), かった (verleden tijd), くなかった (ontkennend verleden); neutraal krijgt です erbij.",
     "na-adjective-normal": "Na-adjectief: het koppelwoord wordt vervoegd: だ, ではない, だった, ではなかった; neutraal です, ではありません, でした, ではありませんでした."
+  },
+  "title": {
+    "home": "Katsu: oefen Japanse vervoeging - 活用",
+    "preferences": "Opties - Katsu",
+    "information": "Informatie - Katsu",
+    "review": "Oefenen - Katsu",
+    "summary": "Samenvatting - Katsu",
+    "about": "Over de maker - Katsu"
+  },
+  "information": {
+    "title": "Zo werkt Katsu",
+    "lead": "Met Katsu (活用, katsuyō: vervoeging) oefen je de vervoeging van Japanse werkwoorden en adjectieven met een eindeloze stroom vragen. Gratis, zonder account, werkt offline.",
+    "how": {
+      "title": "Oefenen in drie stappen",
+      "step1": "Kies wat je wilt oefenen: vormen, woordsoorten en je JLPT-niveau. Je kunt dit altijd aanpassen, ook tijdens het oefenen.",
+      "step2": "Typ je antwoord in het 答え-veld. Romaji wordt tijdens het typen omgezet naar hiragana, dus een Japans toetsenbord is niet nodig. Hiragana, katakana en kanji zijn allemaal goed.",
+      "step3": "Druk op enter om te controleren. Goede antwoorden kleuren groen; bij een fout zie je het juiste antwoord met een stap-voor-stap uitleg. Druk nog een keer op enter voor de volgende vraag."
+    },
+    "guide": {
+      "title": "Vervoegingsgids",
+      "lead": "Alle vormen die Katsu vraagt, met de regel en een voorbeeld met het werkwoord 書く (schrijven)."
+    }
+  },
+  "description": {
+    "home": "Katsu is een gratis oefenapp voor de vervoeging van Japanse werkwoorden en adjectieven. Oefen de te-vorm, potentialis, passivum, causativum en meer, van JLPT N5 tot N1.",
+    "information": "Zo werkt Japanse vervoeging: regels en voorbeelden voor de te-vorm, potentialis, passivum, causativum, conditionalis en meer. De gids achter de oefenapp Katsu.",
+    "about": "Katsu is gemaakt door Arthur Hoek, ontwikkelaar uit Nederland. De app is gratis en open source (MIT). Contact, GitHub en fooi."
+  },
+  "about": {
+    "title": "Over de maker",
+    "lead": "Hoi! Ik ben Arthur Hoek, ontwikkelaar uit Nederland. Ik heb Katsu gemaakt om het stampen van Japanse vervoegingen minder saai te maken (en omdat ik het zelf nodig had).",
+    "contact": {
+      "title": "Zeg hallo",
+      "text": "Vragen, ideeën, foutmeldingen of gewoon een hallo, mail is altijd welkom:"
+    },
+    "open-source": {
+      "title": "Open source",
+      "text": "Katsu is open source onder de MIT-licentie. Bekijk de code, meld een probleem of draag bij:",
+      "more": "Meer van mijn projecten:"
+    },
+    "tip": {
+      "title": "Fooi geven",
+      "text": "Katsu is gratis en zonder advertenties. Helpt het je? Dan kun je een kopje koffie doneren:"
+    }
+  },
+  "credit": {
+    "by": "gemaakt door Arthur Hoek"
   }
 }
