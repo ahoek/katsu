@@ -1,7 +1,7 @@
 {
   "setting": {
     "title": "Kies instellingen",
-    "info": "info",
+    "info": "Uitleg",
     "group-title": {
       "form": "Vorm",
       "part-of-speech": "Woordsoort",
@@ -76,7 +76,8 @@
     "prompt-reverse": "Geef de woordenboekvorm:",
     "example": "Voorbeeld",
     "example-explanation": "Vervoeg het woord zoals in dit voorbeeld:",
-    "invalid": "Antwoord in het Japans (hiragana, katakana of kanji)."
+    "invalid": "Antwoord in het Japans (hiragana, katakana of kanji).",
+    "example-more": "Meer in de uitleg"
   },
   "summary": {
     "title": "Samenvatting",
@@ -166,5 +167,28 @@
     "information": "Informatie - Katsu",
     "review": "Oefenen - Katsu",
     "summary": "Samenvatting - Katsu"
+  },
+  "information": {
+    "title": "Zo werkt Katsu",
+    "lead": "Met Katsu (活用, katsuyō: vervoeging) oefen je de vervoeging van Japanse werkwoorden en adjectieven met een eindeloze stroom vragen. Gratis, zonder account, werkt offline.",
+    "how": {
+      "title": "Oefenen in drie stappen",
+      "step1": "Kies wat je wilt oefenen: vormen, woordsoorten en je JLPT-niveau. Je kunt dit altijd aanpassen, ook tijdens het oefenen.",
+      "step2": "Typ je antwoord in het 答え-veld. Romaji wordt tijdens het typen omgezet naar hiragana, dus een Japans toetsenbord is niet nodig. Hiragana, katakana en kanji zijn allemaal goed.",
+      "step3": "Druk op enter om te controleren. Goede antwoorden kleuren groen; bij een fout zie je het juiste antwoord met een stap-voor-stap uitleg. Druk nog een keer op enter voor de volgende vraag."
+    },
+    "guide": {
+      "title": "Vervoegingsgids",
+      "lead": "Alle vormen die Katsu vraagt, met de regel en een voorbeeld met het werkwoord 書く (schrijven)."
+    },
+    "about": {
+      "title": "Over Katsu",
+      "text": "Katsu is gemaakt door Arthur Hoek. Vragen, problemen of suggesties zijn welkom:",
+      "tip": "Vind je Katsu leuk? Je kunt een fooi achterlaten:"
+    }
+  },
+  "description": {
+    "home": "Katsu is een gratis oefenapp voor de vervoeging van Japanse werkwoorden en adjectieven. Oefen de te-vorm, potentialis, passivum, causativum en meer, van JLPT N5 tot N1.",
+    "information": "Zo werkt Japanse vervoeging: regels en voorbeelden voor de te-vorm, potentialis, passivum, causativum, conditionalis en meer — de gids achter de oefenapp Katsu."
   }
 }

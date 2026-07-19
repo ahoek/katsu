@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import {
   IonButton,
   IonButtons,
@@ -56,6 +57,7 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
   styleUrls: ['./review-page.component.scss'],
   imports: [
     FormsModule,
+    RouterLink,
     IonButton,
     IonButtons,
     IonCol,

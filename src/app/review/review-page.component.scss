@@ -186,3 +186,17 @@
     }
   }
 }
+
+.example__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  font-size: .9rem;
+  color: var(--ion-color-primary);
+  text-decoration: none;
+
+  ion-icon {
+    font-size: 1em;
+  }
+}

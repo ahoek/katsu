@@ -5,6 +5,7 @@ export const routes: Routes = [
   {
     path: 'home',
     title: 'title.home',
+    data: { description: 'description.home' },
     loadComponent: () => import('./home/home-page.component').then(m => m.HomePageComponent),
   },
   {
@@ -15,6 +16,7 @@ export const routes: Routes = [
   {
     path: 'information',
     title: 'title.information',
+    data: { description: 'description.information' },
     loadComponent: () => import('./information/information-page.component').then(m => m.InformationPageComponent),
   },
   {
