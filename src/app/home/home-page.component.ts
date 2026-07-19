@@ -1,25 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import {
   IonButton,
   IonButtons,
-  IonCheckbox,
-  IonCol,
   IonContent,
   IonFooter,
-  IonGrid,
   IonHeader,
   IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonNote,
   IonRouterLink,
-  IonRow,
-  IonSelect,
-  IonSelectOption,
   IonTitle,
   IonToolbar,
   NavController,
@@ -29,35 +17,25 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SettingsService } from '../shared/settings.service';
 import { SpeechService } from '../shared/speech.service';
 import { AnalyticsService } from '../shared/analytics.service';
+import { ReviewSettingsComponent } from '../components/review-settings/review-settings.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home-page.component.html',
   styleUrls: ['home-page.component.scss'],
   imports: [
-    FormsModule,
     RouterLink,
     IonRouterLink,
     IonButton,
     IonButtons,
-    IonCheckbox,
-    IonCol,
     IonContent,
     IonFooter,
-    IonGrid,
     IonHeader,
     IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonListHeader,
-    IonNote,
-    IonRow,
-    IonSelect,
-    IonSelectOption,
     IonTitle,
     IonToolbar,
     TranslatePipe,
+    ReviewSettingsComponent,
   ],
 })
 export class HomePageComponent implements OnInit {
@@ -66,7 +44,6 @@ export class HomePageComponent implements OnInit {
   private translate = inject(TranslateService);
   speech = inject(SpeechService);
   settings = inject(SettingsService);
-
 
   /**
    * Session summary shown above the start button, e.g. "N3 · 2 forms"

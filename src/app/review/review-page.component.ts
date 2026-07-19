@@ -9,6 +9,7 @@ import {
   IonHeader,
   IonIcon,
   IonItem,
+  IonModal,
   IonNote,
   IonRow,
   IonTitle,
@@ -28,6 +29,7 @@ import { QuestionDataService } from './question-data.service';
 import { AnalyticsService } from '../shared/analytics.service';
 import { AnswersComponent } from '../components/answers/answers.component';
 import { FuriganaComponent } from '../components/furigana/furigana.component';
+import { ReviewSettingsComponent } from '../components/review-settings/review-settings.component';
 
 // Well-known words used to demonstrate the asked form
 const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
@@ -62,6 +64,7 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
     IonHeader,
     IonIcon,
     IonItem,
+    IonModal,
     IonNote,
     IonRow,
     IonTitle,
@@ -69,6 +72,7 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
     TranslatePipe,
     AnswersComponent,
     FuriganaComponent,
+    ReviewSettingsComponent,
   ],
 })
 export class ReviewPageComponent implements OnInit, AfterViewInit {

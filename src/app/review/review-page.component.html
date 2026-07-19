@@ -12,6 +12,9 @@
     </ion-title>
 
     <ion-buttons slot="end">
+      <ion-button id="open-session-settings" [attr.aria-label]="'setting.title'|translate">
+        <ion-icon slot="icon-only" name="options-outline"></ion-icon>
+      </ion-button>
       <ion-button (click)="nextQuestion()">
         {{'review.skip'|translate}}
         <ion-icon name="arrow-forward"></ion-icon>
@@ -122,3 +125,22 @@
     </ion-row>
   </ion-grid>
 </ion-content>
+
+<!-- In-session settings; newly generated questions use the changed values -->
+<ion-modal #settingsModal trigger="open-session-settings">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar color="secondary">
+        <ion-title>{{'setting.title'|translate}}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="settingsModal.dismiss()">
+            {{'summary.close'|translate}}
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <app-review-settings></app-review-settings>
+    </ion-content>
+  </ng-template>
+</ion-modal>
