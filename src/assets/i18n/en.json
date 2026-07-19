@@ -159,5 +159,12 @@
     "nai-endings": "Negative: stem + ない; negative past: なかった.",
     "i-adjective-normal": "I-adjective endings: い → くない (negative), かった (past), くなかった (negative past); formal adds です.",
     "na-adjective-normal": "Na-adjective: the copula is conjugated: だ, ではない, だった, ではなかった; formal です, ではありません, でした, ではありませんでした."
+  },
+  "title": {
+    "home": "Katsu: practise Japanese conjugation - 活用",
+    "preferences": "Options - Katsu",
+    "information": "Information - Katsu",
+    "review": "Practice - Katsu",
+    "summary": "Summary - Katsu"
   }
 }

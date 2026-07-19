@@ -159,5 +159,12 @@
     "nai-endings": "Ontkennend: stam + ない; ontkennend verleden: なかった.",
     "i-adjective-normal": "Uitgangen van een i-adjectief: い → くない (ontkennend), かった (verleden tijd), くなかった (ontkennend verleden); neutraal krijgt です erbij.",
     "na-adjective-normal": "Na-adjectief: het koppelwoord wordt vervoegd: だ, ではない, だった, ではなかった; neutraal です, ではありません, でした, ではありませんでした."
+  },
+  "title": {
+    "home": "Katsu: oefen Japanse vervoeging - 活用",
+    "preferences": "Opties - Katsu",
+    "information": "Informatie - Katsu",
+    "review": "Oefenen - Katsu",
+    "summary": "Samenvatting - Katsu"
   }
 }

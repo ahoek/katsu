@@ -4,27 +4,27 @@ export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: 'home',
-    title: 'Katsu: practise Japanese conjugation - 活用',
+    title: 'title.home',
     loadComponent: () => import('./home/home-page.component').then(m => m.HomePageComponent),
   },
   {
     path: 'preferences',
-    title: 'Options - Katsu',
+    title: 'title.preferences',
     loadComponent: () => import('./preferences/preferences-page.component').then(m => m.PreferencesPageComponent),
   },
   {
     path: 'information',
-    title: 'Information - Katsu',
+    title: 'title.information',
     loadComponent: () => import('./information/information-page.component').then(m => m.InformationPageComponent),
   },
   {
     path: 'review',
-    title: 'Practice - Katsu',
+    title: 'title.review',
     loadComponent: () => import('./review/review-page.component').then(m => m.ReviewPageComponent),
   },
   {
     path: 'summary',
-    title: 'Summary - Katsu',
+    title: 'title.summary',
     loadComponent: () => import('./summary/summary-page.component').then(m => m.SummaryPageComponent),
   },
 ];
