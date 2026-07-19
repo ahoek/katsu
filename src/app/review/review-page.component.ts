@@ -210,6 +210,14 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * Open the preferences on top of the running session; the back button
+   * returns to the current question.
+   */
+  openPreferences() {
+    this.navCtrl.navigateForward('/preferences');
+  }
+
+  /**
    * Check the given answer
    *
    * If correct, give good styling.

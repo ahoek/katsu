@@ -15,6 +15,9 @@
       <ion-button id="open-session-settings" [attr.aria-label]="'setting.title'|translate">
         <ion-icon slot="icon-only" name="options-outline"></ion-icon>
       </ion-button>
+      <ion-button (click)="openPreferences()" [attr.aria-label]="'preferences.title'|translate">
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
       <ion-button (click)="nextQuestion()">
         {{'review.skip'|translate}}
         <ion-icon name="arrow-forward"></ion-icon>
