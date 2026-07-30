@@ -8,6 +8,7 @@
 
 .dictionary {
   margin-top: 17px;
+  border-radius: 12px 12px 0 0;
 
   &__word {
     font-size: 2.1em;
@@ -23,13 +24,10 @@
   margin-top: 3px;
   font-size: 1.7em;
   line-height: 1.8;
+  border-radius: 0 0 12px 12px;
 
   .answer-input::placeholder {
     color: rgba(#ccc, .5);
-  }
-
-  &.item-ios.item-block .item-inner {
-    padding-right: 0;
   }
 
   [slot='end'] {
@@ -99,6 +97,9 @@
   top: -120px;
   width: 120px;
   height: 120px;
+  // The idle star parks just outside the viewBox; keep it clipped
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .star {
@@ -195,4 +196,29 @@
   ion-icon {
     font-size: 1em;
   }
+}
+
+.question-counter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--ion-background-color-step-100, rgba(0, 0, 0, .06));
+  color: var(--ion-color-medium);
+  font-size: .85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+ion-grid {
+  width: 100%;
+  max-width: 720px;
+}
+
+.skip-row {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 8px;
 }

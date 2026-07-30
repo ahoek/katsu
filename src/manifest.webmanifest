@@ -1,8 +1,8 @@
 {
   "name": "Katsu",
   "short_name": "Katsu",
-  "theme_color": "#e08e0a",
-  "background_color": "#e08e0a",
+  "theme_color": "#ebebec",
+  "background_color": "#ebebec",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",

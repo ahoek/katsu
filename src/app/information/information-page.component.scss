@@ -1,5 +1,5 @@
 .page {
-  max-width: 860px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 8px 16px 32px;
 }
@@ -89,10 +89,6 @@ h2 {
   &__example {
     margin: 0;
     font-size: 1.25rem;
-
-    ruby rt {
-      font-size: .55em;
-    }
   }
 
   &__arrow {

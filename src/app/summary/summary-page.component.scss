@@ -30,11 +30,27 @@ ion-item {
   color: var(--ion-color-danger);
 }
 
-answers ion-list.list-ios {
-  margin-bottom: 0;
+.page-title {
+  max-width: 720px;
+  margin: 16px auto 4px;
+  padding: 0 16px;
+  font-size: 1.6rem;
+}
+
+.close-summary {
+  --background: var(--ion-color-primary-shade);
+  --border-radius: 999px;
+  display: block;
+  max-width: 360px;
+  margin: 8px auto calc(10px + env(safe-area-inset-bottom));
 }
 
 ion-list {
-  max-width: 800px;
+  max-width: 720px;
   margin: 0 auto;
+  background: transparent;
+}
+
+ion-item {
+  --background: transparent;
 }

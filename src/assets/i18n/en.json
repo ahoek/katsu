@@ -70,6 +70,7 @@
   "review": {
     "stop": "Stop",
     "skip": "Skip",
+    "settings": "Settings",
     "correct": "Correct!",
     "incorrect": "Incorrect. The correct answer:",
     "prompt": "Give this form: {{terms}}",

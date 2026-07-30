@@ -2,16 +2,13 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   IonButton,
-  IonButtons,
   IonContent,
-  IonHeader,
+  IonFooter,
   IonIcon,
   IonItem,
   IonLabel,
   IonList,
   IonRouterLink,
-  IonTitle,
-  IonToolbar,
   NavController,
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -19,7 +16,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { QuestionDataService } from '../review/question-data.service';
 import { Question } from '../models/question';
 import { AnswersComponent } from '../components/answers/answers.component';
-import { CreditComponent } from '../components/credit/credit.component';
 
 @Component({
   selector: 'app-summary',
@@ -29,18 +25,14 @@ import { CreditComponent } from '../components/credit/credit.component';
     RouterLink,
     IonRouterLink,
     IonButton,
-    IonButtons,
     IonContent,
-    IonHeader,
+    IonFooter,
     IonIcon,
     IonItem,
     IonLabel,
     IonList,
-    IonTitle,
-    IonToolbar,
     TranslatePipe,
     AnswersComponent,
-    CreditComponent,
   ],
 })
 export class SummaryPageComponent {

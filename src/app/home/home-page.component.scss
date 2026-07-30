@@ -1,23 +1,39 @@
-ion-title,
-.start-review .text {
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
+.wordmark {
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  [lang='ja'] {
+    color: var(--ion-color-secondary);
+  }
+}
+
+.page-heading {
+  max-width: 720px;
+  margin: 12px auto 0;
+  padding: 0 16px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ion-color-medium);
 }
 
 app-review-settings {
-  max-width: 1024px;
+  display: block;
+  max-width: 720px;
   margin: 0 auto;
-}
-
-.start-review {
-  --background: var(--ion-color-primary-shade);
-  margin: 0;
 }
 
 .session-summary {
   margin: 0;
-  padding: 6px 16px;
+  padding: 6px 16px 4px;
   text-align: center;
   font-size: .8rem;
   color: var(--ion-color-medium);
-  background: var(--ion-background-color, #fff);
+}
+
+.start-review {
+  --background: var(--ion-color-primary-shade);
+  --border-radius: 999px;
+  display: block;
+  max-width: 360px;
+  margin: 0 auto calc(10px + env(safe-area-inset-bottom));
 }

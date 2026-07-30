@@ -1,18 +1,5 @@
-<ion-header>
-  <ion-toolbar color="secondary">
-    <ion-title>
-      {{'summary.title'|translate}}
-    </ion-title>
-
-    <ion-buttons slot="end">
-      <ion-button routerLink="/home" routerDirection="root">
-        {{'summary.close'|translate}}
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
+<ion-content class="patterned" [fullscreen]="true">
+  <h1 class="page-title">{{'summary.title'|translate}}</h1>
   <ion-list>
     <ion-item>{{ summaryText }}</ion-item>
     @for (item of items; track $index) {
@@ -50,5 +37,10 @@
       </ion-item>
     }
   </ion-list>
-  <app-credit></app-credit>
 </ion-content>
+
+<ion-footer class="app-footer">
+  <ion-button routerLink="/home" routerDirection="root" size="large" class="close-summary">
+    {{'summary.close'|translate}}
+  </ion-button>
+</ion-footer>

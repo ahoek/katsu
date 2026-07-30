@@ -10,8 +10,11 @@ import {
   IonHeader,
   IonIcon,
   IonItem,
+  IonLabel,
+  IonList,
   IonModal,
   IonNote,
+  IonPopover,
   IonRow,
   IonTitle,
   IonToolbar,
@@ -31,7 +34,6 @@ import { AnalyticsService } from '../shared/analytics.service';
 import { AnswersComponent } from '../components/answers/answers.component';
 import { FuriganaComponent } from '../components/furigana/furigana.component';
 import { ReviewSettingsComponent } from '../components/review-settings/review-settings.component';
-import { CreditComponent } from '../components/credit/credit.component';
 
 // Well-known words used to demonstrate the asked form
 const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
@@ -67,8 +69,11 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
     IonHeader,
     IonIcon,
     IonItem,
+    IonLabel,
+    IonList,
     IonModal,
     IonNote,
+    IonPopover,
     IonRow,
     IonTitle,
     IonToolbar,
@@ -76,7 +81,6 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
     AnswersComponent,
     FuriganaComponent,
     ReviewSettingsComponent,
-    CreditComponent,
   ],
 })
 export class ReviewPageComponent implements OnInit, AfterViewInit {

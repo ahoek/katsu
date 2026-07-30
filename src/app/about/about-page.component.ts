@@ -6,7 +6,6 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -22,7 +21,6 @@ import { TranslatePipe } from '@ngx-translate/core';
     IonContent,
     IonHeader,
     IonIcon,
-    IonTitle,
     IonToolbar,
     TranslatePipe,
   ],

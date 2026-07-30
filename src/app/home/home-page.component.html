@@ -1,8 +1,6 @@
-<ion-header>
-  <ion-toolbar color="secondary">
-    <ion-title>
-      {{'setting.title'|translate}}
-    </ion-title>
+<ion-header class="app-chrome">
+  <ion-toolbar>
+    <span class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu</span>
     <ion-buttons slot="end">
       <ion-button routerLink="/information" routerDirection="forward">
         <ion-icon slot="start" name="help-circle-outline"></ion-icon>
@@ -15,20 +13,20 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="patterned" [fullscreen]="true">
   <h1 class="sr-only">Katsu: practise Japanese conjugation - 活用</h1>
+  <h2 class="page-heading">{{'setting.title'|translate}}</h2>
   <app-review-settings></app-review-settings>
   <app-credit></app-credit>
 </ion-content>
 
-<ion-footer>
+<ion-footer class="app-footer">
   <p class="session-summary">{{ summary }}</p>
   <ion-button
     (click)="startReview()"
-    expand="full"
     size="large"
     class="start-review"
   >
-    <span class="text">{{'home.start'|translate}}</span>
+    {{'home.start'|translate}}
   </ion-button>
 </ion-footer>

@@ -1,32 +1,40 @@
-<ion-header>
+<ion-header class="app-chrome">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="showSummary()">
-        <ion-icon name="arrow-back"></ion-icon>
+        <ion-icon slot="start" name="close"></ion-icon>
         {{'review.stop'|translate}}
       </ion-button>
     </ion-buttons>
 
-    <ion-title>
+    <span class="question-counter">
       {{'summary.question'|translate}} {{index + 1}}
-    </ion-title>
+    </span>
 
     <ion-buttons slot="end">
-      <ion-button id="open-session-settings" [attr.aria-label]="'setting.title'|translate">
+      <ion-button id="open-review-menu" [attr.aria-label]="'review.settings'|translate">
         <ion-icon slot="icon-only" name="options-outline"></ion-icon>
-      </ion-button>
-      <ion-button (click)="openPreferences()" [attr.aria-label]="'preferences.title'|translate">
-        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
-      </ion-button>
-      <ion-button (click)="nextQuestion()">
-        {{'review.skip'|translate}}
-        <ion-icon name="arrow-forward"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [class]="classNames()" class="patterned">
+<ion-popover trigger="open-review-menu" [dismissOnSelect]="true">
+  <ng-template>
+    <ion-list lines="none">
+      <ion-item [button]="true" [detail]="false" (click)="settingsModal.present()">
+        <ion-icon slot="start" name="options-outline" aria-hidden="true"></ion-icon>
+        <ion-label>{{'setting.title'|translate}}</ion-label>
+      </ion-item>
+      <ion-item [button]="true" [detail]="false" (click)="openPreferences()">
+        <ion-icon slot="start" name="settings-outline" aria-hidden="true"></ion-icon>
+        <ion-label>{{'preferences.title'|translate}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+</ion-popover>
+
+<ion-content [class]="classNames()" class="patterned" [fullscreen]="true">
   <ion-grid fixed="true">
     <ion-row>
       <ion-col>
@@ -87,7 +95,7 @@
               [(ngModel)]="questions[index].givenAnswer"
               (ngModelChange)="onAnswerChange()"
               [ngModelOptions]="{standalone: true}"
-              class="answer-input native-input sc-ion-input-ios"
+              class="answer-input"
               type="text"
               placeholder="答え"
               autocomplete="off"
@@ -105,6 +113,14 @@
             </ion-button>
           </ion-item>
         </form>
+
+        <!-- Skip acts on the current question, so it lives with the answer -->
+        <div class="skip-row">
+          <ion-button fill="clear" size="small" color="medium" (click)="nextQuestion()">
+            {{'review.skip'|translate}}
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          </ion-button>
+        </div>
 
         <!-- Answer feedback, also announced to screen readers -->
         <div aria-live="polite">
@@ -131,14 +147,13 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <app-credit></app-credit>
 </ion-content>
 
 <!-- In-session settings; newly generated questions use the changed values -->
-<ion-modal #settingsModal trigger="open-session-settings">
+<ion-modal #settingsModal>
   <ng-template>
     <ion-header>
-      <ion-toolbar color="secondary">
+      <ion-toolbar>
         <ion-title>{{'setting.title'|translate}}</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="settingsModal.dismiss()">

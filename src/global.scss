@@ -14,6 +14,44 @@
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+// No shouting buttons in md mode
+ion-button {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+// Floating app chrome: a translucent, blurred strip over the canvas,
+// constrained to the same centred column as the content. Pages using it
+// set [fullscreen]="true" on ion-content so the canvas runs underneath.
+ion-header.app-chrome {
+  box-shadow: none;
+  background: color-mix(in srgb, var(--app-color-bg-dark) 45%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  &::after {
+    display: none;
+  }
+
+  ion-toolbar {
+    --background: transparent;
+    --border-width: 0;
+    --padding-start: max(4px, calc((100% - 720px) / 2));
+    --padding-end: max(4px, calc((100% - 720px) / 2));
+  }
+}
+
+ion-footer.app-footer {
+  box-shadow: none;
+  background: color-mix(in srgb, var(--app-color-bg-dark) 45%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  &::before {
+    display: none;
+  }
+}
+
 // Visually hidden, but available to screen readers and crawlers
 .sr-only {
   position: absolute;
@@ -68,10 +106,14 @@
   animation: pulse2 500ms linear infinite;
 }
 
+// Seigaiha (traditional wave pattern), tiled at 100x50; the colour may
+// only be in the last layer of the background shorthand.
 ion-content.patterned {
-  --background: var(--app-color-bg-dark) radial-gradient(circle at 100% 150%, var(--app-color-bg-dark) 24%, var(--app-color-bg-light) 25%, var(--app-color-bg-light) 28%, var(--app-color-bg-dark) 29%, var(--app-color-bg-dark) 36%, var(--app-color-bg-light) 36%, var(--app-color-bg-light) 40%, transparent 40%, transparent),
-    radial-gradient(circle at 0    150%, var(--app-color-bg-dark) 24%, var(--app-color-bg-light) 25%, var(--app-color-bg-light) 28%, var(--app-color-bg-dark) 29%, var(--app-color-bg-dark) 36%, var(--app-color-bg-light) 36%, var(--app-color-bg-light) 40%, transparent 40%, transparent),
-    radial-gradient(circle at 50%  100%, var(--app-color-bg-light) 10%, var(--app-color-bg-dark) 11%, var(--app-color-bg-dark) 23%, var(--app-color-bg-light) 24%, var(--app-color-bg-light) 30%, var(--app-color-bg-dark) 31%, var(--app-color-bg-dark) 43%, var(--app-color-bg-light) 44%, var(--app-color-bg-light) 50%, var(--app-color-bg-dark) 51%, var(--app-color-bg-dark) 63%, var(--app-color-bg-light) 64%, var(--app-color-bg-light) 71%, transparent 71%, transparent),
-    radial-gradient(circle at 100% 50%, var(--app-color-bg-light) 5%, var(--app-color-bg-dark) 6%, var(--app-color-bg-dark) 15%, var(--app-color-bg-light) 16%, var(--app-color-bg-light) 20%, var(--app-color-bg-dark) 21%, var(--app-color-bg-dark) 30%, var(--app-color-bg-light) 31%, var(--app-color-bg-light) 35%, var(--app-color-bg-dark) 36%, var(--app-color-bg-dark) 45%, var(--app-color-bg-light) 46%, var(--app-color-bg-light) 49%, transparent 50%, transparent),
-    radial-gradient(circle at 0    50%, var(--app-color-bg-light) 5%, var(--app-color-bg-dark) 6%, var(--app-color-bg-dark) 15%, var(--app-color-bg-light) 16%, var(--app-color-bg-light) 20%, var(--app-color-bg-dark) 21%, var(--app-color-bg-dark) 30%, var(--app-color-bg-light) 31%, var(--app-color-bg-light) 35%, var(--app-color-bg-dark) 36%, var(--app-color-bg-dark) 45%, var(--app-color-bg-light) 46%, var(--app-color-bg-light) 49%, transparent 50%, transparent) 100px 50px;
+  // Halve the wave contrast against the base colour
+  --wave: color-mix(in srgb, var(--app-color-bg-light) 50%, var(--app-color-bg-dark));
+  --background: radial-gradient(circle at 100% 150%, var(--app-color-bg-dark) 24%, var(--wave) 25%, var(--wave) 28%, var(--app-color-bg-dark) 29%, var(--app-color-bg-dark) 36%, var(--wave) 36%, var(--wave) 40%, transparent 40%, transparent) 0 0 / 100px 50px,
+    radial-gradient(circle at 0    150%, var(--app-color-bg-dark) 24%, var(--wave) 25%, var(--wave) 28%, var(--app-color-bg-dark) 29%, var(--app-color-bg-dark) 36%, var(--wave) 36%, var(--wave) 40%, transparent 40%, transparent) 0 0 / 100px 50px,
+    radial-gradient(circle at 50%  100%, var(--wave) 10%, var(--app-color-bg-dark) 11%, var(--app-color-bg-dark) 23%, var(--wave) 24%, var(--wave) 30%, var(--app-color-bg-dark) 31%, var(--app-color-bg-dark) 43%, var(--wave) 44%, var(--wave) 50%, var(--app-color-bg-dark) 51%, var(--app-color-bg-dark) 63%, var(--wave) 64%, var(--wave) 71%, transparent 71%, transparent) 0 0 / 100px 50px,
+    radial-gradient(circle at 100% 50%, var(--wave) 5%, var(--app-color-bg-dark) 6%, var(--app-color-bg-dark) 15%, var(--wave) 16%, var(--wave) 20%, var(--app-color-bg-dark) 21%, var(--app-color-bg-dark) 30%, var(--wave) 31%, var(--wave) 35%, var(--app-color-bg-dark) 36%, var(--app-color-bg-dark) 45%, var(--wave) 46%, var(--wave) 49%, transparent 50%, transparent) 0 0 / 100px 50px,
+    radial-gradient(circle at 0    50%, var(--wave) 5%, var(--app-color-bg-dark) 6%, var(--app-color-bg-dark) 15%, var(--wave) 16%, var(--wave) 20%, var(--app-color-bg-dark) 21%, var(--app-color-bg-dark) 30%, var(--wave) 31%, var(--wave) 35%, var(--app-color-bg-dark) 36%, var(--app-color-bg-dark) 45%, var(--wave) 46%, var(--wave) 49%, transparent 50%, transparent) 0 0 / 100px 50px var(--app-color-bg-dark);
 }
