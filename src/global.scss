@@ -20,6 +20,12 @@ ion-button {
   letter-spacing: normal;
 }
 
+// Lay the app out in the height the keyboard leaves (see ViewportService),
+// so the browser never has to scroll the page to reveal a focused field.
+ion-app {
+  height: var(--app-visible-height, 100%);
+}
+
 // Floating app chrome: a translucent, blurred strip over the canvas,
 // constrained to the same centred column as the content. Pages using it
 // set [fullscreen]="true" on ion-content so the canvas runs underneath.
