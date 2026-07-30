@@ -78,7 +78,8 @@
     "example": "Voorbeeld",
     "example-explanation": "Vervoeg het woord zoals in dit voorbeeld:",
     "invalid": "Antwoord in het Japans (hiragana, katakana of kanji).",
-    "example-more": "Meer in de uitleg"
+    "example-more": "Meer in de uitleg",
+    "explanation": "Uitleg"
   },
   "summary": {
     "title": "Samenvatting",

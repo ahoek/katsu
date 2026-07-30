@@ -78,7 +78,8 @@
     "example": "Example",
     "example-explanation": "Conjugate the word like this example:",
     "invalid": "Please answer in Japanese (hiragana, katakana or kanji).",
-    "example-more": "More in the guide"
+    "example-more": "More in the guide",
+    "explanation": "Explanation"
   },
   "summary": {
     "title": "Summary",

@@ -11,6 +11,7 @@ import {
   barcodeOutline,
   briefcaseOutline,
   checkmarkCircle,
+  chevronDown,
   close,
   closeCircle,
   codeWorkingOutline,
@@ -56,7 +57,7 @@ export class AppComponent {
     this.updates.start();
     addIcons({
       alertCircle, arrowBack, arrowForward, barcodeOutline, briefcaseOutline,
-      checkmarkCircle, close, closeCircle, codeWorkingOutline, helpCircleOutline,
+      checkmarkCircle, chevronDown, close, closeCircle, codeWorkingOutline, helpCircleOutline,
       languageOutline, logoGithub, logoPaypal, mailOutline, moonOutline, optionsOutline, playBackOutline,
       playForwardOutline, settingsOutline, shirtOutline, shuffleOutline,
       volumeHighOutline,

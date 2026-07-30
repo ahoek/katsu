@@ -199,7 +199,7 @@ ion-col {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin: 12px 16px 4px;
+  margin: 0 0 0 16px;
   font-size: 1rem;
 
   ion-icon {
@@ -301,12 +301,25 @@ ion-grid {
   max-width: 720px;
 }
 
-.skip-row {
+// The verdict sits left of Skip; the button's height carries the row, so a
+// verdict appearing never moves anything below it.
+.status-row {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  // Height of the Skip button, held so the row does not twitch when Skip
+  // gives way to the verdict
+  min-height: 35px;
   margin: 0 8px;
 
-  ion-button {
+  .feedback-slot {
+    min-width: 0;
+  }
+
+  .skip-button {
+    // Keep Skip on the right, with or without a verdict beside it
+    margin-left: auto;
+    flex-shrink: 0;
     --color: var(--ion-color-medium);
   }
 }
