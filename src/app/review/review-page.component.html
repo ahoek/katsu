@@ -81,12 +81,6 @@
         </ion-item>
 
         <form (submit)="checkAnswer(questions[index])" class="answer-form">
-          <svg class="animation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
-            <path class="star" id="star1" d="m55,237 74-228 74,228L9,96h240"/>
-            <path class="star" id="star2" d="m55,237 74-228 74,228L9,96h240"/>
-            <path class="star" id="star3" d="m55,237 74-228 74,228L9,96h240"/>
-          </svg>
-
           <ion-item class="answer-item" lines="full">
             <input
               #answerInput
@@ -112,6 +106,16 @@
               <ion-icon name="arrow-forward"></ion-icon>
             </ion-button>
           </ion-item>
+
+          <!-- Star burst on a correct answer; purely decorative -->
+          <div class="sparkles" aria-hidden="true">
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+            <span class="sparkle"></span>
+          </div>
         </form>
 
         <!-- Skip acts on the current question, so it lives with the answer -->

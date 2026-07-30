@@ -106,29 +106,88 @@ ion-col {
   position: relative;
 }
 
-.animation {
+// Success: the feedback line eases in and its check pops, and a handful
+// of small stars arc up from the corner of the answer row and fall away.
+// The answer field itself stays still.
+.feedback--correct {
+  animation: feedback-in 250ms ease-out;
+
+  ion-icon {
+    animation: check-pop 400ms cubic-bezier(.34, 1.56, .64, 1);
+  }
+}
+
+@keyframes feedback-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@keyframes check-pop {
+  from {
+    transform: scale(0);
+  }
+
+  60% {
+    transform: scale(1.25);
+  }
+}
+
+.sparkles {
   position: absolute;
-  right: 20px;
-  top: -120px;
-  width: 120px;
-  height: 120px;
-  // The idle star parks just outside the viewBox; keep it clipped
-  overflow: hidden;
+  top: 12px;
+  right: 40px;
   pointer-events: none;
 }
 
-.star {
-  fill: yellow;
-  transform-origin: 0 0;
-  opacity: 1;
+.sparkle {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  background: var(--c);
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  opacity: 0;
+
+  &:nth-child(1) { --dx: -52px; --peak: -38px; --fall: 10px; --rot: -50deg; --delay: 0ms; --size: 13px; --c: var(--ion-color-warning); }
+  &:nth-child(2) { --dx: 26px; --peak: -46px; --fall: 2px; --rot: 60deg; --delay: 60ms; --size: 10px; --c: var(--ion-color-success); }
+  &:nth-child(3) { --dx: -18px; --peak: -56px; --fall: -12px; --rot: 35deg; --delay: 120ms; --size: 15px; --c: var(--ion-color-warning); }
+  &:nth-child(4) { --dx: 44px; --peak: -30px; --fall: 14px; --rot: -70deg; --delay: 40ms; --size: 9px; --c: var(--ion-color-secondary); }
+  &:nth-child(5) { --dx: -70px; --peak: -20px; --fall: 18px; --rot: 45deg; --delay: 150ms; --size: 10px; --c: var(--ion-color-success); }
+  &:nth-child(6) { --dx: 8px; --peak: -24px; --fall: 8px; --rot: -30deg; --delay: 200ms; --size: 12px; --c: var(--ion-color-warning); }
 }
 
-#star2 {
-  fill: #ffcc33;
+.correct .sparkle {
+  animation: sparkle-arc 900ms ease-out var(--delay) both;
 }
 
-#star3 {
-  fill: #eecc33;
+@keyframes sparkle-arc {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(.3) rotate(0deg);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  55% {
+    opacity: 1;
+    transform: translate(var(--dx), var(--peak)) scale(1) rotate(var(--rot));
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--dx) * 1.5), var(--fall)) scale(.7) rotate(calc(var(--rot) * 1.7));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feedback--correct,
+  .feedback--correct ion-icon,
+  .correct .sparkle {
+    animation: none;
+  }
 }
 
 .feedback {
