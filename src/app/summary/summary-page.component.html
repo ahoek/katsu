@@ -1,42 +1,76 @@
 <ion-content class="patterned" [fullscreen]="true">
   <h1 class="page-title">{{'summary.title'|translate}}</h1>
-  <ion-list>
-    <ion-item>{{ summaryText }}</ion-item>
-    @for (item of items; track $index) {
-      <ion-item
-        (click)="goToQuestion(item.index)"
-        [class.correct]="item.question.correct === true"
-        [class.incorrect]="item.question.correct === false"
-      >
-        <ion-label class="ion-text-wrap">
-          <p class="question-title">{{'summary.question'|translate}} {{$index + 1}}</p>
+
+  @if (items.length > 0) {
+    <div class="score">
+      <div class="score__ring-wrap">
+        <svg class="score__ring" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="score__track" cx="60" cy="60" r="52"/>
+          <circle
+            class="score__value"
+            cx="60" cy="60" r="52"
+            [style.stroke-dasharray]="ringCircumference"
+            [style.stroke-dashoffset]="ringOffset"
+          />
+        </svg>
+        <p class="score__count">
+          <strong>{{ correctCount }}</strong><span class="score__total">/{{ answeredCount }}</span>
+        </p>
+      </div>
+      <p class="score__text">{{ summaryText }}</p>
+
+      <div class="stats">
+        <span class="stat stat--correct">
+          <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+          {{ correctCount }} {{'summary.correct'|translate|lowercase}}
+        </span>
+        <span class="stat stat--incorrect">
+          <ion-icon name="close-circle" aria-hidden="true"></ion-icon>
+          {{ incorrectCount }} {{'summary.incorrect'|translate|lowercase}}
+        </span>
+        @if (skippedCount > 0) {
+          <span class="stat">
+            <ion-icon name="play-forward-outline" aria-hidden="true"></ion-icon>
+            {{ skippedCount }} {{'summary.skipped'|translate|lowercase}}
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="answer-cards">
+      @for (item of items; track $index) {
+        <button
+          type="button"
+          class="answer-card"
+          [class.correct]="item.question.correct === true"
+          [class.incorrect]="item.question.correct === false"
+          (click)="goToQuestion(item.index)"
+        >
+          <span class="answer-card__header">
+            <span class="answer-card__number">{{'summary.question'|translate}} {{$index + 1}}</span>
+            @if (item.question.correct === true) {
+              <ion-icon name="checkmark-circle" color="success" aria-hidden="true"></ion-icon>
+            }
+            @if (item.question.correct === false) {
+              <ion-icon name="close-circle" color="danger" aria-hidden="true"></ion-icon>
+            }
+          </span>
 
           @if (item.question.givenAnswer) {
-            <p class="given-answer" lang="ja">{{item.question.givenAnswer}}</p>
+            <span class="given-answer" lang="ja">{{item.question.givenAnswer}}</span>
           } @else {
-            <p class="given-answer given-answer--skipped">{{'summary.skipped'|translate}}</p>
+            <span class="given-answer given-answer--skipped">{{'summary.skipped'|translate}}</span>
           }
           <!-- The correct answer and its explanation, when the user got it wrong -->
           @if (item.question.correct !== true) {
             <app-answers [question]="item.question"></app-answers>
           }
-        </ion-label>
-
-        @if (item.question.correct === true) {
-          <ion-icon
-            name="checkmark-circle"
-            color="success"
-            slot="end"></ion-icon>
-        }
-        @if (item.question.correct === false) {
-          <ion-icon
-            name="close-circle"
-            color="danger"
-            slot="end"></ion-icon>
-        }
-      </ion-item>
-    }
-  </ion-list>
+        </button>
+      }
+    </div>
+  } @else {
+    <p class="empty">{{ summaryText }}</p>
+  }
 </ion-content>
 
 <ion-footer class="app-footer">

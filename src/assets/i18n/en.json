@@ -85,6 +85,8 @@
     "close": "Done",
     "text": "You answered {{correct}} out of {{total}} correctly",
     "question": "Question",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
     "skipped": "Skipped"
   },
   "preferences": {

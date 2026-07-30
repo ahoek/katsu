@@ -1,13 +1,11 @@
 import { Component, inject } from '@angular/core';
+import { LowerCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {
   IonButton,
   IonContent,
   IonFooter,
   IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
   IonRouterLink,
   NavController,
 } from '@ionic/angular/standalone';
@@ -28,9 +26,7 @@ import { AnswersComponent } from '../components/answers/answers.component';
     IonContent,
     IonFooter,
     IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
+    LowerCasePipe,
     TranslatePipe,
     AnswersComponent,
   ],
@@ -47,6 +43,8 @@ export class SummaryPageComponent {
 
   summaryText = '';
 
+  readonly ringCircumference = 2 * Math.PI * 52;
+
   constructor() {
     const all = this.questionService.questions();
     // Drop the final question if it was never answered — that is the one
@@ -59,6 +57,28 @@ export class SummaryPageComponent {
     this.items = shown.map((question, index) => ({ question, index }));
     this.questionService.resetAnsweredStatus();
     this.setSummaryText();
+  }
+
+  get correctCount(): number {
+    return this.items.filter(item => item.question.correct === true).length;
+  }
+
+  get incorrectCount(): number {
+    return this.items.filter(item => item.question.correct === false).length;
+  }
+
+  get skippedCount(): number {
+    return this.items.filter(item => !item.question.givenAnswer).length;
+  }
+
+  get answeredCount(): number {
+    return this.items.filter(item => item.question.givenAnswer).length;
+  }
+
+  // How much of the score ring stays uncovered
+  get ringOffset(): number {
+    const share = this.answeredCount ? this.correctCount / this.answeredCount : 0;
+    return this.ringCircumference * (1 - share);
   }
 
   setSummaryText() {

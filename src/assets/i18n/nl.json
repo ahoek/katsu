@@ -85,6 +85,8 @@
     "close": "Klaar",
     "text": "Je hebt {{correct}} van de {{total}} goed beantwoord",
     "question": "Vraag",
+    "correct": "Goed",
+    "incorrect": "Fout",
     "skipped": "Overgeslagen"
   },
   "preferences": {

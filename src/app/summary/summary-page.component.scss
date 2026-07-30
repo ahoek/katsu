@@ -1,19 +1,151 @@
-ion-item {
+.page-title {
+  max-width: 720px;
+  margin: 16px auto 4px;
+  padding: 0 16px;
   font-size: 1.6rem;
+}
 
-  &:hover {
-    cursor: pointer;
+.score {
+  max-width: 720px;
+  margin: 8px auto 0;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.score__ring-wrap {
+  position: relative;
+  width: 132px;
+  margin: 8px auto 0;
+}
+
+.score__ring {
+  display: block;
+  transform: rotate(-90deg);
+}
+
+.score__track,
+.score__value {
+  fill: none;
+  stroke-width: 10;
+}
+
+.score__track {
+  stroke: color-mix(in srgb, var(--ion-color-medium) 25%, transparent);
+}
+
+.score__value {
+  stroke: var(--ion-color-success);
+  stroke-linecap: round;
+}
+
+.score__count {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  font-size: 1.1rem;
+
+  strong {
+    font-size: 2rem;
+    font-weight: 600;
   }
 }
 
-.question-title {
-  margin: 0 0 4px;
-  font-size: .8rem;
+.score__total {
   color: var(--ion-color-medium);
 }
 
+.score__text {
+  margin: 8px 0 0;
+  font-size: .9rem;
+  color: var(--ion-color-medium);
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--app-color-bg-dark) 72%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: .9rem;
+  color: var(--ion-color-medium);
+
+  ion-icon {
+    font-size: 1.1rem;
+  }
+
+  &--correct ion-icon {
+    color: var(--ion-color-success);
+  }
+
+  &--incorrect ion-icon {
+    color: var(--ion-color-danger);
+  }
+}
+
+.answer-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 720px;
+  margin: 24px auto 16px;
+  padding: 0 16px;
+}
+
+.answer-card {
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid color-mix(in srgb, var(--ion-color-medium) 30%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--app-color-bg-dark) 72%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--ion-text-color);
+  font-family: inherit;
+  font-size: 1rem;
+  text-align: start;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--ion-color-primary);
+  }
+}
+
+.answer-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: .8rem;
+  color: var(--ion-color-medium);
+
+  ion-icon {
+    font-size: 1.2rem;
+  }
+}
+
+.answer-card__number {
+  letter-spacing: .02em;
+}
+
 .given-answer {
-  margin: 0;
+  display: block;
+  margin-top: 2px;
+  font-size: 1.6rem;
 }
 
 .given-answer--skipped {
@@ -30,11 +162,16 @@ ion-item {
   color: var(--ion-color-danger);
 }
 
-.page-title {
+// The explanation block brings its own card styling; keep it flush
+.answer-card app-answers {
+  margin: 8px -8px 0;
+}
+
+.empty {
   max-width: 720px;
-  margin: 16px auto 4px;
+  margin: 16px auto;
   padding: 0 16px;
-  font-size: 1.6rem;
+  color: var(--ion-color-medium);
 }
 
 .close-summary {
@@ -44,14 +181,4 @@ ion-item {
   width: calc(100% - 32px);
   max-width: 360px;
   margin: 8px auto calc(10px + env(safe-area-inset-bottom));
-}
-
-ion-list {
-  max-width: 720px;
-  margin: 0 auto;
-  background: transparent;
-}
-
-ion-item {
-  --background: transparent;
 }

@@ -14,3 +14,13 @@ ion-list {
 ion-item {
   --background: transparent;
 }
+
+// The する glyph stands in for an icon; give it the icon slot's footprint
+ion-item span[slot='start'] {
+  width: 24px;
+  margin-inline-end: 32px;
+  font-size: 12px;
+  text-align: center;
+  white-space: nowrap;
+  color: rgba(var(--ion-text-color-rgb), .54);
+}
