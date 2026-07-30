@@ -14,6 +14,11 @@ ion-col {
 
   &__word {
     font-size: 2.1em;
+    // One tall line that already fits the furigana, so the row keeps its
+    // height while the question loads and across words with and without kanji
+    display: inline-block;
+    line-height: 2.4;
+    min-height: 1lh;
   }
 
   &__meaning {
@@ -218,6 +223,11 @@ ion-col {
 .question-prompt {
   margin: 16px 16px 2px;
   font-size: .9rem;
+  // The longest question sentence wraps to two lines, so hold that space:
+  // the row below stays put while loading and between questions. The line
+  // box is taller than the help icon, so the first line never grows either.
+  line-height: 1.6;
+  min-height: 2lh;
   color: var(--ion-color-medium);
 }
 

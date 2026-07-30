@@ -270,13 +270,14 @@ export class ReviewPageComponent implements OnInit {
    */
   public currentQuestion(): { word: string; reading: string } {
     const question = this.questions[this.index];
-    if (!question) {
+    // No type means the placeholder question shown while loading
+    if (!question?.type) {
       return { word: '', reading: '' };
     }
 
     const na = this.getNa(question);
     return {
-      word: question.word + na,
+      word: (question.word ?? question.reading) + na,
       reading: question.reading + na,
     };
   }
