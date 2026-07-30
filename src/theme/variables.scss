@@ -1,17 +1,25 @@
 :root {
+  // Light text on the brand greens and oranges cannot reach WCAG AA;
+  // both get dark contrast colours instead, in both themes.
   --ion-color-primary: #86a93f;
-  --ion-color-primary-rgb: 153,193,71;
-  --ion-color-primary-contrast: #fff;
-  --ion-color-primary-contrast-rgb: 255,255,255;
+  --ion-color-primary-rgb: 134,169,63;
+  --ion-color-primary-contrast: #182600;
+  --ion-color-primary-contrast-rgb: 24,38,0;
   --ion-color-primary-shade: #87aa3e;
   --ion-color-primary-tint: #a3c759;
 
   --ion-color-secondary: #e08e0a;
-  --ion-color-secondary-rgb: 239,151,9;
-  --ion-color-secondary-contrast: #fff;
-  --ion-color-secondary-contrast-rgb: 255,255,255;
-  --ion-color-secondary-shade: #d28508;
+  --ion-color-secondary-rgb: 224,142,10;
+  --ion-color-secondary-contrast: #131300;
+  --ion-color-secondary-contrast-rgb: 19,19,0;
+  --ion-color-secondary-shade: #a86603;
   --ion-color-secondary-tint: #f1a122;
+
+  // Readable on the canvas and on cards; brightened again in dark mode
+  --app-color-link: #4a6519;
+
+  --ion-text-color: #000;
+  --ion-text-color-rgb: 0,0,0;
 
   --ion-color-tertiary: #7044ff;
   --ion-color-tertiary-rgb: 112,68,255;
@@ -20,53 +28,56 @@
   --ion-color-tertiary-shade: #633ce0;
   --ion-color-tertiary-tint: #7e57ff;
 
-  --ion-color-success: #10dc60;
-  --ion-color-success-rgb: 16,220,96;
+  // State colours stay in the brand family: olive green and warm
+  // terracotta, dark enough for AA as text on the light canvas and as
+  // background under white text. Dark mode brightens them.
+  --ion-color-success: #446e14;
+  --ion-color-success-rgb: 68,110,20;
   --ion-color-success-contrast: #ffffff;
   --ion-color-success-contrast-rgb: 255,255,255;
-  --ion-color-success-shade: #0ec254;
-  --ion-color-success-tint: #28e070;
+  --ion-color-success-shade: #3c6112;
+  --ion-color-success-tint: #577d2c;
 
   --ion-color-warning: #ffce00;
   --ion-color-warning-rgb: 255,206,0;
-  --ion-color-warning-contrast: #ffffff;
-  --ion-color-warning-contrast-rgb: 255,255,255;
-  --ion-color-warning-shade: #e0b500;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0,0,0;
+  --ion-color-warning-shade: #715b00;
   --ion-color-warning-tint: #ffd31a;
 
-  --ion-color-danger: #f04141;
-  --ion-color-danger-rgb: 245,61,61;
+  --ion-color-danger: #a5402a;
+  --ion-color-danger-rgb: 165,64,42;
   --ion-color-danger-contrast: #ffffff;
   --ion-color-danger-contrast-rgb: 255,255,255;
-  --ion-color-danger-shade: #d33939;
-  --ion-color-danger-tint: #f25454;
+  --ion-color-danger-shade: #913825;
+  --ion-color-danger-tint: #b35340;
 
   --ion-color-dark: #222428;
-  --ion-color-dark-rgb: 34,34,34;
+  --ion-color-dark-rgb: 34,36,40;
   --ion-color-dark-contrast: #ffffff;
   --ion-color-dark-contrast-rgb: 255,255,255;
   --ion-color-dark-shade: #1e2023;
   --ion-color-dark-tint: #383a3e;
 
-  --ion-color-medium: #989aa2;
-  --ion-color-medium-rgb: 152,154,162;
+  // Dark enough to stay readable on the patterned light canvas
+  --ion-color-medium: #5f6169;
+  --ion-color-medium-rgb: 95,97,105;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255,255,255;
-  --ion-color-medium-shade: #86888f;
-  --ion-color-medium-tint: #a2a4ab;
+  --ion-color-medium-shade: #54555c;
+  --ion-color-medium-tint: #6f7178;
 
   --ion-color-light: #f4f5f8;
-  --ion-color-light-rgb: 244,244,244;
+  --ion-color-light-rgb: 244,245,248;
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0,0,0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
   --app-color-bg-dark: #ebebec;
-  --app-color-bg-light: #ededf0;
+  --app-color-bg-light: #d5dedd;
 
-  // Answer field state colours. Light mode uses the bright brand colours;
-  // amber needs dark text for legibility.
+  // Answer field state colours; amber needs dark text for legibility.
   --app-answer-correct-background: var(--ion-color-success);
   --app-answer-correct-color: #fff;
   --app-answer-incorrect-background: var(--ion-color-danger);
@@ -78,6 +89,24 @@
 // Dark theme values, applied when the user forces dark mode or when
 // the OS prefers dark and the user has not forced light mode.
 @mixin dark-theme {
+    --ion-color-medium: #989aa2;
+    --ion-color-medium-rgb: 152,154,162;
+    --ion-color-medium-shade: #86888f;
+    --ion-color-medium-tint: #a2a4ab;
+
+    // Brighter takes on the same olive/terracotta family for dark
+    --ion-color-success: #a3c759;
+    --ion-color-success-rgb: 163,199,89;
+    --ion-color-success-shade: #8fb04e;
+    --ion-color-success-tint: #accd6a;
+    --ion-color-danger: #ec7358;
+    --ion-color-danger-rgb: 236,115,88;
+    --ion-color-danger-shade: #d0654e;
+    --ion-color-danger-tint: #ef8169;
+    --ion-color-warning-shade: #e0b500;
+    --ion-color-secondary-shade: #d28508;
+    --app-color-link: #a3c759;
+
     --ion-border-color: var(--ion-color-dark-shade);
     --ion-background-color: var(--ion-color-dark);
     --ion-background-color-rgb: var(--ion-color-dark-rgb);

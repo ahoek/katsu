@@ -34,7 +34,9 @@
   padding: 8px 14px;
   border-radius: 999px;
   border: 1px solid var(--ion-color-medium);
-  background: transparent;
+  background: color-mix(in srgb, var(--app-color-bg-dark) 72%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--ion-text-color, #000);
   font-size: .95rem;
   font-family: inherit;
@@ -55,6 +57,11 @@
     border-color: var(--ion-color-primary-shade);
     background: var(--ion-color-primary-shade);
     color: var(--ion-color-primary-contrast);
+
+    .chip__glyph,
+    .chip__icon {
+      opacity: 1;
+    }
   }
 
   &--level {

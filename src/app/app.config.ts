@@ -14,7 +14,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
-    provideIonicAngular({ mode: 'ios' }),
+    // md on every platform: static toolbar titles, one consistent look
+    provideIonicAngular({ mode: 'md' }),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: TitleStrategy, useClass: TranslatedTitleStrategy },
     provideTranslateService({

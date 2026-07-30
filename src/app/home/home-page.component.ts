@@ -8,7 +8,6 @@ import {
   IonHeader,
   IonIcon,
   IonRouterLink,
-  IonTitle,
   IonToolbar,
   NavController,
 } from '@ionic/angular/standalone';
@@ -33,7 +32,6 @@ import { CreditComponent } from '../components/credit/credit.component';
     IonFooter,
     IonHeader,
     IonIcon,
-    IonTitle,
     IonToolbar,
     TranslatePipe,
     ReviewSettingsComponent,

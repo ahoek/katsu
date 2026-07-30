@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import {
@@ -10,8 +10,11 @@ import {
   IonHeader,
   IonIcon,
   IonItem,
+  IonLabel,
+  IonList,
   IonModal,
   IonNote,
+  IonPopover,
   IonRow,
   IonTitle,
   IonToolbar,
@@ -19,7 +22,6 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import * as wanakana from 'wanakana';
-import { gsap } from 'gsap';
 
 import { Question } from '../models/question';
 import { Verb } from '../models/conjugation/verb';
@@ -31,7 +33,6 @@ import { AnalyticsService } from '../shared/analytics.service';
 import { AnswersComponent } from '../components/answers/answers.component';
 import { FuriganaComponent } from '../components/furigana/furigana.component';
 import { ReviewSettingsComponent } from '../components/review-settings/review-settings.component';
-import { CreditComponent } from '../components/credit/credit.component';
 
 // Well-known words used to demonstrate the asked form
 const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
@@ -67,8 +68,11 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
     IonHeader,
     IonIcon,
     IonItem,
+    IonLabel,
+    IonList,
     IonModal,
     IonNote,
+    IonPopover,
     IonRow,
     IonTitle,
     IonToolbar,
@@ -76,24 +80,20 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
     AnswersComponent,
     FuriganaComponent,
     ReviewSettingsComponent,
-    CreditComponent,
   ],
 })
-export class ReviewPageComponent implements OnInit, AfterViewInit {
+export class ReviewPageComponent implements OnInit {
   navCtrl = inject(NavController);
   dataService = inject(QuestionDataService);
   settings = inject(SettingsService);
   private analytics = inject(AnalyticsService);
   private speech = inject(SpeechService);
-  private hostRef = inject(ElementRef);
   private translate = inject(TranslateService);
 
   @ViewChild('answerInputNative', { read: ElementRef, static: true })
   answerInputNative!: ElementRef;
 
   exampleVisible = false;
-
-  tl!: gsap.core.Timeline;
 
   get questions(): Question[] {
     return this.dataService.questions();
@@ -116,11 +116,6 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
     this.dataService.load().then(() => {
       this.goToQuestion(this.index);
     });
-  }
-
-  ngAfterViewInit() {
-    // The star elements exist in the DOM only after the view is created
-    this.initStar();
   }
 
   ionViewDidEnter() {
@@ -252,9 +247,6 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
     question.answered = true;
 
     this.speech.say(question.answers[0].reading);
-    if (question.correct) {
-      this.animateStar();
-    }
 
     this.analytics.trackEvent('Question', 'answer-check', question.correct ? 'correct' : 'incorrect', 1);
   }
@@ -297,42 +289,4 @@ export class ReviewPageComponent implements OnInit, AfterViewInit {
     return '';
   }
 
-  public animateStar() {
-    this.tl.restart();
-  }
-
-  public initStar() {
-    // Query from the host element: Ionic attaches the page to the
-    // document asynchronously, so global selectors can miss it here.
-    const host: HTMLElement = this.hostRef.nativeElement;
-    gsap.set(host.querySelectorAll('.star'), {
-      scale: 1,
-      x: 500, y: 1000,
-    });
-    this.tl = gsap.timeline({ paused: true });
-    this.tl.add('start');
-    this.tl.to(host.querySelector('#star1'), {
-      duration: 1,
-      opacity: 0,
-      x: 250, y: 300,
-      rotation: 270,
-      scale: 1.2,
-    }, '#start');
-    this.tl.to(host.querySelector('#star2'), {
-      duration: 1,
-      opacity: 0,
-      x: 700, y: 300,
-      rotation: 260,
-      scale: 1.5,
-    }, 'start+=.2');
-    this.tl.to(host.querySelector('#star3'), {
-      duration: 1,
-      opacity: 0,
-      x: 600, y: 300,
-      rotation: -260,
-      scale: 2,
-    }, 'start+=.5');
-
-    this.tl.timeScale(1.8);
-  }
 }

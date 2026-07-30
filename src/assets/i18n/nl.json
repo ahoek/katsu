@@ -70,6 +70,7 @@
   "review": {
     "stop": "Stop",
     "skip": "Sla over",
+    "settings": "Instellingen",
     "correct": "Goed!",
     "incorrect": "Helaas, het juiste antwoord:",
     "prompt": "Geef de vorm: {{terms}}",
@@ -84,6 +85,8 @@
     "close": "Klaar",
     "text": "Je hebt {{correct}} van de {{total}} goed beantwoord",
     "question": "Vraag",
+    "correct": "Goed",
+    "incorrect": "Fout",
     "skipped": "Overgeslagen"
   },
   "preferences": {

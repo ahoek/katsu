@@ -1,13 +1,12 @@
-<ion-header>
-  <ion-toolbar color="secondary">
+<ion-header class="app-chrome">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'information.title'|translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="patterned" [fullscreen]="true">
   <div class="page">
     <h1>{{'information.title'|translate}}</h1>
     <p class="lead">{{'information.lead'|translate}}</p>

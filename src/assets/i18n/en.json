@@ -70,6 +70,7 @@
   "review": {
     "stop": "Stop",
     "skip": "Skip",
+    "settings": "Settings",
     "correct": "Correct!",
     "incorrect": "Incorrect. The correct answer:",
     "prompt": "Give this form: {{terms}}",
@@ -84,6 +85,8 @@
     "close": "Done",
     "text": "You answered {{correct}} out of {{total}} correctly",
     "question": "Question",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
     "skipped": "Skipped"
   },
   "preferences": {

@@ -1,8 +1,8 @@
 {
   "name": "Katsu",
   "short_name": "Katsu",
-  "theme_color": "#e08e0a",
-  "background_color": "#e08e0a",
+  "theme_color": "#ebebec",
+  "background_color": "#ebebec",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
@@ -13,7 +13,7 @@
       "type": "image/png"
     },
     {
-      "src": "assets/icon/largetile.png",
+      "src": "assets/icon/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

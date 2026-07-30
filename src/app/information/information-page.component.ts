@@ -4,7 +4,6 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -40,7 +39,6 @@ interface GuideCard {
     IonButtons,
     IonContent,
     IonHeader,
-    IonTitle,
     IonToolbar,
     TranslatePipe,
     FuriganaComponent,

@@ -13,7 +13,6 @@ import {
   IonNote,
   IonSelect,
   IonSelectOption,
-  IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -21,7 +20,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { SettingsService } from '../shared/settings.service';
 import { SpeechService } from '../shared/speech.service';
 import { ThemePreference, ThemeService } from '../shared/theme.service';
-import { CreditComponent } from '../components/credit/credit.component';
 
 @Component({
   selector: 'app-preferences',
@@ -41,10 +39,8 @@ import { CreditComponent } from '../components/credit/credit.component';
     IonNote,
     IonSelect,
     IonSelectOption,
-    IonTitle,
     IonToolbar,
     TranslatePipe,
-    CreditComponent,
   ],
 })
 export class PreferencesPageComponent {

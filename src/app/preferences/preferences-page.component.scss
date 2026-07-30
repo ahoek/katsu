@@ -1,4 +1,30 @@
+.page-title {
+  max-width: 720px;
+  margin: 16px auto 4px;
+  padding: 0 16px;
+  font-size: 1.6rem;
+}
+
 ion-list {
-  max-width: 640px;
+  max-width: 720px;
   margin: 0 auto;
+  background: transparent;
+}
+
+ion-item {
+  --background: transparent;
+}
+
+// The する glyph stands in for an icon; give it the icon slot's footprint
+ion-item span[slot='start'] {
+  width: 24px;
+  margin-inline-end: 32px;
+  font-size: 12px;
+  text-align: center;
+  white-space: nowrap;
+  color: rgba(var(--ion-text-color-rgb), .62);
+}
+
+ion-note {
+  color: var(--ion-color-medium);
 }

@@ -1,13 +1,13 @@
-<ion-header>
-  <ion-toolbar color="secondary">
+<ion-header class="app-chrome">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{'preferences.title'|translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="patterned" [fullscreen]="true">
+  <h1 class="page-title">{{'preferences.title'|translate}}</h1>
   <ion-list>
     <ion-item>
       <ion-icon name="moon-outline" slot="start"></ion-icon>
@@ -100,5 +100,4 @@
       </ion-checkbox>
     </ion-item>
   </ion-list>
-  <app-credit></app-credit>
 </ion-content>

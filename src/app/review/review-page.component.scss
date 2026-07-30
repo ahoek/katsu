@@ -1,13 +1,16 @@
-.scroll-content {
-  overflow: hidden;
+// The grid is only a centred column; the 16px gutter comes from the
+// elements' own margins, like on every other screen.
+ion-grid {
+  --ion-grid-padding: 0;
 }
 
-.item-block {
-  min-height: 3.0rem;
+ion-col {
+  --ion-grid-column-padding: 0;
 }
 
 .dictionary {
-  margin-top: 17px;
+  margin: 16px 16px 0;
+  border-radius: 12px 12px 0 0;
 
   &__word {
     font-size: 2.1em;
@@ -20,19 +23,17 @@
 }
 
 .answer-item {
-  margin-top: 3px;
+  margin: 4px 16px 0;
   font-size: 1.7em;
   line-height: 1.8;
+  border-radius: 0 0 12px 12px;
 
   .answer-input::placeholder {
-    color: rgba(#ccc, .5);
-  }
-
-  &.item-ios.item-block .item-inner {
-    padding-right: 0;
+    color: var(--ion-color-medium);
   }
 
   [slot='end'] {
+    --color: var(--app-color-link);
     margin: 0;
     height: 100%;
     width: 45px;
@@ -63,7 +64,11 @@
   }
 
   [type='submit'] {
-    color: var(--app-answer-correct-color);
+    --color: var(--app-answer-correct-color);
+  }
+
+  .answer-input::placeholder {
+    color: inherit;
   }
 }
 
@@ -74,7 +79,11 @@
   }
 
   [type='submit'] {
-    color: var(--app-answer-incorrect-color);
+    --color: var(--app-answer-incorrect-color);
+  }
+
+  .answer-input::placeholder {
+    color: inherit;
   }
 }
 
@@ -85,7 +94,11 @@
   }
 
   [type='submit'] {
-    color: var(--app-answer-invalid-color);
+    --color: var(--app-answer-invalid-color);
+  }
+
+  .answer-input::placeholder {
+    color: inherit;
   }
 }
 
@@ -93,26 +106,88 @@
   position: relative;
 }
 
-.animation {
+// Success: the feedback line eases in and its check pops, and a handful
+// of small stars arc up from the corner of the answer row and fall away.
+// The answer field itself stays still.
+.feedback--correct {
+  animation: feedback-in 250ms ease-out;
+
+  ion-icon {
+    animation: check-pop 400ms cubic-bezier(.34, 1.56, .64, 1);
+  }
+}
+
+@keyframes feedback-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@keyframes check-pop {
+  from {
+    transform: scale(0);
+  }
+
+  60% {
+    transform: scale(1.25);
+  }
+}
+
+.sparkles {
   position: absolute;
-  right: 20px;
-  top: -120px;
-  width: 120px;
-  height: 120px;
+  top: 12px;
+  right: 40px;
+  pointer-events: none;
 }
 
-.star {
-  fill: yellow;
-  transform-origin: 0 0;
-  opacity: 1;
+.sparkle {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  background: var(--c);
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  opacity: 0;
+
+  &:nth-child(1) { --dx: -52px; --peak: -38px; --fall: 10px; --rot: -50deg; --delay: 0ms; --size: 13px; --c: var(--ion-color-warning); }
+  &:nth-child(2) { --dx: 26px; --peak: -46px; --fall: 2px; --rot: 60deg; --delay: 60ms; --size: 10px; --c: var(--ion-color-success); }
+  &:nth-child(3) { --dx: -18px; --peak: -56px; --fall: -12px; --rot: 35deg; --delay: 120ms; --size: 15px; --c: var(--ion-color-warning); }
+  &:nth-child(4) { --dx: 44px; --peak: -30px; --fall: 14px; --rot: -70deg; --delay: 40ms; --size: 9px; --c: var(--ion-color-secondary); }
+  &:nth-child(5) { --dx: -70px; --peak: -20px; --fall: 18px; --rot: 45deg; --delay: 150ms; --size: 10px; --c: var(--ion-color-success); }
+  &:nth-child(6) { --dx: 8px; --peak: -24px; --fall: 8px; --rot: -30deg; --delay: 200ms; --size: 12px; --c: var(--ion-color-warning); }
 }
 
-#star2 {
-  fill: #ffcc33;
+.correct .sparkle {
+  animation: sparkle-arc 900ms ease-out var(--delay) both;
 }
 
-#star3 {
-  fill: #eecc33;
+@keyframes sparkle-arc {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(.3) rotate(0deg);
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  55% {
+    opacity: 1;
+    transform: translate(var(--dx), var(--peak)) scale(1) rotate(var(--rot));
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(calc(var(--dx) * 1.5), var(--fall)) scale(.7) rotate(calc(var(--rot) * 1.7));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feedback--correct,
+  .feedback--correct ion-icon,
+  .correct .sparkle {
+    animation: none;
+  }
 }
 
 .feedback {
@@ -141,7 +216,7 @@
 }
 
 .question-prompt {
-  margin: 10px 16px 2px;
+  margin: 16px 16px 2px;
   font-size: .9rem;
   color: var(--ion-color-medium);
 }
@@ -151,7 +226,7 @@
   border: none;
   padding: 0 4px;
   vertical-align: middle;
-  color: var(--ion-color-primary);
+  color: var(--app-color-link);
   cursor: pointer;
 
   ion-icon {
@@ -189,10 +264,39 @@
   gap: 4px;
   margin-top: 6px;
   font-size: .9rem;
-  color: var(--ion-color-primary);
+  color: var(--app-color-link);
   text-decoration: none;
 
   ion-icon {
     font-size: 1em;
+  }
+}
+
+.question-counter {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--ion-background-color-step-100, rgba(0, 0, 0, .06));
+  color: rgba(var(--ion-text-color-rgb), .8);
+  font-size: .85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+ion-grid {
+  width: 100%;
+  max-width: 720px;
+}
+
+.skip-row {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 8px;
+
+  ion-button {
+    --color: var(--ion-color-medium);
   }
 }

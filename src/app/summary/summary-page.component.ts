@@ -1,17 +1,12 @@
 import { Component, inject } from '@angular/core';
+import { LowerCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {
   IonButton,
-  IonButtons,
   IonContent,
-  IonHeader,
+  IonFooter,
   IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
   IonRouterLink,
-  IonTitle,
-  IonToolbar,
   NavController,
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -19,7 +14,6 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { QuestionDataService } from '../review/question-data.service';
 import { Question } from '../models/question';
 import { AnswersComponent } from '../components/answers/answers.component';
-import { CreditComponent } from '../components/credit/credit.component';
 
 @Component({
   selector: 'app-summary',
@@ -29,18 +23,12 @@ import { CreditComponent } from '../components/credit/credit.component';
     RouterLink,
     IonRouterLink,
     IonButton,
-    IonButtons,
     IonContent,
-    IonHeader,
+    IonFooter,
     IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonTitle,
-    IonToolbar,
+    LowerCasePipe,
     TranslatePipe,
     AnswersComponent,
-    CreditComponent,
   ],
 })
 export class SummaryPageComponent {
@@ -55,6 +43,8 @@ export class SummaryPageComponent {
 
   summaryText = '';
 
+  readonly ringCircumference = 2 * Math.PI * 52;
+
   constructor() {
     const all = this.questionService.questions();
     // Drop the final question if it was never answered — that is the one
@@ -67,6 +57,28 @@ export class SummaryPageComponent {
     this.items = shown.map((question, index) => ({ question, index }));
     this.questionService.resetAnsweredStatus();
     this.setSummaryText();
+  }
+
+  get correctCount(): number {
+    return this.items.filter(item => item.question.correct === true).length;
+  }
+
+  get incorrectCount(): number {
+    return this.items.filter(item => item.question.correct === false).length;
+  }
+
+  get skippedCount(): number {
+    return this.items.filter(item => !item.question.givenAnswer).length;
+  }
+
+  get answeredCount(): number {
+    return this.items.filter(item => item.question.givenAnswer).length;
+  }
+
+  // How much of the score ring stays uncovered
+  get ringOffset(): number {
+    const share = this.answeredCount ? this.correctCount / this.answeredCount : 0;
+    return this.ringCircumference * (1 - share);
   }
 
   setSummaryText() {
