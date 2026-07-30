@@ -139,6 +139,16 @@ export class ReviewPageComponent implements OnInit {
   }
 
   /**
+   * Tapping a button next to the answer field would move focus and close the
+   * on-screen keyboard, which resizes the viewport and scrolls the question
+   * out of view. Suppressing the pointer's focus keeps the field active;
+   * the button stays reachable by keyboard.
+   */
+  keepKeyboardOpen(event: Event) {
+    event.preventDefault();
+  }
+
+  /**
    * The question sentence, composed from the question type attributes
    * using the same terms as the settings screen.
    */
@@ -270,13 +280,14 @@ export class ReviewPageComponent implements OnInit {
    */
   public currentQuestion(): { word: string; reading: string } {
     const question = this.questions[this.index];
-    if (!question) {
+    // No type means the placeholder question shown while loading
+    if (!question?.type) {
       return { word: '', reading: '' };
     }
 
     const na = this.getNa(question);
     return {
-      word: question.word + na,
+      word: (question.word ?? question.reading) + na,
       reading: question.reading + na,
     };
   }

@@ -27,11 +27,44 @@
   }
 }
 
+.correct-answer__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  // Comfortable tap target without making the collapsed block much taller
+  min-height: 44px;
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: .95rem;
+  color: var(--app-color-link);
+  cursor: pointer;
+
+  &[aria-expanded='true'] .correct-answer__chevron {
+    transform: rotate(180deg);
+  }
+}
+
+.correct-answer__chevron {
+  font-size: 1.1rem;
+  transition: transform 150ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .correct-answer__chevron {
+    transition: none;
+  }
+}
+
 .correct-answer__steps {
   margin: 10px 0 2px;
   padding-left: 1.3em;
   font-size: 1.05rem;
   color: var(--ion-color-medium);
+
+  &[hidden] {
+    display: none;
+  }
 
   li {
     margin: 6px 0;

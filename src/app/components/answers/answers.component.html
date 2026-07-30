@@ -8,7 +8,21 @@
   </div>
 
   @if (showExplanation && steps.length > 0) {
-    <ol class="correct-answer__steps">
+    <button
+      class="correct-answer__toggle"
+      type="button"
+      (click)="toggleExplanation()"
+      [attr.aria-expanded]="explanationVisible"
+      [attr.aria-controls]="stepsId"
+    >
+      {{ 'review.explanation' | translate }}
+      <ion-icon
+        class="correct-answer__chevron"
+        name="chevron-down"
+        aria-hidden="true"
+      ></ion-icon>
+    </button>
+    <ol class="correct-answer__steps" [id]="stepsId" [hidden]="!explanationVisible">
       @for (step of steps; track $index) {
         <li>
           @if (step.from && step.to) {
