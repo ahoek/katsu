@@ -39,33 +39,33 @@
 
     <div class="answer-cards">
       @for (item of items; track $index) {
-        <button
-          type="button"
+        <article
           class="answer-card"
           [class.correct]="item.question.correct === true"
           [class.incorrect]="item.question.correct === false"
-          (click)="goToQuestion(item.index)"
         >
-          <span class="answer-card__header">
-            <span class="answer-card__number">{{'summary.question'|translate}} {{$index + 1}}</span>
-            @if (item.question.correct === true) {
-              <ion-icon name="checkmark-circle" color="success" aria-hidden="true"></ion-icon>
-            }
-            @if (item.question.correct === false) {
-              <ion-icon name="close-circle" color="danger" aria-hidden="true"></ion-icon>
-            }
-          </span>
+          <button type="button" class="answer-card__link" (click)="goToQuestion(item.index)">
+            <span class="answer-card__header">
+              <span class="answer-card__number">{{'summary.question'|translate}} {{$index + 1}}</span>
+              @if (item.question.correct === true) {
+                <ion-icon name="checkmark-circle" color="success" aria-hidden="true"></ion-icon>
+              }
+              @if (item.question.correct === false) {
+                <ion-icon name="close-circle" color="danger" aria-hidden="true"></ion-icon>
+              }
+            </span>
 
-          @if (item.question.givenAnswer) {
-            <span class="given-answer" lang="ja">{{item.question.givenAnswer}}</span>
-          } @else {
-            <span class="given-answer given-answer--skipped">{{'summary.skipped'|translate}}</span>
-          }
+            @if (item.question.givenAnswer) {
+              <span class="given-answer" lang="ja">{{item.question.givenAnswer}}</span>
+            } @else {
+              <span class="given-answer given-answer--skipped">{{'summary.skipped'|translate}}</span>
+            }
+          </button>
           <!-- The correct answer and its explanation, when the user got it wrong -->
           @if (item.question.correct !== true) {
             <app-answers [question]="item.question"></app-answers>
           }
-        </button>
+        </article>
       }
     </div>
   } @else {

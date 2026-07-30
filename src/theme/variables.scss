@@ -2,14 +2,14 @@
   // Light text on the brand greens and oranges cannot reach WCAG AA;
   // both get dark contrast colours instead, in both themes.
   --ion-color-primary: #86a93f;
-  --ion-color-primary-rgb: 153,193,71;
+  --ion-color-primary-rgb: 134,169,63;
   --ion-color-primary-contrast: #182600;
   --ion-color-primary-contrast-rgb: 24,38,0;
   --ion-color-primary-shade: #87aa3e;
   --ion-color-primary-tint: #a3c759;
 
   --ion-color-secondary: #e08e0a;
-  --ion-color-secondary-rgb: 239,151,9;
+  --ion-color-secondary-rgb: 224,142,10;
   --ion-color-secondary-contrast: #131300;
   --ion-color-secondary-contrast-rgb: 19,19,0;
   --ion-color-secondary-shade: #a86603;
@@ -53,7 +53,7 @@
   --ion-color-danger-tint: #b35340;
 
   --ion-color-dark: #222428;
-  --ion-color-dark-rgb: 34,34,34;
+  --ion-color-dark-rgb: 34,36,40;
   --ion-color-dark-contrast: #ffffff;
   --ion-color-dark-contrast-rgb: 255,255,255;
   --ion-color-dark-shade: #1e2023;
@@ -68,7 +68,7 @@
   --ion-color-medium-tint: #6f7178;
 
   --ion-color-light: #f4f5f8;
-  --ion-color-light-rgb: 244,244,244;
+  --ion-color-light-rgb: 244,245,248;
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0,0,0;
   --ion-color-light-shade: #d7d8da;
@@ -77,8 +77,7 @@
   --app-color-bg-dark: #ebebec;
   --app-color-bg-light: #d5dedd;
 
-  // Answer field state colours. Light mode uses the bright brand colours;
-  // amber needs dark text for legibility.
+  // Answer field state colours; amber needs dark text for legibility.
   --app-answer-correct-background: var(--ion-color-success);
   --app-answer-correct-color: #fff;
   --app-answer-incorrect-background: var(--ion-color-danger);

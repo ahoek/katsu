@@ -22,9 +22,8 @@ export class ThemeService {
   private applyThemeColor(theme: ThemePreference) {
     const light = '#ebebec';
     const dark = '#131300';
-    const metas = this.doc.querySelectorAll('meta[name="theme-color"]');
-    metas.forEach((meta, i) => {
-      const auto = i === 0 ? light : dark;
+    this.doc.querySelectorAll('meta[name="theme-color"]').forEach(meta => {
+      const auto = meta.getAttribute('media')?.includes('dark') ? dark : light;
       meta.setAttribute('content', theme === 'auto' ? auto : theme === 'dark' ? dark : light);
     });
   }
