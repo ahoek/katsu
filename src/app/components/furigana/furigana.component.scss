@@ -1,0 +1,11 @@
+// Gecko draws furigana in the leading above the base instead of growing the
+// line box, so reserve that leading here: without it the annotation overhangs
+// the line and gets clipped by ancestors with overflow: hidden.
+ruby {
+  line-height: 2.4;
+}
+
+rt {
+  font-size: 50%;
+  line-height: 1.1;
+}

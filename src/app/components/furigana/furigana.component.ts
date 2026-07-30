@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, ViewEncapsulation, inject } from '@angular/core';
 import * as wanakana from 'wanakana';
 
 import { WordToken } from '../../models/word-token';
@@ -7,6 +7,9 @@ import { SettingsService } from '../../shared/settings.service';
 @Component({
   selector: 'app-furigana',
   templateUrl: 'furigana.component.html',
+  styleUrls: ['furigana.component.scss'],
+  // The ruby markup is set with [innerHTML], so scoped styles never reach it.
+  encapsulation: ViewEncapsulation.None,
 })
 export class FuriganaComponent {
   settings = inject(SettingsService);
