@@ -24,3 +24,9 @@ h2 {
 p {
   line-height: 1.7;
 }
+
+// Link-style buttons; the brand orange is too light for AA text
+ion-button[fill='outline'] {
+  --color: var(--app-color-link);
+  --border-color: var(--app-color-link);
+}

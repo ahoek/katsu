@@ -38,7 +38,7 @@
     line-height: 1.7;
 
     &::marker {
-      color: var(--ion-color-primary);
+      color: var(--app-color-link);
     }
   }
 }
@@ -53,5 +53,5 @@
 
 .step-arrow {
   margin: 0 2px;
-  color: var(--ion-color-primary);
+  color: var(--app-color-link);
 }

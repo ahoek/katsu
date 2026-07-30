@@ -29,10 +29,11 @@ ion-col {
   border-radius: 0 0 12px 12px;
 
   .answer-input::placeholder {
-    color: rgba(#ccc, .5);
+    color: var(--ion-color-medium);
   }
 
   [slot='end'] {
+    --color: var(--app-color-link);
     margin: 0;
     height: 100%;
     width: 45px;
@@ -63,7 +64,11 @@ ion-col {
   }
 
   [type='submit'] {
-    color: var(--app-answer-correct-color);
+    --color: var(--app-answer-correct-color);
+  }
+
+  .answer-input::placeholder {
+    color: inherit;
   }
 }
 
@@ -74,7 +79,11 @@ ion-col {
   }
 
   [type='submit'] {
-    color: var(--app-answer-incorrect-color);
+    --color: var(--app-answer-incorrect-color);
+  }
+
+  .answer-input::placeholder {
+    color: inherit;
   }
 }
 
@@ -85,7 +94,11 @@ ion-col {
   }
 
   [type='submit'] {
-    color: var(--app-answer-invalid-color);
+    --color: var(--app-answer-invalid-color);
+  }
+
+  .answer-input::placeholder {
+    color: inherit;
   }
 }
 
@@ -154,7 +167,7 @@ ion-col {
   border: none;
   padding: 0 4px;
   vertical-align: middle;
-  color: var(--ion-color-primary);
+  color: var(--app-color-link);
   cursor: pointer;
 
   ion-icon {
@@ -192,7 +205,7 @@ ion-col {
   gap: 4px;
   margin-top: 6px;
   font-size: .9rem;
-  color: var(--ion-color-primary);
+  color: var(--app-color-link);
   text-decoration: none;
 
   ion-icon {
@@ -208,7 +221,7 @@ ion-col {
   padding: 3px 12px;
   border-radius: 999px;
   background: var(--ion-background-color-step-100, rgba(0, 0, 0, .06));
-  color: var(--ion-color-medium);
+  color: rgba(var(--ion-text-color-rgb), .8);
   font-size: .85rem;
   font-weight: 600;
   white-space: nowrap;
@@ -223,4 +236,8 @@ ion-grid {
   display: flex;
   justify-content: flex-end;
   margin: 0 8px;
+
+  ion-button {
+    --color: var(--ion-color-medium);
+  }
 }

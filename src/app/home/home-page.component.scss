@@ -5,7 +5,9 @@
   font-weight: 600;
 
   [lang='ja'] {
-    color: var(--ion-color-secondary);
+    // Outweigh the global JP normal-weight rule; bold lowers the AA threshold
+    font-weight: 600;
+    color: var(--ion-color-secondary-shade);
   }
 }
 

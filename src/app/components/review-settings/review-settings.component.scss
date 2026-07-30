@@ -57,6 +57,11 @@
     border-color: var(--ion-color-primary-shade);
     background: var(--ion-color-primary-shade);
     color: var(--ion-color-primary-contrast);
+
+    .chip__glyph,
+    .chip__icon {
+      opacity: 1;
+    }
   }
 
   &--level {

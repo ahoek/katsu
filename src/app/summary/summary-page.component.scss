@@ -36,6 +36,20 @@
 .score__value {
   stroke: var(--ion-color-success);
   stroke-linecap: round;
+  animation: ring-sweep 900ms ease-out;
+}
+
+// Sweep in from empty; 326.73 is the ring circumference
+@keyframes ring-sweep {
+  from {
+    stroke-dashoffset: 326.73px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .score__value {
+    animation: none;
+  }
 }
 
 .score__count {

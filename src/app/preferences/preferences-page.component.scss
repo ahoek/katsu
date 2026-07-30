@@ -22,5 +22,9 @@ ion-item span[slot='start'] {
   font-size: 12px;
   text-align: center;
   white-space: nowrap;
-  color: rgba(var(--ion-text-color-rgb), .54);
+  color: rgba(var(--ion-text-color-rgb), .62);
+}
+
+ion-note {
+  color: var(--ion-color-medium);
 }
