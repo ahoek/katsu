@@ -1,4 +1,6 @@
 .wordmark {
+  // 4px toolbar padding + 12px = the 16px content gutter
+  margin-inline-start: 12px;
   font-size: 1.2rem;
   font-weight: 600;
 
@@ -9,7 +11,7 @@
 
 .page-heading {
   max-width: 720px;
-  margin: 12px auto 0;
+  margin: 16px auto 0;
   padding: 0 16px;
   font-size: 1.05rem;
   font-weight: 600;
@@ -34,6 +36,7 @@ app-review-settings {
   --background: var(--ion-color-primary-shade);
   --border-radius: 999px;
   display: block;
+  width: calc(100% - 32px);
   max-width: 360px;
   margin: 0 auto calc(10px + env(safe-area-inset-bottom));
 }

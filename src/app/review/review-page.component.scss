@@ -1,13 +1,15 @@
-.scroll-content {
-  overflow: hidden;
+// The grid is only a centred column; the 16px gutter comes from the
+// elements' own margins, like on every other screen.
+ion-grid {
+  --ion-grid-padding: 0;
 }
 
-.item-block {
-  min-height: 3.0rem;
+ion-col {
+  --ion-grid-column-padding: 0;
 }
 
 .dictionary {
-  margin-top: 17px;
+  margin: 16px 16px 0;
   border-radius: 12px 12px 0 0;
 
   &__word {
@@ -21,7 +23,7 @@
 }
 
 .answer-item {
-  margin-top: 3px;
+  margin: 4px 16px 0;
   font-size: 1.7em;
   line-height: 1.8;
   border-radius: 0 0 12px 12px;
@@ -142,7 +144,7 @@
 }
 
 .question-prompt {
-  margin: 10px 16px 2px;
+  margin: 16px 16px 2px;
   font-size: .9rem;
   color: var(--ion-color-medium);
 }

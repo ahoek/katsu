@@ -41,6 +41,7 @@ ion-item {
   --background: var(--ion-color-primary-shade);
   --border-radius: 999px;
   display: block;
+  width: calc(100% - 32px);
   max-width: 360px;
   margin: 8px auto calc(10px + env(safe-area-inset-bottom));
 }
