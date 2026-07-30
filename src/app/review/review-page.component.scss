@@ -323,22 +323,3 @@ ion-grid {
     --color: var(--ion-color-medium);
   }
 }
-
-// With the keyboard up there is little more than 250px to work with, so the
-// gutters give way while the question and answer field keep their size. Only
-// margins: the line heights are what hold the reserved space, and the word row
-// is sized by its furigana, so shrinking either would let the layout shift
-// again while loading.
-:host-context(html.app-short-viewport) {
-  .question-prompt {
-    margin-top: 8px;
-  }
-
-  .dictionary {
-    margin-top: 8px;
-  }
-
-  .answer-item {
-    margin-top: 2px;
-  }
-}

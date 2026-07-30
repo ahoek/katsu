@@ -37,7 +37,6 @@ import { AnalyticsService } from './shared/analytics.service';
 import { SettingsService } from './shared/settings.service';
 import { ThemeService } from './shared/theme.service';
 import { UpdateService } from './shared/update.service';
-import { ViewportService } from './shared/viewport.service';
 
 @Component({
   selector: 'app-root',
@@ -53,11 +52,9 @@ export class AppComponent {
   private readonly updates = inject(UpdateService);
   private readonly settings = inject(SettingsService);
   private readonly theme = inject(ThemeService);
-  private readonly viewport = inject(ViewportService);
 
   constructor() {
     this.updates.start();
-    this.viewport.start();
     addIcons({
       alertCircle, arrowBack, arrowForward, barcodeOutline, briefcaseOutline,
       checkmarkCircle, chevronDown, close, closeCircle, codeWorkingOutline, helpCircleOutline,
