@@ -11,7 +11,7 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { arrowBack, arrowForward } from 'ionicons/icons';
+import { arrowBack, arrowForward, brushOutline, schoolOutline, timeOutline } from 'ionicons/icons';
 
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
@@ -75,7 +75,7 @@ export class KanjiPathPageComponent implements OnInit {
 
   constructor() {
     installKanjiTranslations(this.translate);
-    addIcons({ arrowBack, arrowForward });
+    addIcons({ arrowBack, arrowForward, brushOutline, schoolOutline, timeOutline });
   }
 
   async ngOnInit(): Promise<void> {

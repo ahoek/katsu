@@ -13,18 +13,27 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { arrowBack, arrowForward, checkmarkCircle, refreshOutline } from 'ionicons/icons';
 
-import { StrokePadComponent } from '../components/stroke-pad.component';
+import { STROKE_TRACE_MS, StrokePadComponent } from '../components/stroke-pad.component';
 import { WritingExerciseComponent } from '../components/writing-exercise.component';
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { FIRST_STAGE, stageLabel } from '../srs/srs';
 
-/** Pause between strokes while the order is being demonstrated. */
-const DEMO_STROKE_MS = 750;
+/**
+ * A demonstration draws faster than a hint does, or a fourteen-stroke kanji
+ * takes too long to sit through.
+ */
+const DEMO_TRACE_MS = Math.round(STROKE_TRACE_MS / 2);
 
-/** Pause before the demonstration loops back to the first stroke. */
-const DEMO_RESTART_MS = 1400;
+/**
+ * A stroke has to finish drawing before the next one starts, otherwise the
+ * moving tip stops halfway and jumps back to the start of the next stroke.
+ */
+const DEMO_STROKE_MS = DEMO_TRACE_MS + 200;
+
+/** Beat on the finished character before looping back to the first stroke. */
+const DEMO_RESTART_MS = 1600;
 
 type Phase = 'watch' | 'trace' | 'done';
 
@@ -73,6 +82,8 @@ export class KanjiLessonPageComponent implements OnInit, OnDestroy {
     const character = this.character();
     return character ? this.data.meaningOf(character, this.translate.getCurrentLang()) : '';
   });
+
+  protected readonly demoTraceMs = DEMO_TRACE_MS;
 
   /** The interval before the first review, named for the screen. */
   readonly firstInterval = computed(() => `kanji.interval.${stageLabel(FIRST_STAGE)}`);

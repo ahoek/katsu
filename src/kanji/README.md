@@ -103,14 +103,19 @@ The script fetches one SVG per character from a pinned KanjiVG tag, keeps the
 stroke paths in writing order, and merges them with the deck above. It fails
 loudly when a character is missing or its stroke numbering has a gap.
 
-## Two things to know before adding to this
+## Two things that grow the main bundle
 
-- **Translations** go in `i18n/kanji-translations.ts`, not in
-  `src/assets/i18n/*.json`. The root component imports those files, so anything
-  added there ships in the main bundle, which sits close to its 1 MB budget.
+Neither is a reason to hold back while this is a proof of concept - the initial
+bundle currently runs about 1.5 kB over its 1 MB `maximumWarning`, knowingly,
+and an optimisation pass comes later. Worth knowing where the weight goes:
+
+- **Translations** in `src/assets/i18n/*.json` are imported by the root
+  component, so anything added there ships in the main bundle. The feature's own
+  strings live in `i18n/kanji-translations.ts` and travel with the lazy route
+  instead.
 - **Icons** are the same trap from the other direction: `ionicons/icons` is a
   barrel imported by the root component, so an icon used only in a lazy chunk
-  still lands in main. Reuse an icon the app already registers where you can.
+  still lands in main. Six of them cost about 1.1 kB.
 
 ## Attribution
 

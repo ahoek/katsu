@@ -15,7 +15,8 @@
 
     <section class="card">
       <h3 class="card__title">
-{{ 'kanji.path.reviews-title' | translate }}
+        <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+        {{ 'kanji.path.reviews-title' | translate }}
       </h3>
 
       @if (dueCount() > 0) {
@@ -40,7 +41,8 @@
 
     <section class="card">
       <h3 class="card__title">
-{{ 'kanji.path.lessons-title' | translate }}
+        <ion-icon name="school-outline" aria-hidden="true"></ion-icon>
+        {{ 'kanji.path.lessons-title' | translate }}
       </h3>
 
       @if (nextLesson(); as lesson) {
@@ -88,7 +90,8 @@
 
     <p class="practice">
       <a routerLink="/kanji/practice" routerDirection="forward">
-{{ 'kanji.path.practice-title' | translate }}
+        <ion-icon name="brush-outline" aria-hidden="true"></ion-icon>
+        {{ 'kanji.path.practice-title' | translate }}
       </a>
       <span class="practice__note">{{ 'kanji.path.practice-note' | translate }}</span>
     </p>

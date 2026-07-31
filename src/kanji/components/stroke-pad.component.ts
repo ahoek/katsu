@@ -9,6 +9,12 @@ const VIEW_BOX = 109;
 const MIN_STEP = 0.6;
 
 /**
+ * How long a stroke takes to draw itself. Exported because anything that steps
+ * through strokes has to wait for the drawing to finish before moving on.
+ */
+export const STROKE_TRACE_MS = 1100;
+
+/**
  * The square you write in: renders the strokes written so far, the hints the
  * learner asked for, and the ink under their finger. It knows nothing about
  * whether a stroke was right - it reports what was drawn and lets the page
@@ -22,6 +28,7 @@ const MIN_STEP = 0.6;
       class="pad"
       [class.pad--wrong]="feedback() === 'wrong'"
       [class.pad--interactive]="interactive()"
+      [style.--kanji-trace-duration]="traceMs() + 'ms'"
       [attr.viewBox]="'0 0 ' + viewBox + ' ' + viewBox"
       [attr.role]="interactive() ? 'application' : 'img'"
       [attr.aria-label]="label()"
@@ -120,7 +127,7 @@ const MIN_STEP = 0.6;
       stroke: var(--ion-color-secondary);
       stroke-width: 5.5;
       stroke-dasharray: 100;
-      animation: trace 1.1s ease-in-out forwards;
+      animation: trace var(--kanji-trace-duration, 1100ms) ease-in-out forwards;
     }
 
     .start {
@@ -175,6 +182,9 @@ export class StrokePadComponent {
 
   /** Off while a stroke order is being demonstrated. */
   readonly interactive = input(true);
+
+  /** How long the stroke hint takes to draw itself. */
+  readonly traceMs = input(STROKE_TRACE_MS);
 
   readonly label = input('');
 

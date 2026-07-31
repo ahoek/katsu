@@ -61,11 +61,13 @@
         @if (result.mastered) {
           {{ 'kanji.review.mastered' | translate }}
         } @else if (result.stage > result.previousStage) {
-{{ 'kanji.review.stage-up' | translate: {
+          <ion-icon name="trending-up-outline" aria-hidden="true"></ion-icon>
+          {{ 'kanji.review.stage-up' | translate: {
             from: result.previousStage, to: result.stage, interval: result.intervalKey | translate
           } }}
         } @else if (result.stage < result.previousStage) {
-{{ 'kanji.review.stage-down' | translate: {
+          <ion-icon name="trending-down-outline" aria-hidden="true"></ion-icon>
+          {{ 'kanji.review.stage-down' | translate: {
             to: result.stage, interval: result.intervalKey | translate
           } }}
         } @else {

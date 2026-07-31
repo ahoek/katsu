@@ -11,7 +11,7 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { arrowBack, arrowForward, checkmarkCircle } from 'ionicons/icons';
+import { arrowBack, arrowForward, checkmarkCircle, trendingDownOutline, trendingUpOutline } from 'ionicons/icons';
 
 import { WritingExerciseComponent } from '../components/writing-exercise.component';
 import { installKanjiTranslations } from '../i18n/kanji-translations';
@@ -84,7 +84,7 @@ export class KanjiReviewPageComponent implements OnInit {
 
   constructor() {
     installKanjiTranslations(this.translate);
-    addIcons({ arrowBack, arrowForward, checkmarkCircle });
+    addIcons({ arrowBack, arrowForward, checkmarkCircle, trendingDownOutline, trendingUpOutline });
   }
 
   async ngOnInit(): Promise<void> {
