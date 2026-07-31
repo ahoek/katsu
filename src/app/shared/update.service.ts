@@ -130,8 +130,13 @@ export class UpdateService {
     try {
       const registration = await navigator.serviceWorker?.getRegistration();
       await registration?.unregister();
+      // Unregistering leaves the caches behind, and a fresh worker reads the
+      // same ones - so a bad state survives being unregistered unless they go
+      // too. Only the worker's own caches: the schedule lives in IndexedDB.
+      const names = await caches.keys();
+      await Promise.all(names.filter(name => name.startsWith('ngsw:')).map(name => caches.delete(name)));
     } catch {
-      // Nothing to unregister; the reload is still worth a try.
+      // Nothing to clear; the reload is still worth a try.
     }
     this.reload();
   }

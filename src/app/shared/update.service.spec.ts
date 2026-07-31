@@ -147,6 +147,21 @@ describe('UpdateService', () => {
     expect(Number(sessionStorage.getItem('katsu.sw-reloads'))).toBeLessThanOrEqual(2);
   });
 
+  it('takes the worker caches with it, and leaves the schedule alone', async () => {
+    const deleted: string[] = [];
+    vi.stubGlobal('caches', {
+      keys: () => Promise.resolve(['ngsw:/:db:control', 'ngsw:/:1:assets:app:cache', 'other-cache']),
+      delete: (name: string) => { deleted.push(name); return Promise.resolve(true); },
+    });
+    vi.stubGlobal('navigator', { serviceWorker: { getRegistration: () => Promise.resolve(undefined) } });
+    const { swUpdate, reload } = setUp();
+
+    swUpdate.unrecoverable.next({ type: 'UNRECOVERABLE_STATE', reason: 'missing' });
+    await vi.waitFor(() => expect(reload).toHaveBeenCalledOnce());
+
+    expect(deleted).toEqual(['ngsw:/:db:control', 'ngsw:/:1:assets:app:cache']);
+  });
+
   it('leaves a practice round alone', async () => {
     const { swUpdate, reload } = setUp('/review');
 
