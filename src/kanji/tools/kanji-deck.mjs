@@ -14,7 +14,8 @@
  * A meaning is the whole question in a review, so when adding kanji:
  *
  * - Pick words that mean one thing on their own. 台 was "standaard", which is
- *   both a stand and a default; it is now "voetstuk".
+ *   both a stand and a default; it is now "platform, standaard", where the
+ *   two senses pin each other down.
  * - Never let two kanji claim the same word, in either language. Write the
  *   sense that separates them instead - 森 is a "woud", 林 a "bos".
  *
@@ -33,7 +34,7 @@ export const deck = [
   { kanji: '花', grade: 1, meaning: { en: 'flower', nl: 'bloem' }, on: 'カ', kun: 'はな' },
   { kanji: '貝', grade: 1, meaning: { en: 'shellfish', nl: 'schelp' }, on: '', kun: 'かい' },
   { kanji: '学', grade: 1, meaning: { en: 'study', nl: 'leren' }, on: 'ガク', kun: 'まな.ぶ' },
-  { kanji: '気', grade: 1, meaning: { en: 'spirit, air', nl: 'energie, gevoel' }, on: 'キ', kun: '' },
+  { kanji: '気', grade: 1, meaning: { en: 'spirit, air', nl: 'geest, stemming' }, on: 'キ', kun: '' },
   { kanji: '九', grade: 1, meaning: { en: 'nine', nl: 'negen' }, on: 'キュウ', kun: 'ここの' },
   { kanji: '休', grade: 1, meaning: { en: 'rest', nl: 'rusten' }, on: 'キュウ', kun: 'やす.む' },
   { kanji: '玉', grade: 1, meaning: { en: 'jewel, ball', nl: 'edelsteen, bal' }, on: 'ギョク', kun: 'たま' },
@@ -191,7 +192,7 @@ export const deck = [
   { kanji: '新', grade: 2, meaning: { en: 'new', nl: 'nieuw' }, on: 'シン', kun: 'あたら.しい' },
   { kanji: '親', grade: 2, meaning: { en: 'parent', nl: 'ouder' }, on: 'シン', kun: 'おや' },
   { kanji: '図', grade: 2, meaning: { en: 'diagram, map', nl: 'schema, plattegrond' }, on: 'ズ', kun: 'はか.る' },
-  { kanji: '数', grade: 2, meaning: { en: 'count, quantity', nl: 'aantal, tellen' }, on: 'スウ', kun: 'かず' },
+  { kanji: '数', grade: 2, meaning: { en: 'count, figures', nl: 'aantal, tellen' }, on: 'スウ', kun: 'かず' },
   { kanji: '西', grade: 2, meaning: { en: 'west', nl: 'west' }, on: 'セイ', kun: 'にし' },
   { kanji: '声', grade: 2, meaning: { en: 'voice', nl: 'stem' }, on: 'セイ', kun: 'こえ' },
   { kanji: '星', grade: 2, meaning: { en: 'star', nl: 'ster' }, on: 'セイ', kun: 'ほし' },
@@ -206,13 +207,13 @@ export const deck = [
   { kanji: '多', grade: 2, meaning: { en: 'many', nl: 'veel' }, on: 'タ', kun: 'おお.い' },
   { kanji: '太', grade: 2, meaning: { en: 'thick, fat', nl: 'dik' }, on: 'タイ', kun: 'ふと.い' },
   { kanji: '体', grade: 2, meaning: { en: 'body', nl: 'lichaam' }, on: 'タイ', kun: 'からだ' },
-  { kanji: '台', grade: 2, meaning: { en: 'platform', nl: 'voetstuk' }, on: 'ダイ', kun: '' },
-  { kanji: '地', grade: 2, meaning: { en: 'ground', nl: 'bodem' }, on: 'チ', kun: '' },
+  { kanji: '台', grade: 2, meaning: { en: 'platform', nl: 'platform, standaard' }, on: 'ダイ', kun: '' },
+  { kanji: '地', grade: 2, meaning: { en: 'ground', nl: 'bodem, terrein' }, on: 'チ', kun: '' },
   { kanji: '池', grade: 2, meaning: { en: 'pond', nl: 'vijver' }, on: 'チ', kun: 'いけ' },
   { kanji: '知', grade: 2, meaning: { en: 'know', nl: 'weten' }, on: 'チ', kun: 'し.る' },
   { kanji: '茶', grade: 2, meaning: { en: 'tea', nl: 'thee' }, on: 'チャ', kun: '' },
   { kanji: '昼', grade: 2, meaning: { en: 'daytime', nl: 'middag, overdag' }, on: 'チュウ', kun: 'ひる' },
-  { kanji: '長', grade: 2, meaning: { en: 'long, chief', nl: 'lang, chef' }, on: 'チョウ', kun: 'なが.い' },
+  { kanji: '長', grade: 2, meaning: { en: 'long, chief', nl: 'lang, leider' }, on: 'チョウ', kun: 'なが.い' },
   { kanji: '鳥', grade: 2, meaning: { en: 'bird', nl: 'vogel' }, on: 'チョウ', kun: 'とり' },
   { kanji: '朝', grade: 2, meaning: { en: 'morning', nl: 'ochtend' }, on: 'チョウ', kun: 'あさ' },
   { kanji: '直', grade: 2, meaning: { en: 'straight, fix', nl: 'recht, herstellen' }, on: 'チョク', kun: 'なお.す' },

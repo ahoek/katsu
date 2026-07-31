@@ -229,10 +229,19 @@ is not also a word. Adding a language means adding a key per entry and
 regenerating; anything missing falls back to English.
 
 Every meaning has to identify its character on its own, because that is all a
-review gives you besides the readings. Two kanji sharing a gloss makes the review
-unanswerable, so the deck is checked for collisions - exact ones and pairs that
-merely start alike - and the loser gets a sharper word: 画 *beeld* against 絵
-*tekening*, 字 *schriftteken*, 内 *binnenkant* against 入 *binnengaan*.
+review gives you besides the readings, and two rules follow from that.
+
+A word that means two things asks the wrong question: 台 as *standaard* reads as
+"write the kanji for default". The fix is not a rarer word of my own - it is the
+dictionary's own senses side by side, *platform, standaard*, each ruling the
+other's second meaning out.
+
+No two kanji may claim the same word either, in either language: asked for
+*grond*, someone who writes 土 cannot be told 地 was wanted. `stroke-data.spec.ts`
+fails on any overlap in the generated file, allowing only the family words, which
+are never alone - *oudere broer* against *oudere zus*. The loser of a collision
+gets the sense that separates it: 画 *beeld* against 絵 *tekening*, 森 *woud*
+against 林 *bos*, 内 *binnenkant* against 入 *binnengaan*.
 
 ## Regenerating the stroke data
 
