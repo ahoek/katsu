@@ -1,3 +1,62 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <!-- The app's one navigation: every trainer and every shell page, so a new
+       trainer later is a new line here and nothing else. -->
+  <ion-menu side="end" contentId="main-content">
+    <ion-header class="app-chrome">
+      <ion-toolbar>
+        <span class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu</span>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list lines="none">
+        <ion-menu-toggle>
+          <ion-item
+            button
+            detail="false"
+            routerLink="/home"
+            routerDirection="root"
+            routerLinkActive="menu-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <ion-icon slot="start" name="repeat-outline" aria-hidden="true"></ion-icon>
+            <ion-label>{{ 'menu.conjugation' | translate }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item button detail="false" routerLink="/kanji" routerDirection="root" routerLinkActive="menu-active">
+            <ion-icon slot="start" name="brush-outline" aria-hidden="true"></ion-icon>
+            <ion-label>
+              {{ 'home.kanji' | translate }}
+              <span class="alpha-tag">{{ 'home.kanji-tag' | translate }}</span>
+              <ion-note>{{ 'home.kanji-note' | translate }}</ion-note>
+            </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item button detail="false" routerLink="/information" routerDirection="root" routerLinkActive="menu-active">
+            <ion-icon slot="start" name="help-circle-outline" aria-hidden="true"></ion-icon>
+            <ion-label>{{ 'setting.info' | translate }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item button detail="false" routerLink="/preferences" routerDirection="root" routerLinkActive="menu-active">
+            <ion-icon slot="start" name="settings-outline" aria-hidden="true"></ion-icon>
+            <ion-label>{{ 'preferences.title' | translate }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle>
+          <ion-item button detail="false" routerLink="/about" routerDirection="root" routerLinkActive="menu-active">
+            <ion-icon slot="start" name="person-circle-outline" aria-hidden="true"></ion-icon>
+            <ion-label>{{ 'about.title' | translate }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

@@ -33,20 +33,23 @@ writing](src/kanji/README.md). The pattern for living together is **one shell,
 sibling features**:
 
 * **The shell** (`src/app`) owns everything both trainers need: routing, the
-  home page, preferences, i18n bootstrapping, theme, settings persistence,
-  service-worker updates and analytics. The cross-cutting services live in
-  `src/app/shared`.
+  navigation menu, the home page, the options page, i18n bootstrapping, theme,
+  settings persistence, service-worker updates and analytics. The cross-cutting
+  services live in `src/app/shared`.
 * **A trainer is a lazily-loaded feature**: its own routes file, pages,
   services and storage namespace, and its own translations installed when the
-  feature is entered. Nothing of it lands in the initial bundle.
-* **The dependency rule**: a feature may import from `src/app/shared`; features
-  never import from each other; the shell knows a feature only by the one line
-  in `app.routes.ts` that loads its routes.
+  feature is entered. Nothing of it lands in the initial bundle - that is the
+  one boundary worth keeping.
+* **Sharing is the point, not the exception**: features use the shell's
+  services and components freely, and the shell reaches into a feature where
+  that reads best (the options page shows the kanji pad switches next to
+  everything else). Lazy loading already keeps the bundles apart; the code does
+  not need to be kept apart as well.
 * **Settings split by reach**: app-wide options (theme, language) belong to the
-  shell's `SettingsService`, and a feature surfaces them through that same
-  service, so a change made anywhere holds everywhere. Options only one trainer
-  understands stay inside that trainer (the kanji pad annotations, the
-  conjugation forms).
+  shell's `SettingsService`, so a change made anywhere holds everywhere.
+  Options only one trainer understands keep their own service (the kanji pad
+  annotations, the conjugation forms), and the shared options page shows them
+  all, grouped by reach.
 
 The kanji feature already has the target shape. Conjugation is still interwoven
 with the shell (`home`, `review` and `summary` are its pages); the way to unify

@@ -94,7 +94,13 @@
     "skipped": "Overgeslagen"
   },
   "preferences": {
-    "title": "Opties"
+    "title": "Opties",
+    "group": {
+      "conjugation": "Vervoeging",
+      "kanji": "Kanji schrijven"
+    },
+    "kanji-arrows": "Richtingspijlen bij voorbeelden",
+    "kanji-numbers": "Streeknummers bij voorbeelden"
   },
   "explanation": {
     "group": {
@@ -169,9 +175,9 @@
     "na-adjective-normal": "Na-adjectief: het koppelwoord wordt vervoegd: だ, ではない, だった, ではなかった; neutraal です, ではありません, でした, ではありませんでした."
   },
   "title": {
-    "home": "Katsu: oefen Japanse vervoeging - 活用",
+    "home": "Katsu: oefen Japanse vervoeging en kanji - 活用",
     "preferences": "Opties - Katsu",
-    "information": "Informatie - Katsu",
+    "information": "Uitleg - Katsu",
     "review": "Oefenen - Katsu",
     "summary": "Samenvatting - Katsu",
     "about": "Over de maker - Katsu",
@@ -179,21 +185,23 @@
   },
   "information": {
     "title": "Zo werkt Katsu",
-    "lead": "Met Katsu (活用, katsuyō: vervoeging) oefen je de vervoeging van Japanse werkwoorden en adjectieven met een eindeloze stroom vragen. Gratis, zonder account, werkt offline.",
+    "lead": "Katsu (活用, katsuyō: vervoeging) is twee gratis trainers in één app: een eindeloze stroom vervoegingsvragen, en kanji leren schrijven in de juiste streekvolgorde. Gratis, zonder account, werkt offline.",
     "how": {
-      "title": "Oefenen in drie stappen",
+      "title": "Vervoegen in drie stappen",
       "step1": "Kies wat je wilt oefenen: vormen, woordsoorten en je JLPT-niveau. Je kunt dit altijd aanpassen, ook tijdens het oefenen.",
       "step2": "Typ je antwoord in het 答え-veld. Romaji wordt tijdens het typen omgezet naar hiragana, dus een Japans toetsenbord is niet nodig. Hiragana, katakana en kanji zijn allemaal goed.",
       "step3": "Druk op enter om te controleren. Goede antwoorden kleuren groen; bij een fout zie je het juiste antwoord met een stap-voor-stap uitleg. Druk nog een keer op enter voor de volgende vraag."
     },
-    "guide": {
-      "title": "Vervoegingsgids",
-      "lead": "Alle vormen die Katsu vraagt, met de regel en een voorbeeld met het werkwoord 書く (schrijven)."
+    "kanji": {
+      "title": "Kanji schrijven in drie stappen",
+      "step1": "Elke kanji begint met een les: bekijk de streekvolgorde, trek het teken één keer over en schrijf het daarna uit je hoofd.",
+      "step2": "Teken op het schrijfvlak met je vinger of muis. Elke streek wordt gecontroleerd op vorm, volgorde en richting, en hints staan klaar als je vastzit.",
+      "step3": "Geleerde kanji komen terug als herhalingen, gespreid van vier uur tot vier maanden. Foutloos geschreven blijven ze langer weg; met Jouw apparaten neem je het schema mee naar een ander apparaat."
     }
   },
   "description": {
-    "home": "Katsu is een gratis oefenapp voor de vervoeging van Japanse werkwoorden en adjectieven. Oefen de te-vorm, potentialis, passivum, causativum en meer, van JLPT N5 tot N1.",
-    "information": "Zo werkt Japanse vervoeging: regels en voorbeelden voor de te-vorm, potentialis, passivum, causativum, conditionalis en meer. De gids achter de oefenapp Katsu.",
+    "home": "Katsu is een gratis oefenapp voor Japans: oefen de vervoeging van werkwoorden en adjectieven van JLPT N5 tot N1, en leer kanji schrijven in de juiste streekvolgorde.",
+    "information": "Zo werkt Katsu: een eindeloze stroom Japanse vervoegingsvragen en kanji leren schrijven in de juiste streekvolgorde, uitgelegd in drie stappen per trainer.",
     "about": "Katsu is gemaakt door Arthur Hoek, ontwikkelaar uit Nederland. De app is gratis en open source (MIT). Contact, GitHub en fooi.",
     "kanji": "Oefen het schrijven van de 240 kanji die Japanse kinderen in hun eerste twee schooljaren leren, streek voor streek, in de juiste streekvolgorde."
   },
@@ -216,5 +224,9 @@
   },
   "credit": {
     "by": "gemaakt door Arthur Hoek"
+  },
+  "menu": {
+    "conjugation": "Vervoeging",
+    "title": "Menu"
   }
 }

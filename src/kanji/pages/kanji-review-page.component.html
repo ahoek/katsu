@@ -3,6 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/kanji"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button [attr.aria-label]="'menu.title' | translate"></ion-menu-button>
+    </ion-buttons>
 
     @if (!finished() && queue().length) {
       <span class="counter">

@@ -1,16 +1,10 @@
 <ion-header class="app-chrome">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
+    <!-- No back button: since the menu, this page is a sibling of the
+         conjugation home, not a child of it. -->
+    <span class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu</span>
     <ion-buttons slot="end">
-      <ion-button
-        routerLink="/kanji/options"
-        routerDirection="forward"
-        [attr.aria-label]="'kanji.options.title' | translate"
-      >
-        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
-      </ion-button>
+      <ion-menu-button [attr.aria-label]="'menu.title' | translate"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -19,7 +13,7 @@
   <div class="path">
     <h1 class="path__heading">{{ 'kanji.path.title' | translate }}</h1>
 
-    <section class="card">
+    <section class="card frosted-card">
       <h3 class="card__title">
         <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
         {{ 'kanji.path.reviews-title' | translate }}
@@ -45,7 +39,7 @@
       }
     </section>
 
-    <section class="card">
+    <section class="card frosted-card">
       <h3 class="card__title">
         <ion-icon name="school-outline" aria-hidden="true"></ion-icon>
         {{ 'kanji.path.lessons-title' | translate }}
@@ -65,7 +59,7 @@
       }
     </section>
 
-    <section class="card">
+    <section class="card frosted-card">
       <p class="card__lead">
         {{ 'kanji.progress' | translate: { done: learnedCount(), total: characters().length } }}
       </p>

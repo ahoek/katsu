@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import {
   IonBackButton,
   IonButtons,
+  IonMenuButton,
   IonContent,
   IonHeader,
   IonToolbar,
@@ -28,6 +29,7 @@ import { KanjiSrsService } from '../kanji-srs.service';
     RouterLink,
     IonBackButton,
     IonButtons,
+    IonMenuButton,
     IonContent,
     IonHeader,
     IonToolbar,

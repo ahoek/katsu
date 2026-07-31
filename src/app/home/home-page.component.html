@@ -2,26 +2,15 @@
   <ion-toolbar>
     <span class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu</span>
     <ion-buttons slot="end">
-      <ion-button routerLink="/information" routerDirection="forward">
-        <ion-icon slot="start" name="help-circle-outline"></ion-icon>
-        {{ 'setting.info'|translate }}
-      </ion-button>
-      <ion-button routerLink="/preferences" routerDirection="forward" [attr.aria-label]="'preferences.title'|translate">
-        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
-      </ion-button>
+      <ion-menu-button [attr.aria-label]="'menu.title'|translate"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="patterned" [fullscreen]="true">
-  <h1 class="sr-only">Katsu: practise Japanese conjugation - 活用</h1>
+  <h1 class="sr-only">Katsu: practise Japanese conjugation and kanji - 活用</h1>
   <h2 class="page-heading">{{'setting.title'|translate}}</h2>
   <app-review-settings></app-review-settings>
-  <p class="kanji-link">
-    <a routerLink="/kanji" routerDirection="forward">{{'home.kanji'|translate}}</a>
-    <span class="kanji-link__tag">{{'home.kanji-tag'|translate}}</span>
-    <span class="kanji-link__note">{{'home.kanji-note'|translate}}</span>
-  </p>
   <app-credit></app-credit>
 </ion-content>
 

@@ -60,12 +60,6 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       browse: {
         title: 'All kanji',
       },
-      options: {
-        title: 'Options',
-        arrows: 'Direction arrows on examples',
-        numbers: 'Stroke numbers on examples',
-        'shared-note': 'Theme and language apply to all of Katsu.',
-      },
       sync: {
         title: 'Your devices',
         lead: 'Move your review schedule between devices, or keep a copy of it.',
@@ -195,12 +189,6 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       },
       browse: {
         title: 'Alle kanji',
-      },
-      options: {
-        title: 'Opties',
-        arrows: 'Richtingspijlen bij voorbeelden',
-        numbers: 'Streeknummers bij voorbeelden',
-        'shared-note': 'Thema en taal gelden voor heel Katsu.',
       },
       sync: {
         title: 'Jouw apparaten',

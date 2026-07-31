@@ -31,12 +31,6 @@ export const kanjiRoutes: Routes = [
       import('./pages/kanji-sync-page.component').then(m => m.KanjiSyncPageComponent),
   },
   {
-    path: 'options',
-    title: 'title.kanji',
-    loadComponent: () =>
-      import('./pages/kanji-options-page.component').then(m => m.KanjiOptionsPageComponent),
-  },
-  {
     path: 'practice',
     title: 'title.kanji',
     loadComponent: () =>

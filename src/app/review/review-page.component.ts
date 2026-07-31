@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import {
   IonButton,
   IonButtons,
+  IonMenuButton,
   IonCol,
   IonContent,
   IonGrid,
@@ -62,6 +63,7 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
     RouterLink,
     IonButton,
     IonButtons,
+    IonMenuButton,
     IonCol,
     IonContent,
     IonGrid,

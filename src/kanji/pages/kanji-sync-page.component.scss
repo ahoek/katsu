@@ -20,9 +20,7 @@
 .card {
   margin-bottom: 16px;
   padding: 16px;
-  background: color-mix(in srgb, var(--ion-background-color) 82%, transparent);
-  border: 1px solid var(--ion-border-color, var(--ion-color-light-shade));
-  border-radius: 12px;
+  // The surface itself is .frosted-card, from global.scss.
 
   &__title {
     margin: 0 0 8px;

@@ -1,18 +1,18 @@
 import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
-  IonBackButton,
   IonButton,
   IonButtons,
   IonContent,
   IonHeader,
   IonIcon,
+  IonMenuButton,
   IonRouterLink,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { arrowBack, arrowForward, brushOutline, schoolOutline, settingsOutline, timeOutline } from 'ionicons/icons';
+import { arrowForward, brushOutline, schoolOutline, timeOutline } from 'ionicons/icons';
 
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
@@ -33,12 +33,12 @@ import { countdown } from '../srs/srs';
   imports: [
     RouterLink,
     IonRouterLink,
-    IonBackButton,
     IonButton,
     IonButtons,
     IonContent,
     IonHeader,
     IonIcon,
+    IonMenuButton,
     IonToolbar,
     TranslatePipe,
   ],
@@ -81,7 +81,7 @@ export class KanjiPathPageComponent implements OnInit {
 
   constructor() {
     installKanjiTranslations(this.translate);
-    addIcons({ arrowBack, arrowForward, brushOutline, schoolOutline, settingsOutline, timeOutline });
+    addIcons({ arrowForward, brushOutline, schoolOutline, timeOutline });
   }
 
   async ngOnInit(): Promise<void> {
