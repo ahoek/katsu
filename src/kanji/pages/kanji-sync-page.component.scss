@@ -1,0 +1,98 @@
+.sync {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 8px 16px 24px;
+
+  &__heading {
+    margin: 8px 0 4px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ion-color-medium);
+  }
+
+  &__lead {
+    margin: 0 0 16px;
+    font-size: .85rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+.card {
+  margin-bottom: 16px;
+  padding: 16px;
+  background: color-mix(in srgb, var(--ion-background-color) 82%, transparent);
+  border: 1px solid var(--ion-border-color, var(--ion-color-light-shade));
+  border-radius: 12px;
+
+  &__title {
+    margin: 0 0 8px;
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--ion-color-medium);
+  }
+
+  &__note {
+    margin: 0 0 12px;
+    font-size: .8rem;
+    color: var(--ion-color-medium);
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+
+    ion-button {
+      --color: var(--app-color-link);
+      font-size: .8rem;
+    }
+  }
+
+  ion-button[expand='block'] {
+    --border-radius: 999px;
+    margin: 12px 0 0;
+  }
+}
+
+.code {
+  margin: 0 0 8px;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 1.15rem;
+  letter-spacing: .06em;
+  // Long enough to wrap on a narrow phone; keep the groups together.
+  overflow-wrap: anywhere;
+}
+
+.result,
+.error,
+.unavailable,
+.privacy {
+  font-size: .85rem;
+}
+
+.result {
+  margin: 0 0 16px;
+  color: var(--ion-color-success);
+
+  ion-icon {
+    vertical-align: -2px;
+  }
+}
+
+.error {
+  margin: 0 0 16px;
+  color: var(--ion-color-danger);
+}
+
+.unavailable,
+.privacy {
+  margin: 0 0 16px;
+  color: var(--ion-color-medium);
+}
+
+.privacy {
+  margin-top: 8px;
+  font-size: .75rem;
+}

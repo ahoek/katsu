@@ -99,6 +99,44 @@ altogether, however badly it goes.
   so a six-month ladder can be tested in a millisecond.
   `kanji-srs.service.ts` stores it and works out what is due.
 
+## Moving between devices
+
+`/kanji/sync` does two things, and only the second needs a server:
+
+- **A backup file.** The schedule packed into a text file, and read back in.
+  Needs nothing at all, and is worth keeping regardless: a browser that has not
+  seen the app for a week may clear its storage.
+- **A sync code.** One device makes a code, the other is given it, and from then
+  on either can pull, merge and push. No email, no password, no account - the
+  code is the only credential, and it holds nothing but the schedule.
+
+Both go through `sync/schedule-code.ts`, which packs cards into a compact string,
+and `sync/schedule-merge.ts`, which folds two schedules together. The merge rule
+is the important part: **per kanji, the card reviewed more times wins, with a
+later `updatedAt` breaking a tie.** Deliberately not "newest write wins" - a
+device that has been offline a week still writes with today's timestamp, and
+would otherwise drag a kanji back down the ladder it had already climbed
+elsewhere. Because the rule only moves a card towards more work done, merging is
+commutative: either device can merge the other's schedule, in any order, and
+they converge. A write lost to two devices syncing at the same moment repairs
+itself on the next sync, since each still holds its own state.
+
+### The server, and why GitHub Pages cannot be it
+
+Pages serves static files and stores nothing, so a sync code needs somewhere to
+put the schedule. That is the whole of `server/katsu-sync-worker.js`: one
+Cloudflare Worker over one KV namespace, which keeps an opaque string per code
+and knows nothing else. The app stays on Pages and calls it cross-origin, so
+only the Worker's `ALLOWED_ORIGIN` and the URL in `sync/sync-endpoint.ts` tie
+them together.
+
+`SYNC_ENDPOINT` ships empty, which switches the code-based half off: the sync
+screen then offers only the backup file. Nothing else in the feature notices.
+
+A schedule is about 3 kB at 240 kanji and would be around 32 kB at 2500, so the
+storage and traffic are negligible; the reason to think twice is the moving part,
+not the bill.
+
 ## No account needed
 
 The schedule is a handful of numbers per kanji, so all of this works offline
@@ -107,11 +145,10 @@ with nothing signed in. It is kept in the app's IndexedDB storage
 script-writable storage after about a week without a visit, and asks for
 persistent storage to push that off. Home-screen installs are exempt.
 
-If accounts ever arrive, the schedule is ready for them: one record per kanji,
-each stamped with `updatedAt`, so two devices can be merged by timestamp instead
-of needing a migration. What is missing without an account is sync between
-devices and recovery after site data is cleared - export and import of the
-schedule as JSON would cover most of that without a backend.
+A sync code is a bearer token: whoever holds it can read and write that
+schedule, and there is no email to recover it with. That is the trade for having
+no sign-up, and it is why the backup file matters - it is the only way back if
+every device loses the code.
 
 ## The deck
 
@@ -170,6 +207,10 @@ MIT-licensed code.
 - No cap on how many lessons or reviews a day, and no way to reset a kanji or
   the whole schedule from the interface. At 240 kanji a day's reviews can pile
   up, which makes a daily cap the next thing worth having.
+- Syncing is manual: there is a button, not a background sync on app start. A
+  deliberate reset also has no way to travel - with a merge that only moves
+  towards more work done, wiping one device would be undone by the next sync,
+  which would need a tombstone to express.
 - Reviews only ever ask for writing. Recognition and readings are untested
   ground here, and the conjugation side of the app already covers reading.
 - Stroke shape is judged, but not how a stroke should taper or hook.

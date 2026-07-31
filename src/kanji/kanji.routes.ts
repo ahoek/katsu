@@ -25,6 +25,12 @@ export const kanjiRoutes: Routes = [
       import('./pages/kanji-review-page.component').then(m => m.KanjiReviewPageComponent),
   },
   {
+    path: 'sync',
+    title: 'title.kanji',
+    loadComponent: () =>
+      import('./pages/kanji-sync-page.component').then(m => m.KanjiSyncPageComponent),
+  },
+  {
     path: 'practice',
     title: 'title.kanji',
     loadComponent: () =>

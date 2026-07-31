@@ -1,6 +1,7 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
+import { MergeResult, mergeSchedules } from './sync/schedule-merge';
 import {
   Attempt,
   Card,
@@ -87,6 +88,22 @@ export class KanjiSrsService {
     const card = applyReview(existing, grade, Date.now());
     this.save(card);
     return { card, grade, previousStage: existing.stage };
+  }
+
+  /**
+   * Fold in a schedule from somewhere else - another device, or an exported
+   * file. Non-destructive: the merge only ever moves a card towards more work
+   * done, so nothing already earned here is lost.
+   */
+  merge(theirs: readonly Card[]): MergeResult {
+    const result = mergeSchedules(this.cards(), theirs);
+
+    if (result.added.length || result.updated.length) {
+      this.schedule.set(Object.fromEntries(result.cards.map(card => [card.kanji, card])));
+      this.clock.set(Date.now());
+      this.write();
+    }
+    return result;
   }
 
   /** Forget everything, for a fresh run through the deck. */
