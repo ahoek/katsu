@@ -220,6 +220,10 @@
     "tip": {
       "title": "Fooi geven",
       "text": "Katsu is gratis en zonder advertenties. Helpt het je? Dan kun je een kopje koffie doneren:"
+    },
+    "credits": {
+      "title": "Bronnen",
+      "text": "De streekvolgorde van de kanji komt uit het KanjiVG-project van Ulrich Apel, gebruikt onder de CC BY-SA 3.0-licentie."
     }
   },
   "credit": {
@@ -227,6 +231,8 @@
   },
   "menu": {
     "conjugation": "Vervoeging",
-    "title": "Menu"
+    "title": "Menu",
+    "kanji-practice": "Vrij oefenen",
+    "kanji-devices": "Jouw apparaten"
   }
 }

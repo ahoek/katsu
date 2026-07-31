@@ -95,33 +95,4 @@
   }
 }
 
-.practice {
-  margin: 4px 0 0;
-  text-align: center;
-  font-size: .85rem;
 
-  a {
-    color: var(--app-color-link);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-
-    ion-icon {
-      vertical-align: -2px;
-      margin-inline-end: 4px;
-    }
-  }
-
-  &__note {
-    display: block;
-    margin-top: 2px;
-    font-size: .75rem;
-    color: var(--ion-color-medium);
-  }
-}
-
-.source {
-  margin: 24px 0 0;
-  text-align: center;
-  font-size: .7rem;
-  color: var(--ion-color-medium);
-}

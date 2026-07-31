@@ -220,6 +220,10 @@
     "tip": {
       "title": "Leave a tip",
       "text": "Katsu is free and has no ads. If it helps you, you can buy me a coffee:"
+    },
+    "credits": {
+      "title": "Credits",
+      "text": "The kanji stroke order comes from the KanjiVG project by Ulrich Apel, used under the CC BY-SA 3.0 license."
     }
   },
   "credit": {
@@ -227,6 +231,8 @@
   },
   "menu": {
     "conjugation": "Conjugation",
-    "title": "Menu"
+    "title": "Menu",
+    "kanji-practice": "Free practice",
+    "kanji-devices": "Your devices"
   }
 }

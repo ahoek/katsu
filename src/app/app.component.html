@@ -34,6 +34,38 @@
           </ion-item>
         </ion-menu-toggle>
 
+        <!-- Indenting alone did not say "part of kanji writing"; the rail down
+             the left of this group does. -->
+        <div class="menu-children">
+          <ion-menu-toggle>
+            <ion-item
+              class="menu-sub"
+              button
+              detail="false"
+              routerLink="/kanji/practice"
+              routerDirection="root"
+              routerLinkActive="menu-active"
+            >
+              <ion-icon slot="start" name="pencil-outline" aria-hidden="true"></ion-icon>
+              <ion-label>{{ 'menu.kanji-practice' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle>
+            <ion-item
+              class="menu-sub"
+              button
+              detail="false"
+              routerLink="/kanji/sync"
+              routerDirection="root"
+              routerLinkActive="menu-active"
+            >
+              <ion-icon slot="start" name="phone-portrait-outline" aria-hidden="true"></ion-icon>
+              <ion-label>{{ 'menu.kanji-devices' | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </div>
+
         <ion-menu-toggle>
           <ion-item button detail="false" routerLink="/information" routerDirection="root" routerLinkActive="menu-active">
             <ion-icon slot="start" name="help-circle-outline" aria-hidden="true"></ion-icon>

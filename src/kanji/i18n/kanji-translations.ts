@@ -40,7 +40,6 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       picker: 'Choose a kanji',
       progress: '{{done}} of {{total}} learned',
       loading: 'Loading kanji...',
-      source: 'Stroke data from KanjiVG, CC BY-SA 3.0',
       demo: {
         write: 'Write it yourself',
         replay: 'Play again',
@@ -170,7 +169,6 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       picker: 'Kies een kanji',
       progress: '{{done}} van {{total}} geleerd',
       loading: 'Kanji laden...',
-      source: 'Streekdata van KanjiVG, CC BY-SA 3.0',
       demo: {
         write: 'Zelf schrijven',
         replay: 'Nog een keer',
