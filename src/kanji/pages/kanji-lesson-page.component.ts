@@ -78,6 +78,13 @@ export class KanjiLessonPageComponent implements OnInit {
   /** The interval before the first review, named for the screen. */
   readonly firstInterval = computed(() => `kanji.interval.${stageLabel(FIRST_STAGE)}`);
 
+  /**
+   * The character is shown while it is being taught and once it is done, but not
+   * while it is being written: sitting above the pad, it turns the writing steps
+   * into copying.
+   */
+  readonly showCharacter = computed(() => this.phase() === 'watch' || this.phase() === 'done');
+
   constructor() {
     installKanjiTranslations(this.translate);
     addIcons({ arrowBack, arrowForward, checkmarkCircle, refreshOutline });
