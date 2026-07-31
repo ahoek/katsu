@@ -90,8 +90,22 @@
             [interactive]="false"
             [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
           ></app-kanji-stroke-pad>
+
+          <!-- The way on is in the footer; this stays here, as the quieter
+               choice, for a kanji that does not feel learnt yet. -->
+          <div class="actions">
+            <ion-button fill="clear" size="small" (click)="practiseAgain()">
+              <ion-icon slot="start" name="refresh-outline"></ion-icon>
+              {{ 'kanji.lesson.again' | translate }}
+            </ion-button>
+          </div>
+
           <p class="step__note">
             {{ 'kanji.lesson.add-note' | translate: { interval: firstInterval() | translate } }}
+            @if (recalls() > 1) {
+              <br />
+              {{ 'kanji.lesson.recall-count' | translate: { count: recalls() } }}
+            }
           </p>
         }
       }

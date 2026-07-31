@@ -62,6 +62,9 @@ export class KanjiLessonPageComponent implements OnInit {
 
   readonly phase = signal<Phase>('watch');
 
+  /** Times it has been written from memory, the trace not counted. */
+  readonly recalls = signal(0);
+
 
   readonly strokes = computed<readonly string[]>(() => this.character()?.strokes ?? []);
 
@@ -114,7 +117,17 @@ export class KanjiLessonPageComponent implements OnInit {
   }
 
   finishRecall(): void {
+    this.recalls.update(recalls => recalls + 1);
     this.phase.set('done');
+  }
+
+  /**
+   * Another go from memory. Nothing is written down for it: the schedule only
+   * hears about the kanji when it is handed over, so practising until it sticks
+   * costs nothing but does not buy a longer first interval either.
+   */
+  practiseAgain(): void {
+    this.phase.set('recall');
   }
 
   /** Put the kanji into the schedule and go on to the next lesson. */
