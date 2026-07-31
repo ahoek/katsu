@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { UpdateService } from './update.service';
 
 const RELOADED_FOR = 'katsu.reloaded-for';
+const RELOAD_COUNT = 'katsu.sw-reloads';
 
 function ready(hash: string): VersionEvent {
   return {
@@ -57,7 +58,10 @@ function setUp(url = '/home') {
 }
 
 describe('UpdateService', () => {
-  beforeEach(() => sessionStorage.removeItem(RELOADED_FOR));
+  beforeEach(() => {
+    sessionStorage.removeItem(RELOADED_FOR);
+    sessionStorage.removeItem(RELOAD_COUNT);
+  });
   afterEach(() => vi.unstubAllGlobals());
 
   it('activates the new version before reloading, so it is not offered again', async () => {
@@ -107,6 +111,40 @@ describe('UpdateService', () => {
     second.swUpdate.versionUpdates.next(ready('newer'));
 
     await vi.waitFor(() => expect(second.reload).toHaveBeenCalledOnce());
+  });
+
+  /**
+   * The hole in the first fix: an unrecoverable worker reports itself on every
+   * load, and only an in-memory flag stood in the way - which every reload
+   * cleared.
+   */
+  it('discards a broken worker, but stops once the budget is gone', async () => {
+    const first = setUp();
+    first.swUpdate.unrecoverable.next({ type: 'UNRECOVERABLE_STATE', reason: 'missing' });
+    await vi.waitFor(() => expect(first.reload).toHaveBeenCalledOnce());
+
+    const second = setUp();
+    second.swUpdate.unrecoverable.next({ type: 'UNRECOVERABLE_STATE', reason: 'missing' });
+    await vi.waitFor(() => expect(second.reload).toHaveBeenCalledOnce());
+
+    // Two reloads is the ceiling: a third load must sit still, however broken.
+    const third = setUp();
+    third.swUpdate.unrecoverable.next({ type: 'UNRECOVERABLE_STATE', reason: 'missing' });
+    await Promise.resolve();
+
+    expect(third.reload).not.toHaveBeenCalled();
+  });
+
+  /** A CDN serving two copies of ngsw.json makes every reason look new. */
+  it('stops reloading even when each version announced is different', async () => {
+    for (const version of ['a', 'b', 'c', 'd', 'e']) {
+      const tab = setUp();
+      tab.swUpdate.versionUpdates.next(ready(version));
+      await Promise.resolve();
+      await Promise.resolve();
+    }
+
+    expect(Number(sessionStorage.getItem('katsu.sw-reloads'))).toBeLessThanOrEqual(2);
   });
 
   it('leaves a practice round alone', async () => {
