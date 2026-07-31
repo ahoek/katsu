@@ -49,8 +49,10 @@ altogether, however badly it goes.
   writing rather than a metronome.
 - **Demonstrating** — `components/stroke-demo.component.ts` writes a whole kanji
   out once, waiting for each stroke to finish before starting the next, and
-  leaves it on the pad. Used by the lesson and by free practice, both of which
-  offer a replay.
+  leaves it on the pad with every stroke numbered, so the order can still be
+  read off once nothing is moving. Used by the lesson and by free practice, both
+  of which offer a replay. The numbers are switched off while someone is
+  writing, where they would give the order away.
 - **Judging** — `stroke/stroke-matcher.ts`. Compares the drawn stroke with the
   model stroke in KanjiVG's 109x109 space and answers one of four things:
   correct, reversed (right shape, drawn backwards), out of order (that is stroke
@@ -108,8 +110,10 @@ node src/kanji/tools/build-stroke-data.mjs
 ```
 
 The script fetches one SVG per character from a pinned KanjiVG tag, keeps the
-stroke paths in writing order, and merges them with the deck above. It fails
-loudly when a character is missing or its stroke numbering has a gap.
+stroke paths in writing order along with KanjiVG's own hand-placed stroke number
+positions, and merges them with the deck above. It fails loudly when a character
+is missing, its stroke numbering has a gap, or it ends up with a different count
+of numbers and strokes. `stroke-data.spec.ts` guards the file that ships.
 
 ## Two things that grow the main bundle
 

@@ -43,6 +43,7 @@
       @if (watching()) {
         <app-kanji-stroke-demo
           [strokes]="strokes()"
+          [numbers]="numbers()"
           [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
         ></app-kanji-stroke-demo>
         <div class="actions">

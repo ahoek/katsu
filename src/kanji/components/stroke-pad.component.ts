@@ -83,6 +83,15 @@ export function strokeTraceMs(path: string, scale = 1): number {
         }
       }
 
+      @if (showNumbers()) {
+        <!-- Described by the pad's own label, so not read out separately. -->
+        <g class="numbers" aria-hidden="true">
+          @for (number of visibleNumbers(); track $index) {
+            <text [attr.x]="number.x" [attr.y]="number.y">{{ $index + 1 }}</text>
+          }
+        </g>
+      }
+
       @if (livePath(); as path) {
         <path class="live" [attr.d]="path" />
       }
@@ -160,6 +169,19 @@ export function strokeTraceMs(path: string, scale = 1): number {
       stroke-width: 5.5;
     }
 
+    .numbers text {
+      // KanjiVG lays these out for a font-size of 8 in the 109 unit square;
+      // smaller keeps the digit clear of a 5.5 unit stroke. The position is the
+      // start of the baseline, so a smaller digit stays inside the same gap.
+      font-size: 4.5px;
+      fill: var(--ion-color-medium);
+      // A halo behind the digit, for where a number does touch a stroke.
+      paint-order: stroke;
+      stroke: var(--ion-background-color);
+      stroke-width: 1.2;
+      stroke-linejoin: round;
+    }
+
     @keyframes trace {
       from { stroke-dashoffset: 100; }
       to { stroke-dashoffset: 0; }
@@ -198,6 +220,14 @@ export class StrokePadComponent {
   /** Mark where the next stroke begins. */
   readonly showStart = input(false);
 
+  /**
+   * Number every stroke that is on the pad, so the order can still be read off
+   * once nothing is moving. Positions come with the stroke data.
+   */
+  readonly showNumbers = input(false);
+
+  readonly numbers = input<readonly Point[]>([]);
+
   readonly feedback = input<'none' | 'wrong'>('none');
 
   /** Off while a stroke order is being demonstrated. */
@@ -222,6 +252,16 @@ export class StrokePadComponent {
   private readonly replayCount = signal(0);
 
   protected readonly writtenStrokes = computed(() => this.strokes().slice(0, this.written()));
+
+  /**
+   * Numbers for the strokes on the pad, including the one being drawn: a stroke
+   * and its number belong together, so the number arrives with the stroke
+   * rather than a stroke later.
+   */
+  protected readonly visibleNumbers = computed(() => {
+    const drawing = this.showStroke() && this.currentStroke() ? 1 : 0;
+    return this.numbers().slice(0, this.written() + drawing);
+  });
 
   protected readonly currentStroke = computed(() => this.strokes()[this.written()] ?? '');
 

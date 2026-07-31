@@ -47,13 +47,44 @@ function strokePaths(svg, kanji) {
   return strokes.map(stroke => stroke.d);
 }
 
+/**
+ * Where KanjiVG puts the stroke numbers. They are placed by hand so they clear
+ * the strokes themselves, which is worth keeping rather than guessing at an
+ * offset from each stroke's start.
+ */
+function strokeNumbers(svg, kanji, strokeCount) {
+  const group = /<g id="kvg:StrokeNumbers_[^"]*"[^>]*>([\s\S]*?)<\/g>/.exec(svg);
+  if (!group) {
+    throw new Error(`No stroke numbers found for ${kanji}`);
+  }
+  const numbers = [...group[1].matchAll(/<text transform="matrix\(([^)]+)\)"[^>]*>(\d+)<\/text>/g)]
+    .map(([, matrix, number]) => {
+      // The last two values of the matrix are the translation.
+      const values = matrix.trim().split(/[\s,]+/).map(Number);
+      return { number: Number(number), x: values[4], y: values[5] };
+    })
+    .sort((a, b) => a.number - b.number);
+
+  if (numbers.length !== strokeCount) {
+    throw new Error(`${kanji} has ${strokeCount} strokes but ${numbers.length} numbers`);
+  }
+  numbers.forEach((entry, index) => {
+    if (entry.number !== index + 1 || !Number.isFinite(entry.x) || !Number.isFinite(entry.y)) {
+      throw new Error(`Stroke number ${index + 1} of ${kanji} is missing or misplaced`);
+    }
+  });
+  return numbers.map(({ x, y }) => ({ x, y }));
+}
+
 async function fetchKanji(entry) {
   const url = `${BASE_URL}/${fileName(entry.kanji)}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`${entry.kanji}: ${response.status} ${url}`);
   }
-  return { ...entry, strokes: strokePaths(await response.text(), entry.kanji) };
+  const svg = await response.text();
+  const strokes = strokePaths(svg, entry.kanji);
+  return { ...entry, strokes, numbers: strokeNumbers(svg, entry.kanji, strokes.length) };
 }
 
 const characters = [];

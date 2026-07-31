@@ -13,6 +13,8 @@ export interface KanjiCharacter {
   kun: string;
   /** SVG paths, one per stroke, drawn in a 109x109 square. */
   strokes: string[];
+  /** Where to print each stroke's number, one per stroke, from KanjiVG. */
+  numbers: { x: number; y: number }[];
 }
 
 export interface KanjiStrokeData {

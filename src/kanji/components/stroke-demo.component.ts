@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, computed, effect, input, signal, untracked } from '@angular/core';
 
+import { Point } from '../stroke/geometry';
 import { StrokePadComponent, strokeTraceMs } from './stroke-pad.component';
 
 /**
@@ -30,6 +31,8 @@ const PAUSE_MS = 200;
       [written]="shown()"
       [showStroke]="true"
       [showStart]="true"
+      [showNumbers]="true"
+      [numbers]="numbers()"
       [interactive]="false"
       [traceScale]="scale"
       [label]="label()"
@@ -49,6 +52,9 @@ const PAUSE_MS = 200;
 })
 export class StrokeDemoComponent implements OnDestroy {
   readonly strokes = input.required<readonly string[]>();
+
+  /** Where to put each stroke's number, from the stroke data. */
+  readonly numbers = input<readonly Point[]>([]);
 
   readonly label = input('');
 

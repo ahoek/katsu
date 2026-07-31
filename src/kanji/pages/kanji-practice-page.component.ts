@@ -68,6 +68,8 @@ export class KanjiPracticePageComponent implements OnInit {
 
   readonly strokes = computed<readonly string[]>(() => this.character()?.strokes ?? []);
 
+  readonly numbers = computed(() => this.character()?.numbers ?? []);
+
   readonly meaning = computed(() => {
     const character = this.character();
     return character ? this.data.meaningOf(character, this.translate.getCurrentLang()) : '';
