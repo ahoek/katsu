@@ -28,49 +28,6 @@ ion-menu {
       line-height: 1.35;
       white-space: normal;
     }
-
-    &.menu-sub {
-      --padding-start: 22px;
-      --background: transparent;
-      font-size: .95rem;
-
-      ion-icon {
-        font-size: 18px;
-      }
-    }
-  }
-}
-
-// A trainer's own pages, hanging off it: indented, and tied to their parent by
-// a rail so the grouping reads at a glance rather than from the indent alone.
-.menu-children {
-  position: relative;
-  margin-inline-start: 30px;
-
-  // The rail, down the whole group.
-  &::before {
-    content: '';
-    position: absolute;
-    inset-block: 0;
-    inset-inline-start: 0;
-    width: 1px;
-    background: rgba(var(--ion-text-color-rgb), .22);
-  }
-
-  // And a tick from it into each child.
-  ion-menu-toggle {
-    display: block;
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      inset-inline-start: 0;
-      width: 10px;
-      height: 1px;
-      background: rgba(var(--ion-text-color-rgb), .22);
-    }
   }
 }
 

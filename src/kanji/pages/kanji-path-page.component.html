@@ -88,5 +88,26 @@
       </dl>
     </section>
 
+    <!-- The two ways off the path: neither is part of the schedule, so they sit
+         apart from the cards above rather than competing with them. -->
+    <nav class="detours">
+      <a class="detour frosted-card" routerLink="/kanji/practice" routerDirection="forward">
+        <ion-icon class="detour__icon" name="brush-outline" aria-hidden="true"></ion-icon>
+        <span class="detour__text">
+          <span class="detour__title">{{ 'kanji.path.practice-title' | translate }}</span>
+          <span class="detour__note">{{ 'kanji.path.practice-note' | translate }}</span>
+        </span>
+        <ion-icon class="detour__go" name="chevron-forward" aria-hidden="true"></ion-icon>
+      </a>
+
+      <a class="detour frosted-card" routerLink="/kanji/sync" routerDirection="forward">
+        <ion-icon class="detour__icon" name="phone-portrait-outline" aria-hidden="true"></ion-icon>
+        <span class="detour__text">
+          <span class="detour__title">{{ 'kanji.sync.title' | translate }}</span>
+          <span class="detour__note">{{ 'kanji.path.devices-note' | translate }}</span>
+        </span>
+        <ion-icon class="detour__go" name="chevron-forward" aria-hidden="true"></ion-icon>
+      </a>
+    </nav>
   </div>
 </ion-content>

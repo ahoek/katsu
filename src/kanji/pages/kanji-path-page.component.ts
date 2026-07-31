@@ -12,7 +12,7 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { arrowForward, brushOutline, schoolOutline, timeOutline } from 'ionicons/icons';
+import { arrowForward, brushOutline, chevronForward, phonePortraitOutline, schoolOutline, timeOutline } from 'ionicons/icons';
 
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
@@ -81,7 +81,7 @@ export class KanjiPathPageComponent implements OnInit {
 
   constructor() {
     installKanjiTranslations(this.translate);
-    addIcons({ arrowForward, brushOutline, schoolOutline, timeOutline });
+    addIcons({ arrowForward, brushOutline, chevronForward, phonePortraitOutline, schoolOutline, timeOutline });
   }
 
   async ngOnInit(): Promise<void> {

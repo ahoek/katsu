@@ -96,3 +96,60 @@
 }
 
 
+
+// The two pages that are not the schedule: a tappable row each, on the same
+// glass as the cards but half their weight, so they read as side doors.
+.detours {
+  display: grid;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.detour {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  color: inherit;
+  text-decoration: none;
+
+  &__icon {
+    flex: none;
+    font-size: 22px;
+    color: var(--app-color-link);
+  }
+
+  &__text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__title {
+    display: block;
+    font-size: .95rem;
+    font-weight: 600;
+  }
+
+  &__note {
+    display: block;
+    margin-top: 1px;
+    font-size: .75rem;
+    line-height: 1.35;
+    color: var(--ion-color-medium);
+  }
+
+  &__go {
+    flex: none;
+    font-size: 16px;
+    color: var(--ion-color-medium);
+  }
+
+  // Touch has no hover, and the glass already says these are surfaces.
+  @media (hover: hover) {
+    transition: border-color 150ms ease-in-out;
+
+    &:hover {
+      border-color: var(--app-color-link);
+    }
+  }
+}
