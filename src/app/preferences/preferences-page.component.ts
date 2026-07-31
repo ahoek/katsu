@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  IonBackButton,
   IonButtons,
+  IonMenuButton,
   IonCheckbox,
   IonContent,
   IonHeader,
@@ -10,6 +10,7 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonListHeader,
   IonNote,
   IonSelect,
   IonSelectOption,
@@ -17,6 +18,7 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
+import { KanjiViewService } from '../../kanji/kanji-view.service';
 import { SettingsService } from '../shared/settings.service';
 import { SpeechService } from '../shared/speech.service';
 import { ThemePreference, ThemeService } from '../shared/theme.service';
@@ -27,8 +29,8 @@ import { ThemePreference, ThemeService } from '../shared/theme.service';
   styleUrls: ['./preferences-page.component.scss'],
   imports: [
     FormsModule,
-    IonBackButton,
     IonButtons,
+    IonMenuButton,
     IonCheckbox,
     IonContent,
     IonHeader,
@@ -36,6 +38,7 @@ import { ThemePreference, ThemeService } from '../shared/theme.service';
     IonItem,
     IonLabel,
     IonList,
+    IonListHeader,
     IonNote,
     IonSelect,
     IonSelectOption,
@@ -48,6 +51,8 @@ export class PreferencesPageComponent {
   private readonly theme = inject(ThemeService);
   speech = inject(SpeechService);
   settings = inject(SettingsService);
+  // The kanji trainer's own switches, shown here so every option has one home.
+  view = inject(KanjiViewService);
 
   store() {
     this.settings.store();

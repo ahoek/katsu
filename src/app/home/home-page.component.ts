@@ -1,13 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import {
   IonButton,
   IonButtons,
   IonContent,
   IonFooter,
   IonHeader,
-  IonIcon,
-  IonRouterLink,
+  IonMenuButton,
   IonToolbar,
   NavController,
 } from '@ionic/angular/standalone';
@@ -24,14 +22,12 @@ import { CreditComponent } from '../components/credit/credit.component';
   templateUrl: 'home-page.component.html',
   styleUrls: ['home-page.component.scss'],
   imports: [
-    RouterLink,
-    IonRouterLink,
     IonButton,
     IonButtons,
     IonContent,
     IonFooter,
     IonHeader,
-    IonIcon,
+    IonMenuButton,
     IonToolbar,
     TranslatePipe,
     ReviewSettingsComponent,

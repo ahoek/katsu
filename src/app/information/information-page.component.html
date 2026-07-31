@@ -1,7 +1,8 @@
 <ion-header class="app-chrome">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+    <span class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu</span>
+    <ion-buttons slot="end">
+      <ion-menu-button [attr.aria-label]="'menu.title'|translate"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -27,25 +28,21 @@
       </li>
     </ol>
 
-    <h2>{{'information.guide.title'|translate}}</h2>
-    <p>{{'information.guide.lead'|translate}}</p>
-    <div class="guide">
-      @for (card of guide; track card.titleKey) {
-        <article class="guide-card">
-          <h3 class="guide-card__title">
-            <span class="guide-card__glyph" lang="ja" aria-hidden="true">{{card.glyph}}</span>
-            {{card.titleKey|translate}}
-          </h3>
-          <p class="guide-card__rule">{{card.ruleKey|translate}}</p>
-          <p class="guide-card__example" lang="ja">
-            <app-furigana [input]="card.from"></app-furigana>
-            <span class="guide-card__arrow" aria-hidden="true">→</span>
-            <app-furigana [input]="card.to"></app-furigana>
-          </p>
-        </article>
-      }
-    </div>
-
+    <h2>{{'information.kanji.title'|translate}}</h2>
+    <ol class="steps">
+      <li>
+        <span class="steps__number" aria-hidden="true">1</span>
+        {{'information.kanji.step1'|translate}}
+      </li>
+      <li>
+        <span class="steps__number" aria-hidden="true">2</span>
+        {{'information.kanji.step2'|translate}}
+      </li>
+      <li>
+        <span class="steps__number" aria-hidden="true">3</span>
+        {{'information.kanji.step3'|translate}}
+      </li>
+    </ol>
 
     <app-credit></app-credit>
   </div>

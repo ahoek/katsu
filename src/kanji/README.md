@@ -6,13 +6,14 @@ schedule. Every stroke is
 checked as you draw it, so you find out at once when a stroke is in the wrong
 place, drawn backwards, or out of order.
 
-Everything for the feature lives in this folder. The app only knows about it
-through one lazy route (`/kanji` in `src/app/app.routes.ts`) and three keys in
-the shared translation files, so it can be extended or dropped without touching
-the conjugation app.
+The feature lives in this folder and arrives through one lazy route (`/kanji`
+in `src/app/app.routes.ts`), so nothing of it lands in the initial bundle. It
+shares the shell freely in both directions - the navigation menu links its
+pages, the shared options page shows its pad switches - per the "One app, two
+trainers" section of the root README.
 
-The home page links to it behind an **Alpha** label, and it is deliberately kept
-out of the sitemap, so it is found by people looking rather than by search
+The menu links it behind an **Alpha** label, and it is deliberately kept out
+of the sitemap, so it is found by people looking rather than by search
 engines.
 
 ## The path
@@ -276,7 +277,8 @@ and an optimisation pass comes later. Worth knowing where the weight goes:
 
 Stroke data comes from [KanjiVG](https://kanjivg.tagaini.net/) by Ulrich Apel,
 licensed [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/). The
-generated JSON keeps that notice in its own fields, and the screens credit it.
+generated JSON keeps that notice in its own fields, and the app credits it on
+the About page, one tap from every screen via the menu.
 Note that KanjiVG's share-alike terms cover the stroke data, not Katsu's own
 MIT-licensed code.
 

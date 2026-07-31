@@ -20,6 +20,44 @@ ion-button {
   letter-spacing: normal;
 }
 
+// The app's name, worn by every top-level header and the menu.
+.wordmark {
+  // 4px toolbar padding + 12px = the 16px content gutter
+  margin-inline-start: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+
+  [lang='ja'] {
+    // Outweigh the global JP normal-weight rule; bold lowers the AA threshold
+    font-weight: 600;
+    color: var(--ion-color-secondary-shade);
+  }
+}
+
+// A frosted surface for content floating on the patterned canvas: the same
+// glass as the app chrome, but opaque enough to keep text at AA on top of
+// the pattern. --app-color-bg-dark exists in both themes, unlike Ionic's
+// --ion-background-color, which the light theme leaves unset.
+.frosted-card {
+  background: color-mix(in srgb, var(--app-color-bg-dark) 72%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--ion-border-color, var(--ion-color-light-shade));
+  border-radius: 12px;
+}
+
+// Outline buttons get the same glass behind their border, so they read as
+// buttons on the pattern instead of floating outlines. Document styles on
+// the host outrank the :host rules inside Ionic's shadow DOM.
+ion-button[fill='outline'] {
+  --background: color-mix(in srgb, var(--app-color-bg-dark) 72%, transparent);
+}
+
+ion-button[fill='outline']::part(native) {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
 // Floating app chrome: a translucent, blurred strip over the canvas,
 // constrained to the same centred column as the content. Pages using it
 // set [fullscreen]="true" on ion-content so the canvas runs underneath.

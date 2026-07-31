@@ -1,7 +1,8 @@
 <ion-header class="app-chrome">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+    <span class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu</span>
+    <ion-buttons slot="end">
+      <ion-menu-button [attr.aria-label]="'menu.title'|translate"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -9,6 +10,8 @@
 <ion-content class="patterned" [fullscreen]="true">
   <h1 class="page-title">{{'preferences.title'|translate}}</h1>
   <ion-list>
+    <!-- The unlabeled first group is the app-wide one; only the trainers'
+         own sections need saying whose they are. -->
     <ion-item>
       <ion-icon name="moon-outline" slot="start"></ion-icon>
       <ion-select
@@ -36,6 +39,10 @@
         <ion-select-option value="nl">Nederlands</ion-select-option>
       </ion-select>
     </ion-item>
+
+    <ion-list-header>
+      <ion-label>{{'preferences.group.conjugation'|translate}}</ion-label>
+    </ion-list-header>
     <ion-item>
       <ion-icon name="volume-high-outline" slot="start"></ion-icon>
       <ion-select
@@ -97,6 +104,22 @@
           {{'setting.special.reverse'|translate}}
           <ion-note>{{'setting.special.reverse-note'|translate}}</ion-note>
         </ion-label>
+      </ion-checkbox>
+    </ion-item>
+
+    <ion-list-header>
+      <ion-label>{{'preferences.group.kanji'|translate}}</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <span slot="start" aria-hidden="true">→</span>
+      <ion-checkbox [checked]="view.arrows()" (ionChange)="view.toggleArrows()" justify="space-between">
+        {{'preferences.kanji-arrows'|translate}}
+      </ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <span slot="start" aria-hidden="true">①</span>
+      <ion-checkbox [checked]="view.numbers()" (ionChange)="view.toggleNumbers()" justify="space-between">
+        {{'preferences.kanji-numbers'|translate}}
       </ion-checkbox>
     </ion-item>
   </ion-list>

@@ -3,6 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/kanji"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button [attr.aria-label]="'menu.title' | translate"></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -32,7 +35,7 @@
     }
 
     @if (sync.available) {
-      <section class="card">
+      <section class="card frosted-card">
         <h2 class="card__title">{{ 'kanji.sync.code-title' | translate }}</h2>
 
         @if (sync.code(); as code) {
@@ -76,7 +79,7 @@
         }
       </section>
 
-      <section class="card">
+      <section class="card frosted-card">
         <h2 class="card__title">{{ 'kanji.sync.join-title' | translate }}</h2>
 
         @if (scanned(); as code) {
@@ -118,7 +121,7 @@
       <p class="unavailable">{{ 'kanji.sync.unavailable' | translate }}</p>
     }
 
-    <section class="card">
+    <section class="card frosted-card">
       <h2 class="card__title">{{ 'kanji.sync.backup-title' | translate }}</h2>
       <p class="card__note">{{ 'kanji.sync.backup-note' | translate }}</p>
 

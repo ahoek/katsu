@@ -31,7 +31,8 @@ export const routes: Routes = [
     loadComponent: () => import('./review/review-page.component').then(m => m.ReviewPageComponent),
   },
   {
-    // Proof of concept, kept to itself in src/kanji
+    // A trainer feature, kept to itself in src/kanji. The shape every trainer
+    // should take - see "One app, two trainers" in the README.
     path: 'kanji',
     loadChildren: () => import('../kanji/kanji.routes').then(m => m.kanjiRoutes),
   },

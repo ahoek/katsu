@@ -14,8 +14,15 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(),
-    // md on every platform: static toolbar titles, one consistent look
-    provideIonicAngular({ mode: 'md' }),
+    // md on every platform: static toolbar titles, one consistent look.
+    //
+    // No page transitions. The md ones read as a bug here: on the way in, the
+    // entering page paints at rest for a frame before the animation drags it
+    // 40px down and slides it back; on the way back, the outgoing page slides
+    // down over an already-opaque new page. Every page in Katsu wears the same
+    // header and column, so both look like the page scrolling by itself rather
+    // than like movement between pages.
+    provideIonicAngular({ mode: 'md', animated: false }),
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: TitleStrategy, useClass: TranslatedTitleStrategy },
     provideTranslateService({

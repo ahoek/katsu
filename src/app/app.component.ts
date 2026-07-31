@@ -1,8 +1,22 @@
 import { Component, DOCUMENT, inject } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationStart, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { TranslateService } from '@ngx-translate/core';
+import {
+  IonApp,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonMenu,
+  IonMenuToggle,
+  IonNote,
+  IonRouterLink,
+  IonRouterOutlet,
+  IonToolbar,
+} from '@ionic/angular/standalone';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import {
   alertCircle,
@@ -10,6 +24,7 @@ import {
   arrowForward,
   barcodeOutline,
   briefcaseOutline,
+  brushOutline,
   checkmarkCircle,
   chevronDown,
   close,
@@ -22,8 +37,10 @@ import {
   mailOutline,
   moonOutline,
   optionsOutline,
+  personCircleOutline,
   playBackOutline,
   playForwardOutline,
+  repeatOutline,
   settingsOutline,
   shirtOutline,
   shuffleOutline,
@@ -41,7 +58,25 @@ import { UpdateService } from './shared/update.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet],
+  styleUrls: ['app.component.scss'],
+  imports: [
+    IonApp,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonMenu,
+    IonMenuToggle,
+    IonNote,
+    IonRouterLink,
+    IonRouterOutlet,
+    IonToolbar,
+    RouterLink,
+    RouterLinkActive,
+    TranslatePipe,
+  ],
 })
 export class AppComponent {
   private readonly analytics = inject(AnalyticsService);
@@ -56,10 +91,11 @@ export class AppComponent {
   constructor() {
     this.updates.start();
     addIcons({
-      alertCircle, arrowBack, arrowForward, barcodeOutline, briefcaseOutline,
+      alertCircle, arrowBack, arrowForward, barcodeOutline, briefcaseOutline, brushOutline,
       checkmarkCircle, chevronDown, close, closeCircle, codeWorkingOutline, helpCircleOutline,
-      languageOutline, logoGithub, logoPaypal, mailOutline, moonOutline, optionsOutline, playBackOutline,
-      playForwardOutline, settingsOutline, shirtOutline, shuffleOutline,
+      languageOutline, logoGithub, logoPaypal, mailOutline, moonOutline, optionsOutline,
+      personCircleOutline, playBackOutline,
+      playForwardOutline, repeatOutline, settingsOutline, shirtOutline, shuffleOutline,
       volumeHighOutline,
     });
     this.initializeApp();
@@ -71,7 +107,11 @@ export class AppComponent {
       this.router.navigateByUrl(location.hash.substring(1), { replaceUrl: true });
     }
 
-    this.settings.userSettings().then(() => this.theme.apply(this.settings.theme));
+    this.settings.userSettings().then(() => {
+      this.theme.apply(this.settings.theme);
+      // A stored language choice outlives the browser-language guess below.
+      this.translate.use(this.settings.language);
+    });
 
     // Translations are bundled with the app so they can never be stale
     // relative to the code (e.g. a service worker mid-update).

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {
-  IonBackButton,
   IonButton,
   IonButtons,
+  IonMenuButton,
   IonContent,
   IonHeader,
   IonIcon,
@@ -15,9 +15,9 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './about-page.component.html',
   styleUrls: ['./about-page.component.scss'],
   imports: [
-    IonBackButton,
     IonButton,
     IonButtons,
+    IonMenuButton,
     IonContent,
     IonHeader,
     IonIcon,

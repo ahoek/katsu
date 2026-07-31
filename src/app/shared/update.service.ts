@@ -34,6 +34,14 @@ export class UpdateService {
           this.reloadWhenSafe();
         }
       });
+
+    // The worker only looks for new versions on page load, which a tab left
+    // open never does. Coming back into view is the next best moment.
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        this.swUpdate.checkForUpdate().catch(() => undefined);
+      }
+    });
   }
 
   private reloadWhenSafe() {

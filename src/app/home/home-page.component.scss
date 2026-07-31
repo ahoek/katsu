@@ -1,15 +1,4 @@
-.wordmark {
-  // 4px toolbar padding + 12px = the 16px content gutter
-  margin-inline-start: 12px;
-  font-size: 1.2rem;
-  font-weight: 600;
-
-  [lang='ja'] {
-    // Outweigh the global JP normal-weight rule; bold lowers the AA threshold
-    font-weight: 600;
-    color: var(--ion-color-secondary-shade);
-  }
-}
+// .wordmark comes from global.scss, shared with the menu and the kanji path.
 
 .page-heading {
   max-width: 720px;
@@ -24,40 +13,6 @@ app-review-settings {
   display: block;
   max-width: 720px;
   margin: 0 auto;
-}
-
-.kanji-link {
-  margin: 20px 0 0;
-  text-align: center;
-  font-size: .85rem;
-
-  a {
-    color: var(--app-color-link);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  // Amber and filled, so it reads as a warning label rather than a category
-  &__tag {
-    margin-inline-start: 8px;
-    padding: 2px 7px;
-    // The base amber, not the shade: the theme pairs dark text with this one
-    // and reaches AA in both themes, which the darker shade only just misses.
-    background: var(--ion-color-secondary);
-    border-radius: 999px;
-    font-size: .65rem;
-    font-weight: 600;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-    color: var(--ion-color-secondary-contrast);
-  }
-
-  &__note {
-    display: block;
-    margin-top: 4px;
-    font-size: .75rem;
-    color: var(--ion-color-medium);
-  }
 }
 
 .session-summary {

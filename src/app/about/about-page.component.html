@@ -1,7 +1,8 @@
 <ion-header class="app-chrome">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+    <span class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu</span>
+    <ion-buttons slot="end">
+      <ion-menu-button [attr.aria-label]="'menu.title'|translate"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -26,6 +27,15 @@
       <ion-button href="https://github.com/ahoek/katsu" target="_blank" rel="noopener" fill="outline" color="secondary">
         <ion-icon slot="start" name="logo-github"></ion-icon>
         github.com/ahoek/katsu
+      </ion-button>
+    </p>
+
+    <h2>{{'about.credits.title'|translate}}</h2>
+    <p>{{'about.credits.text'|translate}}</p>
+    <p>
+      <ion-button href="https://kanjivg.tagaini.net" target="_blank" rel="noopener" fill="outline" color="secondary">
+        <ion-icon slot="start" name="brush-outline"></ion-icon>
+        kanjivg.tagaini.net
       </ion-button>
     </p>
 

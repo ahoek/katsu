@@ -94,7 +94,13 @@
     "skipped": "Skipped"
   },
   "preferences": {
-    "title": "Options"
+    "title": "Options",
+    "group": {
+      "conjugation": "Conjugation",
+      "kanji": "Kanji writing"
+    },
+    "kanji-arrows": "Direction arrows on examples",
+    "kanji-numbers": "Stroke numbers on examples"
   },
   "explanation": {
     "group": {
@@ -169,9 +175,9 @@
     "na-adjective-normal": "Na-adjective: the copula is conjugated: だ, ではない, だった, ではなかった; formal です, ではありません, でした, ではありませんでした."
   },
   "title": {
-    "home": "Katsu: practise Japanese conjugation - 活用",
+    "home": "Katsu: practise Japanese conjugation and kanji - 活用",
     "preferences": "Options - Katsu",
-    "information": "Information - Katsu",
+    "information": "Guide - Katsu",
     "review": "Practice - Katsu",
     "summary": "Summary - Katsu",
     "about": "About the maker - Katsu",
@@ -179,21 +185,23 @@
   },
   "information": {
     "title": "How Katsu works",
-    "lead": "Katsu (活用, katsuyō: conjugation) lets you practise Japanese verb and adjective conjugation with an endless stream of questions. Free, no account, works offline.",
+    "lead": "Katsu (活用, katsuyō: conjugation) is two free trainers in one app: an endless stream of conjugation questions, and kanji writing practice in the correct stroke order. Free, no account, works offline.",
     "how": {
-      "title": "Practising in three steps",
+      "title": "Conjugation in three steps",
       "step1": "Choose what to practise: forms, word types and your JLPT level. You can change them at any time, even mid-session.",
       "step2": "Type your answer in the 答え field. Romaji is converted to hiragana as you type, so a Japanese keyboard is not needed. Hiragana, katakana and kanji are all accepted.",
       "step3": "Press enter to check. Correct answers turn green; mistakes show the right answer with a step-by-step explanation. Press enter again for the next question."
     },
-    "guide": {
-      "title": "Conjugation guide",
-      "lead": "Every form Katsu asks, with its rule and an example based on the verb 書く (to write)."
+    "kanji": {
+      "title": "Writing kanji in three steps",
+      "step1": "Every kanji starts with a lesson: watch the stroke order, trace the character once, then write it from memory.",
+      "step2": "Draw on the pad with your finger or mouse. Each stroke is checked for shape, order and direction, and hints are there when you are stuck.",
+      "step3": "Learned kanji come back as reviews, spaced from four hours out to four months. Written cleanly, they stay away longer; Your devices carries the schedule to another device."
     }
   },
   "description": {
-    "home": "Katsu is a free practice app for Japanese verb and adjective conjugation. Drill the te-form, potential, passive, causative and more, from JLPT N5 to N1.",
-    "information": "How Japanese conjugation works: rules and examples for the te-form, potential, passive, causative, conditional and more. The guide behind the Katsu practice app.",
+    "home": "Katsu is a free practice app for Japanese: drill verb and adjective conjugation from JLPT N5 to N1, and learn to write kanji in the correct stroke order.",
+    "information": "How Katsu works: an endless stream of Japanese conjugation questions and kanji writing practice with stroke order, explained in three steps each.",
     "about": "Katsu is made by Arthur Hoek, a Dutch developer. The app is free and open source (MIT). Contact, GitHub and tip links.",
     "kanji": "Practise writing the 240 kanji Japanese children learn in their first two years at school, stroke by stroke, in the correct stroke order."
   },
@@ -212,9 +220,17 @@
     "tip": {
       "title": "Leave a tip",
       "text": "Katsu is free and has no ads. If it helps you, you can buy me a coffee:"
+    },
+    "credits": {
+      "title": "Credits",
+      "text": "The kanji stroke order comes from the KanjiVG project by Ulrich Apel, used under the CC BY-SA 3.0 license."
     }
   },
   "credit": {
     "by": "made by Arthur Hoek"
+  },
+  "menu": {
+    "conjugation": "Conjugation",
+    "title": "Menu"
   }
 }

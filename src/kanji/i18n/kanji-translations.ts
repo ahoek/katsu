@@ -40,7 +40,6 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       picker: 'Choose a kanji',
       progress: '{{done}} of {{total}} learned',
       loading: 'Loading kanji...',
-      source: 'Stroke data from KanjiVG, CC BY-SA 3.0',
       demo: {
         write: 'Write it yourself',
         replay: 'Play again',
@@ -109,6 +108,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'start-lesson': 'Start lesson',
         'practice-title': 'Free practice',
         'practice-note': 'Any kanji, nothing scheduled',
+        'devices-note': 'Sync between devices, or keep a backup',
         learning: 'In reviews',
         mastered: 'Mastered',
         'to-learn': 'To learn',
@@ -170,7 +170,6 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       picker: 'Kies een kanji',
       progress: '{{done}} van {{total}} geleerd',
       loading: 'Kanji laden...',
-      source: 'Streekdata van KanjiVG, CC BY-SA 3.0',
       demo: {
         write: 'Zelf schrijven',
         replay: 'Nog een keer',
@@ -239,6 +238,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'start-lesson': 'Start les',
         'practice-title': 'Vrij oefenen',
         'practice-note': 'Elke kanji, zonder planning',
+        'devices-note': 'Synchroniseer of bewaar een back-up',
         learning: 'In herhaling',
         mastered: 'Beheerst',
         'to-learn': 'Te leren',

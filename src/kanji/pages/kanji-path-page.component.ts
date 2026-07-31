@@ -1,21 +1,22 @@
 import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
-  IonBackButton,
   IonButton,
   IonButtons,
   IonContent,
   IonHeader,
   IonIcon,
+  IonMenuButton,
   IonRouterLink,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { arrowBack, arrowForward, brushOutline, schoolOutline, timeOutline } from 'ionicons/icons';
+import { arrowForward, brushOutline, chevronForward, phonePortraitOutline, schoolOutline, timeOutline } from 'ionicons/icons';
 
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
+import { KanjiRefreshService } from '../kanji-refresh.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { KanjiSyncService } from '../sync/kanji-sync.service';
 import { countdown } from '../srs/srs';
@@ -32,18 +33,19 @@ import { countdown } from '../srs/srs';
   imports: [
     RouterLink,
     IonRouterLink,
-    IonBackButton,
     IonButton,
     IonButtons,
     IonContent,
     IonHeader,
     IonIcon,
+    IonMenuButton,
     IonToolbar,
     TranslatePipe,
   ],
 })
 export class KanjiPathPageComponent implements OnInit {
   private readonly data = inject(KanjiDataService);
+  private readonly refresh = inject(KanjiRefreshService);
   private readonly srs = inject(KanjiSrsService);
   private readonly sync = inject(KanjiSyncService);
   private readonly translate = inject(TranslateService);
@@ -79,7 +81,7 @@ export class KanjiPathPageComponent implements OnInit {
 
   constructor() {
     installKanjiTranslations(this.translate);
-    addIcons({ arrowBack, arrowForward, brushOutline, schoolOutline, timeOutline });
+    addIcons({ arrowForward, brushOutline, chevronForward, phonePortraitOutline, schoolOutline, timeOutline });
   }
 
   async ngOnInit(): Promise<void> {
@@ -93,6 +95,9 @@ export class KanjiPathPageComponent implements OnInit {
     // Fold in what other devices have done, without waiting for it: the counts
     // and the due list follow by themselves once it lands.
     void this.sync.autoSync(this.sync.autoInterval);
+
+    // And keep doing so whenever the tab comes back into view.
+    this.refresh.watch();
   }
 
   meaningOf(character: KanjiCharacter): string {

@@ -1,7 +1,10 @@
 <ion-header class="app-chrome">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+    <!-- No back button: since the menu, this page is a sibling of the
+         conjugation home, not a child of it. -->
+    <span class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu</span>
+    <ion-buttons slot="end">
+      <ion-menu-button [attr.aria-label]="'menu.title' | translate"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +13,7 @@
   <div class="path">
     <h1 class="path__heading">{{ 'kanji.path.title' | translate }}</h1>
 
-    <section class="card">
+    <section class="card frosted-card">
       <h3 class="card__title">
         <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
         {{ 'kanji.path.reviews-title' | translate }}
@@ -36,7 +39,7 @@
       }
     </section>
 
-    <section class="card">
+    <section class="card frosted-card">
       <h3 class="card__title">
         <ion-icon name="school-outline" aria-hidden="true"></ion-icon>
         {{ 'kanji.path.lessons-title' | translate }}
@@ -56,7 +59,7 @@
       }
     </section>
 
-    <section class="card">
+    <section class="card frosted-card">
       <p class="card__lead">
         {{ 'kanji.progress' | translate: { done: learnedCount(), total: characters().length } }}
       </p>
@@ -85,21 +88,26 @@
       </dl>
     </section>
 
-    <p class="practice">
-      <a routerLink="/kanji/practice" routerDirection="forward">
-        <ion-icon name="brush-outline" aria-hidden="true"></ion-icon>
-        {{ 'kanji.path.practice-title' | translate }}
+    <!-- The two ways off the path: neither is part of the schedule, so they sit
+         apart from the cards above rather than competing with them. -->
+    <nav class="detours">
+      <a class="detour frosted-card" routerLink="/kanji/practice" routerDirection="forward">
+        <ion-icon class="detour__icon" name="brush-outline" aria-hidden="true"></ion-icon>
+        <span class="detour__text">
+          <span class="detour__title">{{ 'kanji.path.practice-title' | translate }}</span>
+          <span class="detour__note">{{ 'kanji.path.practice-note' | translate }}</span>
+        </span>
+        <ion-icon class="detour__go" name="chevron-forward" aria-hidden="true"></ion-icon>
       </a>
-      <span class="practice__note">{{ 'kanji.path.practice-note' | translate }}</span>
-    </p>
 
-    <p class="practice">
-      <a routerLink="/kanji/sync" routerDirection="forward">
-        {{ 'kanji.sync.title' | translate }}
+      <a class="detour frosted-card" routerLink="/kanji/sync" routerDirection="forward">
+        <ion-icon class="detour__icon" name="phone-portrait-outline" aria-hidden="true"></ion-icon>
+        <span class="detour__text">
+          <span class="detour__title">{{ 'kanji.sync.title' | translate }}</span>
+          <span class="detour__note">{{ 'kanji.path.devices-note' | translate }}</span>
+        </span>
+        <ion-icon class="detour__go" name="chevron-forward" aria-hidden="true"></ion-icon>
       </a>
-      <span class="practice__note">{{ 'kanji.sync.lead' | translate }}</span>
-    </p>
-
-    <p class="source">{{ 'kanji.source' | translate }}</p>
+    </nav>
   </div>
 </ion-content>

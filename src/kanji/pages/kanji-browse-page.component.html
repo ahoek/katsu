@@ -3,6 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/kanji"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-menu-button [attr.aria-label]="'menu.title' | translate"></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -41,6 +44,5 @@
       <p class="loading">{{ 'kanji.loading' | translate }}</p>
     }
 
-    <p class="source">{{ 'kanji.source' | translate }}</p>
   </div>
 </ion-content>
