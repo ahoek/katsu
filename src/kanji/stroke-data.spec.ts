@@ -43,6 +43,31 @@ describe('the shipped stroke data', () => {
     }
   });
 
+  /**
+   * A review shows the meaning and asks for the character, so two kanji may
+   * never lay claim to the same word: asked for "grond", a learner who wrote 土
+   * cannot be told 地 was wanted. Only the family words survive, because they
+   * are never alone - "oudere broer" and "oudere zus" still name one kanji each.
+   */
+  it('never gives the same meaning to two kanji', () => {
+    const qualified = ['older', 'younger', 'brother', 'sister', 'oudere', 'jongere', 'broer', 'zus'];
+
+    for (const language of ['en', 'nl'] as const) {
+      const claims = new Map<string, string[]>();
+      for (const character of strokeData.characters) {
+        for (const word of character.meaning[language].toLowerCase().split(/[,\s]+/).filter(Boolean)) {
+          claims.set(word, [...(claims.get(word) ?? []), character.kanji]);
+        }
+      }
+
+      const shared = [...claims]
+        .filter(([word, kanji]) => kanji.length > 1 && !qualified.includes(word))
+        .map(([word, kanji]) => `${word}: ${kanji.join(' ')}`);
+
+      expect(shared).toEqual([]);
+    }
+  });
+
   it('credits KanjiVG, whose licence asks for it', () => {
     expect(strokeData.source).toBe('KanjiVG');
     expect(strokeData.license).toBe('CC BY-SA 3.0');

@@ -11,7 +11,9 @@
   @if (character(); as kanji) {
     <div class="lesson">
       <div class="meet">
-        <span class="meet__glyph" lang="ja">{{ kanji.kanji }}</span>
+        @if (showCharacter()) {
+          <span class="meet__glyph" lang="ja">{{ kanji.kanji }}</span>
+        }
         <div class="meet__facts">
           <p class="meet__meaning">{{ meaning() }}</p>
           <p class="meet__readings">
@@ -22,15 +24,17 @@
               <span lang="ja">{{ kanji.kun }}</span>
             }
           </p>
-          <p class="meet__note">
-            @if (strokes().length === 1) {
-              {{ 'kanji.strokes-one' | translate }}
-            } @else {
-              {{ 'kanji.strokes' | translate: { count: strokes().length } }}
-            }
-            ·
-            {{ 'kanji.grade' | translate: { grade: kanji.grade } }}
-          </p>
+          @if (showCharacter()) {
+            <p class="meet__note">
+              @if (strokes().length === 1) {
+                {{ 'kanji.strokes-one' | translate }}
+              } @else {
+                {{ 'kanji.strokes' | translate: { count: strokes().length } }}
+              }
+              ·
+              {{ 'kanji.grade' | translate: { grade: kanji.grade } }}
+            </p>
+          }
         </div>
       </div>
 
@@ -52,7 +56,6 @@
           <app-kanji-writing-exercise
             [strokes]="strokes()"
             [numbers]="numbers()"
-            [glyph]="kanji.kanji"
             [meaning]="meaning()"
             [example]="true"
             (finished)="finishTracing()"
@@ -68,7 +71,6 @@
           <app-kanji-writing-exercise
             [strokes]="strokes()"
             [numbers]="numbers()"
-            [glyph]="kanji.kanji"
             [meaning]="meaning()"
             (finished)="finishRecall()"
           ></app-kanji-writing-exercise>

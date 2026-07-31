@@ -20,6 +20,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       strokes: '{{count}} strokes',
       'strokes-one': '1 stroke',
       'stroke-progress': 'Stroke {{current}} of {{total}}',
+      'stroke-current': 'Stroke {{current}}',
       'pad-label': 'Writing pad for the kanji meaning {{meaning}}',
       feedback: {
         correct: 'Good',
@@ -147,6 +148,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       strokes: '{{count}} streken',
       'strokes-one': '1 streek',
       'stroke-progress': 'Streek {{current}} van {{total}}',
+      'stroke-current': 'Streek {{current}}',
       'pad-label': 'Schrijfveld voor de kanji die {{meaning}} betekent',
       feedback: {
         correct: 'Goed',

@@ -32,10 +32,11 @@ type Feedback =
  * commentary on what went wrong. Counts what the schedule needs to grade the
  * attempt and reports it when the last stroke lands.
  *
- * Hints run from weakest to strongest - the whole character as a faint example,
- * the start of the next stroke, then the stroke itself - and the last two appear
- * on their own once a stroke has failed a few times, so being stuck is never a
- * dead end.
+ * Hints run from weakest to strongest - the start of the next stroke, the stroke
+ * itself, then watching the whole character written out - and the first two
+ * appear on their own once a stroke has failed a few times, so being stuck is
+ * never a dead end. The character is never simply printed next to the pad: that
+ * would turn writing into copying.
  */
 @Component({
   selector: 'app-kanji-writing-exercise',
@@ -84,7 +85,11 @@ type Feedback =
           {{ 'kanji.feedback.wrong' | translate }}
         }
         @default {
-          {{ 'kanji.stroke-progress' | translate: { current: written() + 1, total: strokeCount() } }}
+          @if (showTotal()) {
+            {{ 'kanji.stroke-progress' | translate: { current: written() + 1, total: strokeCount() } }}
+          } @else {
+            {{ 'kanji.stroke-current' | translate: { current: written() + 1 } }}
+          }
         }
       }
     </p>
@@ -150,20 +155,12 @@ type Feedback =
         --color: var(--app-color-link);
         font-size: .8rem;
       }
-
-      &__glyph {
-        font-size: 1.1rem;
-        font-weight: 600;
-      }
     }
   `,
 })
 export class WritingExerciseComponent implements OnDestroy {
   /** The strokes to write, in order. Changing them starts a new exercise. */
   readonly strokes = input.required<readonly string[]>();
-
-  /** The character itself, revealed only when the example hint is on. */
-  readonly glyph = input('');
 
   /** Used in the pad's label, so the exercise is described to screen readers. */
   readonly meaning = input('');
@@ -205,6 +202,13 @@ export class WritingExerciseComponent implements OnDestroy {
   readonly strokeCount = computed(() => this.strokes().length);
 
   readonly complete = computed(() => this.strokeCount() > 0 && this.written() >= this.strokeCount());
+
+  /**
+   * How many strokes there are in total is only shown where the character is on
+   * screen anyway. Writing from memory, "stroke 3 of 4" says how many are left
+   * to go, which is part of what was being asked.
+   */
+  protected readonly showTotal = computed(() => this.example());
 
   readonly startVisible = computed(() =>
     !this.complete() && (this.strokeHintVisible() || this.misses() >= HINT_START_AFTER));

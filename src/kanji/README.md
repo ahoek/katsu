@@ -219,12 +219,29 @@ and 160 characters, both in the ministry's own aiueo order. Meanings and reading
 live in `tools/kanji-deck.mjs` and are deliberately short, so the prompt fits one
 line on a phone.
 
-Meanings are written per language (`en`, `nl`) by hand: no kanji dictionary
-ships Dutch glosses. KANJIDIC2 has English, French, Spanish and Portuguese only,
-and JMdict's Dutch glosses are word-level and partial. For 100 short glosses,
-writing them out beats importing a second dataset and its licence. Adding a
-language means adding a key per entry and regenerating; anything missing falls
-back to English.
+Meanings are written per language (`en`, `nl`) by hand, and the Dutch is written
+from the character rather than translated from the English - Dutch separates
+senses English runs together, which is why 森 is *woud* against 林 *bos*. No kanji
+dictionary ships Dutch: KANJIDIC2 has English, French, Spanish and Portuguese
+only. JMdict does have around 29,000 Dutch glosses, but they are word-level and
+partial, so they would confirm 水 *water* and say nothing about a character that
+is not also a word. Adding a language means adding a key per entry and
+regenerating; anything missing falls back to English.
+
+Every meaning has to identify its character on its own, because that is all a
+review gives you besides the readings, and two rules follow from that.
+
+A word that means two things asks the wrong question: 台 as *standaard* reads as
+"write the kanji for default". The fix is not a rarer word of my own - it is the
+dictionary's own senses side by side, *platform, standaard*, each ruling the
+other's second meaning out.
+
+No two kanji may claim the same word either, in either language: asked for
+*grond*, someone who writes 土 cannot be told 地 was wanted. `stroke-data.spec.ts`
+fails on any overlap in the generated file, allowing only the family words, which
+are never alone - *oudere broer* against *oudere zus*. The loser of a collision
+gets the sense that separates it: 画 *beeld* against 絵 *tekening*, 森 *woud*
+against 林 *bos*, 内 *binnenkant* against 入 *binnengaan*.
 
 ## Regenerating the stroke data
 
