@@ -26,6 +26,35 @@ The following forms can be practised:
 
 Use the app at [katsu.arthurhoek.nl](https://katsu.arthurhoek.nl/).
 
+## One app, two trainers
+
+Katsu is growing a second trainer next to conjugation: [kanji
+writing](src/kanji/README.md). The pattern for living together is **one shell,
+sibling features**:
+
+* **The shell** (`src/app`) owns everything both trainers need: routing, the
+  home page, preferences, i18n bootstrapping, theme, settings persistence,
+  service-worker updates and analytics. The cross-cutting services live in
+  `src/app/shared`.
+* **A trainer is a lazily-loaded feature**: its own routes file, pages,
+  services and storage namespace, and its own translations installed when the
+  feature is entered. Nothing of it lands in the initial bundle.
+* **The dependency rule**: a feature may import from `src/app/shared`; features
+  never import from each other; the shell knows a feature only by the one line
+  in `app.routes.ts` that loads its routes.
+* **Settings split by reach**: app-wide options (theme, language) belong to the
+  shell's `SettingsService`, and a feature surfaces them through that same
+  service, so a change made anywhere holds everywhere. Options only one trainer
+  understands stay inside that trainer (the kanji pad annotations, the
+  conjugation forms).
+
+The kanji feature already has the target shape. Conjugation is still interwoven
+with the shell (`home`, `review` and `summary` are its pages); the way to unify
+is to extract it into a sibling feature - `conjugation.routes.ts`, its pages
+moved out of the shell, `SettingsService` reduced to what is app-wide - and to
+do that the next time conjugation needs real work, not as a rewrite for its own
+sake.
+
 ## Tech stack
 
 * [Angular](https://angular.dev/) 22 with standalone components
