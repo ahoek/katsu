@@ -387,7 +387,6 @@ export class SettingsService {
     if (this.causativePassive) {
       this.addCausativePassive(options);
     }
-    // console.log('options', options);
     return options;
   }
 

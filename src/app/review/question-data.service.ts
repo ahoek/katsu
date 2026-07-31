@@ -145,7 +145,6 @@ export class QuestionDataService {
       question = question.reverse();
     }
 
-    // console.log('answers', word.level, question.answers);
     return question;
   }
 
