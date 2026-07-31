@@ -37,6 +37,16 @@
 
         @if (sync.code(); as code) {
           <p class="code">{{ code }}</p>
+
+          <div class="scan">
+            <app-kanji-sync-qr
+              class="scan__qr"
+              [text]="link()"
+              [label]="'kanji.sync.qr-label' | translate"
+            ></app-kanji-sync-qr>
+            <p class="scan__note">{{ 'kanji.sync.qr-note' | translate }}</p>
+          </div>
+
           <p class="card__note">{{ 'kanji.sync.code-note' | translate }}</p>
 
           <div class="card__actions">
@@ -62,26 +72,39 @@
 
       <section class="card">
         <h2 class="card__title">{{ 'kanji.sync.join-title' | translate }}</h2>
-        <p class="card__note">{{ 'kanji.sync.join-note' | translate }}</p>
 
-        <ion-input
-          fill="outline"
-          autocapitalize="characters"
-          spellcheck="false"
-          [placeholder]="'kanji.sync.join-placeholder' | translate"
-          [ngModel]="entered()"
-          (ngModelChange)="entered.set($event)"
-          [attr.aria-label]="'kanji.sync.join-title' | translate"
-        ></ion-input>
+        @if (scanned(); as code) {
+          <!-- Arrived by camera: nothing to type, so nothing to fill in either. -->
+          <p class="card__note card__note--scanned">
+            {{ 'kanji.sync.scanned' | translate }}
+          </p>
+          <p class="code code--scanned">{{ code }}</p>
 
-        <ion-button
-          expand="block"
-          fill="outline"
-          (click)="useCode()"
-          [disabled]="sync.busy() || !entered()"
-        >
-          {{ 'kanji.sync.join' | translate }}
-        </ion-button>
+          <ion-button expand="block" (click)="useCode()">
+            {{ 'kanji.sync.join' | translate }}
+          </ion-button>
+        } @else {
+          <p class="card__note">{{ 'kanji.sync.join-note' | translate }}</p>
+
+          <ion-input
+            fill="outline"
+            autocapitalize="characters"
+            spellcheck="false"
+            [placeholder]="'kanji.sync.join-placeholder' | translate"
+            [ngModel]="entered()"
+            (ngModelChange)="entered.set($event)"
+            [attr.aria-label]="'kanji.sync.join-title' | translate"
+          ></ion-input>
+
+          <ion-button
+            expand="block"
+            fill="outline"
+            (click)="useCode()"
+            [disabled]="sync.busy() || !entered()"
+          >
+            {{ 'kanji.sync.join' | translate }}
+          </ion-button>
+        }
       </section>
 
       <p class="privacy">{{ 'kanji.sync.privacy' | translate }}</p>
