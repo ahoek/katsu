@@ -85,7 +85,11 @@ type Feedback =
           {{ 'kanji.feedback.wrong' | translate }}
         }
         @default {
-          {{ 'kanji.stroke-progress' | translate: { current: written() + 1, total: strokeCount() } }}
+          @if (showTotal()) {
+            {{ 'kanji.stroke-progress' | translate: { current: written() + 1, total: strokeCount() } }}
+          } @else {
+            {{ 'kanji.stroke-current' | translate: { current: written() + 1 } }}
+          }
         }
       }
     </p>
@@ -198,6 +202,13 @@ export class WritingExerciseComponent implements OnDestroy {
   readonly strokeCount = computed(() => this.strokes().length);
 
   readonly complete = computed(() => this.strokeCount() > 0 && this.written() >= this.strokeCount());
+
+  /**
+   * How many strokes there are in total is only shown where the character is on
+   * screen anyway. Writing from memory, "stroke 3 of 4" says how many are left
+   * to go, which is part of what was being asked.
+   */
+  protected readonly showTotal = computed(() => this.example());
 
   readonly startVisible = computed(() =>
     !this.complete() && (this.strokeHintVisible() || this.misses() >= HINT_START_AFTER));

@@ -24,15 +24,17 @@
               <span lang="ja">{{ kanji.kun }}</span>
             }
           </p>
-          <p class="meet__note">
-            @if (strokes().length === 1) {
-              {{ 'kanji.strokes-one' | translate }}
-            } @else {
-              {{ 'kanji.strokes' | translate: { count: strokes().length } }}
-            }
-            ·
-            {{ 'kanji.grade' | translate: { grade: kanji.grade } }}
-          </p>
+          @if (showCharacter()) {
+            <p class="meet__note">
+              @if (strokes().length === 1) {
+                {{ 'kanji.strokes-one' | translate }}
+              } @else {
+                {{ 'kanji.strokes' | translate: { count: strokes().length } }}
+              }
+              ·
+              {{ 'kanji.grade' | translate: { grade: kanji.grade } }}
+            </p>
+          }
         </div>
       </div>
 
