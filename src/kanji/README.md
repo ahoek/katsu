@@ -48,8 +48,9 @@ altogether, however badly it goes.
   in a flick and gives a long sweep close to a second - so it reads like a hand
   writing rather than a metronome.
 - **Demonstrating** — `components/stroke-demo.component.ts` writes a whole kanji
-  out on a loop, waiting for each stroke to finish before starting the next.
-  Used by the lesson and by free practice.
+  out once, waiting for each stroke to finish before starting the next, and
+  leaves it on the pad. Used by the lesson and by free practice, both of which
+  offer a replay.
 - **Judging** — `stroke/stroke-matcher.ts`. Compares the drawn stroke with the
   model stroke in KanjiVG's 109x109 space and answers one of four things:
   correct, reversed (right shape, drawn backwards), out of order (that is stroke

@@ -11,13 +11,14 @@ const DEMO_SCALE = 0.5;
 /** Beat between one stroke finishing and the next starting. */
 const PAUSE_MS = 200;
 
-/** Beat on the finished character before looping back to the first stroke. */
-const RESTART_MS = 1600;
-
 /**
- * Writes a kanji out stroke by stroke, in order, on a loop. Each stroke is
- * given the time it takes to draw - a dot is a flick, a long sweep takes its
- * time - and the next one waits until it has finished.
+ * Writes a kanji out stroke by stroke, in order. Each stroke is given the time
+ * it takes to draw - a dot is a flick, a long sweep takes its time - and the
+ * next one waits until it has finished.
+ *
+ * It plays once and leaves the finished character on the pad, rather than
+ * looping: something that keeps moving is a nuisance next to the readings the
+ * learner is trying to take in. `replay()` is there for another look.
  */
 @Component({
   selector: 'app-kanji-stroke-demo',
@@ -85,7 +86,7 @@ export class StrokeDemoComponent implements OnDestroy {
     const shown = this.shown();
 
     if (shown >= this.strokeCount()) {
-      this.timer = setTimeout(() => this.replay(), RESTART_MS);
+      // Done: the whole character stays on the pad to be looked at.
       return;
     }
     // Wait out the stroke being drawn, which takes as long as the stroke is.
