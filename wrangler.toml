@@ -23,4 +23,4 @@ routes = [
 # Paste the id it prints here.
 [[kv_namespaces]]
 binding = "SCHEDULES"
-id = "PASTE_KV_NAMESPACE_ID_HERE"
+id = "de5462f73a0c4b019b5c06c39365b469"
