@@ -1,0 +1,58 @@
+<ion-header class="app-chrome">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/kanji"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="patterned" [fullscreen]="true">
+  <h1 class="page-title">{{ 'kanji.options.title' | translate }}</h1>
+
+  <ion-list>
+    <ion-item>
+      <ion-icon name="moon-outline" slot="start"></ion-icon>
+      <ion-select
+        [ngModel]="settings.theme"
+        (ngModelChange)="setTheme($event)"
+        [label]="'setting.special.theme' | translate"
+        interface="action-sheet"
+        justify="space-between"
+      >
+        <ion-select-option value="auto">{{ 'setting.special.theme-auto' | translate }}</ion-select-option>
+        <ion-select-option value="light">{{ 'setting.special.theme-light' | translate }}</ion-select-option>
+        <ion-select-option value="dark">{{ 'setting.special.theme-dark' | translate }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="language-outline" slot="start"></ion-icon>
+      <ion-select
+        [ngModel]="settings.language"
+        (ngModelChange)="setLanguage($event)"
+        [label]="'setting.special.language' | translate"
+        interface="action-sheet"
+        justify="space-between"
+      >
+        <ion-select-option value="en">English</ion-select-option>
+        <ion-select-option value="nl">Nederlands</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <span slot="start" aria-hidden="true">→</span>
+      <ion-checkbox [checked]="view.arrows()" (ionChange)="view.toggleArrows()" justify="space-between">
+        {{ 'kanji.options.arrows' | translate }}
+      </ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <span slot="start" aria-hidden="true">①</span>
+      <ion-checkbox [checked]="view.numbers()" (ionChange)="view.toggleNumbers()" justify="space-between">
+        {{ 'kanji.options.numbers' | translate }}
+      </ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+  <p class="shared-note">{{ 'kanji.options.shared-note' | translate }}</p>
+</ion-content>

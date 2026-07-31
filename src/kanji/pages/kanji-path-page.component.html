@@ -3,6 +3,15 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button
+        routerLink="/kanji/options"
+        routerDirection="forward"
+        [attr.aria-label]="'kanji.options.title' | translate"
+      >
+        <ion-icon slot="icon-only" name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

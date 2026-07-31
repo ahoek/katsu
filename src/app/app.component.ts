@@ -71,7 +71,11 @@ export class AppComponent {
       this.router.navigateByUrl(location.hash.substring(1), { replaceUrl: true });
     }
 
-    this.settings.userSettings().then(() => this.theme.apply(this.settings.theme));
+    this.settings.userSettings().then(() => {
+      this.theme.apply(this.settings.theme);
+      // A stored language choice outlives the browser-language guess below.
+      this.translate.use(this.settings.language);
+    });
 
     // Translations are bundled with the app so they can never be stale
     // relative to the code (e.g. a service worker mid-update).
