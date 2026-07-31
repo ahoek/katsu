@@ -89,7 +89,7 @@ export function strokeTraceMs(path: string, scale = 1): number {
         <g class="directions" aria-hidden="true">
           @for (marker of directions(); track $index) {
             <polygon
-              points="2.1,0 -1.5,1.55 -1.5,-1.55"
+              points="1.7,0 -1.2,1.25 -1.2,-1.25"
               [attr.transform]="'translate(' + marker.x + ' ' + marker.y + ') rotate(' + marker.angle + ')'"
             />
           }
@@ -183,9 +183,10 @@ export function strokeTraceMs(path: string, scale = 1): number {
 
     .directions polygon {
       // Cut out of the stroke it sits in, so it adds nothing to the outline of
-      // the character.
+      // the character. Kept faint: it only has to be findable when looked for,
+      // and a solid knock-out reads as part of the character.
       fill: var(--ion-background-color, #fff);
-      opacity: .9;
+      opacity: .55;
     }
 
     .numbers text {

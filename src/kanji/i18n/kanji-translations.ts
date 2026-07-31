@@ -43,8 +43,8 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       demo: {
         write: 'Write it yourself',
         replay: 'Play again',
-        'numbers-show': 'Show numbers',
-        'numbers-hide': 'Hide numbers',
+        numbers: 'Numbers',
+        arrows: 'Arrows',
       },
       interval: {
         '4h': '4 hours',
@@ -134,8 +134,8 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       demo: {
         write: 'Zelf schrijven',
         replay: 'Nog een keer',
-        'numbers-show': 'Nummers aan',
-        'numbers-hide': 'Nummers uit',
+        numbers: 'Nummers',
+        arrows: 'Pijlen',
       },
       interval: {
         '4h': '4 uur',

@@ -55,10 +55,14 @@ altogether, however badly it goes.
   both of which offer a replay. The annotation is switched off while someone is
   writing, where it would give the answer away.
 - **Stroke order annotation** — a small arrow per stroke from
-  `stroke/direction.ts`, and optionally a number per stroke at KanjiVG's own
-  position. The numbers are off by default and toggled from the demonstration
-  itself (`kanji-view.service.ts` remembers the choice): on a kanji like 楽 they
-  crowd the character, and the arrows already carry the direction. The arrow is knocked
+  `stroke/direction.ts`, and a number per stroke at KanjiVG's own position. Both
+  are switched from the demonstration itself and remembered by
+  `kanji-view.service.ts`: arrows on by default, numbers off, because on a
+  character like 顔 at eighteen strokes the numbers crowd it while the arrows stay
+  quiet. The switches live next to the pad rather than on the app's preferences
+  page, and in localStorage rather than with the schedule, because they are read
+  during the first paint - a synchronous read means no flash of the wrong state,
+  and losing a display preference costs nothing. The arrow is knocked
   out of the stroke it belongs to rather than drawn beside it: a stroke is 5.5
   units wide on the 109 unit square, enough to carry an arrowhead without adding
   anything to the outline of the character or crowding the numbers. Arrowheads on

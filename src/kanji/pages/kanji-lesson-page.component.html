@@ -82,8 +82,8 @@
           <app-kanji-stroke-pad
             [strokes]="strokes()"
             [written]="strokes().length"
-            [showDirection]="true"
-            [showNumbers]="numbersVisible()"
+            [showDirection]="view.arrows()"
+            [showNumbers]="view.numbers()"
             [numbers]="numbers()"
             [interactive]="false"
             [label]="'kanji.pad-label' | translate: { meaning: meaning() }"

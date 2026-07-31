@@ -38,7 +38,7 @@ const PAUSE_MS = 200;
       [written]="shown()"
       [showStroke]="true"
       [showStart]="true"
-      [showDirection]="true"
+      [showDirection]="view.arrows()"
       [showNumbers]="view.numbers()"
       [numbers]="numbers()"
       [interactive]="false"
@@ -55,10 +55,23 @@ const PAUSE_MS = 200;
       <ion-button
         fill="clear"
         size="small"
+        class="toggle"
+        [class.toggle--off]="!view.arrows()"
+        (click)="view.toggleArrows()"
+        [attr.aria-pressed]="view.arrows()"
+      >
+        {{ 'kanji.demo.arrows' | translate }}
+      </ion-button>
+
+      <ion-button
+        fill="clear"
+        size="small"
+        class="toggle"
+        [class.toggle--off]="!view.numbers()"
         (click)="view.toggleNumbers()"
         [attr.aria-pressed]="view.numbers()"
       >
-        {{ (view.numbers() ? 'kanji.demo.numbers-hide' : 'kanji.demo.numbers-show') | translate }}
+        {{ 'kanji.demo.numbers' | translate }}
       </ion-button>
 
       <ng-content></ng-content>
@@ -84,6 +97,13 @@ const PAUSE_MS = 200;
       ion-button {
         --color: var(--app-color-link);
         font-size: .8rem;
+      }
+
+      // A switch that is off says so by going quiet, so the label can stay put
+      // instead of flipping between "show" and "hide".
+      .toggle--off {
+        --color: var(--ion-color-medium);
+        text-decoration: line-through;
       }
     }
   `,

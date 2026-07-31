@@ -65,8 +65,8 @@ export class KanjiLessonPageComponent implements OnInit {
 
   readonly numbers = computed(() => this.character()?.numbers ?? []);
 
-  /** Follows the same preference the demonstration's own toggle sets. */
-  readonly numbersVisible = inject(KanjiViewService).numbers;
+  /** Follows the same switches the demonstration's own toggles set. */
+  protected readonly view = inject(KanjiViewService);
 
   readonly meaning = computed(() => {
     const character = this.character();
