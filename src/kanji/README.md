@@ -49,10 +49,22 @@ altogether, however badly it goes.
   writing rather than a metronome.
 - **Demonstrating** — `components/stroke-demo.component.ts` writes a whole kanji
   out once, waiting for each stroke to finish before starting the next, and
-  leaves it on the pad with every stroke numbered, so the order can still be
-  read off once nothing is moving. Used by the lesson and by free practice, both
-  of which offer a replay. The numbers are switched off while someone is
-  writing, where they would give the order away.
+  leaves it on the pad annotated, so both the order and the direction can still
+  be read off once nothing is moving. Used by the lesson and by free practice,
+  both of which offer a replay. The annotation is switched off while someone is
+  writing, where it would give the answer away.
+- **Stroke order annotation** — a number per stroke at KanjiVG's own position,
+  and a small arrow per stroke from `stroke/direction.ts`. The arrow is knocked
+  out of the stroke it belongs to rather than drawn beside it: a stroke is 5.5
+  units wide on the 109 unit square, enough to carry an arrowhead without adding
+  anything to the outline of the character or crowding the numbers. Arrowheads on
+  stroke *ends* were the alternative and are worse - plenty of kanji strokes
+  genuinely end in a hook or a taper, so a marker there argues with the shape of
+  the character. Dots and ticks under 12 units get no arrow, having no direction
+  worth marking. A number appears with its own stroke; an arrow waits until the
+  stroke is finished, since it needs the ink underneath it to read as being
+  inside the stroke - and while a stroke is being drawn, its own movement says
+  which way it goes.
 - **Judging** — `stroke/stroke-matcher.ts`. Compares the drawn stroke with the
   model stroke in KanjiVG's 109x109 space and answers one of four things:
   correct, reversed (right shape, drawn backwards), out of order (that is stroke

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 
+import { directionMarker } from '../stroke/direction';
 import { Point, polylineLength } from '../stroke/geometry';
 import { flattenPath } from '../stroke/svg-path';
 
@@ -83,8 +84,16 @@ export function strokeTraceMs(path: string, scale = 1): number {
         }
       }
 
-      @if (showNumbers()) {
-        <!-- Described by the pad's own label, so not read out separately. -->
+      @if (showOrder()) {
+        <!-- Both described by the pad's own label, so not read out separately. -->
+        <g class="directions" aria-hidden="true">
+          @for (marker of directions(); track $index) {
+            <polygon
+              points="2.1,0 -1.5,1.55 -1.5,-1.55"
+              [attr.transform]="'translate(' + marker.x + ' ' + marker.y + ') rotate(' + marker.angle + ')'"
+            />
+          }
+        </g>
         <g class="numbers" aria-hidden="true">
           @for (number of visibleNumbers(); track $index) {
             <text [attr.x]="number.x" [attr.y]="number.y">{{ $index + 1 }}</text>
@@ -169,6 +178,13 @@ export function strokeTraceMs(path: string, scale = 1): number {
       stroke-width: 5.5;
     }
 
+    .directions polygon {
+      // Cut out of the stroke it sits in, so it adds nothing to the outline of
+      // the character.
+      fill: var(--ion-background-color, #fff);
+      opacity: .9;
+    }
+
     .numbers text {
       // KanjiVG lays these out for a font-size of 8 in the 109 unit square;
       // smaller keeps the digit clear of a 5.5 unit stroke. The position is the
@@ -221,10 +237,11 @@ export class StrokePadComponent {
   readonly showStart = input(false);
 
   /**
-   * Number every stroke that is on the pad, so the order can still be read off
-   * once nothing is moving. Positions come with the stroke data.
+   * Number the strokes on the pad and mark which way each finished one was
+   * written, so the order can still be read off once nothing is moving. Number
+   * positions come with the stroke data.
    */
-  readonly showNumbers = input(false);
+  readonly showOrder = input(false);
 
   readonly numbers = input<readonly Point[]>([]);
 
@@ -258,6 +275,16 @@ export class StrokePadComponent {
    * and its number belong together, so the number arrives with the stroke
    * rather than a stroke later.
    */
+  /**
+   * Arrows for strokes that are finished. The one being drawn is left alone: its
+   * own movement says which way it goes, and an arrow further along the stroke
+   * than the ink has reached would float in mid air.
+   */
+  protected readonly directions = computed(() =>
+    this.writtenStrokes()
+      .map(path => directionMarker(path))
+      .filter((marker): marker is NonNullable<typeof marker> => !!marker));
+
   protected readonly visibleNumbers = computed(() => {
     const drawing = this.showStroke() && this.currentStroke() ? 1 : 0;
     return this.numbers().slice(0, this.written() + drawing);
