@@ -219,12 +219,20 @@ and 160 characters, both in the ministry's own aiueo order. Meanings and reading
 live in `tools/kanji-deck.mjs` and are deliberately short, so the prompt fits one
 line on a phone.
 
-Meanings are written per language (`en`, `nl`) by hand: no kanji dictionary
-ships Dutch glosses. KANJIDIC2 has English, French, Spanish and Portuguese only,
-and JMdict's Dutch glosses are word-level and partial. For 100 short glosses,
-writing them out beats importing a second dataset and its licence. Adding a
-language means adding a key per entry and regenerating; anything missing falls
-back to English.
+Meanings are written per language (`en`, `nl`) by hand, and the Dutch is written
+from the character rather than translated from the English - Dutch separates
+senses English runs together, which is why 森 is *woud* against 林 *bos*. No kanji
+dictionary ships Dutch: KANJIDIC2 has English, French, Spanish and Portuguese
+only. JMdict does have around 29,000 Dutch glosses, but they are word-level and
+partial, so they would confirm 水 *water* and say nothing about a character that
+is not also a word. Adding a language means adding a key per entry and
+regenerating; anything missing falls back to English.
+
+Every meaning has to identify its character on its own, because that is all a
+review gives you besides the readings. Two kanji sharing a gloss makes the review
+unanswerable, so the deck is checked for collisions - exact ones and pairs that
+merely start alike - and the loser gets a sharper word: 画 *beeld* against 絵
+*tekening*, 字 *schriftteken*, 内 *binnenkant* against 入 *binnengaan*.
 
 ## Regenerating the stroke data
 
