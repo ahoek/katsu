@@ -6,6 +6,12 @@
       "runtimeExecutable": "bash",
       "runtimeArgs": ["-c", "source \"$HOME/.nvm/nvm.sh\" && nvm use 24 >/dev/null && npm start"],
       "port": 4200
+    },
+    {
+      "name": "katsu-prod",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4300", "--directory", "dist/browser"],
+      "port": 4300
     }
   ]
 }

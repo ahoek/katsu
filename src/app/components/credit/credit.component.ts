@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonRouterLink } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 
 /**
@@ -36,6 +35,6 @@ import { TranslatePipe } from '@ngx-translate/core';
       }
     }
   `,
-  imports: [RouterLink, IonRouterLink, TranslatePipe],
+  imports: [RouterLink, TranslatePipe],
 })
 export class CreditComponent {}
