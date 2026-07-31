@@ -79,6 +79,45 @@
 <body>
   <app-root></app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
+
+  <!--
+    Boot watchdog. GitHub Pages serves this file with max-age=600 and deletes
+    the previous build's hashed scripts, so for ten minutes after a deploy a
+    normal refresh can hand a returning visitor cached HTML pointing at a
+    main-<hash>.js that is gone. Angular then never boots and the page sits
+    empty, which no amount of ordinary reloading fixes.
+
+    So: if nothing has rendered, fetch this page again past the HTTP cache -
+    which also replaces the stale entry - and load the fresh copy. Once per
+    tab, because a reload that can repeat is worse than the fault it treats.
+  -->
+  <script>
+    (function () {
+      var KEY = 'katsu.boot-retry';
+      var WAIT_MS = 10000;
+
+      function booted() {
+        var root = document.querySelector('app-root');
+        return !!root && root.childElementCount > 0;
+      }
+
+      setTimeout(function () {
+        if (booted()) {
+          try { sessionStorage.removeItem(KEY); } catch (e) { /* nothing to clear */ }
+          return;
+        }
+        try {
+          if (sessionStorage.getItem(KEY)) { return; }
+          sessionStorage.setItem(KEY, '1');
+        } catch (e) {
+          return; // No sessionStorage, so no way to stop at one attempt.
+        }
+        fetch(location.href, { cache: 'reload' }).then(function () {
+          location.reload();
+        }, function () { /* offline: the cached page is all there is */ });
+      }, WAIT_MS);
+    })();
+  </script>
 </body>
 
 </html>
