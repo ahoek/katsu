@@ -42,6 +42,17 @@
         <strong>{{ meaning() }}</strong>
       </p>
 
+      <!-- Readings, because a meaning alone can fit two kanji: 画 and 絵 are both
+           a drawing. They say which one is being asked without helping draw it. -->
+      <p class="readings">
+        @if (kanji.on) {
+          <span lang="ja">{{ kanji.on }}</span>
+        }
+        @if (kanji.kun) {
+          <span lang="ja">{{ kanji.kun }}</span>
+        }
+      </p>
+
       <app-kanji-writing-exercise
         [strokes]="strokes()"
         [numbers]="numbers()"

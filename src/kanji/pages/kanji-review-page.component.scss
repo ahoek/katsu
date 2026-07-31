@@ -9,8 +9,17 @@
   padding: 8px 16px 0;
 }
 
+.readings {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 0 12px;
+  font-size: .85rem;
+  color: var(--ion-color-medium);
+}
+
 .prompt {
-  margin: 4px 0 12px;
+  margin: 4px 0 2px;
   text-align: center;
   font-size: 1rem;
   color: var(--ion-color-medium);
