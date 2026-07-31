@@ -1,0 +1,129 @@
+.path {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 8px 16px 24px;
+
+  &__heading {
+    margin: 8px 0 16px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ion-color-medium);
+  }
+}
+
+.card {
+  margin-bottom: 16px;
+  padding: 16px;
+  background: color-mix(in srgb, var(--ion-background-color) 82%, transparent);
+  border: 1px solid var(--ion-border-color, var(--ion-color-light-shade));
+  border-radius: 12px;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 8px;
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--ion-color-medium);
+  }
+
+  &__lead {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 12px;
+    font-size: 1rem;
+
+    &--quiet {
+      color: var(--ion-color-medium);
+    }
+  }
+
+  &__glyph {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  &__note {
+    margin: 0;
+    font-size: .8rem;
+    color: var(--ion-color-medium);
+  }
+
+  ion-button {
+    --border-radius: 999px;
+    margin: 0;
+  }
+}
+
+.bar {
+  height: 8px;
+  margin-bottom: 14px;
+  // Track has to read as empty in both themes, so it is mixed from the text
+  // colour rather than a fixed grey.
+  background: color-mix(in srgb, var(--ion-color-medium) 35%, transparent);
+  border-radius: 999px;
+  overflow: hidden;
+
+  &__fill {
+    display: block;
+    height: 100%;
+    background: var(--ion-color-primary-shade);
+  }
+}
+
+.counts {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  text-align: center;
+
+  dt {
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--ion-color-medium);
+  }
+
+  dd {
+    margin: 2px 0 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+}
+
+.practice {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: .85rem;
+
+  a {
+    color: var(--app-color-link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    ion-icon {
+      vertical-align: -2px;
+      margin-inline-end: 4px;
+    }
+  }
+
+  &__note {
+    display: block;
+    margin-top: 2px;
+    font-size: .75rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+.source {
+  margin: 24px 0 0;
+  text-align: center;
+  font-size: .7rem;
+  color: var(--ion-color-medium);
+}

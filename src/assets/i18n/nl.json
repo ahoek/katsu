@@ -171,7 +171,8 @@
     "information": "Informatie - Katsu",
     "review": "Oefenen - Katsu",
     "summary": "Samenvatting - Katsu",
-    "about": "Over de maker - Katsu"
+    "about": "Over de maker - Katsu",
+    "kanji": "Kanji schrijven - Katsu"
   },
   "information": {
     "title": "Zo werkt Katsu",
@@ -190,7 +191,8 @@
   "description": {
     "home": "Katsu is een gratis oefenapp voor de vervoeging van Japanse werkwoorden en adjectieven. Oefen de te-vorm, potentialis, passivum, causativum en meer, van JLPT N5 tot N1.",
     "information": "Zo werkt Japanse vervoeging: regels en voorbeelden voor de te-vorm, potentialis, passivum, causativum, conditionalis en meer. De gids achter de oefenapp Katsu.",
-    "about": "Katsu is gemaakt door Arthur Hoek, ontwikkelaar uit Nederland. De app is gratis en open source (MIT). Contact, GitHub en fooi."
+    "about": "Katsu is gemaakt door Arthur Hoek, ontwikkelaar uit Nederland. De app is gratis en open source (MIT). Contact, GitHub en fooi.",
+    "kanji": "Oefen het schrijven van de 240 kanji die Japanse kinderen in hun eerste twee schooljaren leren, streek voor streek, in de juiste streekvolgorde."
   },
   "about": {
     "title": "Over de maker",

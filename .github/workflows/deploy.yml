@@ -44,7 +44,8 @@ jobs:
       - name: Add SPA fallback and route pages
         run: |
           cp dist/browser/index.html dist/browser/404.html
-          for route in about home information preferences review summary; do
+          for route in about home information preferences review summary \
+                       kanji kanji/lesson kanji/review kanji/practice kanji/sync; do
             mkdir -p "dist/browser/$route"
             cp dist/browser/index.html "dist/browser/$route/index.html"
           done
@@ -66,3 +67,26 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  worker:
+    name: Deploy sync worker
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # A fork without Cloudflare credentials skips this rather than failing.
+      - name: Look for Cloudflare credentials
+        id: credentials
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: echo "present=${TOKEN:+true}" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy the sync worker
+        if: steps.credentials.outputs.present == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

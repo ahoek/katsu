@@ -1,0 +1,26 @@
+# The sync service for the kanji writing feature: one Worker, one KV namespace.
+#
+# It runs on the site's own hostname rather than a workers.dev subdomain, which
+# only works because arthurhoek.nl is on Cloudflare. Requests to
+# katsu.arthurhoek.nl/api/sync/* are answered by this Worker; everything else
+# carries on to GitHub Pages. Same origin, so the app needs no endpoint
+# configured and there is no CORS anywhere.
+#
+# One-time setup is in src/kanji/README.md. After that, every push to master
+# deploys this along with the app.
+
+name = "katsu-sync"
+main = "src/kanji/server/katsu-sync-worker.js"
+compatibility_date = "2026-01-01"
+
+# The route only fires when the katsu DNS record is proxied through Cloudflare
+# (the orange cloud), which it must be for this to work at all.
+routes = [
+  { pattern = "katsu.arthurhoek.nl/api/sync/*", zone_name = "arthurhoek.nl" },
+]
+
+# Created once with: npx wrangler kv namespace create KATSU_SYNC
+# Paste the id it prints here.
+[[kv_namespaces]]
+binding = "SCHEDULES"
+id = "de5462f73a0c4b019b5c06c39365b469"

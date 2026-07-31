@@ -1,0 +1,84 @@
+<ion-header class="app-chrome">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/kanji"></ion-back-button>
+    </ion-buttons>
+
+    @if (!finished() && queue().length) {
+      <span class="counter">
+        {{ 'kanji.review.progress' | translate: { done: position() + 1, total: queue().length } }}
+      </span>
+    }
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="patterned" [fullscreen]="true">
+  <h1 class="sr-only">{{ 'kanji.review.title' | translate }}</h1>
+  @if (!ready()) {
+    <p class="loading">{{ 'kanji.loading' | translate }}</p>
+  } @else if (finished()) {
+    <div class="summary">
+      @if (queue().length === 0) {
+        <p class="summary__lead">{{ 'kanji.review.none-due' | translate }}</p>
+      } @else {
+        <p class="summary__title">
+          <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+          {{ 'kanji.review.summary-title' | translate }}
+        </p>
+        <p class="summary__lead">
+          {{ 'kanji.review.summary-counts' | translate: {
+            clean: tally().clean, shaky: tally().shaky, poor: tally().poor
+          } }}
+        </p>
+      }
+      <ion-button routerLink="/kanji" routerDirection="back">
+        {{ 'kanji.review.back' | translate }}
+      </ion-button>
+    </div>
+  } @else if (character(); as kanji) {
+    <div class="review">
+      <p class="prompt">
+        {{ 'kanji.prompt' | translate }}
+        <strong>{{ meaning() }}</strong>
+      </p>
+
+      <app-kanji-writing-exercise
+        [strokes]="strokes()"
+        [numbers]="numbers()"
+        [glyph]="kanji.kanji"
+        [meaning]="meaning()"
+        (finished)="record($event)"
+      ></app-kanji-writing-exercise>
+    </div>
+  }
+</ion-content>
+
+<ion-footer class="app-footer">
+  @if (outcome(); as result) {
+    <div class="outcome" [class]="'outcome--' + result.grade">
+      <p class="outcome__line">
+        @if (result.mastered) {
+          {{ 'kanji.review.mastered' | translate }}
+        } @else if (result.stage > result.previousStage) {
+          <ion-icon name="trending-up-outline" aria-hidden="true"></ion-icon>
+          {{ 'kanji.review.stage-up' | translate: {
+            from: result.previousStage, to: result.stage, interval: result.intervalKey | translate
+          } }}
+        } @else if (result.stage < result.previousStage) {
+          <ion-icon name="trending-down-outline" aria-hidden="true"></ion-icon>
+          {{ 'kanji.review.stage-down' | translate: {
+            to: result.stage, interval: result.intervalKey | translate
+          } }}
+        } @else {
+          {{ 'kanji.review.stage-held' | translate: {
+            stage: result.stage, interval: result.intervalKey | translate
+          } }}
+        }
+      </p>
+      <ion-button expand="block" (click)="next()">
+        {{ 'kanji.review.continue' | translate }}
+        <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </div>
+  }
+</ion-footer>

@@ -1,0 +1,84 @@
+.counter {
+  font-size: .8rem;
+  color: var(--ion-color-medium);
+}
+
+.review {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 8px 16px 0;
+}
+
+.prompt {
+  margin: 4px 0 12px;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--ion-color-medium);
+
+  strong {
+    color: var(--ion-text-color);
+  }
+}
+
+.summary {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 48px 16px 0;
+  text-align: center;
+
+  &__title {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+
+    ion-icon {
+      vertical-align: -2px;
+      color: var(--ion-color-success);
+    }
+  }
+
+  &__lead {
+    margin: 0 0 24px;
+    color: var(--ion-color-medium);
+  }
+
+  ion-button {
+    --border-radius: 999px;
+  }
+}
+
+.loading {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--ion-color-medium);
+}
+
+.outcome {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 8px 16px calc(8px + env(safe-area-inset-bottom));
+
+  &__line {
+    margin: 0 0 8px;
+    text-align: center;
+    font-size: .85rem;
+    color: var(--ion-color-medium);
+
+    ion-icon {
+      vertical-align: -2px;
+    }
+  }
+
+  &--clean &__line {
+    color: var(--ion-color-success);
+  }
+
+  &--poor &__line {
+    color: var(--ion-color-danger);
+  }
+
+  ion-button {
+    --border-radius: 999px;
+    margin: 0;
+  }
+}

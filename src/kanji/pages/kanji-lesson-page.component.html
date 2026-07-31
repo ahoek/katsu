@@ -1,0 +1,119 @@
+<ion-header class="app-chrome">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/kanji"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="patterned" [fullscreen]="true">
+  <h1 class="sr-only">{{ 'kanji.lesson.title' | translate }}</h1>
+  @if (character(); as kanji) {
+    <div class="lesson">
+      <div class="meet">
+        <span class="meet__glyph" lang="ja">{{ kanji.kanji }}</span>
+        <div class="meet__facts">
+          <p class="meet__meaning">{{ meaning() }}</p>
+          <p class="meet__readings">
+            @if (kanji.on) {
+              <span lang="ja">{{ kanji.on }}</span>
+            }
+            @if (kanji.kun) {
+              <span lang="ja">{{ kanji.kun }}</span>
+            }
+          </p>
+          <p class="meet__note">
+            @if (strokes().length === 1) {
+              {{ 'kanji.strokes-one' | translate }}
+            } @else {
+              {{ 'kanji.strokes' | translate: { count: strokes().length } }}
+            }
+            ·
+            {{ 'kanji.grade' | translate: { grade: kanji.grade } }}
+          </p>
+        </div>
+      </div>
+
+      @switch (phase()) {
+        @case ('watch') {
+          <p class="step">{{ 'kanji.lesson.watch' | translate }}</p>
+          <app-kanji-stroke-demo
+            [strokes]="strokes()"
+            [numbers]="numbers()"
+            [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
+          ></app-kanji-stroke-demo>
+        }
+
+        @case ('trace') {
+          <p class="step">
+            {{ 'kanji.lesson.trace' | translate }}
+            <small>{{ 'kanji.lesson.trace-note' | translate }}</small>
+          </p>
+          <app-kanji-writing-exercise
+            [strokes]="strokes()"
+            [numbers]="numbers()"
+            [glyph]="kanji.kanji"
+            [meaning]="meaning()"
+            [example]="true"
+            (finished)="finishTracing()"
+          ></app-kanji-writing-exercise>
+        }
+
+        @case ('recall') {
+          <p class="step">
+            {{ 'kanji.lesson.recall' | translate }}
+            <small>{{ 'kanji.lesson.recall-note' | translate }}</small>
+          </p>
+          <!-- A separate block from the trace, so the exercise starts over. -->
+          <app-kanji-writing-exercise
+            [strokes]="strokes()"
+            [numbers]="numbers()"
+            [glyph]="kanji.kanji"
+            [meaning]="meaning()"
+            (finished)="finishRecall()"
+          ></app-kanji-writing-exercise>
+        }
+
+        @case ('done') {
+          <p class="step step--done">
+            <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+            {{ 'kanji.lesson.done' | translate }}
+          </p>
+          <app-kanji-stroke-pad
+            [strokes]="strokes()"
+            [written]="strokes().length"
+            [showDirection]="view.arrows()"
+            [showNumbers]="view.numbers()"
+            [numbers]="numbers()"
+            [interactive]="false"
+            [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
+          ></app-kanji-stroke-pad>
+          <p class="step__note">
+            {{ 'kanji.lesson.add-note' | translate: { interval: firstInterval() | translate } }}
+          </p>
+        }
+      }
+    </div>
+  } @else {
+    <p class="loading">{{ 'kanji.loading' | translate }}</p>
+  }
+</ion-content>
+
+<ion-footer class="app-footer">
+  <div class="lesson-nav">
+    @switch (phase()) {
+      @case ('watch') {
+        <ion-button expand="block" (click)="startTracing()">
+          {{ 'kanji.lesson.trace' | translate }}
+          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        </ion-button>
+      }
+      @case ('done') {
+        <ion-button expand="block" (click)="addToReviews()">
+          {{ 'kanji.lesson.add' | translate }}
+          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        </ion-button>
+      }
+    }
+  </div>
+</ion-footer>

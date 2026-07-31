@@ -1,0 +1,87 @@
+.detail {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 8px 16px 0;
+}
+
+.meet {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+
+  &__glyph {
+    font-size: 3.4rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  &__facts {
+    min-width: 0;
+  }
+
+  &__meaning {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  &__readings {
+    display: flex;
+    gap: 10px;
+    margin: 2px 0 0;
+    font-size: .85rem;
+    color: var(--ion-color-medium);
+  }
+
+  &__note {
+    margin: 2px 0 0;
+    font-size: .75rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+.prompt {
+  margin: 4px 0 12px;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--ion-color-medium);
+
+  strong {
+    color: var(--ion-text-color);
+  }
+}
+
+.answer {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.source {
+  margin: 18px 0 12px;
+  text-align: center;
+  font-size: .7rem;
+  color: var(--ion-color-medium);
+}
+
+.loading {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--ion-color-medium);
+}
+
+.deck-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 0 8px calc(4px + env(safe-area-inset-bottom));
+
+  &__count {
+    font-size: .8rem;
+    color: var(--ion-color-medium);
+  }
+}

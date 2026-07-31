@@ -1,0 +1,87 @@
+<ion-header class="app-chrome">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/kanji/practice"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="patterned" [fullscreen]="true">
+  @if (character(); as kanji) {
+    <div class="detail">
+      @if (mode() === 'demo') {
+        <div class="meet">
+          <span class="meet__glyph" lang="ja">{{ kanji.kanji }}</span>
+          <div class="meet__facts">
+            <h1 class="meet__meaning">{{ meaning() }}</h1>
+            <p class="meet__readings">
+              @if (kanji.on) {
+                <span lang="ja">{{ kanji.on }}</span>
+              }
+              @if (kanji.kun) {
+                <span lang="ja">{{ kanji.kun }}</span>
+              }
+            </p>
+            <p class="meet__note">
+              @if (strokes().length === 1) {
+                {{ 'kanji.strokes-one' | translate }}
+              } @else {
+                {{ 'kanji.strokes' | translate: { count: strokes().length } }}
+              }
+              ·
+              {{ 'kanji.grade' | translate: { grade: kanji.grade } }}
+            </p>
+          </div>
+        </div>
+
+        <app-kanji-stroke-demo
+          [strokes]="strokes()"
+          [numbers]="numbers()"
+          [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
+        >
+          <ion-button fill="clear" size="small" (click)="mode.set('write')">
+            <ion-icon slot="start" name="pencil-outline"></ion-icon>
+            {{ 'kanji.demo.write' | translate }}
+          </ion-button>
+        </app-kanji-stroke-demo>
+      } @else {
+        <p class="prompt">
+          {{ 'kanji.prompt' | translate }}
+          <strong>{{ meaning() }}</strong>
+        </p>
+
+        <app-kanji-writing-exercise
+          [strokes]="strokes()"
+          [numbers]="numbers()"
+          [glyph]="kanji.kanji"
+          [meaning]="meaning()"
+          (finished)="complete.set(true)"
+        ></app-kanji-writing-exercise>
+
+        @if (complete()) {
+          <p class="answer" lang="ja">{{ kanji.kanji }}</p>
+        }
+      }
+
+      <p class="source">{{ 'kanji.source' | translate }}</p>
+    </div>
+  } @else {
+    <p class="loading">{{ 'kanji.loading' | translate }}</p>
+  }
+</ion-content>
+
+<ion-footer class="app-footer">
+  <div class="deck-nav">
+    <ion-button fill="clear" (click)="go(-1)" [attr.aria-label]="'kanji.previous' | translate">
+      <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+    </ion-button>
+
+    <span class="deck-nav__count">
+      {{ position() + 1 }} / {{ characters().length }}
+    </span>
+
+    <ion-button fill="clear" (click)="go(1)" [attr.aria-label]="'kanji.next' | translate">
+      <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+    </ion-button>
+  </div>
+</ion-footer>

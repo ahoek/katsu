@@ -1,0 +1,105 @@
+<ion-header class="app-chrome">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="patterned" [fullscreen]="true">
+  <div class="path">
+    <h1 class="path__heading">{{ 'kanji.path.title' | translate }}</h1>
+
+    <section class="card">
+      <h3 class="card__title">
+        <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
+        {{ 'kanji.path.reviews-title' | translate }}
+      </h3>
+
+      @if (dueCount() > 0) {
+        <p class="card__lead">
+          @if (dueCount() === 1) {
+            {{ 'kanji.path.reviews-one' | translate }}
+          } @else {
+            {{ 'kanji.path.reviews-due' | translate: { count: dueCount() } }}
+          }
+        </p>
+        <ion-button expand="block" routerLink="/kanji/review" routerDirection="forward">
+          {{ 'kanji.path.start-reviews' | translate }}
+          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        </ion-button>
+      } @else {
+        <p class="card__lead card__lead--quiet">{{ 'kanji.path.reviews-none' | translate }}</p>
+        @if (nextReview(); as next) {
+          <p class="card__note">{{ nextReviewKey(next.unit) | translate: { value: next.value } }}</p>
+        }
+      }
+    </section>
+
+    <section class="card">
+      <h3 class="card__title">
+        <ion-icon name="school-outline" aria-hidden="true"></ion-icon>
+        {{ 'kanji.path.lessons-title' | translate }}
+      </h3>
+
+      @if (nextLesson(); as lesson) {
+        <p class="card__lead">
+          <span class="card__glyph" lang="ja">{{ lesson.kanji }}</span>
+          {{ 'kanji.path.lesson-next' | translate: { meaning: meaningOf(lesson) } }}
+        </p>
+        <ion-button expand="block" fill="outline" routerLink="/kanji/lesson" routerDirection="forward">
+          {{ 'kanji.path.start-lesson' | translate }}
+          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        </ion-button>
+      } @else {
+        <p class="card__lead card__lead--quiet">{{ 'kanji.path.lessons-done' | translate }}</p>
+      }
+    </section>
+
+    <section class="card">
+      <p class="card__lead">
+        {{ 'kanji.progress' | translate: { done: learnedCount(), total: characters().length } }}
+      </p>
+      <div
+        class="bar"
+        role="progressbar"
+        [attr.aria-valuenow]="progressPercent()"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
+        <span class="bar__fill" [style.width.%]="progressPercent()"></span>
+      </div>
+      <dl class="counts">
+        <div>
+          <dt>{{ 'kanji.path.learning' | translate }}</dt>
+          <dd>{{ reviewingCount() }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'kanji.path.mastered' | translate }}</dt>
+          <dd>{{ masteredCount() }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'kanji.path.to-learn' | translate }}</dt>
+          <dd>{{ toLearnCount() }}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <p class="practice">
+      <a routerLink="/kanji/practice" routerDirection="forward">
+        <ion-icon name="brush-outline" aria-hidden="true"></ion-icon>
+        {{ 'kanji.path.practice-title' | translate }}
+      </a>
+      <span class="practice__note">{{ 'kanji.path.practice-note' | translate }}</span>
+    </p>
+
+    <p class="practice">
+      <a routerLink="/kanji/sync" routerDirection="forward">
+        {{ 'kanji.sync.title' | translate }}
+      </a>
+      <span class="practice__note">{{ 'kanji.sync.lead' | translate }}</span>
+    </p>
+
+    <p class="source">{{ 'kanji.source' | translate }}</p>
+  </div>
+</ion-content>

@@ -1,0 +1,115 @@
+<ion-header class="app-chrome">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/kanji"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="patterned" [fullscreen]="true">
+  <div class="sync">
+    <h1 class="sync__heading">{{ 'kanji.sync.title' | translate }}</h1>
+    <p class="sync__lead">{{ 'kanji.sync.lead' | translate }}</p>
+
+    @if (outcome(); as result) {
+      <p class="result" role="status">
+        <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+        @if (result.added.length || result.updated.length) {
+          {{ 'kanji.sync.merged' | translate: {
+            added: result.added.length, updated: result.updated.length
+          } }}
+        } @else {
+          {{ 'kanji.sync.already-current' | translate }}
+        }
+        @if (result.pushed) {
+          {{ 'kanji.sync.pushed' | translate: { count: result.pushed } }}
+        }
+      </p>
+    }
+
+    @if (error(); as message) {
+      <p class="error" role="alert">{{ message }}</p>
+    }
+
+    @if (sync.available) {
+      <section class="card">
+        <h2 class="card__title">{{ 'kanji.sync.code-title' | translate }}</h2>
+
+        @if (sync.code(); as code) {
+          <p class="code">{{ code }}</p>
+          <p class="card__note">{{ 'kanji.sync.code-note' | translate }}</p>
+
+          <div class="card__actions">
+            <ion-button fill="clear" size="small" (click)="copyCode()">
+              <ion-icon slot="start" name="copy-outline"></ion-icon>
+              {{ (copied() ? 'kanji.sync.copied' : 'kanji.sync.copy') | translate }}
+            </ion-button>
+            <ion-button fill="clear" size="small" (click)="syncNow()" [disabled]="sync.busy()">
+              <ion-icon slot="start" name="refresh-outline"></ion-icon>
+              {{ 'kanji.sync.now' | translate }}
+            </ion-button>
+            <ion-button fill="clear" size="small" (click)="forget()">
+              {{ 'kanji.sync.forget' | translate }}
+            </ion-button>
+          </div>
+        } @else {
+          <p class="card__note">{{ 'kanji.sync.no-code' | translate }}</p>
+          <ion-button expand="block" (click)="createCode()" [disabled]="sync.busy()">
+            {{ 'kanji.sync.create' | translate }}
+          </ion-button>
+        }
+      </section>
+
+      <section class="card">
+        <h2 class="card__title">{{ 'kanji.sync.join-title' | translate }}</h2>
+        <p class="card__note">{{ 'kanji.sync.join-note' | translate }}</p>
+
+        <ion-input
+          fill="outline"
+          autocapitalize="characters"
+          spellcheck="false"
+          [placeholder]="'kanji.sync.join-placeholder' | translate"
+          [ngModel]="entered()"
+          (ngModelChange)="entered.set($event)"
+          [attr.aria-label]="'kanji.sync.join-title' | translate"
+        ></ion-input>
+
+        <ion-button
+          expand="block"
+          fill="outline"
+          (click)="useCode()"
+          [disabled]="sync.busy() || !entered()"
+        >
+          {{ 'kanji.sync.join' | translate }}
+        </ion-button>
+      </section>
+
+      <p class="privacy">{{ 'kanji.sync.privacy' | translate }}</p>
+    } @else {
+      <p class="unavailable">{{ 'kanji.sync.unavailable' | translate }}</p>
+    }
+
+    <section class="card">
+      <h2 class="card__title">{{ 'kanji.sync.backup-title' | translate }}</h2>
+      <p class="card__note">{{ 'kanji.sync.backup-note' | translate }}</p>
+
+      <div class="card__actions">
+        <ion-button fill="clear" size="small" (click)="exportFile()">
+          <ion-icon slot="start" name="download-outline"></ion-icon>
+          {{ 'kanji.sync.export' | translate }}
+        </ion-button>
+
+        <ion-button fill="clear" size="small" (click)="picker.click()">
+          {{ 'kanji.sync.import' | translate }}
+        </ion-button>
+        <input
+          #picker
+          class="sr-only"
+          type="file"
+          accept=".txt,text/plain"
+          (change)="importFile($event)"
+        />
+      </div>
+    </section>
+  </div>
+</ion-content>
