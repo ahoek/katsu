@@ -1,0 +1,159 @@
+.writer {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 8px 16px 0;
+}
+
+.prompt {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--ion-color-medium);
+
+  strong {
+    color: var(--ion-text-color);
+  }
+}
+
+.readings {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 2px 0 10px;
+  font-size: .8rem;
+  color: var(--ion-color-medium);
+
+  &__grade {
+    padding-inline-start: 10px;
+    border-inline-start: 1px solid var(--ion-color-medium);
+    opacity: .8;
+  }
+}
+
+app-kanji-stroke-pad {
+  display: block;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / .18);
+}
+
+.status {
+  min-height: 2.4em;
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: .9rem;
+  color: var(--ion-color-medium);
+
+  ion-icon {
+    vertical-align: -2px;
+    color: var(--ion-color-success);
+  }
+
+  &--wrong {
+    color: var(--ion-color-danger);
+  }
+
+  &__answer {
+    display: block;
+    margin-top: 2px;
+    font-size: 1.6rem;
+    color: var(--ion-text-color);
+  }
+}
+
+.hints {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+
+  ion-button {
+    --color: var(--app-color-link);
+    font-size: .8rem;
+  }
+
+  &__glyph {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+}
+
+.source {
+  margin: 18px 0 12px;
+  text-align: center;
+  font-size: .7rem;
+  color: var(--ion-color-medium);
+}
+
+.loading {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--ion-color-medium);
+}
+
+.deck-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 0 8px calc(4px + env(safe-area-inset-bottom));
+
+  &__count {
+    font-size: .8rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+.picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: 8px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 16px 24px;
+
+  &__progress {
+    margin: 12px 0;
+    text-align: center;
+    font-size: .8rem;
+    color: var(--ion-color-medium);
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 2px;
+    background: var(--ion-background-color);
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 8px;
+    color: var(--ion-text-color);
+
+    span {
+      font-size: 1.5rem;
+      line-height: 1.1;
+    }
+
+    small {
+      font-size: .6rem;
+      color: var(--ion-color-medium);
+      // Long meanings must not stretch the grid cell
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+
+    &--done {
+      border-color: var(--ion-color-success);
+      background: color-mix(in srgb, var(--ion-color-success) 12%, var(--ion-background-color));
+    }
+
+    &--current {
+      border-color: var(--ion-color-secondary-shade);
+      border-width: 2px;
+    }
+  }
+}

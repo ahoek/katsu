@@ -26,6 +26,27 @@ app-review-settings {
   margin: 0 auto;
 }
 
+.kanji-link {
+  margin: 20px 0 0;
+  text-align: center;
+  font-size: .85rem;
+
+  a {
+    color: var(--app-color-link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  &__tag {
+    margin-inline-start: 8px;
+    padding: 2px 6px;
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 999px;
+    font-size: .65rem;
+    color: var(--ion-color-medium);
+  }
+}
+
 .session-summary {
   margin: 0;
   padding: 6px 16px 4px;

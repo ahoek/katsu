@@ -31,6 +31,11 @@ export const routes: Routes = [
     loadComponent: () => import('./review/review-page.component').then(m => m.ReviewPageComponent),
   },
   {
+    // Proof of concept, kept to itself in src/kanji
+    path: 'kanji',
+    loadChildren: () => import('../kanji/kanji.routes').then(m => m.kanjiRoutes),
+  },
+  {
     path: 'summary',
     title: 'title.summary',
     loadComponent: () => import('./summary/summary-page.component').then(m => m.SummaryPageComponent),
