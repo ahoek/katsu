@@ -8,6 +8,12 @@ import { createSyncCode, isSyncCode, normaliseSyncCode } from './sync-code';
 
 const STORAGE_KEY = 'katsu.kanji-writing.sync';
 
+/** A sync that nobody asked for gets a deadline, so it cannot hold up a screen. */
+const AUTO_TIMEOUT_MS = 8000;
+
+/** How stale an automatic sync may be before a screen bothers to repeat it. */
+const AUTO_INTERVAL_MS = 60 * 1000;
+
 interface StoredSync {
   code: string;
   syncedAt?: number;
@@ -64,6 +70,34 @@ export class KanjiSyncService {
     this.remember({ code, syncedAt: Date.now() });
     return outcome;
   }
+
+  /**
+   * Sync without being asked, and without being able to make a nuisance of
+   * itself: no code means nothing happens, errors are swallowed, and a deadline
+   * stops a slow network holding up whatever screen called it.
+   *
+   * `sinceLast` skips the work if a sync happened recently, which suits opening
+   * a screen. Leave it out when there is new work to push.
+   */
+  async autoSync(sinceLast = 0): Promise<SyncOutcome | undefined> {
+    const syncedAt = this.syncedAt();
+
+    if (!this.available || !this.code() || this.busy()) {
+      return undefined;
+    }
+    if (sinceLast && syncedAt && Date.now() - syncedAt < sinceLast) {
+      return undefined;
+    }
+    try {
+      return await this.syncNow();
+    } catch {
+      // Nobody asked for this one, so nobody needs telling it failed.
+      return undefined;
+    }
+  }
+
+  /** The interval a screen should use when syncing on the way in. */
+  readonly autoInterval = AUTO_INTERVAL_MS;
 
   /** Sync again under the code this device already uses. */
   async syncNow(): Promise<SyncOutcome> {
@@ -143,6 +177,7 @@ export class KanjiSyncService {
         method: body === undefined ? 'GET' : 'PUT',
         headers: body === undefined ? undefined : { 'content-type': 'text/plain' },
         body,
+        signal: AbortSignal.timeout(AUTO_TIMEOUT_MS),
       });
     } catch {
       throw new SyncError('Could not reach the sync service. Check the connection.');

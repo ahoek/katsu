@@ -17,6 +17,7 @@ import { arrowBack, arrowForward, brushOutline, schoolOutline, timeOutline } fro
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
 import { KanjiSrsService } from '../kanji-srs.service';
+import { KanjiSyncService } from '../sync/kanji-sync.service';
 import { countdown } from '../srs/srs';
 
 /**
@@ -44,6 +45,7 @@ import { countdown } from '../srs/srs';
 export class KanjiPathPageComponent implements OnInit {
   private readonly data = inject(KanjiDataService);
   private readonly srs = inject(KanjiSrsService);
+  private readonly sync = inject(KanjiSyncService);
   private readonly translate = inject(TranslateService);
 
   readonly characters = signal<KanjiCharacter[]>([]);
@@ -87,6 +89,10 @@ export class KanjiPathPageComponent implements OnInit {
     await this.srs.load();
     const data = await this.data.load();
     this.characters.set(data.characters);
+
+    // Fold in what other devices have done, without waiting for it: the counts
+    // and the due list follow by themselves once it lands.
+    void this.sync.autoSync(this.sync.autoInterval);
   }
 
   meaningOf(character: KanjiCharacter): string {

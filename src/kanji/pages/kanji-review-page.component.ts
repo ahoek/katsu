@@ -18,6 +18,7 @@ import { WritingExerciseComponent } from '../components/writing-exercise.compone
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
 import { KanjiSrsService } from '../kanji-srs.service';
+import { KanjiSyncService } from '../sync/kanji-sync.service';
 import { Attempt, Grade, MASTERED_STAGE, stageLabel } from '../srs/srs';
 
 /** What a finished review turned into, for the line under the pad. */
@@ -56,6 +57,7 @@ interface Outcome {
 export class KanjiReviewPageComponent implements OnInit {
   private readonly data = inject(KanjiDataService);
   private readonly srs = inject(KanjiSrsService);
+  private readonly sync = inject(KanjiSyncService);
   private readonly translate = inject(TranslateService);
 
   /**
@@ -94,6 +96,10 @@ export class KanjiReviewPageComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.srs.tick();
     await this.srs.load();
+    // Worth waiting for: reviewing a card another device already reviewed today
+    // is wasted work, and the queue is taken once.
+    await this.sync.autoSync();
+    this.srs.tick();
     const data = await this.data.load();
     const characters = new Map(data.characters.map(character => [character.kanji, character]));
 
@@ -126,5 +132,10 @@ export class KanjiReviewPageComponent implements OnInit {
   next(): void {
     this.outcome.set(undefined);
     this.position.update(position => position + 1);
+
+    // Session over: send the results on while they are fresh.
+    if (this.position() >= this.queue().length) {
+      void this.sync.autoSync();
+    }
   }
 }

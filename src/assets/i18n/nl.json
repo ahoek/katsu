@@ -65,7 +65,10 @@
     "summary": {
       "form": "vorm",
       "forms": "vormen"
-    }
+    },
+    "kanji": "Kanji schrijven",
+    "kanji-tag": "Alfa",
+    "kanji-note": "Nog in test: verwacht ruwe kantjes, en bewaar een back-up van je voortgang."
   },
   "review": {
     "stop": "Stop",

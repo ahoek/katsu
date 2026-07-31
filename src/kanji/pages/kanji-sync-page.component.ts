@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import {
   IonBackButton,
   IonButton,
@@ -13,10 +14,13 @@ import {
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { arrowBack, checkmarkCircle, copyOutline, downloadOutline, refreshOutline } from 'ionicons/icons';
+import { Subscription } from 'rxjs';
 
+import { SyncQrComponent } from '../components/sync-qr.component';
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { KanjiSyncService, SyncError, SyncOutcome } from '../sync/kanji-sync.service';
+import { syncCodeFromFragment, syncCodeLink } from '../sync/sync-link';
 
 /** What the file is called when the schedule is exported. */
 const FILE_PREFIX = 'katsu-kanji';
@@ -37,10 +41,12 @@ const FILE_PREFIX = 'katsu-kanji';
     IonInput,
     IonToolbar,
     TranslatePipe,
+    SyncQrComponent,
   ],
 })
-export class KanjiSyncPageComponent {
+export class KanjiSyncPageComponent implements OnInit, OnDestroy {
   private readonly translate = inject(TranslateService);
+  private readonly route = inject(ActivatedRoute);
   protected readonly srs = inject(KanjiSrsService);
   protected readonly sync = inject(KanjiSyncService);
 
@@ -49,10 +55,57 @@ export class KanjiSyncPageComponent {
   readonly error = signal('');
   readonly copied = signal(false);
 
+  /** A code that arrived by camera, waiting for one tap to be used. */
+  readonly scanned = signal('');
+
+  /** The link behind the QR code: this device's code, on the sync screen. */
+  readonly link = computed(() => {
+    const code = this.sync.code();
+    return code ? syncCodeLink(code, location.origin) : '';
+  });
+
+  /** How long ago this device last synced, for the line under the code. */
+  readonly lastSync = computed(() => {
+    const at = this.sync.syncedAt();
+    if (!at) {
+      return undefined;
+    }
+    const minutes = Math.max(0, Math.round((Date.now() - at) / 60_000));
+    if (minutes < 1) {
+      return { key: 'kanji.sync.last-now', value: 0 };
+    }
+    if (minutes < 60) {
+      return { key: 'kanji.sync.last-minutes', value: minutes };
+    }
+    const hours = Math.round(minutes / 60);
+    return hours < 24
+      ? { key: 'kanji.sync.last-hours', value: hours }
+      : { key: 'kanji.sync.last-days', value: Math.round(hours / 24) };
+  });
+
+  private fragmentChanges?: Subscription;
+
   constructor() {
     installKanjiTranslations(this.translate);
     addIcons({ arrowBack, checkmarkCircle, copyOutline, downloadOutline, refreshOutline });
     this.srs.load();
+  }
+
+  ngOnInit(): void {
+    // Scanning the other device's QR lands here with the code in the fragment.
+    // It is offered rather than used: joining a code also pushes this device's
+    // schedule to it, which is not something a scanned link should do unasked.
+    this.fragmentChanges = this.route.fragment.subscribe(fragment => {
+      const code = syncCodeFromFragment(fragment);
+      if (code && code !== this.sync.code()) {
+        this.scanned.set(code);
+        this.entered.set(code);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.fragmentChanges?.unsubscribe();
   }
 
   async createCode(): Promise<void> {
@@ -63,7 +116,11 @@ export class KanjiSyncPageComponent {
   }
 
   async useCode(): Promise<void> {
+    if (this.sync.busy()) {
+      return;
+    }
     await this.run(() => this.sync.useCode(this.entered()));
+    this.scanned.set('');
   }
 
   async syncNow(): Promise<void> {

@@ -11,9 +11,9 @@ through one lazy route (`/kanji` in `src/app/app.routes.ts`) and three keys in
 the shared translation files, so it can be extended or dropped without touching
 the conjugation app.
 
-**It is not linked from anywhere yet.** No home page link, nothing in the
-sitemap: reach it by typing `/kanji`. That is deliberate while it is being tried
-out - adding a link on the home page is all it takes to release it.
+The home page links to it behind an **Alpha** label, and it is deliberately kept
+out of the sitemap, so it is found by people looking rather than by search
+engines.
 
 ## The path
 
@@ -113,6 +113,12 @@ altogether, however badly it goes.
 - **A sync code.** One device makes a code, the other is given it, and from then
   on either can pull, merge and push. No email, no password, no account - the
   code is the only credential, and it holds nothing but the schedule.
+
+Syncing happens by itself where it matters: on the way into `/kanji` (at most
+once a minute), before a review session starts, and after a lesson or a session
+adds something. Those automatic runs are deadlined and swallow their errors, so a
+slow or missing network never holds up a screen; the button on `/kanji/sync`
+remains for doing it on the spot.
 
 Both go through `sync/schedule-code.ts`, which packs cards into a compact string,
 and `sync/schedule-merge.ts`, which folds two schedules together. The merge rule
@@ -262,9 +268,8 @@ MIT-licensed code.
 - No cap on how many lessons or reviews a day, and no way to reset a kanji or
   the whole schedule from the interface. At 240 kanji a day's reviews can pile
   up, which makes a daily cap the next thing worth having.
-- Syncing is manual: there is a button, not a background sync on app start. A
-  deliberate reset also has no way to travel - with a merge that only moves
-  towards more work done, wiping one device would be undone by the next sync,
+- A deliberate reset has no way to travel between devices: with a merge that only
+  moves towards more work done, wiping one device is undone by the next sync,
   which would need a tombstone to express.
 - Reviews only ever ask for writing. Recognition and readings are untested
   ground here, and the conjugation side of the app already covers reading.
