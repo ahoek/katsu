@@ -1,0 +1,97 @@
+.browse {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 8px 16px 24px;
+
+  &__heading {
+    margin: 8px 0 2px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ion-color-medium);
+  }
+
+  &__progress {
+    margin: 0 0 16px;
+    font-size: .8rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+.group {
+  margin-bottom: 24px;
+
+  &__title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0 0 8px;
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--ion-color-medium);
+  }
+
+  &__count {
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: normal;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: 8px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 2px;
+  background: var(--ion-background-color);
+  border: 1px solid var(--ion-color-medium);
+  border-radius: 8px;
+  color: var(--ion-text-color);
+  text-decoration: none;
+
+  span {
+    font-size: 1.5rem;
+    line-height: 1.1;
+  }
+
+  small {
+    font-size: .6rem;
+    color: var(--ion-color-medium);
+    // Long meanings must not stretch the grid cell
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+
+  // In the schedule, and out of it again once mastered
+  &--learned {
+    border-color: var(--ion-color-success);
+    background: color-mix(in srgb, var(--ion-color-success) 12%, var(--ion-background-color));
+  }
+
+  &--mastered {
+    border-color: var(--ion-color-secondary-shade);
+    background: color-mix(in srgb, var(--ion-color-secondary) 16%, var(--ion-background-color));
+  }
+}
+
+.loading,
+.source {
+  text-align: center;
+  color: var(--ion-color-medium);
+}
+
+.source {
+  margin: 8px 0 0;
+  font-size: .7rem;
+}

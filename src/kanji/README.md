@@ -13,18 +13,24 @@ dropped without touching the conjugation app.
 
 ## The path
 
-| Route              | Page                                                    |
-| ------------------ | ------------------------------------------------------- |
-| `/kanji`           | Overview: what is due, the next lesson, progress        |
-| `/kanji/lesson`    | The lesson for the next unlearned kanji                 |
-| `/kanji/review`    | A review session over everything that is due            |
-| `/kanji/practice`  | Free practice over the whole deck, outside the schedule  |
+| Route                    | Page                                              |
+| ------------------------ | ------------------------------------------------- |
+| `/kanji`                 | Overview: what is due, the next lesson, progress  |
+| `/kanji/lesson`          | The lesson for the next unlearned kanji           |
+| `/kanji/review`          | A review session over everything that is due      |
+| `/kanji/practice`        | The whole deck, grouped by school year            |
+| `/kanji/practice/:kanji` | One kanji: watch it written, then write it        |
+
+The last two are the way around the deck outside the schedule: pick a character
+from the list, watch it written, and write it yourself if you want to. The
+character itself is the route parameter - `/kanji/practice/水` - so a kanji can
+be linked to directly. A character that is not in the deck sends you back to the
+list rather than sitting on a page that never loads.
 
 A **lesson** runs in four steps: meet the character, watch its strokes written
 in order, trace it once with the example on screen, then write it again from
 memory with the example gone. Finishing puts the kanji into the schedule at the
-first stage. Free practice can play the same demonstration at any time, from the
-play button in its toolbar.
+first stage.
 
 A **review** shows the meaning alone and asks for the kanji from memory. It is
 graded from what happened on the pad, with no button for the learner to press:

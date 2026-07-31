@@ -56,6 +56,9 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         '1m': '1 month',
         '4m': '4 months',
       },
+      browse: {
+        title: 'All kanji',
+      },
       path: {
         title: 'Your kanji path',
         'reviews-title': 'Reviews',
@@ -146,6 +149,9 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         '2w': '2 weken',
         '1m': '1 maand',
         '4m': '4 maanden',
+      },
+      browse: {
+        title: 'Alle kanji',
       },
       path: {
         title: 'Jouw kanjipad',

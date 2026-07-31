@@ -1,0 +1,46 @@
+<ion-header class="app-chrome">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/kanji"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="patterned" [fullscreen]="true">
+  <div class="browse">
+    <h1 class="browse__heading">{{ 'kanji.browse.title' | translate }}</h1>
+    <p class="browse__progress">
+      {{ 'kanji.progress' | translate: { done: learned().size, total: characters().length } }}
+    </p>
+
+    @for (group of groups(); track group.grade) {
+      <section class="group">
+        <h2 class="group__title">
+          {{ 'kanji.grade' | translate: { grade: group.grade } }}
+          <span class="group__count">
+            {{ learnedIn(group.characters) }} / {{ group.characters.length }}
+          </span>
+        </h2>
+
+        <div class="grid">
+          @for (entry of group.characters; track entry.kanji) {
+            <a
+              class="tile"
+              [class.tile--learned]="learned().has(entry.kanji)"
+              [class.tile--mastered]="mastered().has(entry.kanji)"
+              [routerLink]="['/kanji/practice', entry.kanji]"
+              routerDirection="forward"
+            >
+              <span lang="ja">{{ entry.kanji }}</span>
+              <small>{{ meaningOf(entry) }}</small>
+            </a>
+          }
+        </div>
+      </section>
+    } @empty {
+      <p class="loading">{{ 'kanji.loading' | translate }}</p>
+    }
+
+    <p class="source">{{ 'kanji.source' | translate }}</p>
+  </div>
+</ion-content>

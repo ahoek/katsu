@@ -28,6 +28,13 @@ export const kanjiRoutes: Routes = [
     path: 'practice',
     title: 'title.kanji',
     loadComponent: () =>
-      import('./pages/kanji-practice-page.component').then(m => m.KanjiPracticePageComponent),
+      import('./pages/kanji-browse-page.component').then(m => m.KanjiBrowsePageComponent),
+  },
+  {
+    // The character itself is the parameter, so a kanji can be linked to.
+    path: 'practice/:kanji',
+    title: 'title.kanji',
+    loadComponent: () =>
+      import('./pages/kanji-detail-page.component').then(m => m.KanjiDetailPageComponent),
   },
 ];
