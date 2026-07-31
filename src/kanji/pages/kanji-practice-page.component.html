@@ -1,13 +1,17 @@
 <ion-header class="app-chrome">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button routerLink="/kanji" routerDirection="back">
-        <ion-icon slot="start" name="arrow-back"></ion-icon>
-        {{ 'kanji.path.practice-title' | translate }}
-      </ion-button>
+      <ion-back-button defaultHref="/kanji"></ion-back-button>
     </ion-buttons>
 
     <ion-buttons slot="end">
+      <ion-button
+        (click)="watch()"
+        [disabled]="watching()"
+        [attr.aria-label]="'kanji.demo.watch' | translate"
+      >
+        <ion-icon slot="icon-only" name="play-outline"></ion-icon>
+      </ion-button>
       <ion-button (click)="openPicker()" [attr.aria-label]="'kanji.picker' | translate">
         <ion-icon slot="icon-only" name="grid-outline"></ion-icon>
       </ion-button>
@@ -16,6 +20,7 @@
 </ion-header>
 
 <ion-content class="patterned" [fullscreen]="true">
+  <h1 class="sr-only">{{ 'kanji.path.practice-title' | translate }}</h1>
   @if (character(); as kanji) {
     <div class="writer">
       <p class="prompt">
@@ -35,15 +40,33 @@
         </span>
       </p>
 
-      <app-kanji-writing-exercise
-        [strokes]="strokes()"
-        [glyph]="kanji.kanji"
-        [meaning]="meaning()"
-        (finished)="complete.set(true)"
-      ></app-kanji-writing-exercise>
+      @if (watching()) {
+        <app-kanji-stroke-demo
+          [strokes]="strokes()"
+          [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
+        ></app-kanji-stroke-demo>
+        <div class="actions">
+          <ion-button fill="clear" size="small" (click)="replayDemo()">
+            <ion-icon slot="start" name="refresh-outline"></ion-icon>
+            {{ 'kanji.demo.replay' | translate }}
+          </ion-button>
+          <ion-button fill="clear" size="small" (click)="write()">
+            <ion-icon slot="start" name="pencil-outline"></ion-icon>
+            {{ 'kanji.demo.write' | translate }}
+          </ion-button>
+        </div>
+      } @else {
+        <!-- A separate block from the demo, so writing starts on a clean pad. -->
+        <app-kanji-writing-exercise
+          [strokes]="strokes()"
+          [glyph]="kanji.kanji"
+          [meaning]="meaning()"
+          (finished)="complete.set(true)"
+        ></app-kanji-writing-exercise>
 
-      @if (complete()) {
-        <p class="answer" lang="ja">{{ kanji.kanji }}</p>
+        @if (complete()) {
+          <p class="answer" lang="ja">{{ kanji.kanji }}</p>
+        }
       }
 
       <p class="source">{{ 'kanji.source' | translate }}</p>

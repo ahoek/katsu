@@ -40,6 +40,12 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       progress: '{{done}} of {{total}} learned',
       loading: 'Loading kanji...',
       source: 'Stroke data from KanjiVG, CC BY-SA 3.0',
+      demo: {
+        watch: 'Watch stroke order',
+        watching: 'Stroke order',
+        write: 'Write it yourself',
+        replay: 'Play again',
+      },
       interval: {
         '4h': '4 hours',
         '8h': '8 hours',
@@ -73,9 +79,10 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       lesson: {
         title: 'Lesson',
         watch: 'Watch the stroke order',
-        replay: 'Play again',
         trace: 'Now write it yourself',
         'trace-note': 'The example stays on screen for this first go',
+        recall: 'Once more, from memory',
+        'recall-note': 'No example this time',
         done: 'Nicely done',
         add: 'Add to reviews',
         'add-note': 'First review in {{interval}}',
@@ -124,6 +131,12 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       progress: '{{done}} van {{total}} geleerd',
       loading: 'Kanji laden...',
       source: 'Streekdata van KanjiVG, CC BY-SA 3.0',
+      demo: {
+        watch: 'Streekvolgorde bekijken',
+        watching: 'Streekvolgorde',
+        write: 'Zelf schrijven',
+        replay: 'Nog een keer',
+      },
       interval: {
         '4h': '4 uur',
         '8h': '8 uur',
@@ -157,9 +170,10 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       lesson: {
         title: 'Les',
         watch: 'Bekijk de streekvolgorde',
-        replay: 'Nog een keer',
         trace: 'Schrijf hem nu zelf',
         'trace-note': 'Het voorbeeld blijft staan bij deze eerste keer',
+        recall: 'Nog een keer, uit je hoofd',
+        'recall-note': 'Deze keer zonder voorbeeld',
         done: 'Mooi geschreven',
         add: 'Toevoegen aan herhalingen',
         'add-note': 'Eerste herhaling over {{interval}}',

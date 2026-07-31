@@ -1,10 +1,7 @@
 <ion-header class="app-chrome">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button routerLink="/kanji" routerDirection="back">
-        <ion-icon slot="start" name="arrow-back"></ion-icon>
-        {{ 'kanji.review.title' | translate }}
-      </ion-button>
+      <ion-back-button defaultHref="/kanji"></ion-back-button>
     </ion-buttons>
 
     @if (!finished() && queue().length) {
@@ -16,6 +13,7 @@
 </ion-header>
 
 <ion-content class="patterned" [fullscreen]="true">
+  <h1 class="sr-only">{{ 'kanji.review.title' | translate }}</h1>
   @if (!ready()) {
     <p class="loading">{{ 'kanji.loading' | translate }}</p>
   } @else if (finished()) {

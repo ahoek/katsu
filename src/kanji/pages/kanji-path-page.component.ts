@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
+  IonBackButton,
   IonButton,
   IonButtons,
   IonContent,
@@ -30,6 +31,7 @@ import { countdown } from '../srs/srs';
   imports: [
     RouterLink,
     IonRouterLink,
+    IonBackButton,
     IonButton,
     IonButtons,
     IonContent,

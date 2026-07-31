@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
+  IonBackButton,
   IonButton,
   IonButtons,
   IonContent,
@@ -40,6 +41,7 @@ interface Outcome {
   styleUrls: ['kanji-review-page.component.scss'],
   imports: [
     RouterLink,
+    IonBackButton,
     IonButton,
     IonButtons,
     IonContent,

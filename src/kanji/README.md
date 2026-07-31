@@ -19,9 +19,11 @@ dropped without touching the conjugation app.
 | `/kanji/review`    | A review session over everything that is due            |
 | `/kanji/practice`  | Free practice over the whole deck, outside the schedule  |
 
-A **lesson** introduces the character, plays its strokes in writing order, then
-asks for one traced attempt with the example still on screen. Finishing it puts
-the kanji into the schedule at the first stage.
+A **lesson** runs in four steps: meet the character, watch its strokes written
+in order, trace it once with the example on screen, then write it again from
+memory with the example gone. Finishing puts the kanji into the schedule at the
+first stage. Free practice can play the same demonstration at any time, from the
+play button in its toolbar.
 
 A **review** shows the meaning alone and asks for the kanji from memory. It is
 graded from what happened on the pad, with no button for the learner to press:
@@ -41,8 +43,13 @@ altogether, however badly it goes.
 
 - **Drawing** — `components/stroke-pad.component.ts`. An SVG square that takes
   pointer input (touch, pen and mouse), shows the ink under your finger, the
-  strokes you already wrote, and whatever hints are switched on. Also plays a
-  stroke order back, which is what the lesson demonstrates with.
+  strokes you already wrote, and whatever hints are switched on. A stroke draws
+  itself in the time its own length deserves - `strokeTraceMs()` puts a dot down
+  in a flick and gives a long sweep close to a second - so it reads like a hand
+  writing rather than a metronome.
+- **Demonstrating** — `components/stroke-demo.component.ts` writes a whole kanji
+  out on a loop, waiting for each stroke to finish before starting the next.
+  Used by the lesson and by free practice.
 - **Judging** — `stroke/stroke-matcher.ts`. Compares the drawn stroke with the
   model stroke in KanjiVG's 109x109 space and answers one of four things:
   correct, reversed (right shape, drawn backwards), out of order (that is stroke
@@ -106,7 +113,7 @@ loudly when a character is missing or its stroke numbering has a gap.
 ## Two things that grow the main bundle
 
 Neither is a reason to hold back while this is a proof of concept - the initial
-bundle currently runs about 1.5 kB over its 1 MB `maximumWarning`, knowingly,
+bundle currently runs about 2 kB over its 1 MB `maximumWarning`, knowingly,
 and an optimisation pass comes later. Worth knowing where the weight goes:
 
 - **Translations** in `src/assets/i18n/*.json` are imported by the root

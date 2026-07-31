@@ -1,17 +1,14 @@
 <ion-header class="app-chrome">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button routerLink="/home" routerDirection="back">
-        <ion-icon slot="start" name="arrow-back"></ion-icon>
-        {{ 'kanji.title' | translate }}
-      </ion-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="patterned" [fullscreen]="true">
   <div class="path">
-    <h2 class="path__heading">{{ 'kanji.path.title' | translate }}</h2>
+    <h1 class="path__heading">{{ 'kanji.path.title' | translate }}</h1>
 
     <section class="card">
       <h3 class="card__title">

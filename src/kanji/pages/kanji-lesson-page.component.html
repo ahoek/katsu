@@ -1,15 +1,13 @@
 <ion-header class="app-chrome">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button routerLink="/kanji" routerDirection="back">
-        <ion-icon slot="start" name="arrow-back"></ion-icon>
-        {{ 'kanji.lesson.title' | translate }}
-      </ion-button>
+      <ion-back-button defaultHref="/kanji"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="patterned" [fullscreen]="true">
+  <h1 class="sr-only">{{ 'kanji.lesson.title' | translate }}</h1>
   @if (character(); as kanji) {
     <div class="lesson">
       <div class="meet">
@@ -39,19 +37,14 @@
       @switch (phase()) {
         @case ('watch') {
           <p class="step">{{ 'kanji.lesson.watch' | translate }}</p>
-          <app-kanji-stroke-pad
+          <app-kanji-stroke-demo
             [strokes]="strokes()"
-            [written]="demoStrokes()"
-            [showStroke]="true"
-            [showStart]="true"
-            [interactive]="false"
-            [traceMs]="demoTraceMs"
             [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
-          ></app-kanji-stroke-pad>
+          ></app-kanji-stroke-demo>
           <div class="actions">
-            <ion-button fill="clear" size="small" (click)="playDemo()">
+            <ion-button fill="clear" size="small" (click)="replayDemo()">
               <ion-icon slot="start" name="refresh-outline"></ion-icon>
-              {{ 'kanji.lesson.replay' | translate }}
+              {{ 'kanji.demo.replay' | translate }}
             </ion-button>
           </div>
         }
@@ -67,6 +60,20 @@
             [meaning]="meaning()"
             [example]="true"
             (finished)="finishTracing()"
+          ></app-kanji-writing-exercise>
+        }
+
+        @case ('recall') {
+          <p class="step">
+            {{ 'kanji.lesson.recall' | translate }}
+            <small>{{ 'kanji.lesson.recall-note' | translate }}</small>
+          </p>
+          <!-- A separate block from the trace, so the exercise starts over. -->
+          <app-kanji-writing-exercise
+            [strokes]="strokes()"
+            [glyph]="kanji.kanji"
+            [meaning]="meaning()"
+            (finished)="finishRecall()"
           ></app-kanji-writing-exercise>
         }
 

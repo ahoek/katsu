@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 
-import { Point } from '../stroke/geometry';
+import { Point, polylineLength } from '../stroke/geometry';
+import { flattenPath } from '../stroke/svg-path';
 
 /** KanjiVG draws every character in a 109x109 square. */
 const VIEW_BOX = 109;
@@ -8,11 +9,27 @@ const VIEW_BOX = 109;
 /** Ignore pointer moves smaller than this, in kanji units. */
 const MIN_STEP = 0.6;
 
+/** Writing pace, in milliseconds per unit of stroke length. */
+const MS_PER_UNIT = 14;
+
+/** Even a flick of a dot takes a moment to put down. */
+const MIN_TRACE_MS = 200;
+
 /**
- * How long a stroke takes to draw itself. Exported because anything that steps
- * through strokes has to wait for the drawing to finish before moving on.
+ * A hand does not keep a steady pace over a long sweep either, and a stroke
+ * that takes over a second and a half to appear outstays its welcome.
  */
-export const STROKE_TRACE_MS = 1100;
+const MAX_TRACE_MS = 1600;
+
+/**
+ * How long a stroke should take to draw itself, from how long the stroke is:
+ * a dot is a flick, the long sweep of 一 takes its time. Exported because
+ * anything stepping through strokes has to wait out the stroke being drawn.
+ */
+export function strokeTraceMs(path: string, scale = 1): number {
+  const length = path ? polylineLength(flattenPath(path)) : 0;
+  return Math.round(Math.min(MIN_TRACE_MS + length * MS_PER_UNIT, MAX_TRACE_MS) * scale);
+}
 
 /**
  * The square you write in: renders the strokes written so far, the hints the
@@ -126,7 +143,10 @@ export const STROKE_TRACE_MS = 1100;
     .guide-stroke {
       stroke: var(--ion-color-secondary);
       stroke-width: 5.5;
-      stroke-dasharray: 100;
+      // Dash as long as the stroke (pathLength is 100) with a gap twice that.
+      // An equal gap would put the start of the next dash exactly on the end
+      // point, where a round cap paints it as a stray dot for the first frame.
+      stroke-dasharray: 100 200;
       animation: trace var(--kanji-trace-duration, 1100ms) ease-in-out forwards;
     }
 
@@ -183,8 +203,11 @@ export class StrokePadComponent {
   /** Off while a stroke order is being demonstrated. */
   readonly interactive = input(true);
 
-  /** How long the stroke hint takes to draw itself. */
-  readonly traceMs = input(STROKE_TRACE_MS);
+  /**
+   * Scales the writing pace. A demonstration runs faster than a hint, so it can
+   * step through fourteen strokes without testing anyone's patience.
+   */
+  readonly traceScale = input(1);
 
   readonly label = input('');
 
@@ -201,6 +224,9 @@ export class StrokePadComponent {
   protected readonly writtenStrokes = computed(() => this.strokes().slice(0, this.written()));
 
   protected readonly currentStroke = computed(() => this.strokes()[this.written()] ?? '');
+
+  /** Drawing time for the stroke on screen; a long stroke takes longer. */
+  protected readonly traceMs = computed(() => strokeTraceMs(this.currentStroke(), this.traceScale()));
 
   protected readonly replay = computed(() => `${this.written()}-${this.replayCount()}`);
 
