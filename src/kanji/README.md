@@ -7,9 +7,13 @@ checked as you draw it, so you find out at once when a stroke is in the wrong
 place, drawn backwards, or out of order.
 
 Everything for the feature lives in this folder. The app only knows about it
-through one lazy route (`/kanji` in `src/app/app.routes.ts`), a link on the home
-page and three keys in the shared translation files, so it can be extended or
-dropped without touching the conjugation app.
+through one lazy route (`/kanji` in `src/app/app.routes.ts`) and three keys in
+the shared translation files, so it can be extended or dropped without touching
+the conjugation app.
+
+**It is not linked from anywhere yet.** No home page link, nothing in the
+sitemap: reach it by typing `/kanji`. That is deliberate while it is being tried
+out - adding a link on the home page is all it takes to release it.
 
 ## The path
 
@@ -125,17 +129,50 @@ itself on the next sync, since each still holds its own state.
 
 Pages serves static files and stores nothing, so a sync code needs somewhere to
 put the schedule. That is the whole of `server/katsu-sync-worker.js`: one
-Cloudflare Worker over one KV namespace, which keeps an opaque string per code
-and knows nothing else. The app stays on Pages and calls it cross-origin, so
-only the Worker's `ALLOWED_ORIGIN` and the URL in `sync/sync-endpoint.ts` tie
-them together.
+Cloudflare Worker over one KV namespace, keeping an opaque string per code and
+knowing nothing else.
 
-`SYNC_ENDPOINT` ships empty, which switches the code-based half off: the sync
-screen then offers only the backup file. Nothing else in the feature notices.
+Because arthurhoek.nl is already on Cloudflare, the Worker runs on the site's own
+hostname rather than a `workers.dev` subdomain. `katsu.arthurhoek.nl/api/sync/*`
+is answered by the Worker and everything else carries on to GitHub Pages, which
+means the app calls it **same-origin**: no CORS, no allowed-origin list, and
+`SYNC_ENDPOINT` is just `/api/sync`. Route and binding live in `wrangler.toml`.
 
 A schedule is about 3 kB at 240 kanji and would be around 32 kB at 2500, so the
 storage and traffic are negligible; the reason to think twice is the moving part,
 not the bill.
+
+### One-time setup
+
+Everything after this deploys itself on merge to `master`.
+
+1. **Create the KV namespace** and put the id it prints into `wrangler.toml`:
+
+   ```sh
+   npx wrangler kv namespace create KATSU_SYNC
+   ```
+
+2. **Make an API token** at Cloudflare → My Profile → API Tokens, starting from
+   the *Edit Cloudflare Workers* template. It needs, for this account and the
+   `arthurhoek.nl` zone: Workers Scripts **Edit**, Workers KV Storage **Edit**,
+   Workers Routes **Edit**, and Zone **Read**.
+
+3. **Add two GitHub secrets** (Settings → Secrets and variables → Actions):
+   `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Without them the deploy
+   workflow skips the Worker instead of failing, so a fork stays green.
+
+4. **Check the `katsu` DNS record is proxied** - the orange cloud in Cloudflare
+   DNS. A Worker route only fires on proxied records; grey cloud and the requests
+   go straight to GitHub Pages, which will answer `/api/sync/...` with the app's
+   index page.
+
+To run the service locally, start it and the app in two terminals - `npm start`
+proxies `/api` to port 8787 (`proxy.conf.json`):
+
+```sh
+npx wrangler dev --local   # the Worker, with a local stand-in for KV
+npm start
+```
 
 ## No account needed
 

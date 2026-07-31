@@ -1,15 +1,19 @@
 /**
  * Where a sync code's schedule is kept.
  *
- * Empty means sync is switched off, which is how the app ships: GitHub Pages
- * serves static files and cannot store anything, so a code needs somewhere else
- * to put the schedule. With nothing configured the sync screen offers only
- * export and import, which need no server at all.
+ * A relative path, because the Worker answers on the site's own hostname - see
+ * wrangler.toml. Same origin means no CORS, and no URL to keep in step between
+ * the app and the service.
  *
- * Point this at a deployment of `server/katsu-sync-worker.js` (see the README)
- * and the code-based sync appears by itself.
+ * Set it to '' to switch code-based sync off, which is what a fork without a
+ * Worker of its own should do: the sync screen then offers only the backup file,
+ * which needs no server at all.
+ *
+ * Locally, `npm start` proxies /api to a `wrangler dev` on port 8787
+ * (proxy.conf.json). Without one running, sync reports that it cannot be
+ * reached, which is the truth.
  */
-export const SYNC_ENDPOINT = '';
+export const SYNC_ENDPOINT = '/api/sync';
 
 /** Whether a server has been configured for code-based sync. */
 export function syncAvailable(endpoint: string = SYNC_ENDPOINT): boolean {

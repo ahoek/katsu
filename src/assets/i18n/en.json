@@ -65,9 +65,7 @@
     "summary": {
       "form": "form",
       "forms": "forms"
-    },
-    "kanji": "Write kanji",
-    "kanji-tag": "Proof of concept"
+    }
   },
   "review": {
     "stop": "Stop",
@@ -194,7 +192,7 @@
     "home": "Katsu is a free practice app for Japanese verb and adjective conjugation. Drill the te-form, potential, passive, causative and more, from JLPT N5 to N1.",
     "information": "How Japanese conjugation works: rules and examples for the te-form, potential, passive, causative, conditional and more. The guide behind the Katsu practice app.",
     "about": "Katsu is made by Arthur Hoek, a Dutch developer. The app is free and open source (MIT). Contact, GitHub and tip links.",
-    "kanji": "Practise writing the first 100 kanji Japanese children learn, stroke by stroke, in the correct stroke order."
+    "kanji": "Practise writing the 240 kanji Japanese children learn in their first two years at school, stroke by stroke, in the correct stroke order."
   },
   "about": {
     "title": "About the maker",

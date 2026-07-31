@@ -63,7 +63,10 @@ npm run build
 The production build is written to `dist/browser`.
 
 Every push to `master` is built and deployed to GitHub Pages automatically by the
-[deploy workflow](.github/workflows/deploy.yml).
+[deploy workflow](.github/workflows/deploy.yml). The same workflow deploys the
+sync service for the kanji writing feature - a Cloudflare Worker configured in
+[wrangler.toml](wrangler.toml) - when the Cloudflare secrets are present. Its
+one-time setup is in [src/kanji/README.md](src/kanji/README.md).
 
 ## Acknowledgements
 
