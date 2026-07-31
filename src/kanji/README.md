@@ -144,18 +144,25 @@ not the bill.
 
 ### One-time setup
 
-Everything after this deploys itself on merge to `master`.
+Everything after this deploys itself on merge to `master`. The token comes first
+on purpose: with it in the environment, nothing here needs `wrangler login`.
 
-1. **Create the KV namespace** and put the id it prints into `wrangler.toml`:
+1. **Make an API token** at Cloudflare → My Profile → API Tokens, starting from
+   the *Edit Cloudflare Workers* template. It needs, for this account and the
+   `arthurhoek.nl` zone: Workers Scripts **Edit**, Workers KV Storage **Edit**,
+   Workers Routes **Edit**, and Zone **Read**. Copy the account id from the
+   Workers overview page while you are there.
+
+2. **Create the KV namespace** and put the id it prints into `wrangler.toml`:
 
    ```sh
+   export CLOUDFLARE_API_TOKEN=...   # the token from step 1
+   export CLOUDFLARE_ACCOUNT_ID=...  # only needed if the token sees more than one account
    npx wrangler kv namespace create KATSU_SYNC
    ```
 
-2. **Make an API token** at Cloudflare → My Profile → API Tokens, starting from
-   the *Edit Cloudflare Workers* template. It needs, for this account and the
-   `arthurhoek.nl` zone: Workers Scripts **Edit**, Workers KV Storage **Edit**,
-   Workers Routes **Edit**, and Zone **Read**.
+   The dashboard does the same job if you would rather not use the CLI:
+   Workers & Pages → KV → Create namespace, then copy its id.
 
 3. **Add two GitHub secrets** (Settings → Secrets and variables → Actions):
    `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`. Without them the deploy
@@ -173,6 +180,17 @@ proxies `/api` to port 8787 (`proxy.conf.json`):
 npx wrangler dev --local   # the Worker, with a local stand-in for KV
 npm start
 ```
+
+### If wrangler sends you to localhost:8976
+
+That is `wrangler login`'s own callback server, and it only listens while the
+login command is still running. It will refuse to connect if the command was
+interrupted, if the authorise page was opened after it stopped, if something else
+holds port 8976 (`lsof -i :8976`), or if wrangler is running somewhere other than
+the machine with the browser.
+
+Setting `CLOUDFLARE_API_TOKEN` as in step 2 skips the whole OAuth dance, which is
+also exactly how CI authenticates.
 
 ## No account needed
 
