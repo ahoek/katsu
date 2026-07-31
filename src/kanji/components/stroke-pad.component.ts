@@ -21,8 +21,9 @@ const MIN_STEP = 0.6;
     <svg
       class="pad"
       [class.pad--wrong]="feedback() === 'wrong'"
+      [class.pad--interactive]="interactive()"
       [attr.viewBox]="'0 0 ' + viewBox + ' ' + viewBox"
-      role="application"
+      [attr.role]="interactive() ? 'application' : 'img'"
       [attr.aria-label]="label()"
       (pointerdown)="start($event)"
       (pointermove)="extend($event)"
@@ -77,6 +78,10 @@ const MIN_STEP = 0.6;
       // The pad owns every gesture inside it; no scrolling or double-tap zoom.
       touch-action: none;
       cursor: crosshair;
+
+      &:not(.pad--interactive) {
+        cursor: default;
+      }
     }
 
     .pad--wrong {
@@ -168,6 +173,9 @@ export class StrokePadComponent {
 
   readonly feedback = input<'none' | 'wrong'>('none');
 
+  /** Off while a stroke order is being demonstrated. */
+  readonly interactive = input(true);
+
   readonly label = input('');
 
   /** A finished stroke, in the 109x109 kanji coordinate space. */
@@ -206,7 +214,7 @@ export class StrokePadComponent {
   }
 
   protected start(event: PointerEvent): void {
-    if (!this.currentStroke()) {
+    if (!this.interactive() || !this.currentStroke()) {
       return;
     }
     event.preventDefault();

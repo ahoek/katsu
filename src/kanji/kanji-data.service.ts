@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
@@ -35,6 +35,16 @@ export class KanjiDataService {
   readonly data = signal<KanjiStrokeData | undefined>(undefined);
 
   private pending?: Promise<KanjiStrokeData>;
+
+  /** Characters by kanji, for looking up what the schedule refers to. */
+  readonly byKanji = computed(
+    () => new Map((this.data()?.characters ?? []).map(character => [character.kanji, character])),
+  );
+
+  /** The meaning in the given language, falling back to English. */
+  meaningOf(character: KanjiCharacter, language: string | null | undefined): string {
+    return character.meaning[language ?? 'en'] ?? character.meaning['en'];
+  }
 
   async load(): Promise<KanjiStrokeData> {
     const loaded = this.data();

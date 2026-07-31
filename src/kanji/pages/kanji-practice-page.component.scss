@@ -30,51 +30,10 @@
   }
 }
 
-app-kanji-stroke-pad {
-  display: block;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgb(0 0 0 / .18);
-}
-
-.status {
-  min-height: 2.4em;
-  margin: 10px 0 0;
+.answer {
+  margin: 4px 0 0;
   text-align: center;
-  font-size: .9rem;
-  color: var(--ion-color-medium);
-
-  ion-icon {
-    vertical-align: -2px;
-    color: var(--ion-color-success);
-  }
-
-  &--wrong {
-    color: var(--ion-color-danger);
-  }
-
-  &__answer {
-    display: block;
-    margin-top: 2px;
-    font-size: 1.6rem;
-    color: var(--ion-text-color);
-  }
-}
-
-.hints {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2px;
-
-  ion-button {
-    --color: var(--app-color-link);
-    font-size: .8rem;
-  }
-
-  &__glyph {
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
+  font-size: 1.6rem;
 }
 
 .source {
@@ -146,9 +105,15 @@ app-kanji-stroke-pad {
       max-width: 100%;
     }
 
+    // In the schedule, and out of it again once mastered
     &--done {
       border-color: var(--ion-color-success);
       background: color-mix(in srgb, var(--ion-color-success) 12%, var(--ion-background-color));
+    }
+
+    &--mastered {
+      border-color: var(--ion-color-secondary-shade);
+      background: color-mix(in srgb, var(--ion-color-secondary) 16%, var(--ion-background-color));
     }
 
     &--current {
