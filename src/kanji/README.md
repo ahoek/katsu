@@ -1,7 +1,8 @@
 # Kanji writing (proof of concept)
 
-Learn to write the first 100 kanji Japanese children learn: a lesson per
-character, then written reviews on a spaced repetition schedule. Every stroke is
+Learn to write the 240 kanji Japanese children learn in their first two years at
+school: a lesson per character, then written reviews on a spaced repetition
+schedule. Every stroke is
 checked as you draw it, so you find out at once when a stroke is in the wrong
 place, drawn backwards, or out of order.
 
@@ -104,11 +105,11 @@ schedule as JSON would cover most of that without a backend.
 
 ## The deck
 
-The first 100 kanji a Japanese child learns: all 80 of grade 1 of the
-[学年別漢字配当表](https://en.wikipedia.org/wiki/Ky%C5%8Diku_kanji) in the
-ministry's own order, then the first 20 of grade 2. Meanings and readings live in
-`tools/kanji-deck.mjs` and are deliberately short, so the prompt fits one line on
-a phone.
+Grades 1 and 2 of the
+[学年別漢字配当表](https://en.wikipedia.org/wiki/Ky%C5%8Diku_kanji) in full: 80
+and 160 characters, both in the ministry's own aiueo order. Meanings and readings
+live in `tools/kanji-deck.mjs` and are deliberately short, so the prompt fits one
+line on a phone.
 
 Meanings are written per language (`en`, `nl`) by hand: no kanji dictionary
 ships Dutch glosses. KANJIDIC2 has English, French, Spanish and Portuguese only,
@@ -119,7 +120,7 @@ back to English.
 
 ## Regenerating the stroke data
 
-`src/assets/data/kanji/strokes.json` (60 kB, 585 strokes) is generated, not
+`src/assets/data/kanji/strokes.json` (207 kB, 1718 strokes) is generated, not
 edited by hand:
 
 ```bash
@@ -157,7 +158,8 @@ MIT-licensed code.
 ## Known gaps
 
 - No cap on how many lessons or reviews a day, and no way to reset a kanji or
-  the whole schedule from the interface.
+  the whole schedule from the interface. At 240 kanji a day's reviews can pile
+  up, which makes a daily cap the next thing worth having.
 - Reviews only ever ask for writing. Recognition and readings are untested
   ground here, and the conjugation side of the app already covers reading.
 - Stroke shape is judged, but not how a stroke should taper or hook.

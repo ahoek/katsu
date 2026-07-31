@@ -6,9 +6,17 @@ import strokeData from '../assets/data/kanji/strokes.json';
  * shipped, so a hand-edit or a half-finished regeneration cannot slip through.
  */
 describe('the shipped stroke data', () => {
-  it('has the whole deck', () => {
-    expect(strokeData.characters).toHaveLength(100);
+  it('has the whole deck: both school years, in full', () => {
+    expect(strokeData.characters).toHaveLength(240);
+    expect(strokeData.characters.filter(c => c.grade === 1)).toHaveLength(80);
+    expect(strokeData.characters.filter(c => c.grade === 2)).toHaveLength(160);
     expect(strokeData.viewBox).toBe(109);
+  });
+
+  it('has every kanji only once', () => {
+    const kanji = strokeData.characters.map(character => character.kanji);
+
+    expect(new Set(kanji).size).toBe(kanji.length);
   });
 
   it('numbers every stroke of every kanji', () => {
