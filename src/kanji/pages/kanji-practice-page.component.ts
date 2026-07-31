@@ -12,9 +12,8 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { arrowBack, arrowForward, close, gridOutline, playOutline, pencilOutline, refreshOutline } from 'ionicons/icons';
+import { arrowBack, arrowForward, close, gridOutline } from 'ionicons/icons';
 
-import { StrokeDemoComponent } from '../components/stroke-demo.component';
 import { WritingExerciseComponent } from '../components/writing-exercise.component';
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
@@ -40,7 +39,6 @@ import { KanjiSrsService } from '../kanji-srs.service';
     IonModal,
     IonToolbar,
     TranslatePipe,
-    StrokeDemoComponent,
     WritingExerciseComponent,
   ],
 })
@@ -52,14 +50,11 @@ export class KanjiPracticePageComponent implements OnInit {
   // dismiss the overlay itself (backdrop, Escape), and the binding then no
   // longer matches the overlay's own state.
   private readonly picker = viewChild<IonModal>('picker');
-  private readonly demo = viewChild(StrokeDemoComponent);
 
   readonly characters = signal<KanjiCharacter[]>([]);
   readonly index = signal(0);
   readonly complete = signal(false);
 
-  /** Watching the stroke order play out, rather than writing. */
-  readonly watching = signal(false);
 
   readonly learned = this.srs.learned;
   readonly mastered = this.srs.mastered;
@@ -77,7 +72,7 @@ export class KanjiPracticePageComponent implements OnInit {
 
   constructor() {
     installKanjiTranslations(this.translate);
-    addIcons({ arrowBack, arrowForward, close, gridOutline, playOutline, pencilOutline, refreshOutline });
+    addIcons({ arrowBack, arrowForward, close, gridOutline });
   }
 
   async ngOnInit(): Promise<void> {
@@ -101,22 +96,7 @@ export class KanjiPracticePageComponent implements OnInit {
   select(index: number): void {
     this.index.set(index);
     this.complete.set(false);
-    this.watching.set(false);
     this.picker()?.dismiss();
-  }
-
-  /** Watch the stroke order instead of writing; the pad starts over after. */
-  watch(): void {
-    this.complete.set(false);
-    this.watching.set(true);
-  }
-
-  write(): void {
-    this.watching.set(false);
-  }
-
-  replayDemo(): void {
-    this.demo()?.replay();
   }
 
   openPicker(): void {

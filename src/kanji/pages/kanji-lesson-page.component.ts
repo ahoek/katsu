@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   IonBackButton,
@@ -19,6 +19,7 @@ import { StrokePadComponent } from '../components/stroke-pad.component';
 import { WritingExerciseComponent } from '../components/writing-exercise.component';
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
+import { KanjiViewService } from '../kanji-view.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { FIRST_STAGE, stageLabel } from '../srs/srs';
 
@@ -59,11 +60,13 @@ export class KanjiLessonPageComponent implements OnInit {
 
   readonly phase = signal<Phase>('watch');
 
-  private readonly demo = viewChild(StrokeDemoComponent);
 
   readonly strokes = computed<readonly string[]>(() => this.character()?.strokes ?? []);
 
   readonly numbers = computed(() => this.character()?.numbers ?? []);
+
+  /** Follows the same preference the demonstration's own toggle sets. */
+  readonly numbersVisible = inject(KanjiViewService).numbers;
 
   readonly meaning = computed(() => {
     const character = this.character();
@@ -91,9 +94,6 @@ export class KanjiLessonPageComponent implements OnInit {
     this.character.set(next);
   }
 
-  replayDemo(): void {
-    this.demo()?.replay();
-  }
 
   startTracing(): void {
     this.phase.set('trace');

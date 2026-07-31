@@ -84,8 +84,8 @@ export function strokeTraceMs(path: string, scale = 1): number {
         }
       }
 
-      @if (showOrder()) {
-        <!-- Both described by the pad's own label, so not read out separately. -->
+      <!-- Both described by the pad's own label, so not read out separately. -->
+      @if (showDirection()) {
         <g class="directions" aria-hidden="true">
           @for (marker of directions(); track $index) {
             <polygon
@@ -94,6 +94,9 @@ export function strokeTraceMs(path: string, scale = 1): number {
             />
           }
         </g>
+      }
+
+      @if (showNumbers()) {
         <g class="numbers" aria-hidden="true">
           @for (number of visibleNumbers(); track $index) {
             <text [attr.x]="number.x" [attr.y]="number.y">{{ $index + 1 }}</text>
@@ -236,12 +239,15 @@ export class StrokePadComponent {
   /** Mark where the next stroke begins. */
   readonly showStart = input(false);
 
+  /** Mark which way each finished stroke was written. */
+  readonly showDirection = input(false);
+
   /**
-   * Number the strokes on the pad and mark which way each finished one was
-   * written, so the order can still be read off once nothing is moving. Number
-   * positions come with the stroke data.
+   * Number the strokes, so the order can be read off once nothing is moving.
+   * Optional, and off by default: on a dense kanji the numbers crowd the
+   * character, and the arrows already carry the direction.
    */
-  readonly showOrder = input(false);
+  readonly showNumbers = input(false);
 
   readonly numbers = input<readonly Point[]>([]);
 

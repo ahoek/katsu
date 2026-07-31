@@ -42,12 +42,6 @@
             [numbers]="numbers()"
             [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
           ></app-kanji-stroke-demo>
-          <div class="actions">
-            <ion-button fill="clear" size="small" (click)="replayDemo()">
-              <ion-icon slot="start" name="refresh-outline"></ion-icon>
-              {{ 'kanji.demo.replay' | translate }}
-            </ion-button>
-          </div>
         }
 
         @case ('trace') {
@@ -57,6 +51,7 @@
           </p>
           <app-kanji-writing-exercise
             [strokes]="strokes()"
+            [numbers]="numbers()"
             [glyph]="kanji.kanji"
             [meaning]="meaning()"
             [example]="true"
@@ -72,6 +67,7 @@
           <!-- A separate block from the trace, so the exercise starts over. -->
           <app-kanji-writing-exercise
             [strokes]="strokes()"
+            [numbers]="numbers()"
             [glyph]="kanji.kanji"
             [meaning]="meaning()"
             (finished)="finishRecall()"
@@ -86,7 +82,8 @@
           <app-kanji-stroke-pad
             [strokes]="strokes()"
             [written]="strokes().length"
-            [showOrder]="true"
+            [showDirection]="true"
+            [showNumbers]="numbersVisible()"
             [numbers]="numbers()"
             [interactive]="false"
             [label]="'kanji.pad-label' | translate: { meaning: meaning() }"

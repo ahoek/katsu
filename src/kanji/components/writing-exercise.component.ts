@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, OnDestroy, computed, input, linkedS
 import { IonButton, IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { arrowUndoOutline, bulbOutline, checkmarkCircle, eyeOutline, refreshOutline } from 'ionicons/icons';
+import { arrowUndoOutline, bulbOutline, checkmarkCircle, pencilOutline, playOutline, refreshOutline } from 'ionicons/icons';
 
 import { Attempt } from '../srs/srs';
 import { Point } from '../stroke/geometry';
 import { StrokeMatcher } from '../stroke/stroke-matcher';
+import { StrokeDemoComponent } from './stroke-demo.component';
 import { StrokePadComponent } from './stroke-pad.component';
 
 /** Misses on one stroke before the start point is given away. */
@@ -39,8 +40,20 @@ type Feedback =
 @Component({
   selector: 'app-kanji-writing-exercise',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonButton, IonIcon, TranslatePipe, StrokePadComponent],
+  imports: [IonButton, IonIcon, TranslatePipe, StrokeDemoComponent, StrokePadComponent],
   template: `
+    @if (watching()) {
+      <app-kanji-stroke-demo
+        [strokes]="strokes()"
+        [numbers]="numbers()"
+        [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
+      >
+        <ion-button fill="clear" size="small" (click)="watching.set(false)">
+          <ion-icon slot="start" name="pencil-outline"></ion-icon>
+          {{ 'kanji.demo.write' | translate }}
+        </ion-button>
+      </app-kanji-stroke-demo>
+    } @else {
     <app-kanji-stroke-pad
       [strokes]="strokes()"
       [written]="written()"
@@ -77,13 +90,9 @@ type Feedback =
     </p>
 
     <div class="hints">
-      <ion-button fill="clear" size="small" (click)="toggleExample()" [attr.aria-pressed]="exampleVisible()">
-        <ion-icon slot="start" name="eye-outline"></ion-icon>
-        @if (exampleVisible()) {
-          <span lang="ja" class="hints__glyph">{{ glyph() }}</span>
-        } @else {
-          {{ 'kanji.hint.example' | translate }}
-        }
+      <ion-button fill="clear" size="small" (click)="watchExample()">
+        <ion-icon slot="start" name="play-outline"></ion-icon>
+        {{ 'kanji.hint.example' | translate }}
       </ion-button>
 
       <ion-button fill="clear" size="small" (click)="showStrokeHint()" [disabled]="complete()">
@@ -101,6 +110,7 @@ type Feedback =
         {{ 'kanji.restart' | translate }}
       </ion-button>
     </div>
+    }
   `,
   styles: `
     :host {
@@ -161,8 +171,18 @@ export class WritingExerciseComponent implements OnDestroy {
   /** Start with the whole character on screen, for a first guided go. */
   readonly example = input(false);
 
+  /** Where to put each stroke's number, for the demonstration. */
+  readonly numbers = input<readonly Point[]>([]);
+
   /** Reported once the last stroke is written. */
   readonly finished = output<Attempt>();
+
+  /**
+   * Watching the character written out, rather than writing it. Reset for the
+   * next kanji like every other hint: watching is something you asked for about
+   * the character in front of you.
+   */
+  readonly watching = linkedSignal({ source: this.strokes, computation: () => false });
 
   private readonly pad = viewChild(StrokePadComponent);
 
@@ -204,7 +224,7 @@ export class WritingExerciseComponent implements OnDestroy {
 
   constructor() {
     // The exercise brings its own icons, so any page can drop it in.
-    addIcons({ arrowUndoOutline, bulbOutline, checkmarkCircle, eyeOutline, refreshOutline });
+    addIcons({ arrowUndoOutline, bulbOutline, checkmarkCircle, pencilOutline, playOutline, refreshOutline });
   }
 
   ngOnDestroy(): void {
@@ -244,12 +264,13 @@ export class WritingExerciseComponent implements OnDestroy {
     }
   }
 
-  toggleExample(): void {
-    const visible = !this.exampleVisible();
-    this.exampleVisible.set(visible);
-    if (visible) {
-      this.hintsUsed.set(true);
-    }
+  /**
+   * Watch the character written out. This is the strongest hint there is, so it
+   * counts against the review the same as being shown a stroke.
+   */
+  watchExample(): void {
+    this.hintsUsed.set(true);
+    this.watching.set(true);
   }
 
   /** Show the next stroke, or replay it when it is already showing. */

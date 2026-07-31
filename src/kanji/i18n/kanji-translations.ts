@@ -29,7 +29,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         complete: 'Complete!',
       },
       hint: {
-        example: 'Example',
+        example: 'Watch it written',
         stroke: 'Show stroke',
       },
       undo: 'Undo',
@@ -41,10 +41,10 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       loading: 'Loading kanji...',
       source: 'Stroke data from KanjiVG, CC BY-SA 3.0',
       demo: {
-        watch: 'Watch stroke order',
-        watching: 'Stroke order',
         write: 'Write it yourself',
         replay: 'Play again',
+        'numbers-show': 'Show numbers',
+        'numbers-hide': 'Hide numbers',
       },
       interval: {
         '4h': '4 hours',
@@ -120,7 +120,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         complete: 'Klaar!',
       },
       hint: {
-        example: 'Voorbeeld',
+        example: 'Bekijk het schrijven',
         stroke: 'Toon streek',
       },
       undo: 'Ongedaan maken',
@@ -132,10 +132,10 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       loading: 'Kanji laden...',
       source: 'Streekdata van KanjiVG, CC BY-SA 3.0',
       demo: {
-        watch: 'Streekvolgorde bekijken',
-        watching: 'Streekvolgorde',
         write: 'Zelf schrijven',
         replay: 'Nog een keer',
+        'numbers-show': 'Nummers aan',
+        'numbers-hide': 'Nummers uit',
       },
       interval: {
         '4h': '4 uur',

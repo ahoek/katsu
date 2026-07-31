@@ -53,8 +53,11 @@ altogether, however badly it goes.
   be read off once nothing is moving. Used by the lesson and by free practice,
   both of which offer a replay. The annotation is switched off while someone is
   writing, where it would give the answer away.
-- **Stroke order annotation** — a number per stroke at KanjiVG's own position,
-  and a small arrow per stroke from `stroke/direction.ts`. The arrow is knocked
+- **Stroke order annotation** — a small arrow per stroke from
+  `stroke/direction.ts`, and optionally a number per stroke at KanjiVG's own
+  position. The numbers are off by default and toggled from the demonstration
+  itself (`kanji-view.service.ts` remembers the choice): on a kanji like 楽 they
+  crowd the character, and the arrows already carry the direction. The arrow is knocked
   out of the stroke it belongs to rather than drawn beside it: a stroke is 5.5
   units wide on the 109 unit square, enough to carry an arrowhead without adding
   anything to the outline of the character or crowding the numbers. Arrowheads on
@@ -73,9 +76,11 @@ altogether, however badly it goes.
 - **Exercise** — `components/writing-exercise.component.ts` wraps the pad with
   the hints, the running commentary, and the mistake and hint counters the
   schedule grades on. Lessons, reviews and free practice all use it.
-- **Hints**, weakest to strongest: the whole character as a faint example, the
-  starting point of the next stroke, and the next stroke drawn in its writing
-  direction. The last two appear on their own after two and three failed
+- **Hints**, weakest to strongest: the starting point of the next stroke, the
+  next stroke drawn in its writing direction, and watching the whole character
+  written out. That last one replaces what used to be a separate play button in
+  the toolbar - asking to see the example and watching it written are the same
+  wish, so they are the same button. The last two appear on their own after two and three failed
   attempts at the same stroke, so being stuck is never a dead end. Asking for a
   hint costs the review its stage; being shown one after failing does not,
   because the misses have already cost it.
