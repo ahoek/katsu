@@ -26,6 +26,40 @@ app-review-settings {
   margin: 0 auto;
 }
 
+.kanji-link {
+  margin: 20px 0 0;
+  text-align: center;
+  font-size: .85rem;
+
+  a {
+    color: var(--app-color-link);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  // Amber and filled, so it reads as a warning label rather than a category
+  &__tag {
+    margin-inline-start: 8px;
+    padding: 2px 7px;
+    // The base amber, not the shade: the theme pairs dark text with this one
+    // and reaches AA in both themes, which the darker shade only just misses.
+    background: var(--ion-color-secondary);
+    border-radius: 999px;
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--ion-color-secondary-contrast);
+  }
+
+  &__note {
+    display: block;
+    margin-top: 4px;
+    font-size: .75rem;
+    color: var(--ion-color-medium);
+  }
+}
+
 .session-summary {
   margin: 0;
   padding: 6px 16px 4px;

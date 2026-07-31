@@ -64,6 +64,25 @@ export class KanjiSyncPageComponent implements OnInit, OnDestroy {
     return code ? syncCodeLink(code, location.origin) : '';
   });
 
+  /** How long ago this device last synced, for the line under the code. */
+  readonly lastSync = computed(() => {
+    const at = this.sync.syncedAt();
+    if (!at) {
+      return undefined;
+    }
+    const minutes = Math.max(0, Math.round((Date.now() - at) / 60_000));
+    if (minutes < 1) {
+      return { key: 'kanji.sync.last-now', value: 0 };
+    }
+    if (minutes < 60) {
+      return { key: 'kanji.sync.last-minutes', value: minutes };
+    }
+    const hours = Math.round(minutes / 60);
+    return hours < 24
+      ? { key: 'kanji.sync.last-hours', value: hours }
+      : { key: 'kanji.sync.last-days', value: Math.round(hours / 24) };
+  });
+
   private fragmentChanges?: Subscription;
 
   constructor() {

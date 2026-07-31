@@ -20,6 +20,7 @@ import { WritingExerciseComponent } from '../components/writing-exercise.compone
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
 import { KanjiViewService } from '../kanji-view.service';
+import { KanjiSyncService } from '../sync/kanji-sync.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { FIRST_STAGE, stageLabel } from '../srs/srs';
 
@@ -53,6 +54,7 @@ type Phase = 'watch' | 'trace' | 'recall' | 'done';
 export class KanjiLessonPageComponent implements OnInit {
   private readonly data = inject(KanjiDataService);
   private readonly srs = inject(KanjiSrsService);
+  private readonly sync = inject(KanjiSyncService);
   private readonly translate = inject(TranslateService);
   private readonly router = inject(Router);
 
@@ -113,6 +115,7 @@ export class KanjiLessonPageComponent implements OnInit {
     const character = this.character();
     if (character) {
       this.srs.learn(character.kanji);
+      void this.sync.autoSync();
     }
     await this.router.navigate(['/kanji'], { replaceUrl: true });
   }

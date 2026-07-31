@@ -47,6 +47,12 @@
             <p class="scan__note">{{ 'kanji.sync.qr-note' | translate }}</p>
           </div>
 
+          @if (lastSync(); as last) {
+            <p class="card__note card__note--synced">
+              {{ last.key | translate: { value: last.value } }}
+            </p>
+          }
+
           <p class="card__note">{{ 'kanji.sync.code-note' | translate }}</p>
 
           <div class="card__actions">

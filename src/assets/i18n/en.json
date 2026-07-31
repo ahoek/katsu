@@ -65,7 +65,10 @@
     "summary": {
       "form": "form",
       "forms": "forms"
-    }
+    },
+    "kanji": "Write kanji",
+    "kanji-tag": "Alpha",
+    "kanji-note": "Being tested: expect rough edges, and keep a backup of your progress."
   },
   "review": {
     "stop": "Stop",
