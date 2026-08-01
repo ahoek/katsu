@@ -19,6 +19,12 @@ const HINT_STROKE_AFTER = 3;
 /** How long the pad shows that a stroke was rejected. */
 const WRONG_FEEDBACK_MS = 350;
 
+/**
+ * Strokes in a row before the count is worth naming. Below this it is not a run
+ * yet, and a character of four strokes should not be congratulated on two.
+ */
+const RUN_WORTH_SAYING = 3;
+
 type Feedback =
   | { kind: 'none' }
   | { kind: 'correct' }
@@ -61,19 +67,32 @@ type Feedback =
       [showOutline]="exampleVisible()"
       [showStroke]="nextStrokeVisible()"
       [showStart]="startVisible()"
-      [feedback]="rejected() ? 'wrong' : 'none'"
+      [feedback]="padFeedback()"
       [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
       (strokeDrawn)="judge($event)"
     ></app-kanji-stroke-pad>
 
-    <p class="status" role="status" [class.status--wrong]="mistake()">
+    <p
+      class="status"
+      role="status"
+      [class.status--wrong]="mistake()"
+      [class.status--done]="feedback().kind === 'complete'"
+    >
       @switch (feedback().kind) {
         @case ('complete') {
           <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
-          {{ 'kanji.feedback.complete' | translate }}
+          @if (flawless()) {
+            {{ 'kanji.feedback.flawless' | translate }}
+          } @else {
+            {{ 'kanji.feedback.complete' | translate }}
+          }
         }
         @case ('correct') {
-          {{ 'kanji.feedback.correct' | translate }}
+          @if (run() >= RUN_WORTH_SAYING) {
+            {{ 'kanji.feedback.run' | translate: { count: run() } }}
+          } @else {
+            {{ 'kanji.feedback.correct' | translate }}
+          }
         }
         @case ('reversed') {
           {{ 'kanji.feedback.reversed' | translate }}
@@ -143,6 +162,11 @@ type Feedback =
       &--wrong {
         color: var(--ion-color-danger);
       }
+
+      &--done {
+        color: var(--ion-color-success);
+        font-weight: 600;
+      }
     }
 
     .hints {
@@ -188,6 +212,10 @@ export class WritingExerciseComponent implements OnDestroy {
   private readonly misses = linkedSignal({ source: this.strokes, computation: () => 0 });
   private readonly mistakes = linkedSignal({ source: this.strokes, computation: () => 0 });
   private readonly hintsUsed = linkedSignal({ source: this.strokes, computation: () => this.example() });
+
+  /** Strokes accepted in a row, for the run the status line counts out. */
+  protected readonly run = linkedSignal({ source: this.strokes, computation: () => 0 });
+
   readonly exampleVisible = linkedSignal({ source: this.strokes, computation: () => this.example() });
   private readonly strokeHintVisible = linkedSignal({ source: this.strokes, computation: () => false });
   readonly feedback = linkedSignal<readonly string[], Feedback>({
@@ -219,6 +247,23 @@ export class WritingExerciseComponent implements OnDestroy {
   readonly mistake = computed(() =>
     ['wrong', 'reversed', 'out-of-order'].includes(this.feedback().kind));
 
+  /** Written straight through, no stroke turned down and nothing shown. */
+  protected readonly flawless = computed(() => this.mistakes() === 0 && !this.hintsUsed());
+
+  protected readonly RUN_WORTH_SAYING = RUN_WORTH_SAYING;
+
+  /**
+   * What the pad should say about the last stroke. A rejection outranks
+   * anything else: it is the thing to fix, and it clears itself.
+   */
+  protected readonly padFeedback = computed<'none' | 'wrong' | 'correct' | 'complete'>(() => {
+    if (this.rejected()) {
+      return 'wrong';
+    }
+    const kind = this.feedback().kind;
+    return kind === 'complete' || kind === 'correct' ? kind : 'none';
+  });
+
   readonly drawnStroke = computed(() => {
     const feedback = this.feedback();
     return feedback.kind === 'out-of-order' ? feedback.drawn : 0;
@@ -247,6 +292,7 @@ export class WritingExerciseComponent implements OnDestroy {
         const written = this.written() + 1;
         this.written.set(written);
         this.misses.set(0);
+        this.run.update(run => run + 1);
         this.strokeHintVisible.set(false);
         if (written >= this.strokeCount()) {
           this.feedback.set({ kind: 'complete' });
@@ -307,6 +353,7 @@ export class WritingExerciseComponent implements OnDestroy {
   private reject(feedback: Feedback): void {
     this.misses.update(misses => misses + 1);
     this.mistakes.update(mistakes => mistakes + 1);
+    this.run.set(0);
     this.feedback.set(feedback);
     this.rejected.set(true);
     clearTimeout(this.wrongTimer);
@@ -315,6 +362,7 @@ export class WritingExerciseComponent implements OnDestroy {
 
   private clearStrokeState(): void {
     this.misses.set(0);
+    this.run.set(0);
     this.strokeHintVisible.set(false);
     this.feedback.set({ kind: 'none' });
   }

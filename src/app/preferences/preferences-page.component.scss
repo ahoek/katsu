@@ -15,10 +15,39 @@ ion-item {
   --background: transparent;
 }
 
+// Ionic leaves 32px between a start icon and the label, which on a phone is a
+// gap the row cannot afford: it is the label that ends up truncated for it.
+ion-item ion-icon[slot='start'],
+ion-item span[slot='start'],
+ion-item .mark {
+  margin-inline-end: 16px;
+}
+
+// The two marks drawn here rather than taken from ionicons, sized and coloured
+// to sit in the same line as the icons around them.
+.mark {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  color: rgba(var(--ion-text-color-rgb), .62);
+
+  &--numbers {
+    text {
+      font-size: 8px;
+      fill: currentColor;
+    }
+
+    line {
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+  }
+}
+
 // The する glyph stands in for an icon; give it the icon slot's footprint
 ion-item span[slot='start'] {
   width: 24px;
-  margin-inline-end: 32px;
   font-size: 12px;
   text-align: center;
   white-space: nowrap;

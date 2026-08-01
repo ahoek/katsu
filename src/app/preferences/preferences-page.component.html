@@ -111,13 +111,52 @@
       <ion-label>{{'preferences.group.kanji'|translate}}</ion-label>
     </ion-list-header>
     <ion-item>
-      <span slot="start" aria-hidden="true">→</span>
+      <ion-icon name="today-outline" slot="start"></ion-icon>
+      <ion-select
+        [ngModel]="pace.cap()"
+        (ngModelChange)="pace.setCap($event)"
+        [label]="'preferences.kanji-cap'|translate"
+        interface="action-sheet"
+        justify="space-between"
+      >
+        <!-- A number needs no translating; only the way out of the cap does. -->
+        @for (choice of capChoices; track choice) {
+          <ion-select-option [value]="choice">
+            @if (choice === 0) {
+              {{'preferences.kanji-cap-none'|translate}}
+            } @else {
+              {{choice}}
+            }
+          </ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <!-- The pad's own arrow, knocked out of a stroke exactly as it is there,
+           rather than an icon that merely means "direction". -->
+      <svg class="mark" slot="start" viewBox="0 0 24 24" aria-hidden="true">
+        <mask id="kanji-arrow-mark">
+          <rect width="24" height="24" fill="black" />
+          <!-- Kept near the pad's own proportions - an arrowhead a little under
+               half the width of the stroke it sits in - or it reads as a play
+               button rather than as a stroke going somewhere. -->
+          <line x1="3" y1="17.5" x2="21" y2="6.5" stroke="white" stroke-width="7" stroke-linecap="round" />
+          <polygon [attr.points]="arrowPoints" transform="translate(12 12) rotate(-31) scale(1.9)" />
+        </mask>
+        <rect width="24" height="24" fill="currentColor" mask="url(#kanji-arrow-mark)" />
+      </svg>
       <ion-checkbox [checked]="view.arrows()" (ionChange)="view.toggleArrows()" justify="space-between">
         {{'preferences.kanji-arrows'|translate}}
       </ion-checkbox>
     </ion-item>
     <ion-item>
-      <span slot="start" aria-hidden="true">①</span>
+      <!-- Numbered rather than bulleted: it is the numbering that is switched. -->
+      <svg class="mark mark--numbers" slot="start" viewBox="0 0 24 24" aria-hidden="true">
+        @for (row of [0, 1, 2]; track row) {
+          <text x="0" [attr.y]="8.5 + row * 7.5">{{ row + 1 }}</text>
+          <line x1="9" [attr.y1]="6 + row * 7.5" x2="23" [attr.y2]="6 + row * 7.5" />
+        }
+      </svg>
       <ion-checkbox [checked]="view.numbers()" (ionChange)="view.toggleNumbers()" justify="space-between">
         {{'preferences.kanji-numbers'|translate}}
       </ion-checkbox>

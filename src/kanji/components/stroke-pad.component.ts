@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 
-import { directionMarker } from '../stroke/direction';
+import { ARROW_POINTS, directionMarker } from '../stroke/direction';
 import { Point, polylineLength } from '../stroke/geometry';
 import { flattenPath } from '../stroke/svg-path';
 
@@ -45,6 +45,7 @@ export function strokeTraceMs(path: string, scale = 1): number {
     <svg
       class="pad"
       [class.pad--wrong]="feedback() === 'wrong'"
+      [class.pad--complete]="feedback() === 'complete'"
       [class.pad--interactive]="interactive()"
       [style.--kanji-trace-duration]="traceMs() + 'ms'"
       [attr.viewBox]="'0 0 ' + viewBox + ' ' + viewBox"
@@ -67,8 +68,11 @@ export function strokeTraceMs(path: string, scale = 1): number {
         }
       }
 
+      <!-- The stroke that has just been accepted flashes as it lands: the pad
+           says "that one counted" where the stroke actually is, rather than in a
+           line of text underneath it. -->
       @for (path of writtenStrokes(); track $index) {
-        <path class="ink" [attr.d]="path" />
+        <path class="ink" [class.ink--landed]="$last && accepted()" [attr.d]="path" />
       }
 
       @if (showStroke() && currentStroke()) {
@@ -89,7 +93,7 @@ export function strokeTraceMs(path: string, scale = 1): number {
         <g class="directions" aria-hidden="true">
           @for (marker of directions(); track $index) {
             <polygon
-              points="1.7,0 -1.2,1.25 -1.2,-1.25"
+              [attr.points]="arrowPoints"
               [attr.transform]="'translate(' + marker.x + ' ' + marker.y + ') rotate(' + marker.angle + ')'"
             />
           }
@@ -133,6 +137,16 @@ export function strokeTraceMs(path: string, scale = 1): number {
       animation: nudge .3s ease-in-out;
     }
 
+    .pad--complete {
+      // An <svg> root would otherwise scale out of its top left corner.
+      transform-origin: center;
+      animation: settle .5s ease-out;
+
+      .ink {
+        animation: finished .7s ease-out;
+      }
+    }
+
     .grid {
       fill: none;
       stroke: var(--ion-color-medium);
@@ -159,6 +173,12 @@ export function strokeTraceMs(path: string, scale = 1): number {
     .ink {
       stroke: var(--ion-text-color);
       stroke-width: 5.5;
+    }
+
+    // Plays once, when the path is created: a stroke lands green and thickens
+    // for a moment, then dries into ink like the ones before it.
+    .ink--landed {
+      animation: land .45s ease-out;
     }
 
     .guide-stroke {
@@ -216,10 +236,32 @@ export function strokeTraceMs(path: string, scale = 1): number {
       75% { transform: translateX(6px); }
     }
 
+    @keyframes land {
+      0% { stroke: var(--ion-color-success); stroke-width: 8; }
+      45% { stroke: var(--ion-color-success); stroke-width: 6.5; }
+      100% { stroke: var(--ion-text-color); stroke-width: 5.5; }
+    }
+
+    @keyframes finished {
+      0%, 60% { stroke: var(--ion-color-success); }
+      100% { stroke: var(--ion-text-color); }
+    }
+
+    // The whole square breathes out once. Small on purpose: the character has
+    // to stay readable through it, since reading it back is half the reward.
+    @keyframes settle {
+      40% { transform: scale(1.035); }
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .guide-stroke, .start, .pad--wrong {
+      .guide-stroke, .start, .pad--wrong, .pad--complete, .ink--landed {
         animation-duration: .01ms;
         animation-iteration-count: 1;
+      }
+
+      // Not a nicety: without it the success colour is the last frame drawn.
+      .pad--complete .ink, .ink--landed {
+        animation: none;
       }
     }
   `,
@@ -252,7 +294,12 @@ export class StrokePadComponent {
 
   readonly numbers = input<readonly Point[]>([]);
 
-  readonly feedback = input<'none' | 'wrong'>('none');
+  /**
+   * What the page made of the last stroke. `correct` and `complete` are told
+   * apart because finishing a character deserves more than the stroke that
+   * happened to be last.
+   */
+  readonly feedback = input<'none' | 'wrong' | 'correct' | 'complete'>('none');
 
   /** Off while a stroke order is being demonstrated. */
   readonly interactive = input(true);
@@ -270,12 +317,17 @@ export class StrokePadComponent {
 
   protected readonly viewBox = VIEW_BOX;
 
+  protected readonly arrowPoints = ARROW_POINTS;
+
   private readonly drawing = signal<Point[]>([]);
 
   /** Bumped to replay the stroke animation. */
   private readonly replayCount = signal(0);
 
   protected readonly writtenStrokes = computed(() => this.strokes().slice(0, this.written()));
+
+  protected readonly accepted = computed(() =>
+    this.feedback() === 'correct' || this.feedback() === 'complete');
 
   /**
    * Numbers for the strokes on the pad, including the one being drawn: a stroke

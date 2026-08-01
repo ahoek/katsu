@@ -16,6 +16,7 @@ import { arrowForward, brushOutline, chevronForward, phonePortraitOutline, schoo
 
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
+import { KanjiPaceService } from '../kanji-pace.service';
 import { KanjiRefreshService } from '../kanji-refresh.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { KanjiSyncService } from '../sync/kanji-sync.service';
@@ -45,6 +46,7 @@ import { countdown } from '../srs/srs';
 })
 export class KanjiPathPageComponent implements OnInit {
   private readonly data = inject(KanjiDataService);
+  private readonly pace = inject(KanjiPaceService);
   private readonly refresh = inject(KanjiRefreshService);
   private readonly srs = inject(KanjiSrsService);
   private readonly sync = inject(KanjiSyncService);
@@ -53,6 +55,15 @@ export class KanjiPathPageComponent implements OnInit {
   readonly characters = signal<KanjiCharacter[]>([]);
 
   readonly dueCount = computed(() => this.srs.due().length);
+
+  /**
+   * What a session started now would ask for: everything due, or the rest of
+   * today's batch, whichever is smaller.
+   */
+  readonly batchCount = computed(() => Math.min(this.dueCount(), this.pace.remaining()));
+
+  /** Today's batch is done and kanji are still waiting behind it. */
+  readonly batchDone = computed(() => this.pace.reached(this.dueCount()));
 
   readonly learnedCount = computed(() => this.srs.learned().size);
 

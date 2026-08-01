@@ -34,6 +34,12 @@
               ·
               {{ 'kanji.grade' | translate: { grade: kanji.grade } }}
             </p>
+            <p class="meet__standing">
+              {{ standing().key | translate: standing().params }}
+              @if (nextReview(); as next) {
+                · {{ next.key | translate: next.params }}
+              }
+            </p>
           </div>
         </div>
 

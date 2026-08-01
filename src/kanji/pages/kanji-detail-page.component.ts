@@ -20,6 +20,19 @@ import { StrokeDemoComponent } from '../components/stroke-demo.component';
 import { WritingExerciseComponent } from '../components/writing-exercise.component';
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
+import { KanjiSrsService } from '../kanji-srs.service';
+import { FIRST_STAGE, MASTERED_STAGE, countdown } from '../srs/srs';
+
+/** Rungs on the ladder, for "stage 3 of 8". */
+const RUNGS = MASTERED_STAGE - FIRST_STAGE;
+
+/** A line about the schedule: a translation key and whatever it interpolates. */
+interface Standing {
+  key: string;
+  params: Record<string, number>;
+}
+
+const NO_PARAMS: Record<string, number> = {};
 
 /**
  * One kanji, named in the URL so it can be linked to directly. It opens on the
@@ -48,6 +61,7 @@ import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
 })
 export class KanjiDetailPageComponent implements OnInit, OnDestroy {
   private readonly data = inject(KanjiDataService);
+  private readonly srs = inject(KanjiSrsService);
   private readonly translate = inject(TranslateService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -78,12 +92,43 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
   readonly position = computed(() =>
     this.characters().findIndex(character => character.kanji === this.kanji()));
 
+  /**
+   * Where this kanji stands in the schedule, as a translation key and its
+   * parameters. Free practice changes none of it - it is here because the
+   * question "how am I doing on this one" is asked of the character, not of the
+   * list it came from.
+   */
+  readonly standing = computed<Standing>(() => {
+    const card = this.srs.card(this.kanji());
+    if (!card || card.stage < FIRST_STAGE) {
+      return { key: 'kanji.card.unlearned', params: NO_PARAMS };
+    }
+    if (card.stage === MASTERED_STAGE) {
+      return { key: 'kanji.card.mastered', params: NO_PARAMS };
+    }
+    return { key: 'kanji.card.stage', params: { stage: card.stage, total: RUNGS } };
+  });
+
+  /** When it comes back, for a kanji that is in the schedule and not mastered. */
+  readonly nextReview = computed<Standing | undefined>(() => {
+    const card = this.srs.card(this.kanji());
+    if (!card || card.stage < FIRST_STAGE || card.stage === MASTERED_STAGE) {
+      return undefined;
+    }
+    if (card.due <= Date.now()) {
+      return { key: 'kanji.card.due-now', params: NO_PARAMS };
+    }
+    const wait = countdown(card.due, Date.now());
+    return { key: `kanji.card.due-${wait.unit}`, params: { value: wait.value } };
+  });
+
   constructor() {
     installKanjiTranslations(this.translate);
     addIcons({ arrowBack, arrowForward, pencilOutline });
   }
 
   async ngOnInit(): Promise<void> {
+    await this.srs.load();
     const data = await this.data.load();
     this.characters.set(data.characters);
     // The neighbours reuse this component, so the character has to be followed
