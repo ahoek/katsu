@@ -1,22 +1,8 @@
 import { Component, DOCUMENT, inject } from '@angular/core';
-import { NavigationStart, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import {
-  IonApp,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonMenu,
-  IonMenuToggle,
-  IonNote,
-  IonRouterLink,
-  IonRouterOutlet,
-  IonToolbar,
-} from '@ionic/angular/standalone';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import {
   alertCircle,
@@ -50,6 +36,7 @@ import {
 import en from '../assets/i18n/en.json';
 import nl from '../assets/i18n/nl.json';
 
+import { NavDrawerComponent } from './components/nav-drawer/nav-drawer.component';
 import { AnalyticsService } from './shared/analytics.service';
 import { SettingsService } from './shared/settings.service';
 import { ThemeService } from './shared/theme.service';
@@ -58,25 +45,7 @@ import { UpdateService } from './shared/update.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
-  imports: [
-    IonApp,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonMenu,
-    IonMenuToggle,
-    IonNote,
-    IonRouterLink,
-    IonRouterOutlet,
-    IonToolbar,
-    RouterLink,
-    RouterLinkActive,
-    TranslatePipe,
-  ],
+  imports: [IonApp, IonRouterOutlet, NavDrawerComponent],
 })
 export class AppComponent {
   private readonly analytics = inject(AnalyticsService);

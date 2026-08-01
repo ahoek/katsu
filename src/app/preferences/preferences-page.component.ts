@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
   IonButtons,
-  IonMenuButton,
+  IonBackButton,
   IonCheckbox,
   IonContent,
   IonHeader,
@@ -35,7 +35,7 @@ import { ThemePreference, ThemeService } from '../shared/theme.service';
   imports: [
     FormsModule,
     IonButtons,
-    IonMenuButton,
+    IonBackButton,
     IonCheckbox,
     IonContent,
     IonHeader,

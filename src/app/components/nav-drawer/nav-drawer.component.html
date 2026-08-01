@@ -1,0 +1,85 @@
+<!-- A modal <dialog>, so the top layer, the focus trap, Escape and returning
+     focus to the menu button are the browser's job rather than ours. -->
+<dialog #dialog id="app-nav-drawer" class="drawer" (cancel)="onCancel($event)">
+  <!-- A horizontal scroller with two snap stops: the scrim (closed) and the
+       sheet (open). Dragging the sheet is a plain native scroll, so it tracks
+       the finger and carries its momentum without a line of gesture code.
+       Focusable so the dialog has somewhere to put focus that is not a link
+       inside the sheet - focusing that would scroll the drawer open. -->
+  <div #scroller class="drawer__scroller" tabindex="-1" autofocus>
+    <!-- The dimmed area is the closed snap stop and the way out of the drawer,
+         so it may as well be the button that says so. -->
+    <button
+      type="button"
+      class="drawer__scrim"
+      [attr.aria-label]="'menu.close' | translate"
+      (click)="drawer.close()"
+    ></button>
+
+    <nav class="drawer__sheet" [attr.aria-label]="'menu.title' | translate">
+      <ul class="drawer__list">
+        <li>
+          <a
+            class="drawer__item"
+            routerLink="/home"
+            routerDirection="root"
+            routerLinkActive="drawer__item--active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="drawer.close()"
+          >
+            <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
+            <span>{{ 'menu.conjugation' | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="drawer__item"
+            routerLink="/kanji"
+            routerDirection="root"
+            routerLinkActive="drawer__item--active"
+            (click)="drawer.close()"
+          >
+            <ion-icon name="brush-outline" aria-hidden="true"></ion-icon>
+            <span>
+              {{ 'home.kanji' | translate }}
+              <span class="alpha-tag">{{ 'home.kanji-tag' | translate }}</span>
+              <small class="drawer__note">{{ 'home.kanji-note' | translate }}</small>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="drawer__item"
+            routerLink="/information"
+            routerDirection="root"
+            routerLinkActive="drawer__item--active"
+            (click)="drawer.close()"
+          >
+            <ion-icon name="help-circle-outline" aria-hidden="true"></ion-icon>
+            <span>{{ 'setting.info' | translate }}</span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="drawer__item"
+            routerLink="/about"
+            routerDirection="root"
+            routerLinkActive="drawer__item--active"
+            (click)="drawer.close()"
+          >
+            <ion-icon name="person-circle-outline" aria-hidden="true"></ion-icon>
+            <span>{{ 'about.title' | translate }}</span>
+          </a>
+        </li>
+      </ul>
+
+      <!-- Set apart from the list because it is not one of the app's places: it
+           opens on top of wherever you are and hands you a back arrow home. -->
+      <a class="drawer__options" routerLink="/preferences" routerDirection="forward" (click)="drawer.close()">
+        <ion-icon name="settings-outline" aria-hidden="true"></ion-icon>
+        <span>{{ 'preferences.title' | translate }}</span>
+        <ion-icon class="drawer__options-chevron" name="chevron-forward" aria-hidden="true"></ion-icon>
+      </a>
+    </nav>
+  </div>
+</dialog>

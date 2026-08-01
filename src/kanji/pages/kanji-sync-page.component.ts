@@ -5,7 +5,6 @@ import {
   IonBackButton,
   IonButton,
   IonButtons,
-  IonMenuButton,
   IonContent,
   IonHeader,
   IonIcon,
@@ -26,6 +25,8 @@ import { syncCodeFromFragment, syncCodeLink } from '../sync/sync-link';
 /** What the file is called when the schedule is exported. */
 const FILE_PREFIX = 'katsu-kanji';
 
+import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
+
 @Component({
   selector: 'app-kanji-sync-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,7 +37,6 @@ const FILE_PREFIX = 'katsu-kanji';
     IonBackButton,
     IonButton,
     IonButtons,
-    IonMenuButton,
     IonContent,
     IonHeader,
     IonIcon,
@@ -44,6 +44,7 @@ const FILE_PREFIX = 'katsu-kanji';
     IonToolbar,
     TranslatePipe,
     SyncQrComponent,
+    MenuButtonComponent,
   ],
 })
 export class KanjiSyncPageComponent implements OnInit, OnDestroy {

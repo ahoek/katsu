@@ -4,7 +4,6 @@ import {
   IonBackButton,
   IonButton,
   IonButtons,
-  IonMenuButton,
   IonContent,
   IonFooter,
   IonHeader,
@@ -34,6 +33,8 @@ interface Standing {
 
 const NO_PARAMS: Record<string, number> = {};
 
+import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
+
 /**
  * One kanji, named in the URL so it can be linked to directly. It opens on the
  * character being written out; writing it yourself is a step from there, and
@@ -48,7 +49,6 @@ const NO_PARAMS: Record<string, number> = {};
     IonBackButton,
     IonButton,
     IonButtons,
-    IonMenuButton,
     IonContent,
     IonFooter,
     IonHeader,
@@ -57,6 +57,7 @@ const NO_PARAMS: Record<string, number> = {};
     TranslatePipe,
     StrokeDemoComponent,
     WritingExerciseComponent,
+    MenuButtonComponent,
   ],
 })
 export class KanjiDetailPageComponent implements OnInit, OnDestroy {

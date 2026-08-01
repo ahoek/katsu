@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import {
   IonButton,
   IonButtons,
-  IonMenuButton,
   IonContent,
   IonHeader,
   IonIcon,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
+
+import { MenuButtonComponent } from '../components/nav-drawer/menu-button.component';
 
 @Component({
   selector: 'app-about',
@@ -17,12 +18,12 @@ import { TranslatePipe } from '@ngx-translate/core';
   imports: [
     IonButton,
     IonButtons,
-    IonMenuButton,
     IonContent,
     IonHeader,
     IonIcon,
     IonToolbar,
     TranslatePipe,
+    MenuButtonComponent,
   ],
 })
 export class AboutPageComponent {}

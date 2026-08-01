@@ -4,7 +4,6 @@ import {
   IonBackButton,
   IonButton,
   IonButtons,
-  IonMenuButton,
   IonContent,
   IonFooter,
   IonHeader,
@@ -27,6 +26,8 @@ import { FIRST_STAGE, stageLabel } from '../srs/srs';
 
 type Phase = 'watch' | 'trace' | 'recall' | 'done';
 
+import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
+
 /**
  * The lesson for one kanji: meet the character, watch its strokes being written
  * in order, trace it once with the example in front of you, write it once
@@ -41,7 +42,6 @@ type Phase = 'watch' | 'trace' | 'recall' | 'done';
     IonBackButton,
     IonButton,
     IonButtons,
-    IonMenuButton,
     IonContent,
     IonFooter,
     IonHeader,
@@ -51,6 +51,7 @@ type Phase = 'watch' | 'trace' | 'recall' | 'done';
     StrokeDemoComponent,
     StrokePadComponent,
     WritingExerciseComponent,
+    MenuButtonComponent,
   ],
 })
 export class KanjiLessonPageComponent implements OnInit {
