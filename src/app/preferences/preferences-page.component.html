@@ -1,8 +1,9 @@
 <ion-header class="app-chrome">
   <ion-toolbar>
-    <span class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu</span>
-    <ion-buttons slot="end">
-      <ion-menu-button [attr.aria-label]="'menu.title'|translate"></ion-menu-button>
+    <!-- Options is not a place in the app but a panel over the one you came
+         from, so it gets a way back there instead of the menu. -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

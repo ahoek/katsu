@@ -5,7 +5,6 @@ import {
   IonContent,
   IonFooter,
   IonHeader,
-  IonMenuButton,
   IonToolbar,
   NavController,
 } from '@ionic/angular/standalone';
@@ -17,6 +16,8 @@ import { AnalyticsService } from '../shared/analytics.service';
 import { ReviewSettingsComponent } from '../components/review-settings/review-settings.component';
 import { CreditComponent } from '../components/credit/credit.component';
 
+import { MenuButtonComponent } from '../components/nav-drawer/menu-button.component';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home-page.component.html',
@@ -27,11 +28,11 @@ import { CreditComponent } from '../components/credit/credit.component';
     IonContent,
     IonFooter,
     IonHeader,
-    IonMenuButton,
     IonToolbar,
     TranslatePipe,
     ReviewSettingsComponent,
     CreditComponent,
+    MenuButtonComponent,
   ],
 })
 export class HomePageComponent implements OnInit {

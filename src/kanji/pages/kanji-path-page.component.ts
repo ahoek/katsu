@@ -6,7 +6,6 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
-  IonMenuButton,
   IonRouterLink,
   IonToolbar,
 } from '@ionic/angular/standalone';
@@ -21,6 +20,8 @@ import { KanjiRefreshService } from '../kanji-refresh.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { KanjiSyncService } from '../sync/kanji-sync.service';
 import { countdown } from '../srs/srs';
+
+import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
 
 /**
  * Where the feature starts: what is due now, which lesson comes next, and how
@@ -39,9 +40,9 @@ import { countdown } from '../srs/srs';
     IonContent,
     IonHeader,
     IonIcon,
-    IonMenuButton,
     IonToolbar,
     TranslatePipe,
+    MenuButtonComponent,
   ],
 })
 export class KanjiPathPageComponent implements OnInit {

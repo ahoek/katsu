@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {
   IonButtons,
-  IonMenuButton,
   IonContent,
   IonHeader,
   IonToolbar,
@@ -9,6 +8,8 @@ import {
 import { TranslatePipe } from '@ngx-translate/core';
 
 import { CreditComponent } from '../components/credit/credit.component';
+
+import { MenuButtonComponent } from '../components/nav-drawer/menu-button.component';
 
 /**
  * The guide: what each trainer is and how a session goes, in three steps
@@ -21,12 +22,12 @@ import { CreditComponent } from '../components/credit/credit.component';
   styleUrls: ['./information-page.component.scss'],
   imports: [
     IonButtons,
-    IonMenuButton,
     IonContent,
     IonHeader,
     IonToolbar,
     TranslatePipe,
     CreditComponent,
+    MenuButtonComponent,
   ],
 })
 export class InformationPageComponent {}

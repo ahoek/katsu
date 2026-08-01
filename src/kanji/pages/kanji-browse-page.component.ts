@@ -3,7 +3,6 @@ import { RouterLink } from '@angular/router';
 import {
   IonBackButton,
   IonButtons,
-  IonMenuButton,
   IonContent,
   IonHeader,
   IonToolbar,
@@ -16,6 +15,8 @@ import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { FIRST_STAGE, MASTERED_STAGE } from '../srs/srs';
+
+import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
 
 /**
  * The whole deck at a glance, grouped by the school year it belongs to. Pick a
@@ -30,11 +31,11 @@ import { FIRST_STAGE, MASTERED_STAGE } from '../srs/srs';
     RouterLink,
     IonBackButton,
     IonButtons,
-    IonMenuButton,
     IonContent,
     IonHeader,
     IonToolbar,
     TranslatePipe,
+    MenuButtonComponent,
   ],
 })
 export class KanjiBrowsePageComponent implements OnInit {

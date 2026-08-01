@@ -232,6 +232,7 @@
     "by": "made by Arthur Hoek"
   },
   "menu": {
+    "close": "Close menu",
     "conjugation": "Conjugation",
     "title": "Menu"
   }

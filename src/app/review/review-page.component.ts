@@ -4,7 +4,6 @@ import { RouterLink } from '@angular/router';
 import {
   IonButton,
   IonButtons,
-  IonMenuButton,
   IonCol,
   IonContent,
   IonGrid,
@@ -54,6 +53,8 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
   } as JishoDefinition,
 };
 
+import { MenuButtonComponent } from '../components/nav-drawer/menu-button.component';
+
 @Component({
   selector: 'app-review',
   templateUrl: './review-page.component.html',
@@ -63,7 +64,6 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
     RouterLink,
     IonButton,
     IonButtons,
-    IonMenuButton,
     IonCol,
     IonContent,
     IonGrid,
@@ -82,6 +82,7 @@ const EXAMPLE_WORDS: Record<string, JishoDefinition> = {
     AnswersComponent,
     FuriganaComponent,
     ReviewSettingsComponent,
+    MenuButtonComponent,
   ],
 })
 export class ReviewPageComponent implements OnInit {

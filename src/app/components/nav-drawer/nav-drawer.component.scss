@@ -1,0 +1,155 @@
+// The drawer is a horizontal scroller with two mandatory snap stops: the scrim,
+// as wide as the viewport (closed), and the sheet (open). Dragging it is
+// therefore an ordinary scroll, which is what makes it feel native - the sheet
+// tracks the finger, keeps its momentum, and can be caught mid-flight.
+// The component only scrolls to a stop when the menu button is pressed, and
+// sets --drawer-progress (0 closed, 1 open) as the scroll moves.
+
+:host {
+  display: contents;
+}
+
+.drawer {
+  --drawer-width: min(20rem, 82vw);
+  --drawer-progress: 0;
+
+  position: fixed;
+  inset: 0;
+  // A dialog is fit-content by default; the drag surface has to be the viewport.
+  inline-size: 100%;
+  block-size: 100%;
+  max-inline-size: none;
+  max-block-size: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: hidden;
+
+  // Ours is the .drawer__scrim below, which can fade with the drag.
+  &::backdrop {
+    background: transparent;
+  }
+}
+
+.drawer__scroller {
+  block-size: 100%;
+  display: grid;
+  // The viewport-wide scrim, then the sheet: scrolling between the two is what
+  // opens and closes the drawer.
+  grid-template-columns: 100% var(--drawer-width);
+  overflow-x: scroll;
+  overflow-y: hidden;
+  // Don't let a drag that runs past a stop scroll the page behind.
+  overscroll-behavior: none;
+  // Mandatory, so a half-finished drag always lands open or closed.
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  // It only holds focus for the dialog, so a ring around the whole drawer
+  // would say nothing; the links inside show their own.
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.drawer__scrim {
+  padding: 0;
+  border: 0;
+  background: #000;
+  opacity: calc(var(--drawer-progress) * .4);
+  scroll-snap-align: start;
+}
+
+// Reduced motion keeps the drag, and drops only the animated settle.
+@media (prefers-reduced-motion: no-preference) {
+  .drawer__scroller {
+    scroll-behavior: smooth;
+  }
+}
+
+.drawer__sheet {
+  block-size: 100%;
+  padding: calc(env(safe-area-inset-top) + 12px) 0 env(safe-area-inset-bottom);
+  overflow-y: auto;
+  scroll-snap-align: end;
+  // The plain page surface, as the menu had before: over content it needs to be
+  // opaque, and the canvas pattern showing through only muddied it.
+  background: var(--ion-background-color, #fff);
+  box-shadow: -6px 0 20px rgba(0, 0, 0, .22);
+}
+
+.drawer__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// Inset pills, like the settings chips: the row that is current reads as a
+// highlight sitting in the drawer rather than a band cutting across it.
+// 8px of margin plus 8px of padding is the sheet's 16px gutter.
+.drawer__item,
+.drawer__options {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-inline: 8px;
+  padding: 14px 8px;
+  border-radius: 10px;
+  color: var(--ion-text-color);
+  text-decoration: none;
+
+  ion-icon {
+    flex: none;
+    font-size: 1.375rem;
+    color: rgba(var(--ion-text-color-rgb), .6);
+  }
+}
+
+.drawer__item--active {
+  background: rgba(var(--ion-color-primary-rgb), .16);
+  font-weight: 600;
+}
+
+.drawer__note {
+  display: block;
+  font-size: .75rem;
+  font-weight: normal;
+  line-height: 1.35;
+  color: rgba(var(--ion-text-color-rgb), .6);
+}
+
+// Amber and filled, so it reads as a warning label rather than a category.
+// The base amber, not the shade: the theme pairs dark text with this one and
+// reaches AA in both themes, which the darker shade only just misses.
+.alpha-tag {
+  margin-inline-start: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--ion-color-secondary-contrast);
+  background: var(--ion-color-secondary);
+  vertical-align: 1px;
+}
+
+// A rule and a quieter weight: it belongs to the drawer, not to the list of
+// places above it, and its chevron says it opens on top of the current page.
+.drawer__options {
+  margin-block-start: 20px;
+  padding-block-start: 20px;
+  border-block-start: 1px solid rgba(var(--ion-text-color-rgb), .12);
+  font-size: .9375rem;
+  color: rgba(var(--ion-text-color-rgb), .8);
+}
+
+.drawer__options-chevron {
+  margin-inline-start: auto;
+  font-size: 1rem;
+}

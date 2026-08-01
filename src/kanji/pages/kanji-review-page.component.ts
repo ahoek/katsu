@@ -4,7 +4,6 @@ import {
   IonBackButton,
   IonButton,
   IonButtons,
-  IonMenuButton,
   IonContent,
   IonFooter,
   IonHeader,
@@ -31,6 +30,8 @@ import { KanjiPaceService } from '../kanji-pace.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { KanjiSyncService } from '../sync/kanji-sync.service';
 import { Attempt, Grade, MASTERED_STAGE, stageLabel } from '../srs/srs';
+
+import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
 
 /** What a finished review turned into, for the line under the pad. */
 interface Outcome {
@@ -67,7 +68,6 @@ const STREAK_WORTH_SHOWING = 2;
     IonBackButton,
     IonButton,
     IonButtons,
-    IonMenuButton,
     IonContent,
     IonFooter,
     IonHeader,
@@ -75,6 +75,7 @@ const STREAK_WORTH_SHOWING = 2;
     IonToolbar,
     TranslatePipe,
     WritingExerciseComponent,
+    MenuButtonComponent,
   ],
 })
 export class KanjiReviewPageComponent implements OnInit {
