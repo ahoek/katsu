@@ -32,19 +32,61 @@ character itself is the route parameter - `/kanji/practice/水` - so a kanji can
 be linked to directly. A character that is not in the deck sends you back to the
 list rather than sitting on a page that never loads.
 
+Both carry where a kanji stands in the schedule, since "how am I doing on this
+one" is asked of the character rather than of the session that happens to be
+running. In the list it is a bar under each tile filling towards stage 8, amber
+once mastered, with a dot on anything due now; on the character's own page it is
+said in words, stage and all, next to the stroke count. Free practice still
+changes none of it.
+
 A **lesson** runs in four steps: meet the character, watch its strokes written
 in order, trace it once with the example on screen, then write it again from
 memory with the example gone. Finishing puts the kanji into the schedule at the
 first stage.
 
-A **review** shows the meaning alone and asks for the kanji from memory. It is
-graded from what happened on the pad, with no button for the learner to press:
+A **review** shows the meaning alone and asks for the kanji from memory, and it
+only ever asks for writing. Recognition and readings are out of scope for this
+feature by decision, not for want of time: writing is the thing that has no good
+home elsewhere, and the conjugation side of the app already has reading covered.
+
+It is graded from what happened on the pad, with no button for the learner to
+press:
 
 | What happened                     | Grade | Effect               |
 | --------------------------------- | ----- | -------------------- |
 | First time right, no hints        | clean | Up one stage         |
 | One or two wrong strokes          | shaky | Stays at this stage  |
 | A hint used, or three-plus misses | poor  | Back one stage       |
+
+A finished review shows the ladder as eight pips with the reached stage lit, so
+"stage 3 to 4" is a position rather than a fact about two numbers, and the rung
+just won - or just lost, in red - is the one that moves. Clean answers in a row
+are counted in the toolbar from the second one on, and the session ends on a
+recap of every kanji it asked for with the way each one went.
+
+## A day's worth
+
+At 240 kanji a week away builds a pile nobody wants to start, and a pile nobody
+starts is how a schedule dies. So a session takes **twenty by default** rather
+than everything due, and the path page says which it is doing: "20 ready to
+review, of 34 due". When the batch is done it says so, names what is left, and
+puts a quiet **carry on anyway** next to it - the cap decides the default, never
+the ceiling. `srs/daily.ts` holds the arithmetic as pure functions and
+`kanji-pace.service.ts` the count, in localStorage: how many were done today is
+worth nothing tomorrow, so it neither syncs nor earns the sturdier storage the
+schedule gets.
+
+Going past it is a query parameter, `/kanji/review?all=1`, read once when the
+session starts. That is deliberate - asking for everything is a decision made on
+the way in, so a session cannot quietly grow while it is being worked through.
+
+The size is set on the shared options page beside the pad switches - 10, 20, 40,
+or no cap at all, from `CAP_CHOICES`. That group's icons are registered by the
+options page itself rather than by the root component, so the kanji trainer can
+gain a row there without reaching into the app's own component.
+
+Lessons are not capped. They are taken one at a time by hand, so the pile they
+make is a slower problem than the reviews one, and worth a separate look.
 
 Stages and their waits live in `srs/srs.ts`: 4h, 8h, 1d, 3d, 1w, 2w, 1m, 4m.
 Passing the last one masters the kanji and it stops coming back, which takes
@@ -92,6 +134,12 @@ altogether, however badly it goes.
 - **Exercise** — `components/writing-exercise.component.ts` wraps the pad with
   the hints, the running commentary, and the mistake and hint counters the
   schedule grades on. Lessons, reviews and free practice all use it.
+- **Answering right** — a stroke that is accepted flashes green where it was
+  written and then dries into ink, rather than only being reported in the line
+  underneath: the pad answers in the same place the hand was. Finishing the
+  character turns the whole of it green for a beat, and a character written
+  with nothing shown and no stroke turned down is called flawless rather than
+  merely complete. Three strokes in a row starts counting them out.
 - **Hints**, weakest to strongest: the starting point of the next stroke, the
   next stroke drawn in its writing direction, and watching the whole character
   written out. That last one replaces what used to be a separate play button in
@@ -284,14 +332,11 @@ MIT-licensed code.
 
 ## Known gaps
 
-- No cap on how many lessons or reviews a day, and no way to reset a kanji or
-  the whole schedule from the interface. At 240 kanji a day's reviews can pile
-  up, which makes a daily cap the next thing worth having.
+- No way to reset a kanji or the whole schedule from the interface.
+- Lessons are not capped, only reviews.
 - A deliberate reset has no way to travel between devices: with a merge that only
   moves towards more work done, wiping one device is undone by the next sync,
   which would need a tombstone to express.
-- Reviews only ever ask for writing. Recognition and readings are untested
-  ground here, and the conjugation side of the app already covers reading.
 - Stroke shape is judged, but not how a stroke should taper or hook.
 - Tolerances were calibrated against traced strokes and shaky variations of
   them, not against real handwriting from real learners.

@@ -3,6 +3,18 @@
   color: var(--ion-color-medium);
 }
 
+.streak {
+  margin-left: 10px;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--ion-color-secondary-shade);
+  animation: streak-in .35s ease-out;
+
+  ion-icon {
+    vertical-align: -2px;
+  }
+}
+
 .review {
   max-width: 420px;
   margin: 0 auto;
@@ -54,6 +66,60 @@
   ion-button {
     --border-radius: 999px;
   }
+
+  &__waiting {
+    margin: -12px 0 20px;
+    font-size: .8rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+.recap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 44px;
+    padding: 4px 6px 2px;
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 8px;
+
+    &--clean {
+      border-color: var(--ion-color-success);
+      background: color-mix(in srgb, var(--ion-color-success) 12%, transparent);
+
+      ion-icon {
+        color: var(--ion-color-success);
+      }
+    }
+
+    &--poor {
+      border-color: var(--ion-color-danger);
+      background: color-mix(in srgb, var(--ion-color-danger) 10%, transparent);
+
+      ion-icon {
+        color: var(--ion-color-danger);
+      }
+    }
+  }
+
+  &__kanji {
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+
+  &__move ion-icon {
+    font-size: .8rem;
+    color: var(--ion-color-medium);
+  }
 }
 
 .loading {
@@ -89,5 +155,51 @@
   ion-button {
     --border-radius: 999px;
     margin: 0;
+  }
+}
+
+.ladder {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  margin-bottom: 8px;
+
+  &__pip {
+    width: 18px;
+    height: 4px;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--ion-color-medium) 35%, transparent);
+
+    &--filled {
+      background: var(--ion-color-success);
+    }
+
+    // The rung just won, or just lost. Either way it is the one to look at.
+    &--gained {
+      animation: pip-gained .5s ease-out;
+    }
+
+    &--lost {
+      background: var(--ion-color-danger);
+    }
+  }
+
+  &--mastered &__pip {
+    background: var(--ion-color-secondary);
+  }
+}
+
+@keyframes streak-in {
+  from { opacity: 0; transform: translateY(4px); }
+}
+
+@keyframes pip-gained {
+  0% { transform: scaleY(.4); opacity: .3; }
+  60% { transform: scaleY(2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .streak, .ladder__pip--gained {
+    animation: none;
   }
 }

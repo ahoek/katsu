@@ -46,7 +46,43 @@
   gap: 8px;
 }
 
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 0 0 16px;
+  font-size: .7rem;
+  color: var(--ion-color-medium);
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  &__swatch {
+    width: 14px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--ion-color-success);
+
+    &--mastered {
+      background: var(--ion-color-secondary);
+    }
+
+    // Matches the dot on a due tile rather than its bar, so it is recognisable
+    // as the same mark.
+    &--due {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--ion-color-secondary);
+    }
+  }
+}
+
 .tile {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,6 +109,24 @@
     max-width: 100%;
   }
 
+  // How far up the ladder this kanji has come. The tint says it is in the
+  // schedule; only the bar says how well it is going.
+  &__bar {
+    width: 80%;
+    height: 3px;
+    margin-top: 2px;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--ion-color-medium) 30%, transparent);
+    overflow: hidden;
+  }
+
+  &__climbed {
+    display: block;
+    height: 100%;
+    border-radius: 2px;
+    background: var(--ion-color-success);
+  }
+
   // In the schedule, and out of it again once mastered
   &--learned {
     border-color: var(--ion-color-success);
@@ -82,6 +136,33 @@
   &--mastered {
     border-color: var(--ion-color-secondary-shade);
     background: color-mix(in srgb, var(--ion-color-secondary) 16%, var(--ion-background-color));
+
+    .tile__climbed {
+      background: var(--ion-color-secondary);
+    }
+  }
+
+  // Waiting to be reviewed: a dot in the corner, the same mark the legend uses.
+  &--due::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ion-color-secondary);
+    animation: waiting 2s ease-in-out infinite;
+  }
+}
+
+@keyframes waiting {
+  50% { opacity: .3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile--due::after {
+    animation: none;
   }
 }
 

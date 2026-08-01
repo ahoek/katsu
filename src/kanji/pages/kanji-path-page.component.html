@@ -19,14 +19,32 @@
         {{ 'kanji.path.reviews-title' | translate }}
       </h3>
 
-      @if (dueCount() > 0) {
+      @if (batchDone()) {
+        <!-- The day's batch is done. Nothing is withheld: the pile is named and
+             the way past it is right there, just quieter than the main way on. -->
+        <p class="card__lead card__lead--quiet">{{ 'kanji.path.batch-done' | translate }}</p>
+        <p class="card__note">{{ 'kanji.path.batch-waiting' | translate: { count: dueCount() } }}</p>
+        <ion-button
+          expand="block"
+          fill="clear"
+          size="small"
+          [routerLink]="['/kanji/review']"
+          [queryParams]="{ all: 1 }"
+          routerDirection="forward"
+        >
+          {{ 'kanji.path.batch-continue' | translate }}
+        </ion-button>
+      } @else if (dueCount() > 0) {
         <p class="card__lead">
-          @if (dueCount() === 1) {
+          @if (batchCount() === 1) {
             {{ 'kanji.path.reviews-one' | translate }}
           } @else {
-            {{ 'kanji.path.reviews-due' | translate: { count: dueCount() } }}
+            {{ 'kanji.path.reviews-due' | translate: { count: batchCount() } }}
           }
         </p>
+        @if (dueCount() > batchCount()) {
+          <p class="card__note">{{ 'kanji.path.batch-of' | translate: { count: dueCount() } }}</p>
+        }
         <ion-button expand="block" routerLink="/kanji/review" routerDirection="forward">
           {{ 'kanji.path.start-reviews' | translate }}
           <ion-icon slot="end" name="arrow-forward"></ion-icon>

@@ -11,6 +11,13 @@
       <span class="counter">
         {{ 'kanji.review.progress' | translate: { done: position() + 1, total: queue().length } }}
       </span>
+
+      @if (streakVisible()) {
+        <span class="streak" role="status">
+          <ion-icon name="flame" aria-hidden="true"></ion-icon>
+          {{ 'kanji.review.streak' | translate: { count: streak() } }}
+        </span>
+      }
     }
   </ion-toolbar>
 </ion-header>
@@ -26,13 +33,52 @@
       } @else {
         <p class="summary__title">
           <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
-          {{ 'kanji.review.summary-title' | translate }}
+          @if (perfectSession()) {
+            {{ 'kanji.review.summary-perfect' | translate }}
+          } @else {
+            {{ 'kanji.review.summary-title' | translate }}
+          }
         </p>
+
+        <!-- What the session actually looked like, kanji by kanji. The counts
+             say how it went; this says which ones went that way. -->
+        <ul class="recap">
+          @for (result of results(); track $index) {
+            <li class="recap__item" [class]="'recap__item--' + result.grade">
+              <span class="recap__kanji" lang="ja">{{ result.kanji }}</span>
+              <span class="recap__move" aria-hidden="true">
+                @if (result.mastered) {
+                  <ion-icon name="ribbon"></ion-icon>
+                } @else if (result.moved === 'up') {
+                  <ion-icon name="trending-up-outline"></ion-icon>
+                } @else if (result.moved === 'down') {
+                  <ion-icon name="trending-down-outline"></ion-icon>
+                } @else {
+                  <ion-icon name="remove-outline"></ion-icon>
+                }
+              </span>
+            </li>
+          }
+        </ul>
+
         <p class="summary__lead">
           {{ 'kanji.review.summary-counts' | translate: {
             clean: tally().clean, shaky: tally().shaky, poor: tally().poor
           } }}
+          @if (bestStreak() >= 2 && !perfectSession()) {
+            <br />
+            {{ 'kanji.review.best-streak' | translate: { count: bestStreak() } }}
+          }
         </p>
+
+        <!-- Why the session stopped where it did. The way to carry on is on the
+             path, so the decision to overrun a day's batch is made in one place
+             rather than offered at the end of every session. -->
+        @if (stillWaiting() > 0) {
+          <p class="summary__waiting">
+            {{ 'kanji.review.still-waiting' | translate: { count: stillWaiting() } }}
+          </p>
+        }
       }
       <ion-button routerLink="/kanji" routerDirection="back">
         {{ 'kanji.review.back' | translate }}
@@ -69,6 +115,19 @@
 <ion-footer class="app-footer">
   @if (outcome(); as result) {
     <div class="outcome" [class]="'outcome--' + result.grade">
+      <!-- The ladder the stage numbers refer to. A line saying "stage 3 to 4"
+           is a fact; eight pips with four of them lit is a position. -->
+      <span class="ladder" [class.ladder--mastered]="result.mastered" aria-hidden="true">
+        @for (step of ladder; track step) {
+          <span
+            class="ladder__pip"
+            [class.ladder__pip--filled]="result.mastered || step <= result.stage"
+            [class.ladder__pip--gained]="step === result.stage && result.stage > result.previousStage"
+            [class.ladder__pip--lost]="step === result.previousStage && result.stage < result.previousStage"
+          ></span>
+        }
+      </span>
+
       <p class="outcome__line">
         @if (result.mastered) {
           {{ 'kanji.review.mastered' | translate }}

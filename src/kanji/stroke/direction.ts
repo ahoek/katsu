@@ -15,6 +15,14 @@ const OFFSET_FRACTION = 0.3;
 /** Strokes shorter than this are dots and ticks, which have no direction worth marking. */
 const MIN_LENGTH = 12;
 
+/**
+ * The arrowhead itself, pointing right from the origin, in kanji units. Shared
+ * so anything picturing the feature elsewhere - the options page does - shows
+ * the same arrow the learner sees on the pad rather than one that merely looks
+ * like it.
+ */
+export const ARROW_POINTS = '1.7,0 -1.2,1.25 -1.2,-1.25';
+
 export interface DirectionMarker {
   x: number;
   y: number;

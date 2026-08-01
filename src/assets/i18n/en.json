@@ -99,8 +99,10 @@
       "conjugation": "Conjugation",
       "kanji": "Kanji writing"
     },
-    "kanji-arrows": "Direction arrows on examples",
-    "kanji-numbers": "Stroke numbers on examples"
+    "kanji-cap": "Reviews a day",
+    "kanji-cap-none": "No limit",
+    "kanji-arrows": "Direction arrows",
+    "kanji-numbers": "Stroke numbers"
   },
   "explanation": {
     "group": {

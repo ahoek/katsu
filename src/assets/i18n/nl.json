@@ -99,8 +99,10 @@
       "conjugation": "Vervoeging",
       "kanji": "Kanji schrijven"
     },
-    "kanji-arrows": "Richtingspijlen bij voorbeelden",
-    "kanji-numbers": "Streeknummers bij voorbeelden"
+    "kanji-cap": "Herhalingen per dag",
+    "kanji-cap-none": "Geen limiet",
+    "kanji-arrows": "Richtingspijlen",
+    "kanji-numbers": "Streeknummers"
   },
   "explanation": {
     "group": {

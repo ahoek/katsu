@@ -16,6 +16,25 @@
       {{ 'kanji.progress' | translate: { done: learned().size, total: characters().length } }}
     </p>
 
+    <!-- What the tiles are saying, said once. Without it a bar filling up is
+         decoration; with it, it is a level. -->
+    <p class="legend">
+      <span class="legend__item">
+        <span class="legend__swatch legend__swatch--learning"></span>
+        {{ 'kanji.browse.legend-stage' | translate: { total: rungs } }}
+      </span>
+      <span class="legend__item">
+        <span class="legend__swatch legend__swatch--mastered"></span>
+        {{ 'kanji.path.mastered' | translate }}
+      </span>
+      @if (dueNow().size) {
+        <span class="legend__item">
+          <span class="legend__swatch legend__swatch--due"></span>
+          {{ 'kanji.browse.legend-due' | translate: { count: dueNow().size } }}
+        </span>
+      }
+    </p>
+
     @for (group of groups(); track group.grade) {
       <section class="group">
         <h2 class="group__title">
@@ -31,11 +50,21 @@
               class="tile"
               [class.tile--learned]="learned().has(entry.kanji)"
               [class.tile--mastered]="mastered().has(entry.kanji)"
+              [class.tile--due]="dueNow().has(entry.kanji)"
               [routerLink]="['/kanji/practice', entry.kanji]"
               routerDirection="forward"
             >
               <span lang="ja">{{ entry.kanji }}</span>
               <small>{{ meaningOf(entry) }}</small>
+
+              @if (stageOf(entry.kanji); as stage) {
+                <span class="tile__bar" aria-hidden="true">
+                  <span class="tile__climbed" [style.width.%]="climbedOf(entry.kanji)"></span>
+                </span>
+                <span class="sr-only">
+                  {{ stateKeyOf(entry.kanji) | translate: { stage: stage, total: rungs } }}
+                </span>
+              }
             </a>
           }
         </div>
