@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonBackButton,
   IonButton,
@@ -60,6 +60,7 @@ export class KanjiLessonPageComponent implements OnInit {
   private readonly sync = inject(KanjiSyncService);
   private readonly translate = inject(TranslateService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   readonly character = signal<KanjiCharacter | undefined>(undefined);
 
@@ -100,8 +101,27 @@ export class KanjiLessonPageComponent implements OnInit {
     await this.srs.load();
     const data = await this.data.load();
     const learned = this.srs.learned();
-    const next = data.characters.find(character => !learned.has(character.kanji));
 
+    // A kanji named in the URL skips the queue: the deck order is a default,
+    // not a rule, and someone who already knows half the deck starts where it
+    // is new to them.
+    const requested = this.route.snapshot.queryParamMap.get('kanji');
+    if (requested) {
+      const character = data.characters.find(c => c.kanji === requested);
+      if (character && !learned.has(requested)) {
+        this.character.set(character);
+        return;
+      }
+      // Its lesson is already done: the character's own page says where it
+      // stands. A kanji outside the deck goes back to the path.
+      await this.router.navigate(
+        character ? ['/kanji/practice', requested] : ['/kanji'],
+        { replaceUrl: true },
+      );
+      return;
+    }
+
+    const next = data.characters.find(character => !learned.has(character.kanji));
     if (!next) {
       await this.router.navigate(['/kanji'], { replaceUrl: true });
       return;

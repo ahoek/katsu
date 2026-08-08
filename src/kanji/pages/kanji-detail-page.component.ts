@@ -12,7 +12,7 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { arrowBack, arrowForward, pencilOutline } from 'ionicons/icons';
+import { arrowBack, arrowForward, pencilOutline, schoolOutline } from 'ionicons/icons';
 import { Subscription } from 'rxjs';
 
 import { StrokeDemoComponent } from '../components/stroke-demo.component';
@@ -129,7 +129,7 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
 
   constructor() {
     installKanjiTranslations(this.translate);
-    addIcons({ arrowBack, arrowForward, pencilOutline });
+    addIcons({ arrowBack, arrowForward, pencilOutline, schoolOutline });
 
     // The route can only name the section; the page is about one character, and
     // that is what the tab and the search snippet should say. It waits for the
@@ -176,6 +176,13 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeChanges?.unsubscribe();
+  }
+
+  /** A kanji whose lesson is still to be done can have it right from here. */
+  readonly unlearned = computed(() => !this.srs.learned().has(this.kanji()));
+
+  startLesson(): void {
+    this.router.navigate(['/kanji/lesson'], { queryParams: { kanji: this.kanji() } });
   }
 
   /** Step to the kanji before or after this one in the deck. */
