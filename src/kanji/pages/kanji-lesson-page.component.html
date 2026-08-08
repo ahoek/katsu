@@ -80,10 +80,6 @@
         }
 
         @case ('done') {
-          <p class="step step--done">
-            <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
-            {{ 'kanji.lesson.done' | translate }}
-          </p>
           <app-kanji-stroke-pad
             [strokes]="strokes()"
             [written]="strokes().length"
@@ -94,13 +90,20 @@
             [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
           ></app-kanji-stroke-pad>
 
+          <!-- What happened goes under the pad, where every other verdict of
+               these screens lives; above it is for what to do. -->
+          <p class="step step--done" role="status">
+            <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+            {{ 'kanji.lesson.done' | translate }}
+          </p>
+
           <!-- The way on is in the footer; this stays here, as the quieter
                choice, for a kanji that does not feel learnt yet. -->
           <div class="actions">
-            <ion-button fill="clear" size="small" (click)="practiseAgain()">
-              <ion-icon slot="start" name="refresh-outline"></ion-icon>
+            <button type="button" class="pad-chip" (click)="practiseAgain()">
+              <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
               {{ 'kanji.lesson.again' | translate }}
-            </ion-button>
+            </button>
           </div>
 
           <p class="step__note">

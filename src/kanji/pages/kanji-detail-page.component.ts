@@ -78,6 +78,9 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
 
   readonly complete = signal(false);
 
+  /** Bumped to hand out a fresh pad for another go at the same kanji. */
+  readonly writeAttempt = signal(0);
+
   private routeChanges?: Subscription;
 
   readonly character = computed<KanjiCharacter | undefined>(() =>
@@ -183,6 +186,11 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
 
   startLesson(): void {
     this.router.navigate(['/kanji/lesson'], { queryParams: { kanji: this.kanji() } });
+  }
+
+  writeAgain(): void {
+    this.complete.set(false);
+    this.writeAttempt.update(attempt => attempt + 1);
   }
 
   /** Step to the kanji before or after this one in the deck. */

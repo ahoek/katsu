@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, computed, effect, inject, input, signal, untracked } from '@angular/core';
-import { IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { refreshOutline } from 'ionicons/icons';
@@ -31,7 +31,7 @@ const PAUSE_MS = 200;
 @Component({
   selector: 'app-kanji-stroke-demo',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonButton, IonIcon, TranslatePipe, StrokePadComponent],
+  imports: [IonIcon, TranslatePipe, StrokePadComponent],
   template: `
     <app-kanji-stroke-pad
       [strokes]="strokes()"
@@ -47,32 +47,28 @@ const PAUSE_MS = 200;
     ></app-kanji-stroke-pad>
 
     <div class="actions">
-      <ion-button fill="clear" size="small" (click)="replay()">
-        <ion-icon slot="start" name="refresh-outline"></ion-icon>
+      <button type="button" class="pad-chip" (click)="replay()">
+        <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
         {{ 'kanji.demo.replay' | translate }}
-      </ion-button>
+      </button>
 
-      <ion-button
-        fill="clear"
-        size="small"
-        class="toggle"
-        [class.toggle--off]="!view.arrows()"
+      <button
+        type="button"
+        class="pad-chip"
         (click)="view.toggleArrows()"
         [attr.aria-pressed]="view.arrows()"
       >
         {{ 'kanji.demo.arrows' | translate }}
-      </ion-button>
+      </button>
 
-      <ion-button
-        fill="clear"
-        size="small"
-        class="toggle"
-        [class.toggle--off]="!view.numbers()"
+      <button
+        type="button"
+        class="pad-chip"
         (click)="view.toggleNumbers()"
         [attr.aria-pressed]="view.numbers()"
       >
         {{ 'kanji.demo.numbers' | translate }}
-      </ion-button>
+      </button>
 
       <ng-content></ng-content>
     </div>
@@ -96,19 +92,8 @@ const PAUSE_MS = 200;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 2px;
-
-      ion-button {
-        --color: var(--app-color-link);
-        font-size: .8rem;
-      }
-
-      // A switch that is off says so by going quiet, so the label can stay put
-      // instead of flipping between "show" and "hide".
-      .toggle--off {
-        --color: var(--ion-color-medium);
-        text-decoration: line-through;
-      }
+      gap: 8px;
+      margin-top: 12px;
     }
   `,
 })

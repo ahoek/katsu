@@ -48,16 +48,16 @@
           [numbers]="numbers()"
           [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
         >
-          <ion-button fill="clear" size="small" (click)="mode.set('write')">
-            <ion-icon slot="start" name="pencil-outline"></ion-icon>
+          <button type="button" class="pad-chip" (click)="mode.set('write')">
+            <ion-icon name="pencil-outline" aria-hidden="true"></ion-icon>
             {{ 'kanji.demo.write' | translate }}
-          </ion-button>
+          </button>
 
           @if (unlearned()) {
-            <ion-button fill="clear" size="small" (click)="startLesson()">
-              <ion-icon slot="start" name="school-outline"></ion-icon>
+            <button type="button" class="pad-chip" (click)="startLesson()">
+              <ion-icon name="school-outline" aria-hidden="true"></ion-icon>
               {{ 'kanji.path.start-lesson' | translate }}
-            </ion-button>
+            </button>
           }
         </app-kanji-stroke-demo>
       } @else {
@@ -66,15 +66,24 @@
           <strong>{{ meaning() }}</strong>
         </p>
 
-        <app-kanji-writing-exercise
-          [strokes]="strokes()"
-          [numbers]="numbers()"
-          [meaning]="meaning()"
-          (finished)="complete.set(true)"
-        ></app-kanji-writing-exercise>
+        <!-- Re-created per attempt, so writing it again starts from a clean pad. -->
+        @for (attempt of [writeAttempt()]; track attempt) {
+          <app-kanji-writing-exercise
+            [strokes]="strokes()"
+            [numbers]="numbers()"
+            [meaning]="meaning()"
+            (finished)="complete.set(true)"
+          ></app-kanji-writing-exercise>
+        }
 
         @if (complete()) {
           <p class="answer" lang="ja">{{ kanji.kanji }}</p>
+          <div class="again">
+            <button type="button" class="pad-chip" (click)="writeAgain()">
+              <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
+              {{ 'kanji.lesson.again' | translate }}
+            </button>
+          </div>
         }
       }
 

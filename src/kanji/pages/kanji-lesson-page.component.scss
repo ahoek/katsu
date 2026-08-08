@@ -59,7 +59,9 @@
     opacity: .85;
   }
 
+  // Below the pad rather than above it: verdicts live under the writing.
   &--done {
+    margin: 10px 0 6px;
     color: var(--ion-color-success);
     font-weight: 600;
 
@@ -85,11 +87,6 @@ app-kanji-stroke-pad {
 .actions {
   display: flex;
   justify-content: center;
-
-  ion-button {
-    --color: var(--app-color-link);
-    font-size: .8rem;
-  }
 }
 
 .loading {

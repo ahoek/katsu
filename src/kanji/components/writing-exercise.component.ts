@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, computed, input, linkedSignal, output, signal, viewChild } from '@angular/core';
-import { IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { arrowUndoOutline, bulbOutline, checkmarkCircle, pencilOutline, playOutline, refreshOutline } from 'ionicons/icons';
@@ -60,7 +60,7 @@ type Feedback =
 @Component({
   selector: 'app-kanji-writing-exercise',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonButton, IonIcon, TranslatePipe, StrokeDemoComponent, StrokePadComponent],
+  imports: [IonIcon, TranslatePipe, StrokeDemoComponent, StrokePadComponent],
   template: `
     @if (watching()) {
       <app-kanji-stroke-demo
@@ -68,10 +68,10 @@ type Feedback =
         [numbers]="numbers()"
         [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
       >
-        <ion-button fill="clear" size="small" (click)="watching.set(false)">
-          <ion-icon slot="start" name="pencil-outline"></ion-icon>
+        <button type="button" class="pad-chip" (click)="watching.set(false)">
+          <ion-icon name="pencil-outline" aria-hidden="true"></ion-icon>
           {{ 'kanji.demo.write' | translate }}
-        </ion-button>
+        </button>
       </app-kanji-stroke-demo>
     } @else {
     <app-kanji-stroke-pad
@@ -153,39 +153,36 @@ type Feedback =
       ></app-kanji-stroke-pad>
     }
 
-    <!-- One quiet row: the hints, which cost the review, spelled out; undo and
-         restart, which cost nothing, as plain icons across a hairline. -->
+    <!-- Writing tools on a grid, every action named. They leave with the
+         writing: once the character is finished there is nothing they could
+         still do. The erasers only exist where the ink lies as it fell - a
+         guided stroke lands as the model stroke or not at all, so there is
+         never anything worth erasing. -->
+    @if (!complete()) {
     <div class="controls">
-      <button type="button" class="control" (click)="watchExample()">
+      <button type="button" class="pad-chip" (click)="watchExample()">
+        <ion-icon name="play-outline" aria-hidden="true"></ion-icon>
         {{ 'kanji.hint.example' | translate }}
       </button>
 
-      <button type="button" class="control" (click)="showStrokeHint()" [disabled]="complete()">
+      <button type="button" class="pad-chip" (click)="showStrokeHint()">
+        <ion-icon name="bulb-outline" aria-hidden="true"></ion-icon>
         {{ 'kanji.hint.stroke' | translate }}
       </button>
 
-      <span class="controls__rule" aria-hidden="true"></span>
+      @if (deferred()) {
+        <button type="button" class="pad-chip" (click)="undo()" [disabled]="written() === 0">
+          <ion-icon name="arrow-undo-outline" aria-hidden="true"></ion-icon>
+          {{ 'kanji.undo' | translate }}
+        </button>
 
-      <button
-        type="button"
-        class="control control--icon"
-        (click)="undo()"
-        [disabled]="written() === 0"
-        [attr.aria-label]="'kanji.undo' | translate"
-      >
-        <ion-icon name="arrow-undo-outline" aria-hidden="true"></ion-icon>
-      </button>
-
-      <button
-        type="button"
-        class="control control--icon"
-        (click)="restart()"
-        [disabled]="written() === 0"
-        [attr.aria-label]="'kanji.restart' | translate"
-      >
-        <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
-      </button>
+        <button type="button" class="pad-chip" (click)="restart()" [disabled]="written() === 0">
+          <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
+          {{ 'kanji.restart' | translate }}
+        </button>
+      }
     </div>
+    }
     }
   `,
   styles: `
@@ -231,66 +228,11 @@ type Feedback =
     }
 
     .controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-    }
-
-    .control {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      min-height: 40px;
-      padding: 6px 9px;
-      border: 0;
-      border-radius: 999px;
-      background: transparent;
-      font: inherit;
-      font-size: .8rem;
-      white-space: nowrap;
-      color: var(--app-color-link);
-      cursor: pointer;
-
-      ion-icon {
-        font-size: 1rem;
-        flex-shrink: 0;
-      }
-
-      &:disabled {
-        opacity: .4;
-        cursor: default;
-      }
-
-      &:not(:disabled):hover {
-        background: color-mix(in srgb, var(--app-color-link) 12%, transparent);
-      }
-
-      &:focus-visible {
-        outline: 2px solid var(--app-color-link);
-        outline-offset: 1px;
-      }
-
-      &--icon {
-        min-width: 40px;
-        justify-content: center;
-        color: var(--ion-color-medium);
-
-        ion-icon {
-          font-size: 1.15rem;
-        }
-
-        &:not(:disabled):hover {
-          background: color-mix(in srgb, var(--ion-color-medium) 15%, transparent);
-        }
-      }
-    }
-
-    .controls__rule {
-      width: 1px;
-      height: 18px;
-      margin: 0 4px;
-      background: color-mix(in srgb, var(--ion-color-medium) 40%, transparent);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      max-width: 340px;
+      margin: 0 auto;
     }
   `,
 })
