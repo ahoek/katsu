@@ -81,6 +81,32 @@ describe('applyReview', () => {
     expect(reviewed.lapses).toBe(1);
   });
 
+  it('credits a clean review with the wait it actually survived', () => {
+    // Learned at NOW, only reviewed 26 hours later: writing it cleanly proved
+    // the one-day stage, so the climb starts from there, not from stage 1.
+    const reviewed = applyReview(card({ stage: 1 }), 'clean', NOW + 26 * HOUR);
+
+    expect(reviewed.stage).toBe(4);
+    expect(reviewed.due).toBe(NOW + 26 * HOUR + 3 * DAY);
+  });
+
+  it('still climbs a single stage when reviewed on time', () => {
+    const onTime = card({ stage: 1 }).due;
+
+    expect(applyReview(card({ stage: 1 }), 'clean', onTime).stage).toBe(2);
+  });
+
+  it('masters a kanji that survived the longest wait, whatever its stage', () => {
+    const reviewed = applyReview(card({ stage: 2 }), 'clean', NOW + 120 * DAY);
+
+    expect(reviewed.stage).toBe(MASTERED_STAGE);
+  });
+
+  it('gives no overdue credit to a shaky or poor review', () => {
+    expect(applyReview(card({ stage: 3 }), 'shaky', NOW + 120 * DAY).stage).toBe(3);
+    expect(applyReview(card({ stage: 3 }), 'poor', NOW + 120 * DAY).stage).toBe(2);
+  });
+
   it('never drops a kanji out of the review pool', () => {
     const reviewed = applyReview(card({ stage: FIRST_STAGE }), 'poor', NOW);
 

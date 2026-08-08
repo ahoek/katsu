@@ -95,7 +95,7 @@ export function startLearning(kanji: string, now: number): Card {
 
 /** Move a card up, hold it, or drop it back, and set the next due date. */
 export function applyReview(card: Card, grade: Grade, now: number): Card {
-  const stage = nextStage(card.stage, grade);
+  const stage = nextStage(card.stage, grade, now - card.updatedAt);
   return {
     ...card,
     stage,
@@ -108,10 +108,12 @@ export function applyReview(card: Card, grade: Grade, now: number): Card {
   };
 }
 
-function nextStage(stage: number, grade: Grade): number {
+function nextStage(stage: number, grade: Grade, elapsed: number): number {
   switch (grade) {
     case 'clean':
-      return Math.min(stage + 1, MASTERED_STAGE);
+      // A clean answer after a long-overdue wait proved a longer memory than
+      // the stage says, so climb from the stage that wait would have earned.
+      return Math.min(Math.max(stage, stageProven(elapsed)) + 1, MASTERED_STAGE);
     case 'shaky':
       return stage;
     case 'poor':
@@ -119,6 +121,11 @@ function nextStage(stage: number, grade: Grade): number {
       // the review pool rather than dropping out of the schedule.
       return Math.max(stage - 1, FIRST_STAGE);
   }
+}
+
+/** The highest stage whose waiting time the card has already sat through. */
+function stageProven(elapsed: number): number {
+  return STAGES.filter(stage => stage.interval <= elapsed).length;
 }
 
 export function isReviewable(card: Card): boolean {
