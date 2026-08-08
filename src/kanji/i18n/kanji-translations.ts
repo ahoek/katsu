@@ -30,6 +30,8 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'out-of-order': 'That is stroke {{drawn}}. Stroke {{expected}} comes first.',
         complete: 'Complete!',
         flawless: 'Flawless. Every stroke first time.',
+        'off-one': 'One stroke went differently. Compare with the example underneath.',
+        off: '{{count}} strokes went differently. Compare with the example underneath.',
       },
       card: {
         stage: 'Stage {{stage}} of {{total}}',
@@ -193,6 +195,8 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'out-of-order': 'Dat is streek {{drawn}}. Streek {{expected}} komt eerst.',
         complete: 'Klaar!',
         flawless: 'Foutloos. Elke streek in één keer.',
+        'off-one': 'Eén streek ging anders. Vergelijk met het voorbeeld eronder.',
+        off: '{{count}} streken gingen anders. Vergelijk met het voorbeeld eronder.',
       },
       card: {
         stage: 'Stap {{stage}} van {{total}}',

@@ -29,7 +29,7 @@ import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
 import { KanjiPaceService } from '../kanji-pace.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { KanjiSyncService } from '../sync/kanji-sync.service';
-import { Attempt, Grade, MASTERED_STAGE, stageLabel } from '../srs/srs';
+import { Attempt, Grade, MASTERED_STAGE, MATURE_STAGE, stageLabel } from '../srs/srs';
 
 import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
 
@@ -123,6 +123,21 @@ export class KanjiReviewPageComponent implements OnInit {
   });
 
   readonly finished = computed(() => this.ready() && this.position() >= this.queue().length);
+
+  /**
+   * A mature kanji is written whole and judged at the end: by now the learner's
+   * own eye should catch a stroke gone wrong, not the pad's commentary. Judged
+   * by the stage the review started from, so grading it does not change the
+   * exercise while its outcome is still on screen.
+   */
+  readonly deferred = computed(() => {
+    const kanji = this.character()?.kanji;
+    if (!kanji) {
+      return false;
+    }
+    const stage = this.outcome()?.previousStage ?? this.srs.card(kanji)?.stage ?? 0;
+    return stage >= MATURE_STAGE;
+  });
 
   /** Shown once a run has actually started, so it reads as something earned. */
   readonly streakVisible = computed(() => this.streak() >= STREAK_WORTH_SHOWING);

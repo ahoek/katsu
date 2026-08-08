@@ -72,7 +72,12 @@ export function strokeTraceMs(path: string, scale = 1): number {
            says "that one counted" where the stroke actually is, rather than in a
            line of text underneath it. -->
       @for (path of writtenStrokes(); track $index) {
-        <path class="ink" [class.ink--landed]="$last && accepted()" [attr.d]="path" />
+        <path
+          class="ink"
+          [class.ink--landed]="$last && accepted()"
+          [class.ink--off]="offStrokes().includes($index)"
+          [attr.d]="path"
+        />
       }
 
       @if (showStroke() && currentStroke()) {
@@ -181,6 +186,13 @@ export function strokeTraceMs(path: string, scale = 1): number {
       animation: land .45s ease-out;
     }
 
+    // A stroke pointed out as gone wrong, semi-transparent so the model's
+    // stroke stays readable through it for the comparison.
+    .ink--off {
+      stroke: var(--ion-color-danger);
+      opacity: .65;
+    }
+
     .guide-stroke {
       stroke: var(--ion-color-secondary);
       stroke-width: 5.5;
@@ -273,6 +285,16 @@ export class StrokePadComponent {
   /** How many strokes are already written. */
   readonly written = input(0);
 
+  /**
+   * The learner's strokes as they were drawn. When given, the pad shows this
+   * ink instead of the model's strokes, so what is on the pad is what the hand
+   * actually did rather than what it was supposed to do.
+   */
+  readonly drawn = input<readonly string[]>([]);
+
+  /** Indexes of drawn strokes to point out as having gone wrong. */
+  readonly offStrokes = input<readonly number[]>([]);
+
   /** Show the whole kanji faintly, as an example to trace. */
   readonly showOutline = input(false);
 
@@ -324,7 +346,8 @@ export class StrokePadComponent {
   /** Bumped to replay the stroke animation. */
   private readonly replayCount = signal(0);
 
-  protected readonly writtenStrokes = computed(() => this.strokes().slice(0, this.written()));
+  protected readonly writtenStrokes = computed(() =>
+    this.drawn().length ? this.drawn() : this.strokes().slice(0, this.written()));
 
   protected readonly accepted = computed(() =>
     this.feedback() === 'correct' || this.feedback() === 'complete');

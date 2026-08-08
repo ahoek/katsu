@@ -25,6 +25,14 @@ const WRONG_FEEDBACK_MS = 350;
  */
 const RUN_WORTH_SAYING = 3;
 
+/** The drawn points as an SVG path, so the pad can keep the ink as it fell. */
+function inkPath(points: readonly Point[]): string {
+  const [first, ...rest] = points;
+  return `M${first.x.toFixed(1)},${first.y.toFixed(1)}${rest
+    .map(point => `L${point.x.toFixed(1)},${point.y.toFixed(1)}`)
+    .join('')}`;
+}
+
 type Feedback =
   | { kind: 'none' }
   | { kind: 'correct' }
@@ -43,6 +51,11 @@ type Feedback =
  * appear on their own once a stroke has failed a few times, so being stuck is
  * never a dead end. The character is never simply printed next to the pad: that
  * would turn writing into copying.
+ *
+ * In deferred mode every stroke lands as drawn, right or wrong, and the
+ * verdict waits until the character is finished: the learner's own sense of
+ * what went wrong has to do the work the commentary normally does. Auto-hints
+ * stay away for the same reason; the hint buttons remain for being truly stuck.
  */
 @Component({
   selector: 'app-kanji-writing-exercise',
@@ -64,6 +77,8 @@ type Feedback =
     <app-kanji-stroke-pad
       [strokes]="strokes()"
       [written]="written()"
+      [drawn]="inkPaths()"
+      [offStrokes]="offStrokes()"
       [showOutline]="exampleVisible()"
       [showStroke]="nextStrokeVisible()"
       [showStart]="startVisible()"
@@ -76,13 +91,20 @@ type Feedback =
       class="status"
       role="status"
       [class.status--wrong]="mistake()"
-      [class.status--done]="feedback().kind === 'complete'"
+      [class.status--done]="feedback().kind === 'complete' && offCount() === 0"
     >
       @switch (feedback().kind) {
         @case ('complete') {
-          <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+          <!-- Finished with strokes off is not a success to dress in green. -->
+          @if (offCount() === 0) {
+            <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+          }
           @if (flawless()) {
             {{ 'kanji.feedback.flawless' | translate }}
+          } @else if (offCount() === 1) {
+            {{ 'kanji.feedback.off-one' | translate }}
+          } @else if (offCount() > 1) {
+            {{ 'kanji.feedback.off' | translate: { count: offCount() } }}
           } @else {
             {{ 'kanji.feedback.complete' | translate }}
           }
@@ -112,6 +134,22 @@ type Feedback =
         }
       }
     </p>
+
+    <!-- The example below the writing, not under it: two characters on top of
+         each other cannot be told apart once they get at all dense. Numbers
+         and arrows carry the order and direction, which the ink cannot show. -->
+    @if (offStrokes().length) {
+      <app-kanji-stroke-pad
+        class="answer-pad"
+        [strokes]="strokes()"
+        [written]="strokeCount()"
+        [numbers]="numbers()"
+        [showNumbers]="true"
+        [showDirection]="true"
+        [interactive]="false"
+        [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
+      ></app-kanji-stroke-pad>
+    }
 
     <div class="hints">
       <ion-button fill="clear" size="small" (click)="watchExample()">
@@ -169,6 +207,11 @@ type Feedback =
       }
     }
 
+    .answer-pad {
+      width: min(58%, 200px);
+      margin: 4px auto 10px;
+    }
+
     .hints {
       display: flex;
       flex-wrap: wrap;
@@ -192,6 +235,9 @@ export class WritingExerciseComponent implements OnDestroy {
   /** Start with the whole character on screen, for a first guided go. */
   readonly example = input(false);
 
+  /** Judge the character as a whole at the end, not stroke by stroke. */
+  readonly deferred = input(false);
+
   /** Where to put each stroke's number, for the demonstration. */
   readonly numbers = input<readonly Point[]>([]);
 
@@ -212,6 +258,12 @@ export class WritingExerciseComponent implements OnDestroy {
   private readonly misses = linkedSignal({ source: this.strokes, computation: () => 0 });
   private readonly mistakes = linkedSignal({ source: this.strokes, computation: () => 0 });
   private readonly hintsUsed = linkedSignal({ source: this.strokes, computation: () => this.example() });
+
+  /** The ink as it was drawn with its verdict, kept when judging is deferred. */
+  protected readonly drawnInk = linkedSignal<readonly string[], { path: string; correct: boolean }[]>({
+    source: this.strokes,
+    computation: () => [],
+  });
 
   /** Strokes accepted in a row, for the run the status line counts out. */
   protected readonly run = linkedSignal({ source: this.strokes, computation: () => 0 });
@@ -250,6 +302,21 @@ export class WritingExerciseComponent implements OnDestroy {
   /** Written straight through, no stroke turned down and nothing shown. */
   protected readonly flawless = computed(() => this.mistakes() === 0 && !this.hintsUsed());
 
+  /** Strokes that went differently, for the reveal after a deferred writing. */
+  protected readonly offCount = computed(() => (this.deferred() ? this.mistakes() : 0));
+
+  protected readonly inkPaths = computed(() => this.drawnInk().map(stroke => stroke.path));
+
+  /**
+   * Which drawn strokes to point out at the reveal, and only at the reveal:
+   * pointed out earlier, they would be the running commentary this mode is
+   * doing without.
+   */
+  protected readonly offStrokes = computed(() =>
+    this.complete()
+      ? this.drawnInk().flatMap((stroke, index) => (stroke.correct ? [] : [index]))
+      : []);
+
   protected readonly RUN_WORTH_SAYING = RUN_WORTH_SAYING;
 
   /**
@@ -261,6 +328,11 @@ export class WritingExerciseComponent implements OnDestroy {
       return 'wrong';
     }
     const kind = this.feedback().kind;
+    // A deferred writing with strokes off does not get the green flourish:
+    // finished, but not something to celebrate.
+    if (kind === 'complete' && this.offCount() > 0) {
+      return 'none';
+    }
     return kind === 'complete' || kind === 'correct' ? kind : 'none';
   });
 
@@ -287,6 +359,11 @@ export class WritingExerciseComponent implements OnDestroy {
     }
     const result = this.matcher().match(points, this.written());
 
+    if (this.deferred()) {
+      this.judgeQuietly(points, result.result === 'correct');
+      return;
+    }
+
     switch (result.result) {
       case 'correct': {
         const written = this.written() + 1;
@@ -311,6 +388,24 @@ export class WritingExerciseComponent implements OnDestroy {
       case 'no-match':
         this.reject({ kind: 'wrong' });
         break;
+    }
+  }
+
+  /**
+   * A stroke lands as drawn and the verdict is kept to ourselves. Once the last
+   * one is down, the example appears under the ink: the learner reads off what
+   * went differently instead of being told along the way.
+   */
+  private judgeQuietly(points: Point[], correct: boolean): void {
+    if (!correct) {
+      this.mistakes.update(mistakes => mistakes + 1);
+    }
+    this.drawnInk.update(ink => [...ink, { path: inkPath(points), correct }]);
+    const written = this.written() + 1;
+    this.written.set(written);
+    if (written >= this.strokeCount()) {
+      this.feedback.set({ kind: 'complete' });
+      this.finished.emit({ mistakes: this.mistakes(), hintsUsed: this.hintsUsed() });
     }
   }
 
@@ -342,11 +437,13 @@ export class WritingExerciseComponent implements OnDestroy {
       return;
     }
     this.written.update(written => written - 1);
+    this.drawnInk.update(ink => ink.slice(0, -1));
     this.clearStrokeState();
   }
 
   restart(): void {
     this.written.set(0);
+    this.drawnInk.set([]);
     this.clearStrokeState();
   }
 

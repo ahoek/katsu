@@ -19,6 +19,13 @@ export const FIRST_STAGE = 1;
 export const MASTERED_STAGE = 9;
 
 /**
+ * Stage from which a review is written whole and judged at the end, instead of
+ * stroke by stroke. Motor learning keeps more from practice once feedback
+ * thins out; a kanji that has reached weekly intervals has earned that.
+ */
+export const MATURE_STAGE = 5;
+
+/**
  * Waiting time per stage, from `FIRST_STAGE` up. Same-day stages first so a
  * fresh kanji is seen twice before it has a chance to fade, then out to
  * months. `label` names the interval for the interface.
