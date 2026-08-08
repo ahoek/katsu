@@ -137,8 +137,10 @@ type Feedback =
 
     <!-- The example below the writing, not under it: two characters on top of
          each other cannot be told apart once they get at all dense. Numbers
-         and arrows carry the order and direction, which the ink cannot show. -->
-    @if (offStrokes().length) {
+         and arrows carry the order and direction, which the ink cannot show.
+         Shown even for a clean writing: the matcher can be wrong too, and the
+         learner's own eye should get to overrule a pass as well as a fail. -->
+    @if (deferred() && complete()) {
       <app-kanji-stroke-pad
         class="answer-pad"
         [strokes]="strokes()"
