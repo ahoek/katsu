@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, computed, input, linkedS
 import { IonButton, IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { arrowUndoOutline, bulbOutline, checkmarkCircle, pencilOutline, playOutline, refreshOutline } from 'ionicons/icons';
+import { backspaceOutline, bulbOutline, checkmarkCircle, pencilOutline, playOutline, trashOutline } from 'ionicons/icons';
 
 import { Attempt } from '../srs/srs';
 import { Point } from '../stroke/geometry';
@@ -108,12 +108,12 @@ type Feedback =
 
         @if (deferred()) {
           <button type="button" (click)="undo()" [disabled]="written() === 0">
-            <ion-icon name="arrow-undo-outline" aria-hidden="true"></ion-icon>
+            <ion-icon name="backspace-outline" aria-hidden="true"></ion-icon>
             {{ 'kanji.undo' | translate }}
           </button>
 
           <button type="button" (click)="restart()" [disabled]="written() === 0">
-            <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
+            <ion-icon name="trash-outline" aria-hidden="true"></ion-icon>
             {{ 'kanji.restart' | translate }}
           </button>
         }
@@ -361,7 +361,7 @@ export class WritingExerciseComponent implements OnDestroy {
 
   constructor() {
     // The exercise brings its own icons, so any page can drop it in.
-    addIcons({ arrowUndoOutline, bulbOutline, checkmarkCircle, pencilOutline, playOutline, refreshOutline });
+    addIcons({ backspaceOutline, bulbOutline, checkmarkCircle, pencilOutline, playOutline, trashOutline });
   }
 
   ngOnDestroy(): void {
