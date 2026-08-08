@@ -1,7 +1,7 @@
 .lesson {
   max-width: 420px;
   margin: 0 auto;
-  padding: 8px 16px 0;
+  padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
   // A page written on, not read from: no long press should pop the
   // select/copy balloon over the pad or the steps.
   -webkit-user-select: none;
@@ -84,24 +84,8 @@ app-kanji-stroke-pad {
   box-shadow: 0 1px 3px rgb(0 0 0 / .18);
 }
 
-.actions {
-  display: flex;
-  justify-content: center;
-}
-
 .loading {
   padding: 32px 16px;
   text-align: center;
   color: var(--ion-color-medium);
-}
-
-.lesson-nav {
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 8px 16px calc(12px + env(safe-area-inset-bottom));
-
-  ion-button {
-    --border-radius: 999px;
-    margin: 0;
-  }
 }

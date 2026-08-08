@@ -18,7 +18,7 @@
 .review {
   max-width: 420px;
   margin: 0 auto;
-  padding: 8px 16px 0;
+  padding: 8px 16px calc(24px + env(safe-area-inset-bottom));
   // A page written on, not read from: no long press should pop the
   // select/copy balloon over the prompt or the pad.
   -webkit-user-select: none;
@@ -50,7 +50,7 @@
 .summary {
   max-width: 420px;
   margin: 0 auto;
-  padding: 48px 16px 0;
+  padding: 48px 16px calc(24px + env(safe-area-inset-bottom));
   text-align: center;
 
   &__title {
@@ -67,10 +67,6 @@
   &__lead {
     margin: 0 0 24px;
     color: var(--ion-color-medium);
-  }
-
-  ion-button {
-    --border-radius: 999px;
   }
 
   &__waiting {
@@ -135,9 +131,7 @@
 }
 
 .outcome {
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
+  margin-top: 4px;
 
   &__line {
     margin: 0 0 8px;
@@ -156,11 +150,6 @@
 
   &--poor &__line {
     color: var(--ion-color-danger);
-  }
-
-  ion-button {
-    --border-radius: 999px;
-    margin: 0;
   }
 }
 

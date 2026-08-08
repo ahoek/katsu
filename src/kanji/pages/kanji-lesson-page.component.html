@@ -49,6 +49,11 @@
             [numbers]="numbers()"
             [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
           ></app-kanji-stroke-demo>
+
+          <ion-button expand="block" class="flow-cta" (click)="startTracing()">
+            {{ 'kanji.lesson.trace' | translate }}
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          </ion-button>
         }
 
         @case ('trace') {
@@ -97,15 +102,6 @@
             {{ 'kanji.lesson.done' | translate }}
           </p>
 
-          <!-- The way on is in the footer; this stays here, as the quieter
-               choice, for a kanji that does not feel learnt yet. -->
-          <div class="actions">
-            <button type="button" class="pad-chip" (click)="practiseAgain()">
-              <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
-              {{ 'kanji.lesson.again' | translate }}
-            </button>
-          </div>
-
           <p class="step__note">
             {{ 'kanji.lesson.add-note' | translate: { interval: firstInterval() | translate } }}
             @if (recalls() > 1) {
@@ -113,6 +109,18 @@
               {{ 'kanji.lesson.recall-count' | translate: { count: recalls() } }}
             }
           </p>
+
+          <!-- What to do next is one choice, so the two ways stand together:
+               the way on first, another go as the quieter second. -->
+          <ion-button expand="block" class="flow-cta" (click)="addToReviews()">
+            {{ 'kanji.lesson.add' | translate }}
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          </ion-button>
+
+          <ion-button expand="block" fill="outline" class="flow-cta" (click)="practiseAgain()">
+            <ion-icon slot="start" name="refresh-outline"></ion-icon>
+            {{ 'kanji.lesson.again' | translate }}
+          </ion-button>
         }
       }
     </div>
@@ -120,23 +128,3 @@
     <p class="loading">{{ 'kanji.loading' | translate }}</p>
   }
 </ion-content>
-
-<!-- Only there when it has a step to offer: an empty footer is still a bar,
-     and while writing, the pad deserves the whole screen. -->
-@if (phase() === 'watch' || phase() === 'done') {
-  <ion-footer class="app-footer">
-    <div class="lesson-nav">
-      @if (phase() === 'watch') {
-        <ion-button expand="block" (click)="startTracing()">
-          {{ 'kanji.lesson.trace' | translate }}
-          <ion-icon slot="end" name="arrow-forward"></ion-icon>
-        </ion-button>
-      } @else {
-        <ion-button expand="block" (click)="addToReviews()">
-          {{ 'kanji.lesson.add' | translate }}
-          <ion-icon slot="end" name="arrow-forward"></ion-icon>
-        </ion-button>
-      }
-    </div>
-  </ion-footer>
-}

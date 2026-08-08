@@ -80,7 +80,7 @@
           </p>
         }
       }
-      <ion-button routerLink="/kanji" routerDirection="back">
+      <ion-button expand="block" class="flow-cta" routerLink="/kanji" routerDirection="back">
         {{ 'kanji.review.back' | translate }}
       </ion-button>
     </div>
@@ -109,50 +109,49 @@
         [deferred]="deferred()"
         (finished)="record($event)"
       ></app-kanji-writing-exercise>
+
+      <!-- What the review did to the schedule, in the flow under the writing
+           it judges, with the one decision left - carrying on - right below. -->
+      @if (outcome(); as result) {
+        <div class="outcome" [class]="'outcome--' + result.grade">
+          <!-- The ladder the stage numbers refer to. A line saying "stage 3
+               to 4" is a fact; eight pips with four of them lit is a position. -->
+          <span class="ladder" [class.ladder--mastered]="result.mastered" aria-hidden="true">
+            @for (step of ladder; track step) {
+              <span
+                class="ladder__pip"
+                [class.ladder__pip--filled]="result.mastered || step <= result.stage"
+                [class.ladder__pip--gained]="step === result.stage && result.stage > result.previousStage"
+                [class.ladder__pip--lost]="step === result.previousStage && result.stage < result.previousStage"
+              ></span>
+            }
+          </span>
+
+          <p class="outcome__line">
+            @if (result.mastered) {
+              {{ 'kanji.review.mastered' | translate }}
+            } @else if (result.stage > result.previousStage) {
+              <ion-icon name="trending-up-outline" aria-hidden="true"></ion-icon>
+              {{ 'kanji.review.stage-up' | translate: {
+                from: result.previousStage, to: result.stage, interval: result.intervalKey | translate
+              } }}
+            } @else if (result.stage < result.previousStage) {
+              <ion-icon name="trending-down-outline" aria-hidden="true"></ion-icon>
+              {{ 'kanji.review.stage-down' | translate: {
+                to: result.stage, interval: result.intervalKey | translate
+              } }}
+            } @else {
+              {{ 'kanji.review.stage-held' | translate: {
+                stage: result.stage, interval: result.intervalKey | translate
+              } }}
+            }
+          </p>
+          <ion-button expand="block" class="flow-cta" (click)="next()">
+            {{ 'kanji.review.continue' | translate }}
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          </ion-button>
+        </div>
+      }
     </div>
   }
 </ion-content>
-
-<!-- Only there when it has something to say: an empty footer is still a bar. -->
-@if (outcome(); as result) {
-  <ion-footer class="app-footer">
-    <div class="outcome" [class]="'outcome--' + result.grade">
-      <!-- The ladder the stage numbers refer to. A line saying "stage 3 to 4"
-           is a fact; eight pips with four of them lit is a position. -->
-      <span class="ladder" [class.ladder--mastered]="result.mastered" aria-hidden="true">
-        @for (step of ladder; track step) {
-          <span
-            class="ladder__pip"
-            [class.ladder__pip--filled]="result.mastered || step <= result.stage"
-            [class.ladder__pip--gained]="step === result.stage && result.stage > result.previousStage"
-            [class.ladder__pip--lost]="step === result.previousStage && result.stage < result.previousStage"
-          ></span>
-        }
-      </span>
-
-      <p class="outcome__line">
-        @if (result.mastered) {
-          {{ 'kanji.review.mastered' | translate }}
-        } @else if (result.stage > result.previousStage) {
-          <ion-icon name="trending-up-outline" aria-hidden="true"></ion-icon>
-          {{ 'kanji.review.stage-up' | translate: {
-            from: result.previousStage, to: result.stage, interval: result.intervalKey | translate
-          } }}
-        } @else if (result.stage < result.previousStage) {
-          <ion-icon name="trending-down-outline" aria-hidden="true"></ion-icon>
-          {{ 'kanji.review.stage-down' | translate: {
-            to: result.stage, interval: result.intervalKey | translate
-          } }}
-        } @else {
-          {{ 'kanji.review.stage-held' | translate: {
-            stage: result.stage, interval: result.intervalKey | translate
-          } }}
-        }
-      </p>
-      <ion-button expand="block" (click)="next()">
-        {{ 'kanji.review.continue' | translate }}
-        <ion-icon slot="end" name="arrow-forward"></ion-icon>
-      </ion-button>
-    </div>
-  </ion-footer>
-}

@@ -47,19 +47,20 @@
           [strokes]="strokes()"
           [numbers]="numbers()"
           [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
-        >
-          <button type="button" class="pad-chip" (click)="mode.set('write')">
-            <ion-icon name="pencil-outline" aria-hidden="true"></ion-icon>
-            {{ 'kanji.demo.write' | translate }}
-          </button>
+        ></app-kanji-stroke-demo>
 
-          @if (unlearned()) {
-            <button type="button" class="pad-chip" (click)="startLesson()">
-              <ion-icon name="school-outline" aria-hidden="true"></ion-icon>
-              {{ 'kanji.path.start-lesson' | translate }}
-            </button>
-          }
-        </app-kanji-stroke-demo>
+        <!-- What to do next is one choice, so the ways stand together. -->
+        <ion-button expand="block" class="flow-cta" (click)="mode.set('write')">
+          <ion-icon slot="start" name="pencil-outline"></ion-icon>
+          {{ 'kanji.demo.write' | translate }}
+        </ion-button>
+
+        @if (unlearned()) {
+          <ion-button expand="block" fill="outline" class="flow-cta" (click)="startLesson()">
+            <ion-icon slot="start" name="school-outline"></ion-icon>
+            {{ 'kanji.path.start-lesson' | translate }}
+          </ion-button>
+        }
       } @else {
         <p class="prompt">
           {{ 'kanji.prompt' | translate }}
@@ -78,33 +79,30 @@
 
         @if (complete()) {
           <p class="answer" lang="ja">{{ kanji.kanji }}</p>
-          <div class="again">
-            <button type="button" class="pad-chip" (click)="writeAgain()">
-              <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
-              {{ 'kanji.lesson.again' | translate }}
-            </button>
-          </div>
+          <ion-button expand="block" fill="outline" class="flow-cta" (click)="writeAgain()">
+            <ion-icon slot="start" name="refresh-outline"></ion-icon>
+            {{ 'kanji.lesson.again' | translate }}
+          </ion-button>
         }
       }
 
+      <!-- Stepping through the deck is quiet navigation, not an action: it
+           closes the column rather than hanging over it in a bar. -->
+      <nav class="deck-nav" [attr.aria-label]="'kanji.picker' | translate">
+        <ion-button fill="clear" (click)="go(-1)" [attr.aria-label]="'kanji.previous' | translate">
+          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+
+        <span class="deck-nav__count">
+          {{ position() + 1 }} / {{ characters().length }}
+        </span>
+
+        <ion-button fill="clear" (click)="go(1)" [attr.aria-label]="'kanji.next' | translate">
+          <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+        </ion-button>
+      </nav>
     </div>
   } @else {
     <p class="loading">{{ 'kanji.loading' | translate }}</p>
   }
 </ion-content>
-
-<ion-footer class="app-footer">
-  <div class="deck-nav">
-    <ion-button fill="clear" (click)="go(-1)" [attr.aria-label]="'kanji.previous' | translate">
-      <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-    </ion-button>
-
-    <span class="deck-nav__count">
-      {{ position() + 1 }} / {{ characters().length }}
-    </span>
-
-    <ion-button fill="clear" (click)="go(1)" [attr.aria-label]="'kanji.next' | translate">
-      <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
-    </ion-button>
-  </div>
-</ion-footer>

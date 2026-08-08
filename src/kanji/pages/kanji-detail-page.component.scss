@@ -1,7 +1,7 @@
 .detail {
   max-width: 420px;
   margin: 0 auto;
-  padding: 8px 16px 0;
+  padding: 8px 16px calc(16px + env(safe-area-inset-bottom));
   // A page written on, not read from: no long press should pop the
   // select/copy balloon over the pad.
   -webkit-user-select: none;
@@ -73,13 +73,6 @@
   font-size: 1.6rem;
 }
 
-.again {
-  display: flex;
-  justify-content: center;
-  margin-top: 8px;
-}
-
-
 .loading {
   padding: 32px 16px;
   text-align: center;
@@ -89,14 +82,16 @@
 .deck-nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 0 8px calc(4px + env(safe-area-inset-bottom));
+  justify-content: center;
+  gap: 18px;
+  margin-top: 10px;
 
   &__count {
     font-size: .8rem;
     color: var(--ion-color-medium);
+  }
+
+  ion-button {
+    --color: var(--app-color-link);
   }
 }

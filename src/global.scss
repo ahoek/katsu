@@ -79,56 +79,83 @@ ion-header.app-chrome {
   }
 }
 
-// The one button language under a writing pad: a bordered pill that plainly
-// looks pressable. Shared by the stroke demonstration, the writing exercise
-// and the lesson, so the three screens read as one instrument.
-button.pad-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  min-height: 42px;
-  padding: 8px 14px;
-  border: 1px solid color-mix(in srgb, var(--ion-color-medium) 45%, transparent);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--ion-color-medium) 10%, transparent);
-  font: inherit;
-  font-size: .8rem;
-  line-height: 1.2;
-  white-space: nowrap;
-  color: var(--ion-text-color);
-  cursor: pointer;
-  -webkit-user-select: none;
-  user-select: none;
+// The tool tray of a writing pad: the pad's own buttons, one equal-width cell
+// each, attached under the square as part of the instrument. Shared by the
+// demonstration and the exercise, so every screen writes with the same one.
+.pad-tools {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 2px;
+  margin-top: 3px;
+  padding: 3px;
+  background: var(--ion-background-color, #fff);
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgb(0 0 0 / .18);
 
-  ion-icon {
-    font-size: 1.05rem;
-    flex-shrink: 0;
-    color: var(--app-color-link);
+  // Four tools stack into a two-by-two block rather than thinning out.
+  &--rows {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  &:disabled {
-    opacity: .4;
-    cursor: default;
-  }
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 6px 8px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    font: inherit;
+    font-size: .8rem;
+    white-space: nowrap;
+    color: var(--ion-text-color);
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
 
-  &:not(:disabled):hover {
-    background: color-mix(in srgb, var(--ion-color-medium) 22%, transparent);
-  }
+    ion-icon {
+      font-size: 1rem;
+      flex-shrink: 0;
+      color: var(--app-color-link);
+    }
 
-  &:focus-visible {
-    outline: 2px solid var(--app-color-link);
-    outline-offset: 2px;
-  }
+    &:disabled {
+      opacity: .35;
+      cursor: default;
+    }
 
-  // A switch says whether it is on by being filled, not by rewording itself.
-  &[aria-pressed='true'] {
-    border-color: color-mix(in srgb, var(--app-color-link) 55%, transparent);
-    background: color-mix(in srgb, var(--app-color-link) 16%, transparent);
-  }
+    &:not(:disabled):hover {
+      background: color-mix(in srgb, var(--ion-color-medium) 14%, transparent);
+    }
 
-  &[aria-pressed='false'] {
-    color: var(--ion-color-medium);
+    &:focus-visible {
+      outline: 2px solid var(--app-color-link);
+      outline-offset: -2px;
+    }
+
+    // A switch says whether it is on by being filled, not by rewording itself.
+    &[aria-pressed='false'] {
+      color: var(--ion-color-medium);
+    }
+
+    &[aria-pressed='true'] {
+      background: color-mix(in srgb, var(--app-color-link) 14%, transparent);
+    }
+  }
+}
+
+// A page action under the writing column: a full-width pill in the flow of
+// the page, never a bar pinned over the content.
+ion-button.flow-cta {
+  margin: 14px 0 0;
+  --border-radius: 999px;
+
+  & + & {
+    margin-top: 8px;
   }
 }
 

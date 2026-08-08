@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, computed, input, linkedSignal, output, signal, viewChild } from '@angular/core';
-import { IonIcon } from '@ionic/angular/standalone';
+import { IonButton, IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { arrowUndoOutline, bulbOutline, checkmarkCircle, pencilOutline, playOutline, refreshOutline } from 'ionicons/icons';
@@ -60,7 +60,7 @@ type Feedback =
 @Component({
   selector: 'app-kanji-writing-exercise',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [IonIcon, TranslatePipe, StrokeDemoComponent, StrokePadComponent],
+  imports: [IonButton, IonIcon, TranslatePipe, StrokeDemoComponent, StrokePadComponent],
   template: `
     @if (watching()) {
       <app-kanji-stroke-demo
@@ -68,10 +68,10 @@ type Feedback =
         [numbers]="numbers()"
         [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
       >
-        <button type="button" class="pad-chip" (click)="watching.set(false)">
-          <ion-icon name="pencil-outline" aria-hidden="true"></ion-icon>
+        <ion-button expand="block" fill="outline" class="flow-cta" (click)="watching.set(false)">
+          <ion-icon slot="start" name="pencil-outline"></ion-icon>
           {{ 'kanji.demo.write' | translate }}
-        </button>
+        </ion-button>
       </app-kanji-stroke-demo>
     } @else {
     <app-kanji-stroke-pad
@@ -86,6 +86,37 @@ type Feedback =
       [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
       (strokeDrawn)="judge($event)"
     ></app-kanji-stroke-pad>
+
+    <!-- The pad's own tools, on the instrument. They leave with the writing:
+         once the character is finished there is nothing they could still do.
+         The erasers only exist where the ink lies as it fell - a guided
+         stroke lands as the model stroke or not at all, so there is never
+         anything worth erasing. -->
+    @if (!complete()) {
+      <div class="pad-tools" [class.pad-tools--rows]="deferred()">
+        <button type="button" (click)="watchExample()">
+          <ion-icon name="play-outline" aria-hidden="true"></ion-icon>
+          {{ 'kanji.hint.example' | translate }}
+        </button>
+
+        <button type="button" (click)="showStrokeHint()">
+          <ion-icon name="bulb-outline" aria-hidden="true"></ion-icon>
+          {{ 'kanji.hint.stroke' | translate }}
+        </button>
+
+        @if (deferred()) {
+          <button type="button" (click)="undo()" [disabled]="written() === 0">
+            <ion-icon name="arrow-undo-outline" aria-hidden="true"></ion-icon>
+            {{ 'kanji.undo' | translate }}
+          </button>
+
+          <button type="button" (click)="restart()" [disabled]="written() === 0">
+            <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
+            {{ 'kanji.restart' | translate }}
+          </button>
+        }
+      </div>
+    }
 
     <p
       class="status"
@@ -153,36 +184,6 @@ type Feedback =
       ></app-kanji-stroke-pad>
     }
 
-    <!-- Writing tools on a grid, every action named. They leave with the
-         writing: once the character is finished there is nothing they could
-         still do. The erasers only exist where the ink lies as it fell - a
-         guided stroke lands as the model stroke or not at all, so there is
-         never anything worth erasing. -->
-    @if (!complete()) {
-    <div class="controls">
-      <button type="button" class="pad-chip" (click)="watchExample()">
-        <ion-icon name="play-outline" aria-hidden="true"></ion-icon>
-        {{ 'kanji.hint.example' | translate }}
-      </button>
-
-      <button type="button" class="pad-chip" (click)="showStrokeHint()">
-        <ion-icon name="bulb-outline" aria-hidden="true"></ion-icon>
-        {{ 'kanji.hint.stroke' | translate }}
-      </button>
-
-      @if (deferred()) {
-        <button type="button" class="pad-chip" (click)="undo()" [disabled]="written() === 0">
-          <ion-icon name="arrow-undo-outline" aria-hidden="true"></ion-icon>
-          {{ 'kanji.undo' | translate }}
-        </button>
-
-        <button type="button" class="pad-chip" (click)="restart()" [disabled]="written() === 0">
-          <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
-          {{ 'kanji.restart' | translate }}
-        </button>
-      }
-    </div>
-    }
     }
   `,
   styles: `
@@ -227,13 +228,6 @@ type Feedback =
       margin: 4px auto 10px;
     }
 
-    .controls {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      max-width: 340px;
-      margin: 0 auto;
-    }
   `,
 })
 export class WritingExerciseComponent implements OnDestroy {

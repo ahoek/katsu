@@ -46,32 +46,24 @@ const PAUSE_MS = 200;
       [label]="label()"
     ></app-kanji-stroke-pad>
 
-    <div class="actions">
-      <button type="button" class="pad-chip" (click)="replay()">
+    <div class="pad-tools">
+      <button type="button" (click)="replay()">
         <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
         {{ 'kanji.demo.replay' | translate }}
       </button>
 
-      <button
-        type="button"
-        class="pad-chip"
-        (click)="view.toggleArrows()"
-        [attr.aria-pressed]="view.arrows()"
-      >
+      <button type="button" (click)="view.toggleArrows()" [attr.aria-pressed]="view.arrows()">
         {{ 'kanji.demo.arrows' | translate }}
       </button>
 
-      <button
-        type="button"
-        class="pad-chip"
-        (click)="view.toggleNumbers()"
-        [attr.aria-pressed]="view.numbers()"
-      >
+      <button type="button" (click)="view.toggleNumbers()" [attr.aria-pressed]="view.numbers()">
         {{ 'kanji.demo.numbers' | translate }}
       </button>
-
-      <ng-content></ng-content>
     </div>
+
+    <!-- Whatever the page wants to offer next to the demonstration; page
+         actions, not pad tools, so they render below the instrument. -->
+    <ng-content></ng-content>
   `,
   styles: `
     :host {
@@ -88,13 +80,6 @@ const PAUSE_MS = 200;
       box-shadow: 0 1px 3px rgb(0 0 0 / .18);
     }
 
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 12px;
-    }
   `,
 })
 export class StrokeDemoComponent implements OnDestroy {
