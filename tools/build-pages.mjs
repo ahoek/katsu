@@ -10,6 +10,7 @@
  *
  * Run after the build: `npm run build`.
  */
+import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -82,5 +83,45 @@ await writeFile(
 const sitemap = renderSitemap(pages);
 await writeFile(join(DIST, 'sitemap.xml'), sitemap);
 
+await rehashServiceWorker();
+
 const listed = sitemap.match(/<loc>/g)?.length ?? 0;
 console.log(`Wrote ${pages.length} pages (${listed} in the sitemap) to dist/browser.`);
+
+/**
+ * The home page is one of the files rewritten above, and `ng build` hashed the
+ * version it wrote into ngsw.json before that happened. A hash the service
+ * worker cannot match is not a warning - installation fails, and the app
+ * quietly stops working offline.
+ *
+ * Only that one entry is corrected. Generating the manifest again from here
+ * would look tidier and would be wrong: by this point the worker's own scripts
+ * are on disk, `/*.js` sweeps them in, and the service worker ends up caching
+ * itself. The builder's manifest is right about everything except the file
+ * this script touched.
+ */
+async function rehashServiceWorker() {
+  let manifest;
+  try {
+    manifest = JSON.parse(await readFile(join(DIST, 'ngsw.json'), 'utf8'));
+  } catch {
+    return; // A development build has no service worker to correct.
+  }
+
+  const sha1 = async url =>
+    createHash('sha1')
+      .update(await readFile(join(DIST, url)))
+      .digest('hex');
+
+  // Every other file is untouched, so its recorded hash has to be one this
+  // agrees with. If it is not, the hashing here is not the hashing Angular
+  // does any more, and a fixed-up index.html would be a guess.
+  for (const [url, recorded] of Object.entries(manifest.hashTable)) {
+    if (url !== '/index.html' && (await sha1(url)) !== recorded) {
+      throw new Error(`ngsw.json hashes are no longer plain sha1 (${url}); rework rehashServiceWorker`);
+    }
+  }
+
+  manifest.hashTable['/index.html'] = await sha1('/index.html');
+  await writeFile(join(DIST, 'ngsw.json'), `${JSON.stringify(manifest, null, 2)}\n`);
+}

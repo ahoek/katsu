@@ -87,9 +87,11 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
 
   readonly numbers = computed(() => this.character()?.numbers ?? []);
 
+  // The signal, not getCurrentLang(): that one is a snapshot, so the gloss - and
+  // with it the page's title - would keep the language it was first read in.
   readonly meaning = computed(() => {
     const character = this.character();
-    return character ? this.data.meaningOf(character, this.translate.getCurrentLang()) : '';
+    return character ? this.data.meaningOf(character, this.translate.currentLang()) : '';
   });
 
   readonly position = computed(() =>
@@ -137,6 +139,7 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
       if (!character) {
         return;
       }
+      this.translate.currentLang(); // Re-title when the language changes.
       const params = {
         kanji: character.kanji,
         meaning: this.meaning(),
