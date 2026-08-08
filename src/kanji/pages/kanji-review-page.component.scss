@@ -19,24 +19,30 @@
   max-width: 420px;
   margin: 0 auto;
   padding: 8px 16px 0;
+  // A page written on, not read from: no long press should pop the
+  // select/copy balloon over the prompt or the pad.
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .readings {
   display: flex;
   justify-content: center;
   gap: 12px;
-  margin: 0 0 12px;
+  margin: 2px 0 14px;
   font-size: .85rem;
   color: var(--ion-color-medium);
 }
 
 .prompt {
-  margin: 4px 0 2px;
+  margin: 6px 0 0;
   text-align: center;
   font-size: 1rem;
   color: var(--ion-color-medium);
 
+  // The word being asked is the whole question; let it carry the line.
   strong {
+    font-size: 1.15rem;
     color: var(--ion-text-color);
   }
 }
@@ -131,7 +137,7 @@
 .outcome {
   max-width: 420px;
   margin: 0 auto;
-  padding: 8px 16px calc(8px + env(safe-area-inset-bottom));
+  padding: 10px 16px calc(12px + env(safe-area-inset-bottom));
 
   &__line {
     margin: 0 0 8px;

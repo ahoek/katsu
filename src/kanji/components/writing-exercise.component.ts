@@ -153,32 +153,48 @@ type Feedback =
       ></app-kanji-stroke-pad>
     }
 
-    <div class="hints">
-      <ion-button fill="clear" size="small" (click)="watchExample()">
-        <ion-icon slot="start" name="play-outline"></ion-icon>
+    <!-- One quiet row: the hints, which cost the review, spelled out; undo and
+         restart, which cost nothing, as plain icons across a hairline. -->
+    <div class="controls">
+      <button type="button" class="control" (click)="watchExample()">
         {{ 'kanji.hint.example' | translate }}
-      </ion-button>
+      </button>
 
-      <ion-button fill="clear" size="small" (click)="showStrokeHint()" [disabled]="complete()">
-        <ion-icon slot="start" name="bulb-outline"></ion-icon>
+      <button type="button" class="control" (click)="showStrokeHint()" [disabled]="complete()">
         {{ 'kanji.hint.stroke' | translate }}
-      </ion-button>
+      </button>
 
-      <ion-button fill="clear" size="small" (click)="undo()" [disabled]="written() === 0">
-        <ion-icon slot="start" name="arrow-undo-outline"></ion-icon>
-        {{ 'kanji.undo' | translate }}
-      </ion-button>
+      <span class="controls__rule" aria-hidden="true"></span>
 
-      <ion-button fill="clear" size="small" (click)="restart()" [disabled]="written() === 0">
-        <ion-icon slot="start" name="refresh-outline"></ion-icon>
-        {{ 'kanji.restart' | translate }}
-      </ion-button>
+      <button
+        type="button"
+        class="control control--icon"
+        (click)="undo()"
+        [disabled]="written() === 0"
+        [attr.aria-label]="'kanji.undo' | translate"
+      >
+        <ion-icon name="arrow-undo-outline" aria-hidden="true"></ion-icon>
+      </button>
+
+      <button
+        type="button"
+        class="control control--icon"
+        (click)="restart()"
+        [disabled]="written() === 0"
+        [attr.aria-label]="'kanji.restart' | translate"
+      >
+        <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
+      </button>
     </div>
     }
   `,
   styles: `
     :host {
       display: block;
+      // Writing means long presses and drags; none of them should start a text
+      // selection with its select/copy balloon.
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     app-kanji-stroke-pad {
@@ -214,16 +230,67 @@ type Feedback =
       margin: 4px auto 10px;
     }
 
-    .hints {
+    .controls {
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
-      gap: 2px;
+      gap: 4px;
+    }
 
-      ion-button {
-        --color: var(--app-color-link);
-        font-size: .8rem;
+    .control {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 40px;
+      padding: 6px 9px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      font: inherit;
+      font-size: .8rem;
+      white-space: nowrap;
+      color: var(--app-color-link);
+      cursor: pointer;
+
+      ion-icon {
+        font-size: 1rem;
+        flex-shrink: 0;
       }
+
+      &:disabled {
+        opacity: .4;
+        cursor: default;
+      }
+
+      &:not(:disabled):hover {
+        background: color-mix(in srgb, var(--app-color-link) 12%, transparent);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--app-color-link);
+        outline-offset: 1px;
+      }
+
+      &--icon {
+        min-width: 40px;
+        justify-content: center;
+        color: var(--ion-color-medium);
+
+        ion-icon {
+          font-size: 1.15rem;
+        }
+
+        &:not(:disabled):hover {
+          background: color-mix(in srgb, var(--ion-color-medium) 15%, transparent);
+        }
+      }
+    }
+
+    .controls__rule {
+      width: 1px;
+      height: 18px;
+      margin: 0 4px;
+      background: color-mix(in srgb, var(--ion-color-medium) 40%, transparent);
     }
   `,
 })

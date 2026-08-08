@@ -80,6 +80,10 @@ const PAUSE_MS = 200;
   styles: `
     :host {
       display: block;
+      // Watching and its toggles sit among writing; keep long presses from
+      // starting a text selection here too.
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     app-kanji-stroke-pad {

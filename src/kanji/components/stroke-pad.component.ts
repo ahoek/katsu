@@ -129,8 +129,12 @@ export function strokeTraceMs(path: string, scale = 1): number {
       aspect-ratio: 1;
       background: var(--ion-background-color, #fff);
       border-radius: 10px;
-      // The pad owns every gesture inside it; no scrolling or double-tap zoom.
+      // The pad owns every gesture inside it: no scrolling, no double-tap
+      // zoom, and no text selection popping its select/copy balloon mid-stroke.
       touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
       cursor: crosshair;
 
       &:not(.pad--interactive) {

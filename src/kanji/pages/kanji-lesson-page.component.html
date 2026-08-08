@@ -118,21 +118,22 @@
   }
 </ion-content>
 
-<ion-footer class="app-footer">
-  <div class="lesson-nav">
-    @switch (phase()) {
-      @case ('watch') {
+<!-- Only there when it has a step to offer: an empty footer is still a bar,
+     and while writing, the pad deserves the whole screen. -->
+@if (phase() === 'watch' || phase() === 'done') {
+  <ion-footer class="app-footer">
+    <div class="lesson-nav">
+      @if (phase() === 'watch') {
         <ion-button expand="block" (click)="startTracing()">
           {{ 'kanji.lesson.trace' | translate }}
           <ion-icon slot="end" name="arrow-forward"></ion-icon>
         </ion-button>
-      }
-      @case ('done') {
+      } @else {
         <ion-button expand="block" (click)="addToReviews()">
           {{ 'kanji.lesson.add' | translate }}
           <ion-icon slot="end" name="arrow-forward"></ion-icon>
         </ion-button>
       }
-    }
-  </div>
-</ion-footer>
+    </div>
+  </ion-footer>
+}

@@ -2,6 +2,10 @@
   max-width: 420px;
   margin: 0 auto;
   padding: 8px 16px 0;
+  // A page written on, not read from: no long press should pop the
+  // select/copy balloon over the pad or the steps.
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .meet {
@@ -97,7 +101,7 @@ app-kanji-stroke-pad {
 .lesson-nav {
   max-width: 420px;
   margin: 0 auto;
-  padding: 6px 16px calc(8px + env(safe-area-inset-bottom));
+  padding: 8px 16px calc(12px + env(safe-area-inset-bottom));
 
   ion-button {
     --border-radius: 999px;

@@ -113,8 +113,9 @@
   }
 </ion-content>
 
-<ion-footer class="app-footer">
-  @if (outcome(); as result) {
+<!-- Only there when it has something to say: an empty footer is still a bar. -->
+@if (outcome(); as result) {
+  <ion-footer class="app-footer">
     <div class="outcome" [class]="'outcome--' + result.grade">
       <!-- The ladder the stage numbers refer to. A line saying "stage 3 to 4"
            is a fact; eight pips with four of them lit is a position. -->
@@ -153,5 +154,5 @@
         <ion-icon slot="end" name="arrow-forward"></ion-icon>
       </ion-button>
     </div>
-  }
-</ion-footer>
+  </ion-footer>
+}
