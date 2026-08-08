@@ -5,6 +5,7 @@ import {
   IonButton,
   IonButtons,
   IonContent,
+  IonFooter,
   IonHeader,
   IonIcon,
   IonToolbar,
@@ -50,6 +51,7 @@ import { PageMetaService } from '../../app/shared/page-meta.service';
     IonButton,
     IonButtons,
     IonContent,
+    IonFooter,
     IonHeader,
     IonIcon,
     IonToolbar,
@@ -191,15 +193,19 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
     this.writeAttempt.update(attempt => attempt + 1);
   }
 
+  /** The kanji a step away in the deck, for naming where the arrows go. */
+  neighbour(offset: number): string {
+    const count = this.characters().length;
+    return count ? this.characters()[(this.position() + offset + count) % count].kanji : '';
+  }
+
   /** Step to the kanji before or after this one in the deck. */
   go(offset: number): void {
-    const count = this.characters().length;
-    if (count === 0) {
+    if (this.characters().length === 0) {
       return;
     }
-    const next = this.characters()[(this.position() + offset + count) % count];
     // Replaced rather than pushed, so going back returns to the list instead of
     // walking every character stepped through.
-    this.router.navigate(['/kanji/practice', next.kanji], { replaceUrl: true });
+    this.router.navigate(['/kanji/practice', this.neighbour(offset)], { replaceUrl: true });
   }
 }

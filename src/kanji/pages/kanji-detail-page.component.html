@@ -86,23 +86,29 @@
         }
       }
 
-      <!-- Stepping through the deck is quiet navigation, not an action: it
-           closes the column rather than hanging over it in a bar. -->
-      <nav class="deck-nav" [attr.aria-label]="'kanji.picker' | translate">
-        <ion-button fill="clear" (click)="go(-1)" [attr.aria-label]="'kanji.previous' | translate">
-          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-        </ion-button>
-
-        <span class="deck-nav__count">
-          {{ position() + 1 }} / {{ characters().length }}
-        </span>
-
-        <ion-button fill="clear" (click)="go(1)" [attr.aria-label]="'kanji.next' | translate">
-          <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
-        </ion-button>
-      </nav>
     </div>
   } @else {
     <p class="loading">{{ 'kanji.loading' | translate }}</p>
   }
 </ion-content>
+
+<!-- Navigation, not an action: pinned, so it sits in the same place for
+     every kanji instead of riding the height of the page. It names the
+     neighbours, so a step is to somewhere rather than into the dark. -->
+<ion-footer class="app-footer">
+  <nav class="deck-nav" [attr.aria-label]="'kanji.picker' | translate">
+    <ion-button fill="clear" (click)="go(-1)" [attr.aria-label]="'kanji.previous' | translate">
+      <ion-icon slot="start" name="arrow-back"></ion-icon>
+      <span lang="ja">{{ neighbour(-1) }}</span>
+    </ion-button>
+
+    <span class="deck-nav__count">
+      {{ position() + 1 }} / {{ characters().length }}
+    </span>
+
+    <ion-button fill="clear" (click)="go(1)" [attr.aria-label]="'kanji.next' | translate">
+      <span lang="ja">{{ neighbour(1) }}</span>
+      <ion-icon slot="end" name="arrow-forward"></ion-icon>
+    </ion-button>
+  </nav>
+</ion-footer>

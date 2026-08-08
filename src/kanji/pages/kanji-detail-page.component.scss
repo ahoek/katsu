@@ -82,9 +82,11 @@
 .deck-nav {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 18px;
-  margin-top: 10px;
+  justify-content: space-between;
+  gap: 8px;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 2px 8px calc(2px + env(safe-area-inset-bottom));
 
   &__count {
     font-size: .8rem;
@@ -93,5 +95,9 @@
 
   ion-button {
     --color: var(--app-color-link);
+
+    [lang='ja'] {
+      font-size: 1.15rem;
+    }
   }
 }
