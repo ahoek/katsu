@@ -99,6 +99,18 @@ ion-header.app-chrome {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  // One leading action, the rest rarely-touched switches: the action takes
+  // the room, the switches take only their words.
+  &--lead {
+    grid-template-columns: 1fr;
+    grid-auto-columns: max-content;
+
+    button ~ button {
+      font-size: .75rem;
+      padding-inline: 12px;
+    }
+  }
+
   button {
     display: inline-flex;
     align-items: center;

@@ -46,7 +46,7 @@ const PAUSE_MS = 200;
       [label]="label()"
     ></app-kanji-stroke-pad>
 
-    <div class="pad-tools">
+    <div class="pad-tools pad-tools--lead">
       <button type="button" (click)="replay()">
         <ion-icon name="refresh-outline" aria-hidden="true"></ion-icon>
         {{ 'kanji.demo.replay' | translate }}
