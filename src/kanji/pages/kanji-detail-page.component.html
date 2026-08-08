@@ -12,6 +12,18 @@
 <ion-content class="patterned" [fullscreen]="true">
   @if (character(); as kanji) {
     <div class="detail">
+      <!-- Watching and writing are two views of the same kanji: a switch,
+           not a one-way door. -->
+      <div class="pad-tools mode-toggle" role="group">
+        <button type="button" [attr.aria-pressed]="mode() === 'demo'" (click)="setMode('demo')">
+          {{ 'kanji.hint.example' | translate }}
+        </button>
+        <button type="button" [attr.aria-pressed]="mode() === 'write'" (click)="setMode('write')">
+          <ion-icon name="pencil-outline" aria-hidden="true"></ion-icon>
+          {{ 'kanji.demo.write' | translate }}
+        </button>
+      </div>
+
       @if (mode() === 'demo') {
         <div class="meet">
           <span class="meet__glyph" lang="ja">{{ kanji.kanji }}</span>
@@ -48,12 +60,6 @@
           [numbers]="numbers()"
           [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
         ></app-kanji-stroke-demo>
-
-        <!-- What to do next is one choice, so the ways stand together. -->
-        <ion-button expand="block" class="flow-cta" (click)="mode.set('write')">
-          <ion-icon slot="start" name="pencil-outline"></ion-icon>
-          {{ 'kanji.demo.write' | translate }}
-        </ion-button>
 
         @if (unlearned()) {
           <ion-button expand="block" fill="outline" class="flow-cta" (click)="startLesson()">

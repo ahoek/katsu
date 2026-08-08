@@ -193,6 +193,12 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
     this.writeAttempt.update(attempt => attempt + 1);
   }
 
+  /** Switch between watching and writing; coming back to write starts fresh. */
+  setMode(mode: 'demo' | 'write'): void {
+    this.mode.set(mode);
+    this.writeAgain();
+  }
+
   /** The kanji a step away in the deck, for naming where the arrows go. */
   neighbour(offset: number): string {
     const count = this.characters().length;
