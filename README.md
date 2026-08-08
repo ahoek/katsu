@@ -94,6 +94,17 @@ npm run build
 
 The production build is written to `dist/browser`.
 
+`ng build` leaves one `index.html` for a router that decides everything in the
+browser, which GitHub Pages cannot serve and Google cannot tell apart, so the
+build follows it with [tools/build-pages.mjs](tools/build-pages.mjs). That
+writes a file per URL - each with its own title, description, canonical,
+sharing card and structured data - the 404 fallback, and the sitemap. The list
+of URLs lives in [tools/site-pages.mjs](tools/site-pages.mjs), which is also
+where the kanji deck turns into a page per character.
+
+Pages end in a slash (`/about/`, not `/about`): that is the URL GitHub Pages
+answers with the page rather than with a redirect to it.
+
 Every push to `master` is built and deployed to GitHub Pages automatically by the
 [deploy workflow](.github/workflows/deploy.yml). The same workflow deploys the
 sync service for the kanji writing feature - a Cloudflare Worker configured in

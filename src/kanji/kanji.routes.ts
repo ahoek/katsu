@@ -32,14 +32,18 @@ export const kanjiRoutes: Routes = [
   },
   {
     path: 'practice',
-    title: 'title.kanji',
+    title: 'title.kanji-practice',
+    data: { description: 'description.kanji-practice' },
     loadComponent: () =>
       import('./pages/kanji-browse-page.component').then(m => m.KanjiBrowsePageComponent),
   },
   {
-    // The character itself is the parameter, so a kanji can be linked to.
+    // The character itself is the parameter, so a kanji can be linked to. The
+    // page names itself once the character is known; these two are what stands
+    // in the tab until then.
     path: 'practice/:kanji',
-    title: 'title.kanji',
+    title: 'title.kanji-practice',
+    data: { description: 'description.kanji-practice' },
     loadComponent: () =>
       import('./pages/kanji-detail-page.component').then(m => m.KanjiDetailPageComponent),
   },

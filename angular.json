@@ -39,8 +39,7 @@
                 "output": "assets"
               },
               "src/manifest.webmanifest",
-              "src/robots.txt",
-              "src/sitemap.xml"
+              "src/robots.txt"
             ],
             "styles": [
               "src/global.scss",

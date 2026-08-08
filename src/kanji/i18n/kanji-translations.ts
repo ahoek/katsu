@@ -72,6 +72,18 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'legend-stage': 'Stage 1-{{total}}',
         'legend-due': '{{count}} ready now',
       },
+      // What a page about one character calls itself. The build writes the
+      // same thing into the file (tools/site-pages.mjs); this keeps it right
+      // for the reader, in their language, once the router takes over.
+      seo: {
+        title: '{{kanji}} stroke order - write the kanji for ‘{{meaning}}’ - Katsu',
+        description:
+          'How to write the kanji {{kanji}} ({{meaning}}) stroke by stroke, in {{count}} strokes. ' +
+          'Watch the stroke order, then write it yourself and have every stroke checked.',
+        'description-one':
+          'How to write the kanji {{kanji}} ({{meaning}}), a single stroke. ' +
+          'Watch the stroke order, then write it yourself and have it checked.',
+      },
       sync: {
         title: 'Your devices',
         lead: 'Move your review schedule between devices, or keep a copy of it.',
@@ -222,6 +234,15 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         title: 'Alle kanji',
         'legend-stage': 'Stap 1-{{total}}',
         'legend-due': '{{count}} nu klaar',
+      },
+      seo: {
+        title: '{{kanji}} streekvolgorde - schrijf de kanji voor ‘{{meaning}}’ - Katsu',
+        description:
+          'Zo schrijf je de kanji {{kanji}} ({{meaning}}) streek voor streek, in {{count}} streken. ' +
+          'Bekijk de streekvolgorde en schrijf hem daarna zelf, met controle op elke streek.',
+        'description-one':
+          'Zo schrijf je de kanji {{kanji}} ({{meaning}}), één streek. ' +
+          'Bekijk de streekvolgorde en schrijf hem daarna zelf, met controle.',
       },
       sync: {
         title: 'Jouw apparaten',
