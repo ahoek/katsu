@@ -183,7 +183,8 @@
     "review": "Practice - Katsu",
     "summary": "Summary - Katsu",
     "about": "About the maker - Katsu",
-    "kanji": "Write kanji - Katsu"
+    "kanji": "Write kanji - Katsu",
+    "kanji-practice": "All kanji with stroke order - Katsu"
   },
   "information": {
     "title": "How Katsu works",
@@ -205,7 +206,8 @@
     "home": "Katsu is a free practice app for Japanese: drill verb and adjective conjugation from JLPT N5 to N1, and learn to write kanji in the correct stroke order.",
     "information": "How Katsu works: an endless stream of Japanese conjugation questions and kanji writing practice with stroke order, explained in three steps each.",
     "about": "Katsu is made by Arthur Hoek, a Dutch developer. The app is free and open source (MIT). Contact, GitHub and tip links.",
-    "kanji": "Practise writing the 240 kanji Japanese children learn in their first two years at school, stroke by stroke, in the correct stroke order."
+    "kanji": "Practise writing the 240 kanji Japanese children learn in their first two years at school, stroke by stroke, in the correct stroke order.",
+    "kanji-practice": "Every one of the 240 kanji Japanese children learn in their first two school years, each with its stroke order written out and a pad to write it on yourself."
   },
   "about": {
     "title": "About the maker",

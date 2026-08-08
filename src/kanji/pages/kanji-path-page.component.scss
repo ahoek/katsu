@@ -153,3 +153,25 @@
     }
   }
 }
+
+.alpha {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 24px 0 8px;
+  font-size: .75rem;
+  line-height: 1.4;
+  color: var(--ion-color-medium);
+
+  &__tag {
+    flex: none;
+    padding: 1px 7px;
+    border-radius: 999px;
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--ion-color-secondary-contrast);
+    background: var(--ion-color-secondary);
+  }
+}

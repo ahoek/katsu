@@ -38,17 +38,10 @@ jobs:
       - name: Test
         run: npm test -- --watch=false
 
+      # Also writes a page per route, the 404 fallback and the sitemap;
+      # see tools/build-pages.mjs.
       - name: Build
         run: npm run build
-
-      - name: Add SPA fallback and route pages
-        run: |
-          cp dist/browser/index.html dist/browser/404.html
-          for route in about home information preferences review summary \
-                       kanji kanji/lesson kanji/review kanji/practice kanji/sync; do
-            mkdir -p "dist/browser/$route"
-            cp dist/browser/index.html "dist/browser/$route/index.html"
-          done
 
       - name: Upload Pages artifact
         if: github.event_name != 'pull_request'

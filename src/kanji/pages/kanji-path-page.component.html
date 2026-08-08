@@ -14,10 +14,10 @@
     <h1 class="path__heading">{{ 'kanji.path.title' | translate }}</h1>
 
     <section class="card frosted-card">
-      <h3 class="card__title">
+      <h2 class="card__title">
         <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
         {{ 'kanji.path.reviews-title' | translate }}
-      </h3>
+      </h2>
 
       @if (batchDone()) {
         <!-- The day's batch is done. Nothing is withheld: the pile is named and
@@ -58,10 +58,10 @@
     </section>
 
     <section class="card frosted-card">
-      <h3 class="card__title">
+      <h2 class="card__title">
         <ion-icon name="school-outline" aria-hidden="true"></ion-icon>
         {{ 'kanji.path.lessons-title' | translate }}
-      </h3>
+      </h2>
 
       @if (nextLesson(); as lesson) {
         <p class="card__lead">
@@ -78,12 +78,15 @@
     </section>
 
     <section class="card frosted-card">
-      <p class="card__lead">
+      <p class="card__lead" id="kanji-progress-label">
         {{ 'kanji.progress' | translate: { done: learnedCount(), total: characters().length } }}
       </p>
+      <!-- Named by the line above it: a bar that fills up says how far along
+           it is to a pair of eyes and nothing at all to a screen reader. -->
       <div
         class="bar"
         role="progressbar"
+        aria-labelledby="kanji-progress-label"
         [attr.aria-valuenow]="progressPercent()"
         aria-valuemin="0"
         aria-valuemax="100"
@@ -127,5 +130,13 @@
         <ion-icon class="detour__go" name="chevron-forward" aria-hidden="true"></ion-icon>
       </a>
     </nav>
+
+    <!-- The menu says this is alpha, and nobody arriving from a search result
+         has opened the menu. Last thing on the page, because it is a warning
+         about what they are about to put their progress into, not a heading. -->
+    <p class="alpha">
+      <span class="alpha__tag">{{ 'home.kanji-tag' | translate }}</span>
+      {{ 'home.kanji-note' | translate }}
+    </p>
   </div>
 </ion-content>

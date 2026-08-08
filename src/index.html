@@ -55,6 +55,43 @@
   }
   </script>
 
+  <!--
+    The page's own facts, written into the app root by tools/build-pages.mjs
+    and replaced the moment Angular boots. Its colours are spelled out rather than
+    taken from the theme: the stylesheet may still be on its way when this
+    paints, and that is the whole point of it being here.
+  -->
+  <style>
+    .boot-shell {
+      --shell-ink: #000;
+      --shell-quiet: #5f6169;
+      --shell-link: #4a6519;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 12px 20px 40px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.55;
+      color: var(--shell-ink);
+    }
+
+    .boot-shell a { color: var(--shell-link); }
+    .boot-shell h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: var(--shell-quiet); }
+    .boot-shell__brand { font-weight: 600; color: var(--shell-quiet); margin: 0 0 24px; }
+    .boot-shell__title { display: flex; align-items: center; gap: 16px; font-size: 1.5rem; margin: 0 0 16px; }
+    .boot-shell__glyph { font-size: 3rem; line-height: 1; }
+    .boot-shell__diagram { color: var(--shell-ink); }
+    .boot-shell__deck { display: flex; flex-wrap: wrap; gap: 8px; font-size: 1.4rem; }
+    .boot-shell__deck a { text-decoration: none; }
+
+    @media (prefers-color-scheme: dark) {
+      .boot-shell {
+        --shell-ink: #f4f5f8;
+        --shell-quiet: #9d9fa6;
+        --shell-link: #a3c759;
+      }
+    }
+  </style>
+
   <link rel="icon" type="image/svg+xml" href="assets/icon/favicon.svg">
   <link rel="apple-touch-icon" sizes="57x57" href="assets/icon/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="assets/icon/apple-touch-icon-60x60.png">

@@ -12,9 +12,13 @@ shares the shell freely in both directions - the navigation menu links its
 pages, the shared options page shows its pad switches - per the "One app, two
 trainers" section of the root README.
 
-The menu links it behind an **Alpha** label, and it is deliberately kept out
-of the sitemap, so it is found by people looking rather than by search
-engines.
+The menu still links it behind an **Alpha** label, but it is no longer kept
+out of the sitemap: `/kanji`, `/kanji/practice` and a page per character are
+all listed, written out at build time by `tools/build-pages.mjs`. A page about
+one kanji is the part of Katsu somebody might actually search for, and it says
+what it is without an account or a session behind it. The pages built from a
+visitor's own progress - the lesson, the reviews and the sync page - carry
+`noindex` instead.
 
 ## The path
 

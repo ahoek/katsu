@@ -1,7 +1,8 @@
 User-agent: *
 Allow: /
-Disallow: /review
-Disallow: /summary
-Disallow: /preferences
+
+# The pages built from a visitor's own session and settings carry
+# <meta name="robots" content="noindex">, which needs to be read to be
+# obeyed - so they are crawlable rather than disallowed here.
 
 Sitemap: https://katsu.arthurhoek.nl/sitemap.xml

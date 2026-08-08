@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonBackButton,
@@ -34,6 +34,7 @@ interface Standing {
 const NO_PARAMS: Record<string, number> = {};
 
 import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
+import { PageMetaService } from '../../app/shared/page-meta.service';
 
 /**
  * One kanji, named in the URL so it can be linked to directly. It opens on the
@@ -66,6 +67,7 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
   private readonly translate = inject(TranslateService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly page = inject(PageMetaService);
 
   readonly characters = signal<KanjiCharacter[]>([]);
 
@@ -85,9 +87,11 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
 
   readonly numbers = computed(() => this.character()?.numbers ?? []);
 
+  // The signal, not getCurrentLang(): that one is a snapshot, so the gloss - and
+  // with it the page's title - would keep the language it was first read in.
   readonly meaning = computed(() => {
     const character = this.character();
-    return character ? this.data.meaningOf(character, this.translate.getCurrentLang()) : '';
+    return character ? this.data.meaningOf(character, this.translate.currentLang()) : '';
   });
 
   readonly position = computed(() =>
@@ -126,6 +130,29 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
   constructor() {
     installKanjiTranslations(this.translate);
     addIcons({ arrowBack, arrowForward, pencilOutline });
+
+    // The route can only name the section; the page is about one character, and
+    // that is what the tab and the search snippet should say. It waits for the
+    // deck, so it lands after the route's own title either way.
+    effect(() => {
+      const character = this.character();
+      if (!character) {
+        return;
+      }
+      this.translate.currentLang(); // Re-title when the language changes.
+      const params = {
+        kanji: character.kanji,
+        meaning: this.meaning(),
+        count: character.strokes.length,
+      };
+      this.page.setTitle(this.translate.instant('kanji.seo.title', params) as string);
+      this.page.setDescription(
+        this.translate.instant(
+          character.strokes.length === 1 ? 'kanji.seo.description-one' : 'kanji.seo.description',
+          params,
+        ) as string,
+      );
+    });
   }
 
   async ngOnInit(): Promise<void> {

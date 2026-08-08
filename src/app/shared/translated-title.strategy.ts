@@ -1,17 +1,21 @@
 import { Injectable, inject } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
 import { RouterStateSnapshot, TitleStrategy } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+
+import { PageMetaService, canonicalUrl } from './page-meta.service';
 
 /**
  * Sets the document title and meta description from a route's
  * translation keys, and re-applies them whenever the language changes,
  * so the browser tab and search snippet follow the app language.
+ *
+ * The canonical follows the route too. Without it every page kept the one the
+ * build put in the file it was served from, which after a client-side
+ * navigation is the wrong page.
  */
 @Injectable({ providedIn: 'root' })
 export class TranslatedTitleStrategy extends TitleStrategy {
-  private readonly title = inject(Title);
-  private readonly meta = inject(Meta);
+  private readonly page = inject(PageMetaService);
   private readonly translate = inject(TranslateService);
 
   private titleKey?: string;
@@ -31,18 +35,16 @@ export class TranslatedTitleStrategy extends TitleStrategy {
     }
     this.descriptionKey = route.data['description'] ?? 'description.home';
 
+    this.page.setCanonical(canonicalUrl(state.url));
     this.apply();
   }
 
   private apply() {
     if (this.titleKey !== undefined) {
-      this.title.setTitle(this.translate.instant(this.titleKey) as string);
+      this.page.setTitle(this.translate.instant(this.titleKey) as string);
     }
     if (this.descriptionKey !== undefined) {
-      this.meta.updateTag({
-        name: 'description',
-        content: this.translate.instant(this.descriptionKey) as string,
-      });
+      this.page.setDescription(this.translate.instant(this.descriptionKey) as string);
     }
   }
 }

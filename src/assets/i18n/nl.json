@@ -183,7 +183,8 @@
     "review": "Oefenen - Katsu",
     "summary": "Samenvatting - Katsu",
     "about": "Over de maker - Katsu",
-    "kanji": "Kanji schrijven - Katsu"
+    "kanji": "Kanji schrijven - Katsu",
+    "kanji-practice": "Alle kanji met streekvolgorde - Katsu"
   },
   "information": {
     "title": "Zo werkt Katsu",
@@ -205,7 +206,8 @@
     "home": "Katsu is een gratis oefenapp voor Japans: oefen de vervoeging van werkwoorden en adjectieven van JLPT N5 tot N1, en leer kanji schrijven in de juiste streekvolgorde.",
     "information": "Zo werkt Katsu: een eindeloze stroom Japanse vervoegingsvragen en kanji leren schrijven in de juiste streekvolgorde, uitgelegd in drie stappen per trainer.",
     "about": "Katsu is gemaakt door Arthur Hoek, ontwikkelaar uit Nederland. De app is gratis en open source (MIT). Contact, GitHub en fooi.",
-    "kanji": "Oefen het schrijven van de 240 kanji die Japanse kinderen in hun eerste twee schooljaren leren, streek voor streek, in de juiste streekvolgorde."
+    "kanji": "Oefen het schrijven van de 240 kanji die Japanse kinderen in hun eerste twee schooljaren leren, streek voor streek, in de juiste streekvolgorde.",
+    "kanji-practice": "Alle 240 kanji die Japanse kinderen in hun eerste twee schooljaren leren, elk met de streekvolgorde uitgeschreven en een vlak om hem zelf te schrijven."
   },
   "about": {
     "title": "Over de maker",
