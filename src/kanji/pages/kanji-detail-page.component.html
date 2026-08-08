@@ -73,6 +73,17 @@
           <strong>{{ meaning() }}</strong>
         </p>
 
+        <!-- The readings stay in sight while writing: a meaning alone can fit
+             two kanji, and these say which one is being asked. -->
+        <p class="readings">
+          @if (kanji.on) {
+            <span lang="ja">{{ kanji.on }}</span>
+          }
+          @if (kanji.kun) {
+            <span lang="ja">{{ kanji.kun }}</span>
+          }
+        </p>
+
         <!-- Re-created per attempt, so writing it again starts from a clean pad. -->
         @for (attempt of [writeAttempt()]; track attempt) {
           <app-kanji-writing-exercise

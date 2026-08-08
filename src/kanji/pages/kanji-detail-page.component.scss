@@ -59,7 +59,7 @@
 }
 
 .prompt {
-  margin: 4px 0 12px;
+  margin: 4px 0 0;
   text-align: center;
   font-size: 1rem;
   color: var(--ion-color-medium);
@@ -69,6 +69,15 @@
     font-size: 1.15rem;
     color: var(--ion-text-color);
   }
+}
+
+.readings {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 2px 0 14px;
+  font-size: .85rem;
+  color: var(--ion-color-medium);
 }
 
 .answer {
