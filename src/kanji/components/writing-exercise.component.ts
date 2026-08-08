@@ -92,17 +92,19 @@ type Feedback =
          The erasers only exist where the ink lies as it fell - a guided
          stroke lands as the model stroke or not at all, so there is never
          anything worth erasing. -->
-    @if (!complete()) {
-      <div class="pad-tools" [class.pad-tools--rows]="deferred()">
-        <button type="button" (click)="watchExample()">
-          <ion-icon name="play-outline" aria-hidden="true"></ion-icon>
-          {{ 'kanji.hint.example' | translate }}
-        </button>
+    @if (!complete() && (hints() || deferred())) {
+      <div class="pad-tools" [class.pad-tools--rows]="hints() && deferred()">
+        @if (hints()) {
+          <button type="button" (click)="watchExample()">
+            <ion-icon name="play-outline" aria-hidden="true"></ion-icon>
+            {{ 'kanji.hint.example' | translate }}
+          </button>
 
-        <button type="button" (click)="showStrokeHint()">
-          <ion-icon name="bulb-outline" aria-hidden="true"></ion-icon>
-          {{ 'kanji.hint.stroke' | translate }}
-        </button>
+          <button type="button" (click)="showStrokeHint()">
+            <ion-icon name="bulb-outline" aria-hidden="true"></ion-icon>
+            {{ 'kanji.hint.stroke' | translate }}
+          </button>
+        }
 
         @if (deferred()) {
           <button type="button" (click)="undo()" [disabled]="written() === 0">
@@ -242,6 +244,15 @@ export class WritingExerciseComponent implements OnDestroy {
 
   /** Judge the character as a whole at the end, not stroke by stroke. */
   readonly deferred = input(false);
+
+  /**
+   * Offer the hint buttons. Off for a review, which is a test: whoever is
+   * stuck writes what they can and meets the correct version at the end -
+   * an error met by its correction teaches at least as well as an answer
+   * looked up beforehand. The automatic scaffold after repeated misses
+   * stays either way, so being stuck is still never a dead end.
+   */
+  readonly hints = input(true);
 
   /** Where to put each stroke's number, for the demonstration. */
   readonly numbers = input<readonly Point[]>([]);

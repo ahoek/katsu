@@ -102,11 +102,14 @@
         }
       </p>
 
+      <!-- A review is a test, so no hints: write what you can, and the
+           correct version is there at the end. -->
       <app-kanji-writing-exercise
         [strokes]="strokes()"
         [numbers]="numbers()"
         [meaning]="meaning()"
         [deferred]="deferred()"
+        [hints]="false"
         (finished)="record($event)"
       ></app-kanji-writing-exercise>
 
