@@ -127,5 +127,13 @@
         <ion-icon class="detour__go" name="chevron-forward" aria-hidden="true"></ion-icon>
       </a>
     </nav>
+
+    <!-- The menu says this is alpha, and nobody arriving from a search result
+         has opened the menu. Last thing on the page, because it is a warning
+         about what they are about to put their progress into, not a heading. -->
+    <p class="alpha">
+      <span class="alpha__tag">{{ 'home.kanji-tag' | translate }}</span>
+      {{ 'home.kanji-note' | translate }}
+    </p>
   </div>
 </ion-content>
