@@ -11,6 +11,8 @@ export interface KanjiCharacter {
   meaning: Record<string, string>;
   on: string;
   kun: string;
+  /** Deck kanji this one is built from, each taught earlier in the deck. */
+  components: string[];
   /** SVG paths, one per stroke, drawn in a 109x109 square. */
   strokes: string[];
   /** Where to print each stroke's number, one per stroke, from KanjiVG. */

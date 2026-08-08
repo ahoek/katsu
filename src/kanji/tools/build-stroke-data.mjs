@@ -27,6 +27,31 @@ function fileName(kanji) {
   return `${kanji.codePointAt(0).toString(16).padStart(5, '0')}.svg`;
 }
 
+const deckKanji = new Set(deck.map(entry => entry.kanji));
+
+/**
+ * The deck kanji this kanji is built from, per KanjiVG's decomposition. A
+ * group whose element is the kanji itself only classifies the radical, and a
+ * group's `original` (亻 is 人) only counts when the element as written is not
+ * a deck kanji itself - 朝 contains the 月 on the page, not the 肉 it once was.
+ */
+function componentsOf(svg, kanji) {
+  const found = new Set();
+  for (const [, attrs] of svg.matchAll(/<g([^>]*)>/g)) {
+    const element = /kvg:element="([^"]+)"/.exec(attrs)?.[1];
+    const original = /kvg:original="([^"]+)"/.exec(attrs)?.[1];
+    if (!element || element === kanji) {
+      continue;
+    }
+    if (deckKanji.has(element)) {
+      found.add(element);
+    } else if (original && original !== kanji && deckKanji.has(original)) {
+      found.add(original);
+    }
+  }
+  return [...found].sort();
+}
+
 /**
  * Pull the stroke paths out of a KanjiVG document, ordered by stroke number.
  * Ids look like `kvg:06c34-s2`; the suffix is the stroke's position.
@@ -84,7 +109,12 @@ async function fetchKanji(entry) {
   }
   const svg = await response.text();
   const strokes = strokePaths(svg, entry.kanji);
-  return { ...entry, strokes, numbers: strokeNumbers(svg, entry.kanji, strokes.length) };
+  return {
+    ...entry,
+    components: componentsOf(svg, entry.kanji),
+    strokes,
+    numbers: strokeNumbers(svg, entry.kanji, strokes.length),
+  };
 }
 
 const characters = [];

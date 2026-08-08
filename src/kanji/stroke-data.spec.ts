@@ -13,6 +13,23 @@ describe('the shipped stroke data', () => {
     expect(strokeData.viewBox).toBe(109);
   });
 
+  /**
+   * The deck is in learning order: nobody should be asked to write 休 before
+   * having written 人 and 木. Components come from KanjiVG's decomposition,
+   * limited to kanji the deck itself teaches.
+   */
+  it('teaches every kanji after the parts it is built from', () => {
+    const position = new Map(strokeData.characters.map((character, index) => [character.kanji, index]));
+
+    const misplaced = strokeData.characters.flatMap(character =>
+      character.components
+        .filter(part => (position.get(part) ?? Infinity) > (position.get(character.kanji) ?? 0))
+        .map(part => `${character.kanji} before its part ${part}`),
+    );
+
+    expect(misplaced).toEqual([]);
+  });
+
   it('has every kanji only once', () => {
     const kanji = strokeData.characters.map(character => character.kanji);
 
