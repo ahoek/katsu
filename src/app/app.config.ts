@@ -1,18 +1,21 @@
 import { ApplicationConfig, isDevMode, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
-import { provideRouter, RouteReuseStrategy, TitleStrategy } from '@angular/router';
+import { provideRouter, RouteReuseStrategy, TitleStrategy, UrlSerializer } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideIonicAngular, IonicRouteStrategy } from '@ionic/angular/standalone';
 import { provideTranslateService } from '@ngx-translate/core';
 
 import { routes } from './app.routes';
 import { TranslatedTitleStrategy } from './shared/translated-title.strategy';
+import { TrailingSlashUrlSerializer } from './shared/trailing-slash-url-serializer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
+    // The app's own URLs are the ones the sitemap offers, slash and all.
+    { provide: UrlSerializer, useClass: TrailingSlashUrlSerializer },
     provideHttpClient(),
     // md on every platform: static toolbar titles, one consistent look.
     //

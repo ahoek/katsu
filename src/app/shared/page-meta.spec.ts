@@ -12,6 +12,7 @@ describe('canonicalUrl', () => {
 
   it('sends the page the empty route redirects to back to the address it redirects from', () => {
     expect(canonicalUrl('/home')).toBe(`${SITE}/`);
+    expect(canonicalUrl('/home/')).toBe(`${SITE}/`);
     expect(canonicalUrl('/')).toBe(`${SITE}/`);
   });
 

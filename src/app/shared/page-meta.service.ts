@@ -56,11 +56,10 @@ export class PageMetaService {
  * navigating, which is fine for the address bar and wrong for a canonical.
  */
 export function canonicalUrl(routerUrl: string): string {
-  const path = routerUrl.split(/[?#]/)[0];
+  const path = routerUrl.split(/[?#]/)[0].replace(/\/+$/, '');
   // The empty path redirects here, so both are the same page; the plain
   // address is the one worth having indexed.
-  const normalised = path === '/home' ? '/' : path;
-  const slashed = normalised.endsWith('/') ? normalised : `${normalised}/`;
+  const normalised = path === '/home' ? '' : path;
 
-  return `${SITE}${slashed}`;
+  return `${SITE}${normalised}/`;
 }
