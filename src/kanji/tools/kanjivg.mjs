@@ -21,16 +21,15 @@ export async function fetchSvg(kanji) {
 }
 
 /**
- * The radical forms that count as the kanji itself: 亻 is 人 with the same two
- * strokes reshaped, so somebody who can write 人 has written most of 休.
+ * The radical forms that count as the kanji itself. The test is the hand, not
+ * the dictionary: somebody who can write 人 has written 亻, and 飠 is 食 with
+ * its foot tucked in, the way 釒 is 金. Where the form keeps the kanji's own
+ * strokes - 扌 is 手 without its first sweep, 士 is 土 with the lines a
+ * different length - the part is worth teaching first.
  */
 const RADICAL_FORMS = new Map([
   ['亻', '人'],
-  ['氵', '水'],
-  ['氺', '水'],
-  ['灬', '火'],
   ['扌', '手'],
-  ['刂', '刀'],
   ['⺌', '小'],
   ['⺷', '羊'],
   ['飠', '食'],
@@ -38,12 +37,13 @@ const RADICAL_FORMS = new Map([
 ]);
 
 /**
- * And the ones that do not. KanjiVG's `original` records where a shape came
- * from as well as how it is written, so 冬's 冫 is filed under 氷 and 元's 儿
- * under 八. Neither writes a stroke of the kanji it names, and a learner sent
- * to 氷 before 冬 would be looking for something that is not there.
+ * And the ones that are a different mark on the page. KanjiVG's `original`
+ * records where a shape came from as well as how it is written: 冬's 冫 is
+ * filed under 氷, 元's 儿 under 八, 海's 氵 under 水. Etymology is right and
+ * beside the point - nothing of 水 is written in 海, so a learner sent to
+ * write 水 first is looking for something that is not there.
  */
-const ETYMOLOGY_ONLY = new Set(['儿', '冫', '毋']);
+const ETYMOLOGY_ONLY = new Set(['儿', '冫', '毋', '氵', '氺', '灬', '刂']);
 
 /**
  * The deck kanji this kanji is built from. A group whose element is the kanji
