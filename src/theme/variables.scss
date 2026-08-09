@@ -77,6 +77,26 @@
   --app-color-bg-dark: #ebebec;
   --app-color-bg-light: #d5dedd;
 
+  // The writing pad is paper, in both themes: kanji are written in dark ink
+  // on a light sheet everywhere off the phone, and practising them any other
+  // way round teaches a picture the learner will never meet again. So these
+  // seven do not flip with the theme; only the sheet dims for a dark room.
+  // Values are the light theme's own, which are the ones chosen to read on
+  // something pale - the state colours brighten in dark mode and would be
+  // too faint here.
+  --app-color-paper: #f6f3ec;
+  --app-color-ink: #1a1a1a;
+  /** The stroke under the finger, still being laid down. */
+  --app-color-ink-wet: #4a6519;
+  /** A stroke as it lands, and the whole character as it finishes. */
+  --app-color-ink-good: #446e14;
+  /** A stroke pointed out as gone wrong, at the reveal. */
+  --app-color-ink-off: #a5402a;
+  /** Grid, example outline and stroke numbers: on the paper, not written. */
+  --app-color-paper-rule: #5f6169;
+  /** What the pad offers rather than states: the guide stroke, the start dot. */
+  --app-color-paper-hint: #a86603;
+
   // Answer field state colours; amber needs dark text for legibility.
   --app-answer-correct-background: var(--ion-color-success);
   --app-answer-correct-color: #fff;
@@ -166,6 +186,10 @@
 
     --app-color-bg-dark: #131300;
     --app-color-bg-light: #152524;
+
+    // Paper by lamplight: still plainly a sheet, but not a torch in a dark
+    // room. Everything written on it keeps its colour.
+    --app-color-paper: #e3e0d7;
 }
 
 html.theme-dark {

@@ -127,7 +127,8 @@ export function strokeTraceMs(path: string, scale = 1): number {
       display: block;
       width: 100%;
       aspect-ratio: 1;
-      background: var(--ion-background-color, #fff);
+      // Paper in both themes; see the palette in theme/variables.scss.
+      background: var(--app-color-paper);
       border-radius: 10px;
       // The pad owns every gesture inside it: no scrolling, no double-tap
       // zoom, and no text selection popping its select/copy balloon mid-stroke.
@@ -158,7 +159,7 @@ export function strokeTraceMs(path: string, scale = 1): number {
 
     .grid {
       fill: none;
-      stroke: var(--ion-color-medium);
+      stroke: var(--app-color-paper-rule);
       stroke-width: 1;
       opacity: .35;
 
@@ -174,13 +175,13 @@ export function strokeTraceMs(path: string, scale = 1): number {
     }
 
     .outline {
-      stroke: var(--ion-color-medium);
+      stroke: var(--app-color-paper-rule);
       stroke-width: 5;
       opacity: .3;
     }
 
     .ink {
-      stroke: var(--ion-text-color);
+      stroke: var(--app-color-ink);
       stroke-width: 5.5;
     }
 
@@ -193,12 +194,12 @@ export function strokeTraceMs(path: string, scale = 1): number {
     // A stroke pointed out as gone wrong, semi-transparent so the model's
     // stroke stays readable through it for the comparison.
     .ink--off {
-      stroke: var(--ion-color-danger);
+      stroke: var(--app-color-ink-off);
       opacity: .65;
     }
 
     .guide-stroke {
-      stroke: var(--ion-color-secondary);
+      stroke: var(--app-color-paper-hint);
       stroke-width: 5.5;
       // Dash as long as the stroke (pathLength is 100) with a gap twice that.
       // An equal gap would put the start of the next dash exactly on the end
@@ -208,12 +209,12 @@ export function strokeTraceMs(path: string, scale = 1): number {
     }
 
     .start {
-      fill: var(--ion-color-secondary);
+      fill: var(--app-color-paper-hint);
       animation: pulse 1.4s ease-in-out infinite;
     }
 
     .live {
-      stroke: var(--ion-color-primary-shade);
+      stroke: var(--app-color-ink-wet);
       stroke-width: 5.5;
     }
 
@@ -221,7 +222,7 @@ export function strokeTraceMs(path: string, scale = 1): number {
       // Cut out of the stroke it sits in, so it adds nothing to the outline of
       // the character. Kept faint: it only has to be findable when looked for,
       // and a solid knock-out reads as part of the character.
-      fill: var(--ion-background-color, #fff);
+      fill: var(--app-color-paper);
       opacity: .55;
     }
 
@@ -230,10 +231,10 @@ export function strokeTraceMs(path: string, scale = 1): number {
       // smaller keeps the digit clear of a 5.5 unit stroke. The position is the
       // start of the baseline, so a smaller digit stays inside the same gap.
       font-size: 4.5px;
-      fill: var(--ion-color-medium);
+      fill: var(--app-color-paper-rule);
       // A halo behind the digit, for where a number does touch a stroke.
       paint-order: stroke;
-      stroke: var(--ion-background-color);
+      stroke: var(--app-color-paper);
       stroke-width: 1.2;
       stroke-linejoin: round;
     }
@@ -253,14 +254,14 @@ export function strokeTraceMs(path: string, scale = 1): number {
     }
 
     @keyframes land {
-      0% { stroke: var(--ion-color-success); stroke-width: 8; }
-      45% { stroke: var(--ion-color-success); stroke-width: 6.5; }
-      100% { stroke: var(--ion-text-color); stroke-width: 5.5; }
+      0% { stroke: var(--app-color-ink-good); stroke-width: 8; }
+      45% { stroke: var(--app-color-ink-good); stroke-width: 6.5; }
+      100% { stroke: var(--app-color-ink); stroke-width: 5.5; }
     }
 
     @keyframes finished {
-      0%, 60% { stroke: var(--ion-color-success); }
-      100% { stroke: var(--ion-text-color); }
+      0%, 60% { stroke: var(--app-color-ink-good); }
+      100% { stroke: var(--app-color-ink); }
     }
 
     // The whole square breathes out once. Small on purpose: the character has
