@@ -40,10 +40,12 @@
   }
 }
 
+// The character is what is being scanned for, so the row fits as many as it
+// can and the meaning under each one takes what is left, ellipsis and all.
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
+  gap: 6px;
 }
 
 .legend {
