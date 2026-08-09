@@ -64,23 +64,40 @@ describe('the shipped stroke data', () => {
   /**
    * A review shows the meaning and asks for the character, so two kanji may
    * never lay claim to the same word: asked for "grond", a learner who wrote 土
-   * cannot be told 地 was wanted. Only the family words survive, because they
-   * are never alone - "oudere broer" and "oudere zus" still name one kanji each.
+   * cannot be told 地 was wanted.
+   *
+   * A word in brackets is not a claim but the sense the word is being used in,
+   * which is how one word can serve two kanji: "licht (gewicht)" is 軽 and
+   * "licht (schijnsel)" is 光, and neither is answerable by the other. So a
+   * shared word passes only when every kanji claiming it says which sense it
+   * means, and no two of them say the same. The family words survive as they
+   * are, because they are never alone - "oudere broer" and "oudere zus" still
+   * name one kanji each.
    */
   it('never gives the same meaning to two kanji', () => {
-    const qualified = ['older', 'younger', 'brother', 'sister', 'oudere', 'jongere', 'broer', 'zus'];
+    const family = ['older', 'younger', 'brother', 'sister', 'oudere', 'jongere', 'broer', 'zus'];
 
     for (const language of ['en', 'nl'] as const) {
-      const claims = new Map<string, string[]>();
+      const claims = new Map<string, { kanji: string; sense: string }[]>();
       for (const character of strokeData.characters) {
-        for (const word of character.meaning[language].toLowerCase().split(/[,\s]+/).filter(Boolean)) {
-          claims.set(word, [...(claims.get(word) ?? []), character.kanji]);
+        for (const phrase of character.meaning[language].toLowerCase().split(',')) {
+          const sense = /\(([^)]*)\)/.exec(phrase)?.[1] ?? '';
+          for (const word of phrase.replace(/\([^)]*\)/g, '').split(/\s+/).filter(Boolean)) {
+            claims.set(word, [...(claims.get(word) ?? []), { kanji: character.kanji, sense }]);
+          }
         }
       }
 
       const shared = [...claims]
-        .filter(([word, kanji]) => kanji.length > 1 && !qualified.includes(word))
-        .map(([word, kanji]) => `${word}: ${kanji.join(' ')}`);
+        .filter(([word, claimants]) => claimants.length > 1 && !family.includes(word))
+        .filter(
+          ([, claimants]) =>
+            claimants.some(claimant => !claimant.sense) ||
+            new Set(claimants.map(claimant => claimant.sense)).size < claimants.length,
+        )
+        .map(([word, claimants]) =>
+          `${word}: ${claimants.map(({ kanji, sense }) => (sense ? `${kanji} (${sense})` : kanji)).join(' ')}`,
+        );
 
       expect(shared).toEqual([]);
     }

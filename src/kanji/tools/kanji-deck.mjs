@@ -10,11 +10,12 @@
  * kept for grouping, lessons follow this list top to bottom. The order is
  * computed, and stroke-data.spec.ts rejects a kanji placed above its parts.
  *
- * Meanings are kept short on purpose: the prompt has to fit on one line on a
- * phone. They are hand-written per language because no kanji dictionary ships
- * Dutch glosses (KANJIDIC2 has English, French, Spanish and Portuguese only).
- * Readings use the dictionary convention where a dot marks the okurigana
- * boundary.
+ * Meanings are short where a short word will do, but being understood comes
+ * first: a review has room for a phrase, and the practice list cuts off with
+ * an ellipsis what will not fit under a tile. They are hand-written per
+ * language because no kanji dictionary ships Dutch glosses (KANJIDIC2 has
+ * English, French, Spanish and Portuguese only). Readings use the dictionary
+ * convention where a dot marks the okurigana boundary.
  *
  * A meaning is the whole question in a review, so when adding kanji:
  *
@@ -26,8 +27,12 @@
  *   drill" and "trainen, drillen", because "train" alone is a locomotive.
  * - Never let two kanji claim the same word, in either language. Write the
  *   sense that separates them instead - 森 is a "woud", 林 a "bos".
+ * - A word in brackets names the sense meant, and is the one way two kanji may
+ *   share a word: 軽 is "licht (gewicht)" where 光 is "licht (schijnsel)". Use
+ *   it wherever the bare word leaves the question open - "koud (weer)" is not
+ *   the cold of a cold hand.
  *
- * stroke-data.spec.ts enforces the last rule on the generated file.
+ * stroke-data.spec.ts enforces those last two on the generated file.
  */
 export const deck = [
   { kanji: '一', grade: 1, meaning: { en: 'one', nl: 'één' }, on: 'イチ', kun: 'ひと' },
@@ -153,7 +158,7 @@ export const deck = [
   { kanji: '回', grade: 2, meaning: { en: 'times, revolve', nl: 'keer, draaien' }, on: 'カイ', kun: 'まわ.る' },
   { kanji: '会', grade: 2, meaning: { en: 'meet', nl: 'ontmoeten' }, on: 'カイ', kun: 'あ.う' },
   { kanji: '交', grade: 2, meaning: { en: 'cross, exchange', nl: 'kruisen' }, on: 'コウ', kun: 'まじ.わる' },
-  { kanji: '光', grade: 2, meaning: { en: 'light, shine', nl: 'licht' }, on: 'コウ', kun: 'ひかり' },
+  { kanji: '光', grade: 2, meaning: { en: 'light (shine)', nl: 'licht (schijnsel)' }, on: 'コウ', kun: 'ひかり' },
   { kanji: '考', grade: 2, meaning: { en: 'consider', nl: 'nadenken' }, on: 'コウ', kun: 'かんが.える' },
   { kanji: '行', grade: 2, meaning: { en: 'go', nl: 'gaan' }, on: 'コウ', kun: 'い.く' },
   { kanji: '合', grade: 2, meaning: { en: 'fit, join', nl: 'passen, samen' }, on: 'ゴウ', kun: 'あ.う' },
@@ -306,7 +311,7 @@ export const deck = [
   { kanji: '拾', grade: 3, meaning: { en: 'retrieve', nl: 'oprapen' }, on: 'シュウ', kun: 'ひろ.う' },
   { kanji: '重', grade: 3, meaning: { en: 'heavy', nl: 'zwaar' }, on: 'ジュウ', kun: 'おも.い' },
   { kanji: '昭', grade: 3, meaning: { en: 'radiant', nl: 'stralend' }, on: 'ショウ', kun: '' },
-  { kanji: '乗', grade: 3, meaning: { en: 'ride, board', nl: 'instappen, berijden' }, on: 'ジョウ', kun: 'の.る' },
+  { kanji: '乗', grade: 3, meaning: { en: 'ride, board', nl: 'instappen, meerijden' }, on: 'ジョウ', kun: 'の.る' },
   { kanji: '神', grade: 3, meaning: { en: 'god', nl: 'god' }, on: 'シン', kun: 'かみ' },
   { kanji: '相', grade: 3, meaning: { en: 'mutual', nl: 'wederzijds' }, on: 'ソウ', kun: 'あい' },
   { kanji: '送', grade: 3, meaning: { en: 'send', nl: 'sturen' }, on: 'ソウ', kun: 'おく.る' },
@@ -381,7 +386,7 @@ export const deck = [
   { kanji: '進', grade: 3, meaning: { en: 'advance', nl: 'vooruitgaan' }, on: 'シン', kun: 'すす.む' },
   { kanji: '族', grade: 3, meaning: { en: 'tribe, clan', nl: 'stam, volksgroep' }, on: 'ゾク', kun: '' },
   { kanji: '第', grade: 3, meaning: { en: 'ordinal prefix', nl: 'rangtelwoord' }, on: 'ダイ', kun: '' },
-  { kanji: '帳', grade: 3, meaning: { en: 'notebook', nl: 'schrift, kladblok' }, on: 'チョウ', kun: '' },
+  { kanji: '帳', grade: 3, meaning: { en: 'notebook', nl: 'schrift, notitieboek' }, on: 'チョウ', kun: '' },
   { kanji: '笛', grade: 3, meaning: { en: 'flute', nl: 'fluit' }, on: 'テキ', kun: 'ふえ' },
   { kanji: '転', grade: 3, meaning: { en: 'roll', nl: 'rollen' }, on: 'テン', kun: 'ころ.がる' },
   { kanji: '都', grade: 3, meaning: { en: 'metropolis', nl: 'metropool' }, on: 'ト', kun: 'みやこ' },
@@ -401,25 +406,25 @@ export const deck = [
   { kanji: '番', grade: 2, meaning: { en: 'number in order', nl: 'beurt, nummer' }, on: 'バン', kun: '' },
   { kanji: '飲', grade: 3, meaning: { en: 'drink', nl: 'drinken' }, on: 'イン', kun: 'の.む' },
   { kanji: '運', grade: 3, meaning: { en: 'carry', nl: 'vervoeren' }, on: 'ウン', kun: 'はこ.ぶ' },
-  { kanji: '温', grade: 3, meaning: { en: 'warm', nl: 'warm' }, on: 'オン', kun: 'あたた.かい' },
+  { kanji: '温', grade: 3, meaning: { en: 'warm (to touch)', nl: 'warm (aanvoelen)' }, on: 'オン', kun: 'あたた.かい' },
   { kanji: '開', grade: 3, meaning: { en: 'open', nl: 'openen' }, on: 'カイ', kun: 'ひら.く' },
   { kanji: '階', grade: 3, meaning: { en: 'storey', nl: 'verdieping' }, on: 'カイ', kun: '' },
-  { kanji: '寒', grade: 3, meaning: { en: 'cold', nl: 'koud' }, on: 'カン', kun: 'さむ.い' },
+  { kanji: '寒', grade: 3, meaning: { en: 'cold (weather)', nl: 'koud (weer)' }, on: 'カン', kun: 'さむ.い' },
   { kanji: '期', grade: 3, meaning: { en: 'period', nl: 'periode' }, on: 'キ', kun: '' },
-  { kanji: '軽', grade: 3, meaning: { en: 'lightweight', nl: 'lichtgewicht' }, on: 'ケイ', kun: 'かる.い' },
+  { kanji: '軽', grade: 3, meaning: { en: 'light (weight)', nl: 'licht (gewicht)' }, on: 'ケイ', kun: 'かる.い' },
   { kanji: '湖', grade: 3, meaning: { en: 'lake', nl: 'meer, plas' }, on: 'コ', kun: 'みずうみ' },
   { kanji: '港', grade: 3, meaning: { en: 'harbour', nl: 'haven' }, on: 'コウ', kun: 'みなと' },
   { kanji: '歯', grade: 3, meaning: { en: 'tooth', nl: 'tand' }, on: 'シ', kun: 'は' },
   { kanji: '集', grade: 3, meaning: { en: 'gather', nl: 'verzamelen' }, on: 'シュウ', kun: 'あつ.める' },
-  { kanji: '暑', grade: 3, meaning: { en: 'sweltering', nl: 'snikheet' }, on: 'ショ', kun: 'あつ.い' },
+  { kanji: '暑', grade: 3, meaning: { en: 'hot (weather)', nl: 'heet (weer)' }, on: 'ショ', kun: 'あつ.い' },
   { kanji: '勝', grade: 3, meaning: { en: 'win', nl: 'winnen' }, on: 'ショウ', kun: 'か.つ' },
   { kanji: '植', grade: 3, meaning: { en: 'plant', nl: 'planten' }, on: 'ショク', kun: 'う.える' },
   { kanji: '短', grade: 3, meaning: { en: 'short', nl: 'kort' }, on: 'タン', kun: 'みじか.い' },
   { kanji: '着', grade: 3, meaning: { en: 'wear', nl: 'aantrekken' }, on: 'チャク', kun: 'き.る' },
-  { kanji: '湯', grade: 3, meaning: { en: 'hot bath, bathwater', nl: 'heet bad, badwater' }, on: 'トウ', kun: 'ゆ' },
+  { kanji: '湯', grade: 3, meaning: { en: 'hot (water)', nl: 'heet (water)' }, on: 'トウ', kun: 'ゆ' },
   { kanji: '登', grade: 3, meaning: { en: 'climb', nl: 'klimmen' }, on: 'トウ', kun: 'のぼ.る' },
   { kanji: '等', grade: 3, meaning: { en: 'equal', nl: 'gelijk' }, on: 'トウ', kun: 'ひと.しい' },
-  { kanji: '童', grade: 3, meaning: { en: 'youngster, juvenile', nl: 'jochie, jongeling' }, on: 'ドウ', kun: 'わらべ' },
+  { kanji: '童', grade: 3, meaning: { en: 'youngster, juvenile', nl: 'jochie, ventje' }, on: 'ドウ', kun: 'わらべ' },
   { kanji: '悲', grade: 3, meaning: { en: 'sad', nl: 'verdrietig' }, on: 'ヒ', kun: 'かな.しい' },
   { kanji: '筆', grade: 3, meaning: { en: 'brush', nl: 'penseel' }, on: 'ヒツ', kun: 'ふで' },
   { kanji: '遊', grade: 3, meaning: { en: 'play', nl: 'spelen' }, on: 'ユウ', kun: 'あそ.ぶ' },
@@ -434,9 +439,9 @@ export const deck = [
   { kanji: '電', grade: 2, meaning: { en: 'electricity', nl: 'elektriciteit' }, on: 'デン', kun: '' },
   { kanji: '話', grade: 2, meaning: { en: 'talk, story', nl: 'praten, verhaal' }, on: 'ワ', kun: 'はな.す' },
   { kanji: '暗', grade: 3, meaning: { en: 'dark', nl: 'donker' }, on: 'アン', kun: 'くら.い' },
-  { kanji: '意', grade: 3, meaning: { en: 'intention', nl: 'bedoeling' }, on: 'イ', kun: '' },
+  { kanji: '意', grade: 3, meaning: { en: 'meaning, intent', nl: 'betekenis, bedoeling' }, on: 'イ', kun: '' },
   { kanji: '感', grade: 3, meaning: { en: 'feeling', nl: 'gevoel' }, on: 'カン', kun: '' },
-  { kanji: '漢', grade: 3, meaning: { en: 'Han Chinese', nl: 'Han-Chinees' }, on: 'カン', kun: '' },
+  { kanji: '漢', grade: 3, meaning: { en: 'Chinese', nl: 'Chinees' }, on: 'カン', kun: '' },
   { kanji: '業', grade: 3, meaning: { en: 'occupation', nl: 'beroep' }, on: 'ギョウ', kun: 'わざ' },
   { kanji: '詩', grade: 3, meaning: { en: 'poem', nl: 'gedicht' }, on: 'シ', kun: '' },
   { kanji: '想', grade: 3, meaning: { en: 'idea', nl: 'idee' }, on: 'ソウ', kun: '' },
