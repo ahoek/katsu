@@ -6,7 +6,7 @@
  * the path data for the deck, so the app ships one small JSON instead of 100
  * SVG documents.
  *
- * Run from the repo root:
+ * Run from the repo root, after sort-deck.mjs has put any new kanji in place:
  *   node src/kanji/tools/build-stroke-data.mjs
  */
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -14,43 +14,14 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { deck } from './kanji-deck.mjs';
+import { KANJIVG_REF, componentsOf, fetchSvg } from './kanjivg.mjs';
 
-const KANJIVG_REF = 'r20260714';
-const BASE_URL = `https://raw.githubusercontent.com/KanjiVG/kanjivg/${KANJIVG_REF}/kanji`;
 const OUT_FILE = join(
   dirname(fileURLToPath(import.meta.url)),
   '../../assets/data/kanji/strokes.json',
 );
 
-/** KanjiVG names its files after the 5-digit lowercase hex code point. */
-function fileName(kanji) {
-  return `${kanji.codePointAt(0).toString(16).padStart(5, '0')}.svg`;
-}
-
 const deckKanji = new Set(deck.map(entry => entry.kanji));
-
-/**
- * The deck kanji this kanji is built from, per KanjiVG's decomposition. A
- * group whose element is the kanji itself only classifies the radical, and a
- * group's `original` (亻 is 人) only counts when the element as written is not
- * a deck kanji itself - 朝 contains the 月 on the page, not the 肉 it once was.
- */
-function componentsOf(svg, kanji) {
-  const found = new Set();
-  for (const [, attrs] of svg.matchAll(/<g([^>]*)>/g)) {
-    const element = /kvg:element="([^"]+)"/.exec(attrs)?.[1];
-    const original = /kvg:original="([^"]+)"/.exec(attrs)?.[1];
-    if (!element || element === kanji) {
-      continue;
-    }
-    if (deckKanji.has(element)) {
-      found.add(element);
-    } else if (original && original !== kanji && deckKanji.has(original)) {
-      found.add(original);
-    }
-  }
-  return [...found].sort();
-}
 
 /**
  * Pull the stroke paths out of a KanjiVG document, ordered by stroke number.
@@ -102,16 +73,11 @@ function strokeNumbers(svg, kanji, strokeCount) {
 }
 
 async function fetchKanji(entry) {
-  const url = `${BASE_URL}/${fileName(entry.kanji)}`;
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`${entry.kanji}: ${response.status} ${url}`);
-  }
-  const svg = await response.text();
+  const svg = await fetchSvg(entry.kanji);
   const strokes = strokePaths(svg, entry.kanji);
   return {
     ...entry,
-    components: componentsOf(svg, entry.kanji),
+    components: componentsOf(svg, entry.kanji, deckKanji),
     strokes,
     numbers: strokeNumbers(svg, entry.kanji, strokes.length),
   };
