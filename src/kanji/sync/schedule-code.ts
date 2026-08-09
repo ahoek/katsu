@@ -8,7 +8,7 @@ import { Card } from '../srs/srs';
  * sorted by code point and only the difference from the previous one is written,
  * every number is base 36, and times are minutes relative to one timestamp in
  * the header. Deflate then does the rest, bringing a card to roughly thirteen
- * characters - a schedule of 240 kanji comes to about 3 kB, and 2500 would be
+ * characters - a schedule of 440 kanji comes to about 6 kB, and 2500 would be
  * around 32 kB.
  */
 

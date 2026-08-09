@@ -266,7 +266,7 @@ describe('StrokeMatcher', () => {
 
 /**
  * The tolerances above are tuned against a handful of characters, so they are
- * also held against all 240 of the deck at once. A stroke traced faithfully has
+ * also held against all 440 of the deck at once. A stroke traced faithfully has
  * to be accepted, and the same stroke drawn from the wrong end may not be:
  * without this, whole families of short strokes can quietly lose their
  * direction, since over a tick both ends fit either way round.

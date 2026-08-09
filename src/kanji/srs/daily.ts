@@ -1,7 +1,7 @@
 /**
  * How much of the review pile to offer in a day.
  *
- * At 240 kanji a day's reviews can pile up past the point where anyone wants to
+ * At 440 kanji a day's reviews can pile up past the point where anyone wants to
  * start, and a pile nobody starts is how a schedule dies. The cap is a batch
  * rather than a gate: it decides how many a session takes by default, and the
  * screen always offers a way past it. Nothing is ever withheld from someone who

@@ -6,10 +6,11 @@ import strokeData from '../assets/data/kanji/strokes.json';
  * shipped, so a hand-edit or a half-finished regeneration cannot slip through.
  */
 describe('the shipped stroke data', () => {
-  it('has the whole deck: both school years, in full', () => {
-    expect(strokeData.characters).toHaveLength(240);
+  it('has the whole deck: all three school years, in full', () => {
+    expect(strokeData.characters).toHaveLength(440);
     expect(strokeData.characters.filter(c => c.grade === 1)).toHaveLength(80);
     expect(strokeData.characters.filter(c => c.grade === 2)).toHaveLength(160);
+    expect(strokeData.characters.filter(c => c.grade === 3)).toHaveLength(200);
     expect(strokeData.viewBox).toBe(109);
   });
 

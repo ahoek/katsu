@@ -109,7 +109,7 @@ function kanjiShell(character, viewBox) {
       `‘${escapeHtml(meaningOf(character))}’: ${strokeCount(character)}` +
       (readings ? `, ${escapeHtml(readings)}` : '') +
       `. Taught in grade ${character.grade} in Japanese schools.</p>` +
-      `<p><a href="${pathFor('kanji/practice')}">All 240 kanji</a> · ` +
+      `<p><a href="${pathFor('kanji/practice')}">All kanji</a> · ` +
       `<a href="${pathFor('kanji')}">Kanji writing practice</a></p>`,
   );
 }
@@ -120,7 +120,7 @@ function browseShell(characters) {
     byGrade.set(character.grade, [...(byGrade.get(character.grade) ?? []), character]);
   }
 
-  // Every character linked from one page, so each of the 240 is a click from
+  // Every character linked from one page, so each of them is a click from
   // the sitemap's entry point rather than only reachable by running the app.
   const groups = [...byGrade.entries()]
     .sort(([a], [b]) => a - b)
@@ -140,7 +140,7 @@ function browseShell(characters) {
 
   return shell(
     `<h1 class="boot-shell__title">All kanji</h1>` +
-      `<p>The ${characters.length} kanji Japanese children learn in their first two years at ` +
+      `<p>The ${characters.length} kanji Japanese children learn in their first three years at ` +
       `school. Every one has its stroke order written out, and a pad to write it on yourself.</p>` +
       groups,
   );
@@ -214,7 +214,7 @@ const webApplication = {
  *
  * @param translations the shared English translations, for the titles and
  *   descriptions the app already writes for itself
- * @param strokeData the kanji deck, which supplies its own 240 pages
+ * @param strokeData the kanji deck, which supplies a page per character
  */
 export function sitePages(translations, strokeData) {
   const { title, description } = translations;

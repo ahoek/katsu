@@ -1,7 +1,7 @@
 # Kanji writing (proof of concept)
 
-Learn to write the 240 kanji Japanese children learn in their first two years at
-school: a lesson per character, then written reviews on a spaced repetition
+Learn to write the 440 kanji Japanese children learn in their first three years
+at school: a lesson per character, then written reviews on a spaced repetition
 schedule. Every stroke is
 checked as you draw it, so you find out at once when a stroke is in the wrong
 place, drawn backwards, or out of order.
@@ -70,7 +70,7 @@ recap of every kanji it asked for with the way each one went.
 
 ## A day's worth
 
-At 240 kanji a week away builds a pile nobody wants to start, and a pile nobody
+At 440 kanji a week away builds a pile nobody wants to start, and a pile nobody
 starts is how a schedule dies. So a session takes **twenty by default** rather
 than everything due, and the path page says which it is doing: "20 ready to
 review, of 34 due". When the batch is done it says so, names what is left, and
@@ -197,7 +197,7 @@ is answered by the Worker and everything else carries on to GitHub Pages, which
 means the app calls it **same-origin**: no CORS, no allowed-origin list, and
 `SYNC_ENDPOINT` is just `/api/sync`. Route and binding live in `wrangler.toml`.
 
-A schedule is about 3 kB at 240 kanji and would be around 32 kB at 2500, so the
+A schedule is about 6 kB at 440 kanji and would be around 32 kB at 2500, so the
 storage and traffic are negligible; the reason to think twice is the moving part,
 not the bill.
 
