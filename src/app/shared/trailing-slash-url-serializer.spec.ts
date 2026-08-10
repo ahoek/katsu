@@ -31,12 +31,34 @@ describe('TrailingSlashUrlSerializer', () => {
     expect(url('/kanji/practice/%E6%B0%B4/')).toBe('/kanji/practice/%E6%B0%B4/');
   });
 
-  /** Parsing is Angular's own, so a page linked to with a slash still routes. */
-  it('reads the same URLs Angular always did', () => {
+  it('reads an address it wrote as the address it came from', () => {
     const angular = new DefaultUrlSerializer();
 
-    for (const address of ['/kanji/practice/%E6%B0%B4/', '/kanji/review?all=1', '/about']) {
+    // Angular reads "/kanji/" as two segments, the second one empty, and no
+    // empty-path child route can consume an empty segment. Left alone, that is
+    // an NG04002 every time something asks the router for an address this
+    // wrote - which is exactly what Ionic's back button does.
+    for (const address of ['/kanji', '/about', '/kanji/practice', '/kanji/practice/%E6%B0%B4']) {
+      expect(serializer.parse(`${address}/`).toString()).toBe(angular.parse(address).toString());
+    }
+  });
+
+  it('reads a section address as its section, with nothing trailing it', () => {
+    const segments = serializer.parse('/kanji/').root.children['primary'].segments;
+
+    expect(segments.map(segment => segment.path)).toEqual(['kanji']);
+  });
+
+  it('still reads the addresses Angular always did', () => {
+    const angular = new DefaultUrlSerializer();
+
+    for (const address of ['/kanji/practice/%E6%B0%B4', '/kanji/review?all=1', '/about#contact']) {
       expect(serializer.parse(address).toString()).toBe(angular.parse(address).toString());
     }
+  });
+
+  it('keeps the home page an address rather than an empty string', () => {
+    expect(serializer.parse('/').toString()).toBe('/');
+    expect(serializer.serialize(serializer.parse('/'))).toBe('/');
   });
 });
