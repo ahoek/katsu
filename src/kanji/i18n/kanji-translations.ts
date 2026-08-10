@@ -160,6 +160,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       },
       review: {
         title: 'Reviews',
+        stop: 'Stop',
         progress: '{{done}} of {{total}}',
         'stage-up': 'Stage {{from}} to {{to}}, back in {{interval}}',
         'stage-held': 'Stage {{stage}} held, back in {{interval}}',
@@ -322,6 +323,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       },
       review: {
         title: 'Herhalingen',
+        stop: 'Stoppen',
         progress: '{{done}} van {{total}}',
         'stage-up': 'Stap {{from}} naar {{to}}, terug over {{interval}}',
         'stage-held': 'Stap {{stage}} blijft, terug over {{interval}}',

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   IonBackButton,
   IonButton,
@@ -80,6 +80,7 @@ export class KanjiReviewPageComponent implements OnInit {
   private readonly data = inject(KanjiDataService);
   private readonly pace = inject(KanjiPaceService);
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly srs = inject(KanjiSrsService);
   private readonly sync = inject(KanjiSyncService);
   private readonly translate = inject(TranslateService);
@@ -228,5 +229,22 @@ export class KanjiReviewPageComponent implements OnInit {
     if (this.position() >= this.queue().length) {
       void this.sync.autoSync();
     }
+  }
+
+  /**
+   * End the session here. What was answered is already graded and scheduled, so
+   * there is nothing to discard and nothing to confirm - the rest simply stays
+   * due. Stopping before answering anything has no session to show, so that
+   * leaves the way the old back button did.
+   */
+  stop(): void {
+    if (this.results().length === 0) {
+      void this.router.navigate(['/kanji']);
+      return;
+    }
+
+    this.outcome.set(undefined);
+    this.position.set(this.queue().length);
+    void this.sync.autoSync();
   }
 }

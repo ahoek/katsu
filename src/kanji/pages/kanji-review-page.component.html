@@ -1,7 +1,15 @@
 <ion-header class="app-chrome">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/kanji"></ion-back-button>
+      <!-- Mid-session the way out is not "back", it is "stop": every kanji
+           answered is already in the schedule, so leaving early ends the
+           session rather than abandoning it, and it ends the way a full one
+           does - on the summary of what was just done. -->
+      @if (finished()) {
+        <ion-back-button defaultHref="/kanji"></ion-back-button>
+      } @else {
+        <ion-button (click)="stop()">{{ 'kanji.review.stop' | translate }}</ion-button>
+      }
     </ion-buttons>
     <ion-buttons slot="end">
       <app-menu-button></app-menu-button>
