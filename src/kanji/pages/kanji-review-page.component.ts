@@ -16,6 +16,7 @@ import {
   arrowForward,
   checkmarkCircle,
   flame,
+  pauseCircle,
   removeOutline,
   ribbon,
   trendingDownOutline,
@@ -110,6 +111,9 @@ export class KanjiReviewPageComponent implements OnInit {
   /** This session was asked for past the day's batch. */
   readonly beyondCap = signal(false);
 
+  /** The session was ended by hand rather than worked through to the end. */
+  readonly stopped = signal(false);
+
   readonly character = computed<KanjiCharacter | undefined>(() => this.queue()[this.position()]);
 
   readonly strokes = computed<readonly string[]>(() => this.character()?.strokes ?? []);
@@ -158,6 +162,7 @@ export class KanjiReviewPageComponent implements OnInit {
       arrowForward,
       checkmarkCircle,
       flame,
+      pauseCircle,
       removeOutline,
       ribbon,
       trendingDownOutline,
@@ -243,6 +248,7 @@ export class KanjiReviewPageComponent implements OnInit {
       return;
     }
 
+    this.stopped.set(true);
     this.outcome.set(undefined);
     this.position.set(this.queue().length);
     void this.sync.autoSync();

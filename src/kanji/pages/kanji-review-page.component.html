@@ -39,12 +39,20 @@
       @if (queue().length === 0) {
         <p class="summary__lead">{{ 'kanji.review.none-due' | translate }}</p>
       } @else {
+        <!-- A session that was stopped is not a session that was finished, and
+             a tick over "session finished" would be telling the learner they
+             did something they know they did not. -->
         <p class="summary__title">
-          <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
-          @if (perfectSession()) {
-            {{ 'kanji.review.summary-perfect' | translate }}
+          @if (stopped()) {
+            <ion-icon name="pause-circle" aria-hidden="true"></ion-icon>
+            {{ 'kanji.review.summary-stopped' | translate }}
           } @else {
-            {{ 'kanji.review.summary-title' | translate }}
+            <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+            @if (perfectSession()) {
+              {{ 'kanji.review.summary-perfect' | translate }}
+            } @else {
+              {{ 'kanji.review.summary-title' | translate }}
+            }
           }
         </p>
 
