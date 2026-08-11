@@ -68,24 +68,44 @@ just won - or just lost, in red - is the one that moves. Clean answers in a row
 are counted in the toolbar from the second one on, and the session ends on a
 recap of every kanji it asked for with the way each one went.
 
-## A day's worth
+## How much at a time
 
 At 440 kanji a week away builds a pile nobody wants to start, and a pile nobody
-starts is how a schedule dies. So a session takes **twenty by default** rather
-than everything due, and the path page says which it is doing: "20 ready to
-review, of 34 due". When the batch is done it says so, names what is left, and
-puts a quiet **carry on anyway** next to it - the cap decides the default, never
-the ceiling. `srs/daily.ts` holds the arithmetic as pure functions and
-`kanji-pace.service.ts` the count, in localStorage: how many were done today is
-worth nothing tomorrow, so it neither syncs nor earns the sturdier storage the
-schedule gets.
+starts is how a schedule dies. Two caps hold the pace, and they are different in
+kind. `srs/pace.ts` holds both as pure functions; `kanji-pace.service.ts` holds
+nothing but the two settings, in localStorage.
 
-Going past it is a query parameter, `/kanji/review?all=1`, read once when the
-session starts. That is deliberate - asking for everything is a decision made on
-the way in, so a session cannot quietly grow while it is being worked through.
+**Reviews are rationed per session** - twenty by default - and the path page says
+which it is doing: "20 ready to review, of 34 due". A session is the unit a
+learner decides on, one queue or coffee break at a time, and it needs no
+calendar: the count is against what is due, which is already true. This was a cap
+per day, which read well and worked badly. Counting a day needs a day boundary,
+and the count only re-read it when a review was recorded, so an app left open
+past midnight went on believing yesterday's batch was done - and the review that
+would have corrected it was the one the cap was holding back.
 
-The size is set on the shared options page beside the pad switches - 10, 20, 40,
-or no cap at all, from `CAP_CHOICES`. That group's icons are registered by the
+**New kanji are rationed per day** - five by default - because a lesson's cost is
+not the writing it asks for now. A new kanji comes back about seven times before
+it is mastered, spread over the months after, so ten lessons in an excited evening
+is seventy reviews landing on days nobody can see yet. The day it counts against
+starts at **half past three in the morning**: somebody still writing at one is
+finishing their evening, not starting tomorrow. It is counted off the schedule's
+own `learnedAt` against the ticking clock, so there is no tally to keep and
+nothing to reset.
+
+Both are soft, and the screen says so rather than hiding the pile. The reviews
+card offers the session the cap suggests and, under it, **all of them anyway**;
+the lessons card says how many the day has had, why that number is worth knowing,
+and offers **one more regardless**. Nothing is ever withheld from someone who
+asks.
+
+Going past the session cap is a query parameter, `/kanji/review?all=1`, read once
+when the session starts. That is deliberate - asking for everything is a decision
+made on the way in, so a session cannot quietly grow while it is being worked
+through.
+
+Both sizes are set on the shared options page beside the pad switches, from
+`CAP_CHOICES` and `LESSON_CAP_CHOICES`. That group's icons are registered by the
 options page itself rather than by the root component, so the kanji trainer can
 gain a row there without reaching into the app's own component.
 
