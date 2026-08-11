@@ -84,14 +84,42 @@ export function spentSince(mark: number, now: number): number {
   return Math.min(Math.max(now - mark, 0), IDLE);
 }
 
+export interface Spent {
+  unit: 'second' | 'minute' | 'minute-second';
+  value: number;
+  /** Only carried by `minute-second`. */
+  seconds?: number;
+}
+
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
+
 /**
- * A session's time, in the largest unit that keeps it a whole number. Duration
- * and nothing else: no average, no best, nothing to beat. It answers what a
- * session cost, which is the question a pile of ninety-seven asks and a handful
- * of minutes answers.
+ * Past this, seconds are noise: nobody paces an evening to the second, and
+ * "23 min 14 s" reads like a stopwatch rather than an answer.
  */
-export function spentLabel(total: number): { unit: 'second' | 'minute'; value: number } {
-  return total < 60 * 1000
-    ? { unit: 'second', value: Math.max(1, Math.round(total / 1000)) }
-    : { unit: 'minute', value: Math.round(total / (60 * 1000)) };
+const SECONDS_WORTH_SHOWING = 5 * MINUTE;
+
+/**
+ * A session's time. Duration and nothing else: no average, no best, nothing to
+ * beat. It answers what a session cost, which is the question a pile of
+ * ninety-seven asks and a handful of minutes answers.
+ *
+ * Short sessions get the seconds, because that is where they live - a queue at
+ * the till is one to three minutes, and there "1 min" against "2 min" is twice
+ * the work for the same words.
+ */
+export function spentLabel(total: number): Spent {
+  if (total < MINUTE) {
+    return { unit: 'second', value: Math.max(1, Math.round(total / SECOND)) };
+  }
+  if (total < SECONDS_WORTH_SHOWING) {
+    const seconds = Math.round(total / SECOND);
+    const rest = seconds % 60;
+    // A remainder that rounded up to the full minute is that minute, not "0 s".
+    return rest === 0
+      ? { unit: 'minute', value: seconds / 60 }
+      : { unit: 'minute-second', value: Math.floor(seconds / 60), seconds: rest };
+  }
+  return { unit: 'minute', value: Math.round(total / MINUTE) };
 }

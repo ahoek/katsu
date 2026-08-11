@@ -93,7 +93,7 @@
              minutes is worth knowing afterwards and a ticking clock is not. -->
         @if (spent(); as time) {
           <p class="summary__spent">
-            {{ spentKey(time.unit) | translate: { value: time.value } }}
+            {{ spentKey(time.unit) | translate: { value: time.value, seconds: time.seconds } }}
           </p>
         }
 

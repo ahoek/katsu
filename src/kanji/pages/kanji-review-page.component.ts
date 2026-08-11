@@ -30,7 +30,7 @@ import { KanjiPaceService } from '../kanji-pace.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { KanjiSyncService } from '../sync/kanji-sync.service';
 import { Attempt, Grade, MASTERED_STAGE, MATURE_STAGE, stageLabel } from '../srs/srs';
-import { sessionSize, spentLabel, spentSince } from '../srs/pace';
+import { Spent, sessionSize, spentLabel, spentSince } from '../srs/pace';
 
 import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
 
@@ -168,7 +168,7 @@ export class KanjiReviewPageComponent implements OnInit {
   readonly perfectSession = computed(() =>
     this.queue().length > 0 && this.tally().clean === this.queue().length);
 
-  spentKey(unit: 'second' | 'minute'): string {
+  spentKey(unit: Spent['unit']): string {
     return `kanji.review.spent-${unit}`;
   }
 

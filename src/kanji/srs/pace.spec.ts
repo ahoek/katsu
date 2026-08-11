@@ -109,9 +109,26 @@ describe('spentLabel', () => {
     expect(spentLabel(40 * 1000)).toEqual({ unit: 'second', value: 40 });
   });
 
-  it('rounds to whole minutes above that', () => {
-    expect(spentLabel(3 * 60 * 1000 + 20 * 1000)).toEqual({ unit: 'minute', value: 3 });
+  /** The band a queue at the till lives in, where a minute either way is half
+   *  the session. */
+  it('keeps the seconds on a short session', () => {
+    expect(spentLabel(100 * 1000)).toEqual({ unit: 'minute-second', value: 1, seconds: 40 });
+    expect(spentLabel(3 * 60 * 1000 + 20 * 1000)).toEqual({
+      unit: 'minute-second',
+      value: 3,
+      seconds: 20,
+    });
+  });
+
+  it('drops them again once a session is long enough not to care', () => {
     expect(spentLabel(12 * 60 * 1000)).toEqual({ unit: 'minute', value: 12 });
+    expect(spentLabel(23 * 60 * 1000 + 14 * 1000)).toEqual({ unit: 'minute', value: 23 });
+  });
+
+  it('says the whole minute rather than nought seconds past it', () => {
+    expect(spentLabel(2 * 60 * 1000)).toEqual({ unit: 'minute', value: 2 });
+    // 119.6s rounds to 120, which is two minutes, not "1 min 60 s".
+    expect(spentLabel(119_600)).toEqual({ unit: 'minute', value: 2 });
   });
 
   it('never says nothing at all for a session that happened', () => {
