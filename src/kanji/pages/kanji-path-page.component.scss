@@ -56,6 +56,19 @@
     --border-radius: 999px;
     margin: 0;
   }
+
+  // A button is a step down from the words above it, not the next line of them.
+  // Without this a note and the button it explains touch, while a lead and a
+  // button have 12px between them - the same card in two rhythms.
+  > :not(ion-button) + ion-button {
+    margin-top: 12px;
+  }
+
+  // The quieter way past a cap sits closer to the button it is an alternative
+  // to than to anything else, but still clear of it.
+  ion-button + ion-button {
+    margin-top: 6px;
+  }
 }
 
 .bar {
