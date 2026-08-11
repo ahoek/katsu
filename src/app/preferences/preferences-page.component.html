@@ -133,6 +133,26 @@
       </ion-select>
     </ion-item>
     <ion-item>
+      <ion-icon name="school-outline" slot="start"></ion-icon>
+      <ion-select
+        [ngModel]="pace.lessonCap()"
+        (ngModelChange)="pace.setLessonCap($event)"
+        [label]="'preferences.kanji-lesson-cap'|translate"
+        interface="action-sheet"
+        justify="space-between"
+      >
+        @for (choice of lessonCapChoices; track choice) {
+          <ion-select-option [value]="choice">
+            @if (choice === 0) {
+              {{'preferences.kanji-cap-none'|translate}}
+            } @else {
+              {{choice}}
+            }
+          </ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+    <ion-item>
       <!-- The pad's own arrow, knocked out of a stroke exactly as it is there,
            rather than an icon that merely means "direction". -->
       <svg class="mark" slot="start" viewBox="0 0 24 24" aria-hidden="true">

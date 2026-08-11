@@ -1,47 +1,73 @@
 /**
- * How much of the review pile to offer in a day.
+ * How much of the pile to offer at a time. Two caps, different in kind.
  *
- * At 440 kanji a day's reviews can pile up past the point where anyone wants to
- * start, and a pile nobody starts is how a schedule dies. The cap is a batch
- * rather than a gate: it decides how many a session takes by default, and the
- * screen always offers a way past it. Nothing is ever withheld from someone who
- * asks for it.
+ * **Reviews are rationed per session**, because a session is the unit a learner
+ * decides on: one goes through what it offers and stops, and the next queue or
+ * coffee break is another one. It was a cap per day, which read well and worked
+ * badly. Counting a day needs a day boundary, and the count only re-read it
+ * when a review was recorded - so an app left open past midnight went on
+ * believing yesterday's batch was done, and the one thing that would have
+ * corrected it was the review the cap was holding back. A session needs no
+ * calendar at all, so that whole class of bug is gone rather than fixed.
  *
- * Pure functions taking `now`, like the schedule itself, so the day boundary can
- * be tested without waiting for midnight.
+ * **Lessons are rationed per day**, because what a lesson costs is not the
+ * writing it asks for now: a new kanji comes back about seven times before it
+ * is mastered, spread over the months after. That bill arrives on later days,
+ * so the budget belongs to a day too - and a day here is counted off the
+ * schedule's own `learnedAt`, so there is no separate tally to go stale.
+ *
+ * Both are soft. The screen names what is left behind them and offers the way
+ * past; nothing is ever withheld from someone who asks.
  */
+import type { Card } from './srs';
 
-/** Caps offered in the interface, most cautious first. 0 means no cap. */
+/** Reviews one session takes, most cautious first. 0 means all that are due. */
 export const CAP_CHOICES: readonly number[] = [10, 20, 40, 0];
 
 export const DEFAULT_CAP = 20;
 
 export const NO_CAP = 0;
 
-/**
- * The local calendar day, as YYYY-MM-DD. Local rather than UTC because a cap is
- * a day in the learner's own time: reviews done at eleven at night belong to
- * that evening, wherever they are.
- */
-export function dayKey(now: number): string {
-  const date = new Date(now);
-  const month = `${date.getMonth() + 1}`.padStart(2, '0');
-  const day = `${date.getDate()}`.padStart(2, '0');
-  return `${date.getFullYear()}-${month}-${day}`;
-}
+/** New kanji in a day, most cautious first. 0 means as many as you like. */
+export const LESSON_CAP_CHOICES: readonly number[] = [3, 5, 10, 0];
+
+export const DEFAULT_LESSON_CAP = 5;
 
 /**
- * How many more a session should take. `Infinity` with no cap set, so callers
- * can slice by it without asking whether there is one.
+ * A learning day turns over at half past three in the morning, local time.
+ * Midnight is the wrong line for this: somebody still writing at one is
+ * finishing their evening, and should not be told they have started on
+ * tomorrow's kanji. Nobody is awake at half three by accident.
  */
-export function remainingToday(cap: number, doneToday: number): number {
-  if (cap === NO_CAP) {
-    return Infinity;
+const DAY_STARTS = { hour: 3, minute: 30 };
+
+/** How many reviews a session started now should take. */
+export function sessionSize(cap: number, due: number): number {
+  return cap === NO_CAP ? due : Math.min(cap, due);
+}
+
+/** Kanji still waiting once this session has taken its share. */
+export function leftOver(cap: number, due: number): number {
+  return due - sessionSize(cap, due);
+}
+
+/** When the learning day that `now` falls in began. */
+export function learningDayStart(now: number): number {
+  const start = new Date(now);
+  start.setHours(DAY_STARTS.hour, DAY_STARTS.minute, 0, 0);
+  if (start.getTime() > now) {
+    // Not yet half three: this is still last night's day.
+    start.setDate(start.getDate() - 1);
   }
-  return Math.max(cap - doneToday, 0);
+  return start.getTime();
 }
 
-/** Whether the day's batch is done, with kanji still waiting behind it. */
-export function capReached(cap: number, doneToday: number, due: number): boolean {
-  return due > 0 && remainingToday(cap, doneToday) === 0;
+/** Lessons finished since the learning day began, read off the schedule. */
+export function lessonsSince(cards: readonly Card[], start: number): number {
+  return cards.filter(card => card.learnedAt >= start).length;
+}
+
+/** Whether the day's new kanji are done, with deck left to learn behind them. */
+export function lessonCapReached(cap: number, today: number, toLearn: number): boolean {
+  return toLearn > 0 && cap !== NO_CAP && today >= cap;
 }

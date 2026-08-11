@@ -30,6 +30,7 @@ import { KanjiPaceService } from '../kanji-pace.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { KanjiSyncService } from '../sync/kanji-sync.service';
 import { Attempt, Grade, MASTERED_STAGE, MATURE_STAGE, stageLabel } from '../srs/srs';
+import { sessionSize } from '../srs/pace';
 
 import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
 
@@ -108,7 +109,7 @@ export class KanjiReviewPageComponent implements OnInit {
 
   readonly ready = signal(false);
 
-  /** This session was asked for past the day's batch. */
+  /** This session was asked for past the cap, so it holds everything due. */
   readonly beyondCap = signal(false);
 
   /** The session was ended by hand rather than worked through to the end. */
@@ -184,11 +185,11 @@ export class KanjiReviewPageComponent implements OnInit {
       .map(card => characters.get(card.kanji))
       .filter((character): character is KanjiCharacter => !!character);
 
-    // `?all=1` is the way past the day's batch, and the only way: asking for
+    // `?all=1` is the way past the session's cap, and the only way: asking for
     // everything is a decision the learner makes on the way in, so a session
     // cannot quietly grow while it is being worked through.
     this.beyondCap.set(this.route.snapshot.queryParamMap.get('all') === '1');
-    this.queue.set(this.beyondCap() ? due : due.slice(0, this.pace.remaining()));
+    this.queue.set(due.slice(0, this.beyondCap() ? due.length : sessionSize(this.pace.cap(), due.length)));
     this.ready.set(true);
   }
 
@@ -200,9 +201,6 @@ export class KanjiReviewPageComponent implements OnInit {
     }
     const { card, grade, previousStage } = this.srs.review(character.kanji, attempt);
     const mastered = card.stage === MASTERED_STAGE;
-    // Counted whether or not this session went past the cap: the point of the
-    // number is how much was done today, not how it was asked for.
-    this.pace.recordReview();
 
     this.tally.update(tally => ({ ...tally, [grade]: tally[grade] + 1 }));
     this.results.update(results => [...results, {

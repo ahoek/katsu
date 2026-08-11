@@ -99,7 +99,8 @@
       "conjugation": "Vervoeging",
       "kanji": "Kanji schrijven"
     },
-    "kanji-cap": "Herhalingen per dag",
+    "kanji-cap": "Herhalingen per sessie",
+    "kanji-lesson-cap": "Nieuwe kanji per dag",
     "kanji-cap-none": "Geen limiet",
     "kanji-arrows": "Richtingspijlen",
     "kanji-numbers": "Streeknummers"

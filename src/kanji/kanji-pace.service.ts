@@ -1,61 +1,47 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 
-import { DEFAULT_CAP, capReached, dayKey, remainingToday } from './srs/daily';
+import { DEFAULT_CAP, DEFAULT_LESSON_CAP } from './srs/pace';
 
 const STORAGE_KEY = 'katsu.kanji-writing.pace';
 
 interface StoredPace {
   cap?: number;
-  /** The day the count below belongs to, as YYYY-MM-DD. */
-  day?: string;
-  reviews?: number;
+  lessons?: number;
 }
 
 /**
- * How many reviews a day, and how many have been done today.
+ * How much the app offers at a time: reviews per session, new kanji per day.
  *
- * Kept in localStorage rather than with the schedule, and deliberately not
- * synced: a count of today's reviews is worth nothing tomorrow, and a device
- * that loses it costs its owner one extra batch. The schedule, which is worth
- * keeping, stays in the sturdier storage and travels on its own.
+ * Two settings and nothing else. It used to keep a count of today's reviews as
+ * well, which is what made the day's cap unreliable - a tally of what a
+ * calendar day holds, cached in memory, re-read only when a review came in.
+ * Both caps are now measured against something that is already true: a session
+ * against what is due, a day against the schedule's own `learnedAt`.
+ *
+ * localStorage rather than the synced store: which batch size suits this phone
+ * on this commute is not a fact about the learner's progress, and a device that
+ * loses it falls back to the default.
  */
 @Injectable({ providedIn: 'root' })
 export class KanjiPaceService {
   private readonly stored = read();
 
-  private readonly capPerDay = signal(this.stored.cap);
-  private readonly done = signal(this.stored.day === dayKey(Date.now()) ? this.stored.reviews : 0);
+  private readonly perSession = signal(this.stored.cap);
+  private readonly perDay = signal(this.stored.lessons);
 
-  /** Reviews offered per day; `NO_CAP` for as many as are due. */
-  readonly cap = this.capPerDay.asReadonly();
+  /** Reviews offered per session; `NO_CAP` for as many as are due. */
+  readonly cap = this.perSession.asReadonly();
 
-  readonly reviewsToday = this.done.asReadonly();
-
-  /** How many a session should take now. `Infinity` with no cap set. */
-  readonly remaining = computed(() => remainingToday(this.capPerDay(), this.done()));
+  /** New kanji offered per day; `NO_CAP` for as many as are asked for. */
+  readonly lessonCap = this.perDay.asReadonly();
 
   setCap(cap: number): void {
-    this.capPerDay.set(cap);
+    this.perSession.set(cap);
     this.write();
   }
 
-  /**
-   * Whether today's batch is done with kanji still waiting. Takes the due count
-   * because a cap only means anything against a pile.
-   */
-  reached(due: number): boolean {
-    return capReached(this.capPerDay(), this.done(), due);
-  }
-
-  /**
-   * One review done. The day is re-read on every review rather than watched, so
-   * a session running past midnight simply starts the new day's count - which
-   * is the generous reading, and the only one that needs no timer.
-   */
-  recordReview(): void {
-    const today = dayKey(Date.now());
-    this.done.update(done => (this.stored.day === today ? done + 1 : 1));
-    this.stored.day = today;
+  setLessonCap(cap: number): void {
+    this.perDay.set(cap);
     this.write();
   }
 
@@ -63,24 +49,25 @@ export class KanjiPaceService {
     try {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({ cap: this.capPerDay(), day: this.stored.day, reviews: this.done() }),
+        JSON.stringify({ cap: this.perSession(), lessons: this.perDay() }),
       );
     } catch {
-      // Private browsing; today's count just will not survive a reload.
+      // Private browsing; the choice just will not survive a reload.
     }
   }
 }
 
-function read(): { cap: number; day: string; reviews: number } {
+function read(): { cap: number; lessons: number } {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
+    // A cap stored by an older version meant reviews a day; as a session it is
+    // the same number and the same intent, so it carries over as it is.
     const pace = stored ? (JSON.parse(stored) as StoredPace) : {};
     return {
       cap: pace.cap ?? DEFAULT_CAP,
-      day: pace.day ?? '',
-      reviews: pace.reviews ?? 0,
+      lessons: pace.lessons ?? DEFAULT_LESSON_CAP,
     };
   } catch {
-    return { cap: DEFAULT_CAP, day: '', reviews: 0 };
+    return { cap: DEFAULT_CAP, lessons: DEFAULT_LESSON_CAP };
   }
 }

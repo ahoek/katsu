@@ -18,11 +18,11 @@ import {
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { todayOutline } from 'ionicons/icons';
+import { schoolOutline, todayOutline } from 'ionicons/icons';
 
 import { KanjiPaceService } from '../../kanji/kanji-pace.service';
 import { KanjiViewService } from '../../kanji/kanji-view.service';
-import { CAP_CHOICES } from '../../kanji/srs/daily';
+import { CAP_CHOICES, LESSON_CAP_CHOICES } from '../../kanji/srs/pace';
 import { ARROW_POINTS } from '../../kanji/stroke/direction';
 import { SettingsService } from '../shared/settings.service';
 import { SpeechService } from '../shared/speech.service';
@@ -62,13 +62,15 @@ export class PreferencesPageComponent {
 
   readonly capChoices = CAP_CHOICES;
 
+  readonly lessonCapChoices = LESSON_CAP_CHOICES;
+
   /** The pad's arrowhead, so the switch shows the thing it switches. */
   readonly arrowPoints = ARROW_POINTS;
 
   constructor() {
     // Registered here rather than with the app's own icons, so this page can
     // gain a row without touching the root component.
-    addIcons({ todayOutline });
+    addIcons({ schoolOutline, todayOutline });
   }
 
   store() {

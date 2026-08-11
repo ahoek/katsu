@@ -1,54 +1,103 @@
-import { DEFAULT_CAP, NO_CAP, capReached, dayKey, remainingToday } from './daily';
+import type { Card } from './srs';
+import {
+  DEFAULT_CAP,
+  NO_CAP,
+  learningDayStart,
+  lessonCapReached,
+  lessonsSince,
+  leftOver,
+  sessionSize,
+} from './pace';
+
+const HOUR = 60 * 60 * 1000;
 
 /** Midday, so a timezone offset either way stays inside the same day. */
 const NOON = new Date(2026, 6, 31, 12, 0, 0).getTime();
 
-const HOUR = 60 * 60 * 1000;
+const learnedAt = (when: number): Card => ({
+  kanji: '水',
+  stage: 1,
+  due: when + HOUR,
+  reviews: 0,
+  lapses: 0,
+  learnedAt: when,
+  updatedAt: when,
+});
 
-describe('dayKey', () => {
-  it('names the local calendar day', () => {
-    expect(dayKey(NOON)).toBe('2026-07-31');
+describe('sessionSize', () => {
+  it('takes the cap when more is due than that', () => {
+    expect(sessionSize(DEFAULT_CAP, 34)).toBe(DEFAULT_CAP);
   });
 
-  it('pads a single-digit month and day', () => {
-    expect(dayKey(new Date(2026, 0, 5, 12).getTime())).toBe('2026-01-05');
+  it('takes only what is due when that is less', () => {
+    expect(sessionSize(DEFAULT_CAP, 3)).toBe(3);
+    expect(sessionSize(DEFAULT_CAP, 0)).toBe(0);
   });
 
-  it('holds through the evening and turns over at local midnight', () => {
-    expect(dayKey(NOON + 11 * HOUR)).toBe('2026-07-31');
-    expect(dayKey(NOON + 13 * HOUR)).toBe('2026-08-01');
+  it('takes everything with no cap set', () => {
+    expect(sessionSize(NO_CAP, 340)).toBe(340);
+  });
+
+  it('says what a session leaves behind it', () => {
+    expect(leftOver(20, 34)).toBe(14);
+    expect(leftOver(20, 12)).toBe(0);
+    expect(leftOver(NO_CAP, 340)).toBe(0);
   });
 });
 
-describe('remainingToday', () => {
-  it('counts down from the cap', () => {
-    expect(remainingToday(DEFAULT_CAP, 0)).toBe(DEFAULT_CAP);
-    expect(remainingToday(DEFAULT_CAP, 8)).toBe(DEFAULT_CAP - 8);
+describe('learningDayStart', () => {
+  it('begins the day at half three in the morning', () => {
+    expect(new Date(learningDayStart(NOON)).getHours()).toBe(3);
+    expect(new Date(learningDayStart(NOON)).getMinutes()).toBe(30);
+    expect(new Date(learningDayStart(NOON)).getDate()).toBe(31);
   });
 
-  it('never goes below zero, however far past the cap a session ran', () => {
-    expect(remainingToday(10, 25)).toBe(0);
+  /** The whole point of the hour: a late evening is not tomorrow yet. */
+  it('keeps one in the morning with the evening it belongs to', () => {
+    const oneInTheMorning = new Date(2026, 7, 1, 1, 0, 0).getTime();
+
+    expect(learningDayStart(oneInTheMorning)).toBe(learningDayStart(NOON));
   });
 
-  it('is unbounded with no cap set, so callers can slice by it regardless', () => {
-    expect(remainingToday(NO_CAP, 500)).toBe(Infinity);
+  it('turns over once half three has passed', () => {
+    const fourInTheMorning = new Date(2026, 7, 1, 4, 0, 0).getTime();
+
+    expect(learningDayStart(fourInTheMorning)).toBeGreaterThan(learningDayStart(NOON));
+    expect(new Date(learningDayStart(fourInTheMorning)).getDate()).toBe(1);
   });
 });
 
-describe('capReached', () => {
-  it('is reached once the batch is done and kanji are still waiting', () => {
-    expect(capReached(10, 10, 34)).toBe(true);
+describe('lessonsSince', () => {
+  it('counts the lessons of this learning day and no others', () => {
+    const start = learningDayStart(NOON);
+    const cards = [
+      learnedAt(start - HOUR),
+      learnedAt(start),
+      learnedAt(NOON),
+      learnedAt(NOON + HOUR),
+    ];
+
+    expect(lessonsSince(cards, start)).toBe(3);
   });
 
-  it('is not reached while the batch has room', () => {
-    expect(capReached(10, 9, 34)).toBe(false);
+  it('counts nothing on an empty schedule', () => {
+    expect(lessonsSince([], learningDayStart(NOON))).toBe(0);
+  });
+});
+
+describe('lessonCapReached', () => {
+  it('is reached once the day has had its share', () => {
+    expect(lessonCapReached(5, 5, 100)).toBe(true);
+    expect(lessonCapReached(5, 6, 100)).toBe(true);
+    expect(lessonCapReached(5, 4, 100)).toBe(false);
   });
 
-  it('is not reached when nothing is due, so an empty day says nothing about a cap', () => {
-    expect(capReached(10, 10, 0)).toBe(false);
+  it('says nothing with no cap set', () => {
+    expect(lessonCapReached(NO_CAP, 40, 100)).toBe(false);
   });
 
-  it('is never reached with no cap set', () => {
-    expect(capReached(NO_CAP, 400, 34)).toBe(false);
+  /** Nothing to hold back once the deck is finished. */
+  it('says nothing when there is no deck left to learn', () => {
+    expect(lessonCapReached(5, 5, 0)).toBe(false);
   });
 });

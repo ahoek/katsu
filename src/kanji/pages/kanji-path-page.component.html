@@ -19,22 +19,7 @@
         {{ 'kanji.path.reviews-title' | translate }}
       </h2>
 
-      @if (batchDone()) {
-        <!-- The day's batch is done. Nothing is withheld: the pile is named and
-             the way past it is right there, just quieter than the main way on. -->
-        <p class="card__lead card__lead--quiet">{{ 'kanji.path.batch-done' | translate }}</p>
-        <p class="card__note">{{ 'kanji.path.batch-waiting' | translate: { count: dueCount() } }}</p>
-        <ion-button
-          expand="block"
-          fill="clear"
-          size="small"
-          [routerLink]="['/kanji/review']"
-          [queryParams]="{ all: 1 }"
-          routerDirection="forward"
-        >
-          {{ 'kanji.path.batch-continue' | translate }}
-        </ion-button>
-      } @else if (dueCount() > 0) {
+      @if (dueCount() > 0) {
         <p class="card__lead">
           @if (batchCount() === 1) {
             {{ 'kanji.path.reviews-one' | translate }}
@@ -42,13 +27,27 @@
             {{ 'kanji.path.reviews-due' | translate: { count: batchCount() } }}
           }
         </p>
-        @if (dueCount() > batchCount()) {
+        @if (leftOverCount() > 0) {
           <p class="card__note">{{ 'kanji.path.batch-of' | translate: { count: dueCount() } }}</p>
         }
         <ion-button expand="block" routerLink="/kanji/review" routerDirection="forward">
           {{ 'kanji.path.start-reviews' | translate }}
           <ion-icon slot="end" name="arrow-forward"></ion-icon>
         </ion-button>
+        @if (leftOverCount() > 0) {
+          <!-- Nothing is withheld: the whole pile is one tap away, just quieter
+               than the session the cap suggests. -->
+          <ion-button
+            expand="block"
+            fill="clear"
+            size="small"
+            [routerLink]="['/kanji/review']"
+            [queryParams]="{ all: 1 }"
+            routerDirection="forward"
+          >
+            {{ 'kanji.path.batch-continue' | translate: { count: dueCount() } }}
+          </ion-button>
+        }
       } @else {
         <p class="card__lead card__lead--quiet">{{ 'kanji.path.reviews-none' | translate }}</p>
         @if (nextReview(); as next) {
@@ -64,14 +63,36 @@
       </h2>
 
       @if (nextLesson(); as lesson) {
-        <p class="card__lead">
-          <span class="card__glyph" lang="ja">{{ lesson.kanji }}</span>
-          {{ 'kanji.path.lesson-next' | translate: { meaning: meaningOf(lesson) } }}
-        </p>
-        <ion-button expand="block" fill="outline" routerLink="/kanji/lesson" routerDirection="forward">
-          {{ 'kanji.path.start-lesson' | translate }}
-          <ion-icon slot="end" name="arrow-forward"></ion-icon>
-        </ion-button>
+        @if (lessonBudgetDone()) {
+          <!-- The day has had its new kanji. Said as what it costs later rather
+               than as a rule, because the cost is the whole reason for the line
+               - and one more lesson is still right there. -->
+          <p class="card__lead card__lead--quiet">
+            {{ 'kanji.path.lessons-enough' | translate: { count: lessonsToday() } }}
+          </p>
+          <p class="card__note">{{ 'kanji.path.lessons-enough-note' | translate }}</p>
+          <ion-button
+            expand="block"
+            fill="clear"
+            size="small"
+            routerLink="/kanji/lesson"
+            routerDirection="forward"
+          >
+            {{ 'kanji.path.lesson-anyway' | translate }}
+          </ion-button>
+        } @else {
+          <p class="card__lead">
+            <span class="card__glyph" lang="ja">{{ lesson.kanji }}</span>
+            {{ 'kanji.path.lesson-next' | translate: { meaning: meaningOf(lesson) } }}
+          </p>
+          @if (lessonsToday() > 0) {
+            <p class="card__note">{{ 'kanji.path.lessons-today' | translate: { count: lessonsToday() } }}</p>
+          }
+          <ion-button expand="block" fill="outline" routerLink="/kanji/lesson" routerDirection="forward">
+            {{ 'kanji.path.start-lesson' | translate }}
+            <ion-icon slot="end" name="arrow-forward"></ion-icon>
+          </ion-button>
+        }
       } @else {
         <p class="card__lead card__lead--quiet">{{ 'kanji.path.lessons-done' | translate }}</p>
       }

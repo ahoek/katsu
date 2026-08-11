@@ -16,6 +16,13 @@ import { arrowForward, brushOutline, chevronForward, phonePortraitOutline, schoo
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
 import { KanjiPaceService } from '../kanji-pace.service';
+import {
+  learningDayStart,
+  leftOver,
+  lessonCapReached,
+  lessonsSince,
+  sessionSize,
+} from '../srs/pace';
 import { KanjiRefreshService } from '../kanji-refresh.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { KanjiSyncService } from '../sync/kanji-sync.service';
@@ -57,14 +64,11 @@ export class KanjiPathPageComponent implements OnInit {
 
   readonly dueCount = computed(() => this.srs.due().length);
 
-  /**
-   * What a session started now would ask for: everything due, or the rest of
-   * today's batch, whichever is smaller.
-   */
-  readonly batchCount = computed(() => Math.min(this.dueCount(), this.pace.remaining()));
+  /** What a session started now would ask for: the cap, or all that is due. */
+  readonly batchCount = computed(() => sessionSize(this.pace.cap(), this.dueCount()));
 
-  /** Today's batch is done and kanji are still waiting behind it. */
-  readonly batchDone = computed(() => this.pace.reached(this.dueCount()));
+  /** Left waiting for the session after this one. */
+  readonly leftOverCount = computed(() => leftOver(this.pace.cap(), this.dueCount()));
 
   readonly learnedCount = computed(() => this.srs.learned().size);
 
@@ -73,6 +77,20 @@ export class KanjiPathPageComponent implements OnInit {
   readonly reviewingCount = computed(() => this.learnedCount() - this.masteredCount());
 
   readonly toLearnCount = computed(() => Math.max(this.characters().length - this.learnedCount(), 0));
+
+  /**
+   * Lessons done since half three this morning, counted off the schedule rather
+   * than tallied, and read from the same clock as the due list so it turns over
+   * while the app is open rather than only when it is opened.
+   */
+  readonly lessonsToday = computed(() =>
+    lessonsSince(this.srs.cards(), learningDayStart(this.srs.now())),
+  );
+
+  /** The day has had its new kanji, and there is deck left behind them. */
+  readonly lessonBudgetDone = computed(() =>
+    lessonCapReached(this.pace.lessonCap(), this.lessonsToday(), this.toLearnCount()),
+  );
 
   /** The first kanji of the deck whose lesson is still to be done. */
   readonly nextLesson = computed(() => {
