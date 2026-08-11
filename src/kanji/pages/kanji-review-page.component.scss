@@ -69,6 +69,14 @@
     color: var(--ion-color-medium);
   }
 
+  // Right under the counts, in the same quiet voice as what is still waiting:
+  // a fact about the session, not a score for it.
+  &__spent {
+    margin: -16px 0 20px;
+    font-size: .8rem;
+    color: var(--ion-color-medium);
+  }
+
   &__waiting {
     margin: -12px 0 20px;
     font-size: .8rem;

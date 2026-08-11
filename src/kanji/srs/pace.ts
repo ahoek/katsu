@@ -71,3 +71,27 @@ export function lessonsSince(cards: readonly Card[], start: number): number {
 export function lessonCapReached(cap: number, today: number, toLearn: number): boolean {
   return toLearn > 0 && cap !== NO_CAP && today >= cap;
 }
+
+/**
+ * A gap longer than this is somebody putting the phone down, not somebody
+ * writing slowly. Left in, one interrupted session reads as three quarters of
+ * an hour of work, which is both untrue and discouraging.
+ */
+const IDLE = 60 * 1000;
+
+/** What a kanji finished now adds to the time a session has taken. */
+export function spentSince(mark: number, now: number): number {
+  return Math.min(Math.max(now - mark, 0), IDLE);
+}
+
+/**
+ * A session's time, in the largest unit that keeps it a whole number. Duration
+ * and nothing else: no average, no best, nothing to beat. It answers what a
+ * session cost, which is the question a pile of ninety-seven asks and a handful
+ * of minutes answers.
+ */
+export function spentLabel(total: number): { unit: 'second' | 'minute'; value: number } {
+  return total < 60 * 1000
+    ? { unit: 'second', value: Math.max(1, Math.round(total / 1000)) }
+    : { unit: 'minute', value: Math.round(total / (60 * 1000)) };
+}

@@ -7,6 +7,8 @@ import {
   lessonsSince,
   leftOver,
   sessionSize,
+  spentLabel,
+  spentSince,
 } from './pace';
 
 const HOUR = 60 * 60 * 1000;
@@ -82,6 +84,38 @@ describe('lessonsSince', () => {
 
   it('counts nothing on an empty schedule', () => {
     expect(lessonsSince([], learningDayStart(NOON))).toBe(0);
+  });
+});
+
+describe('spentSince', () => {
+  const SECOND = 1000;
+
+  it('counts the time a kanji took', () => {
+    expect(spentSince(NOON, NOON + 12 * SECOND)).toBe(12 * SECOND);
+  });
+
+  /** The whole reason for the clipping: an interrupted session must not lie. */
+  it('clips a gap where the phone was put down', () => {
+    expect(spentSince(NOON, NOON + 40 * 60 * SECOND)).toBe(60 * SECOND);
+  });
+
+  it('never counts backwards, whatever the clock did', () => {
+    expect(spentSince(NOON, NOON - 5 * SECOND)).toBe(0);
+  });
+});
+
+describe('spentLabel', () => {
+  it('says seconds for a session under a minute', () => {
+    expect(spentLabel(40 * 1000)).toEqual({ unit: 'second', value: 40 });
+  });
+
+  it('rounds to whole minutes above that', () => {
+    expect(spentLabel(3 * 60 * 1000 + 20 * 1000)).toEqual({ unit: 'minute', value: 3 });
+    expect(spentLabel(12 * 60 * 1000)).toEqual({ unit: 'minute', value: 12 });
+  });
+
+  it('never says nothing at all for a session that happened', () => {
+    expect(spentLabel(300)).toEqual({ unit: 'second', value: 1 });
   });
 });
 

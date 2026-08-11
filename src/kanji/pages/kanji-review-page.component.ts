@@ -30,7 +30,7 @@ import { KanjiPaceService } from '../kanji-pace.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { KanjiSyncService } from '../sync/kanji-sync.service';
 import { Attempt, Grade, MASTERED_STAGE, MATURE_STAGE, stageLabel } from '../srs/srs';
-import { sessionSize } from '../srs/pace';
+import { sessionSize, spentLabel, spentSince } from '../srs/pace';
 
 import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
 
@@ -149,9 +149,28 @@ export class KanjiReviewPageComponent implements OnInit {
   /** Left over once the session is done, which a capped batch usually has. */
   readonly stillWaiting = computed(() => this.srs.due().length);
 
+  /**
+   * How long the session took, kanji by kanji, with any gap over a minute
+   * clipped off: a phone put down mid-session is not time spent writing.
+   * Deliberately not shown while the session runs - a clock ticking beside a
+   * stroke turns writing into a race, and the pad grades strokes, not speed.
+   */
+  private readonly spentMs = signal(0);
+
+  /** When the kanji on screen was put there. */
+  private mark = 0;
+
+  /** The session's time, once there is a session to have taken any. */
+  readonly spent = computed(() =>
+    this.results().length > 0 ? spentLabel(this.spentMs()) : undefined);
+
   /** Nothing to work on: every kanji of the session went up. */
   readonly perfectSession = computed(() =>
     this.queue().length > 0 && this.tally().clean === this.queue().length);
+
+  spentKey(unit: 'second' | 'minute'): string {
+    return `kanji.review.spent-${unit}`;
+  }
 
   /** The rungs of the ladder, for the pips under a finished review. */
   protected readonly ladder = Array.from({ length: MASTERED_STAGE - 1 }, (_, index) => index + 1);
@@ -190,6 +209,7 @@ export class KanjiReviewPageComponent implements OnInit {
     // cannot quietly grow while it is being worked through.
     this.beyondCap.set(this.route.snapshot.queryParamMap.get('all') === '1');
     this.queue.set(due.slice(0, this.beyondCap() ? due.length : sessionSize(this.pace.cap(), due.length)));
+    this.mark = Date.now();
     this.ready.set(true);
   }
 
@@ -201,6 +221,9 @@ export class KanjiReviewPageComponent implements OnInit {
     }
     const { card, grade, previousStage } = this.srs.review(character.kanji, attempt);
     const mastered = card.stage === MASTERED_STAGE;
+    const now = Date.now();
+    this.spentMs.update(spent => spent + spentSince(this.mark, now));
+    this.mark = now;
 
     this.tally.update(tally => ({ ...tally, [grade]: tally[grade] + 1 }));
     this.results.update(results => [...results, {
