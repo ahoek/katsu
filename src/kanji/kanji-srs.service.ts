@@ -42,6 +42,13 @@ export class KanjiSrsService {
   /** Bumped to re-check what is due; time moves on while a page is open. */
   private readonly clock = signal(Date.now());
 
+  /**
+   * The clock everything time-dependent should read, so it all moves together
+   * when `tick()` happens - the due list, the countdown beside it, and the day
+   * a lesson counts towards.
+   */
+  readonly now = this.clock.asReadonly();
+
   readonly cards = computed(() => Object.values(this.schedule()));
 
   /** Kanji whose lesson has been done, whether or not they are due. */
