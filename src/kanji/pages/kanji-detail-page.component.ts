@@ -117,16 +117,21 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
     return { key: 'kanji.card.stage', params: { stage: card.stage, total: RUNGS } };
   });
 
-  /** When it comes back, for a kanji that is in the schedule and not mastered. */
+  /**
+   * When it comes back, for a kanji that is in the schedule and not mastered.
+   * Read off the clock signal, so both the wait and the moment it turns into
+   * "due now" move while the page is open rather than only when it is opened.
+   */
   readonly nextReview = computed<Standing | undefined>(() => {
     const card = this.srs.card(this.kanji());
+    const now = this.srs.now();
     if (!card || card.stage < FIRST_STAGE || card.stage === MASTERED_STAGE) {
       return undefined;
     }
-    if (card.due <= Date.now()) {
+    if (card.due <= now) {
       return { key: 'kanji.card.due-now', params: NO_PARAMS };
     }
-    const wait = countdown(card.due, Date.now());
+    const wait = countdown(card.due, now);
     return { key: `kanji.card.due-${wait.unit}`, params: { value: wait.value } };
   });
 

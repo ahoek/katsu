@@ -98,10 +98,16 @@ export class KanjiPathPageComponent implements OnInit {
     return this.characters().find(character => !learned.has(character.kanji));
   });
 
-  /** How long until something is due, when nothing is due yet. */
+  /**
+   * How long until something is due, when nothing is due yet.
+   *
+   * Off the clock signal, not `Date.now()`: the time a card is due is a fixed
+   * number, so a countdown that reads only that recomputes to the same answer
+   * for ever. It sat on "next in 9 min" while the nine minutes passed.
+   */
   readonly nextReview = computed(() => {
     const due = this.srs.nextDue();
-    return due === undefined ? undefined : countdown(due, Date.now());
+    return due === undefined ? undefined : countdown(due, this.srs.now());
   });
 
   readonly progressPercent = computed(() => {
