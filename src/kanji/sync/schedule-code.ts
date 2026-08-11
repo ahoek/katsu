@@ -1,4 +1,4 @@
-import { Card } from '../srs/srs';
+import type { Card } from '../srs/srs';
 
 /**
  * Packs a review schedule into a string, so it can be carried between devices -

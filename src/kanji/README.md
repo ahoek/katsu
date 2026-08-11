@@ -318,7 +318,7 @@ against 林 *bos*, 内 *binnenkant* against 入 *binnengaan*.
 
 ## Regenerating the stroke data
 
-`src/assets/data/kanji/strokes.json` (207 kB, 1718 strokes) is generated, not
+`src/assets/data/kanji/strokes.json` (436 kB, 3599 strokes) is generated, not
 edited by hand:
 
 ```bash
@@ -330,6 +330,28 @@ stroke paths in writing order along with KanjiVG's own hand-placed stroke number
 positions, and merges them with the deck above. It fails loudly when a character
 is missing, its stroke numbering has a gap, or it ends up with a different count
 of numbers and strokes. `stroke-data.spec.ts` guards the file that ships.
+
+## Reading a schedule back
+
+The sync page's **save a copy** writes the same code the sync service carries, so
+an exported file is a whole schedule. `analyse-schedule.mjs` reads one and says
+what a month looks like: where each kanji sits on the ladder, what is coming due
+per day for the next fortnight, how much of the writing advanced anything rather
+than holding or dropping it, the lessons taken per day, and which kanji keep
+coming back.
+
+```bash
+node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON \
+  src/kanji/tools/analyse-schedule.mjs ~/Downloads/katsu-kanji-2026-08-11.txt
+```
+
+It decodes with the app's own `decodeSchedule` - Node runs the TypeScript
+directly - so the tool cannot drift away from the format it reads.
+
+It says nothing about deck order on purpose. The deck is re-sorted whenever a
+school year is added, so the order somebody learned in is not the order the file
+has today: any "skipped" or "out of turn" it reported would be a fact about the
+sorting rather than about the learner.
 
 ## Two things that grow the main bundle
 
