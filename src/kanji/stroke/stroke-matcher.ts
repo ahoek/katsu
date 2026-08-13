@@ -158,8 +158,12 @@ export type StrokeResult =
   | { result: 'reversed'; strokeIndex: number }
   /** A stroke further down the order; the learner skipped ahead. */
   | { result: 'out-of-order'; strokeIndex: number }
-  /** Not recognisable as any stroke that is still to be written. */
-  | { result: 'no-match'; reason: Misfit };
+  /**
+   * Not recognisable as the stroke it was asked for. `strokeIndex` is carried
+   * when the reason names another stroke - `elsewhere` - so a rejection can say
+   * which one it read as instead of leaving that as a riddle.
+   */
+  | { result: 'no-match'; reason: Misfit; strokeIndex?: number };
 
 /**
  * Which check turned a stroke down. The first one that fails is the one
@@ -265,7 +269,7 @@ export class StrokeMatcher {
     if (rival >= 0 && this.fits(drawn, samples, length, this.model[rival], place)) {
       return rival > strokeIndex
         ? { result: 'out-of-order', strokeIndex: rival }
-        : { result: 'no-match', reason: 'elsewhere' };
+        : { result: 'no-match', reason: 'elsewhere', strokeIndex: rival };
     }
     const why = this.misfit(drawn, samples, length, expected, place);
     if (why === undefined) {

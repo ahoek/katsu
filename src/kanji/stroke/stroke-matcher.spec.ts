@@ -310,8 +310,15 @@ describe('why a stroke was turned down', () => {
   const inu = new StrokeMatcher(INU);
   const seki = new StrokeMatcher(SEKI);
 
-  it('names a stroke that belongs elsewhere in the kanji', () => {
-    expect(san.match(trace(SAN[0]), 2)).toEqual({ result: 'no-match', reason: 'elsewhere' });
+  /** And says which stroke it read as: that is the difference between a riddle
+   *  and an explanation, and for a kanji written in the wrong order it is the
+   *  whole of what went wrong. */
+  it('names a stroke that belongs elsewhere in the kanji, and which one', () => {
+    expect(san.match(trace(SAN[0]), 2)).toEqual({
+      result: 'no-match',
+      reason: 'elsewhere',
+      strokeIndex: 0,
+    });
   });
 
   it('names a tap where a stroke belongs, and a stroke that runs on', () => {

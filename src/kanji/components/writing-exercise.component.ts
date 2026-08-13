@@ -33,13 +33,36 @@ function inkPath(points: readonly Point[]): string {
     .join('')}`;
 }
 
+/** Why a stroke was turned down, in the terms the reveal talks in. */
+interface Fault {
+  /** Names the translation key under `kanji.misfit`. */
+  kind: Misfit | 'reversed' | 'out-of-order';
+  /** The stroke it was read as, where the fault names one. */
+  read?: number;
+}
+
 /**
- * What is worth telling the learner about a stroke that was turned down. Drawn
- * backwards and drawn out of turn already say themselves; the rest arrive as a
- * reason from the matcher, which decides nothing by carrying it.
+ * What is worth telling the learner about a stroke that was turned down.
+ *
+ * Every way of being turned down gets a line, including the two that mean "right
+ * stroke, wrong moment". Leaving those out is what made a 七 written in the other
+ * order say only "2 streken gingen anders" and, for one of them, that it read as
+ * some other stroke - true, useless, and not the thing that happened.
  */
-function reasonOf(result: StrokeResult): Misfit | undefined {
-  return result.result === 'no-match' ? result.reason : undefined;
+function faultOf(result: StrokeResult): Fault | undefined {
+  switch (result.result) {
+    case 'correct':
+      return undefined;
+    case 'reversed':
+      return { kind: 'reversed' };
+    case 'out-of-order':
+      return { kind: 'out-of-order', read: result.strokeIndex + 1 };
+    case 'no-match':
+      return {
+        kind: result.reason,
+        read: result.strokeIndex === undefined ? undefined : result.strokeIndex + 1,
+      };
+  }
 }
 
 type Feedback =
@@ -183,7 +206,7 @@ type Feedback =
     @if (deferred() && complete() && offReasons().length) {
       <ul class="misfits">
         @for (off of offReasons(); track off.stroke) {
-          <li>{{ off.key | translate: { stroke: off.stroke } }}</li>
+          <li>{{ off.key | translate: { stroke: off.stroke, read: off.read } }}</li>
         }
       </ul>
     }
@@ -312,7 +335,7 @@ export class WritingExerciseComponent implements OnDestroy {
    */
   protected readonly drawnInk = linkedSignal<
     readonly string[],
-    { path: string; correct: boolean; reason?: Misfit }[]
+    { path: string; correct: boolean; fault?: Fault }[]
   >({
     source: this.strokes,
     computation: () => [],
@@ -378,9 +401,13 @@ export class WritingExerciseComponent implements OnDestroy {
   protected readonly offReasons = computed(() =>
     this.complete()
       ? this.drawnInk().flatMap((stroke, index) =>
-          stroke.correct || !stroke.reason
+          stroke.correct || !stroke.fault
             ? []
-            : [{ stroke: index + 1, key: `kanji.misfit.${stroke.reason}` }])
+            : [{
+                stroke: index + 1,
+                key: `kanji.misfit.${stroke.fault.kind}`,
+                read: stroke.fault.read ?? 0,
+              }])
       : []);
 
   protected readonly RUN_WORTH_SAYING = RUN_WORTH_SAYING;
@@ -467,7 +494,7 @@ export class WritingExerciseComponent implements OnDestroy {
     if (!correct) {
       this.mistakes.update(mistakes => mistakes + 1);
     }
-    this.drawnInk.update(ink => [...ink, { path: inkPath(points), correct, reason: reasonOf(result) }]);
+    this.drawnInk.update(ink => [...ink, { path: inkPath(points), correct, fault: faultOf(result) }]);
     const written = this.written() + 1;
     this.written.set(written);
     if (written >= this.strokeCount()) {

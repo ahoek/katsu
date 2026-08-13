@@ -29,7 +29,9 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         shape: 'Stroke {{stroke}}: the right ends, but the line ran elsewhere',
         bend: 'Stroke {{stroke}}: bends the other way',
         hook: 'Stroke {{stroke}}: no closing hook',
-        elsewhere: 'Stroke {{stroke}}: reads as another stroke of this kanji',
+        elsewhere: 'Stroke {{stroke}}: this is stroke {{read}}, which is already written',
+        reversed: 'Stroke {{stroke}}: drawn from the wrong end',
+        'out-of-order': 'Stroke {{stroke}}: this is stroke {{read}}, which comes later',
         through: 'Stroke {{stroke}}: ran on through a stroke it should stop at',
       },
       feedback: {
@@ -213,7 +215,9 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         shape: 'Streek {{stroke}}: goede uiteinden, maar de lijn liep er anders langs',
         bend: 'Streek {{stroke}}: buigt de andere kant op',
         hook: 'Streek {{stroke}}: geen haakje aan het eind',
-        elsewhere: 'Streek {{stroke}}: leest als een andere streek van deze kanji',
+        elsewhere: 'Streek {{stroke}}: dit is streek {{read}}, die al geschreven was',
+        reversed: 'Streek {{stroke}}: van de verkeerde kant getekend',
+        'out-of-order': 'Streek {{stroke}}: dit is streek {{read}}, die later komt',
         through: 'Streek {{stroke}}: liep door een streek waar hij moet stoppen',
       },
       feedback: {
