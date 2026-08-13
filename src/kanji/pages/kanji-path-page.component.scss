@@ -71,6 +71,25 @@
   }
 }
 
+// Quiet, under the counts: a fact about the deck rather than a task list.
+.coming-back {
+  margin: 12px 0 0;
+  font-size: .8rem;
+  line-height: 1.9;
+  color: var(--ion-color-medium);
+
+  &__kanji {
+    margin-left: 6px;
+    padding: 1px 6px;
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 6px;
+    font-size: 1rem;
+    color: var(--ion-text-color);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+}
+
 .bar {
   height: 8px;
   margin-bottom: 14px;

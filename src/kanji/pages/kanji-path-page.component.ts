@@ -70,6 +70,12 @@ export class KanjiPathPageComponent implements OnInit {
   /** Left waiting for the session after this one. */
   readonly leftOverCount = computed(() => leftOver(this.pace.cap(), this.dueCount()));
 
+  /**
+   * The kanji that keep coming back. Naming them is all this does: nothing about
+   * the schedule changes, and nothing is hidden or withheld.
+   */
+  readonly comingBack = this.srs.comingBack;
+
   readonly learnedCount = computed(() => this.srs.learned().size);
 
   readonly masteredCount = computed(() => this.srs.mastered().size);

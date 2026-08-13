@@ -128,6 +128,27 @@
           <dd>{{ toLearnCount() }}</dd>
         </div>
       </dl>
+
+      <!-- The ones that keep coming back, named rather than counted: each links
+           to its own page, where it can be watched and practised without the
+           schedule caring. Nothing here changes what is due. -->
+      @if (comingBack().length) {
+        <p class="coming-back">
+          @if (comingBack().length === 1) {
+            {{ 'kanji.path.coming-back-one' | translate }}
+          } @else {
+            {{ 'kanji.path.coming-back' | translate: { count: comingBack().length } }}
+          }
+          @for (card of comingBack(); track card.kanji) {
+            <a
+              class="coming-back__kanji"
+              lang="ja"
+              [routerLink]="['/kanji/practice', card.kanji]"
+              routerDirection="forward"
+            >{{ card.kanji }}</a>
+          }
+        </p>
+      }
     </section>
 
     <!-- The two ways off the path: neither is part of the schedule, so they sit

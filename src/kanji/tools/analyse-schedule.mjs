@@ -27,6 +27,14 @@ import { fileURLToPath } from 'node:url';
 import { decodeSchedule } from '../sync/schedule-code.ts';
 import { MASTERED_STAGE, STAGES } from '../srs/srs.ts';
 import { learningDayStart } from '../srs/pace.ts';
+import {
+  CLIMBING_STAGE,
+  LAPSES_WORTH_A_LOOK,
+  REVIEWS_WORTH_A_LOOK,
+  comingBack,
+  dropsBack,
+  notClimbing,
+} from '../srs/leech.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const STROKE_DATA = join(HERE, '../../assets/data/kanji/strokes.json');
@@ -99,23 +107,34 @@ console.log('  ' + [...perDay].sort().map(([day, count]) => `${day.slice(5)}:${c
 console.log(`  ${(cards.length / days).toFixed(1)} a day on average, biggest day ${Math.max(...perDay.values())}`);
 
 /**
- * Kanji that keep coming back: plenty of writing behind them and still on one of
- * the same-day or few-day steps. Not a diagnosis - they are simply the ones that
+ * Kanji that keep coming back. Not a diagnosis - they are simply the ones that
  * cannot be written yet, and more testing is not what teaches them.
+ *
+ * The two rules are reported apart on purpose: which threshold is the keeper is
+ * a decision for a few months of schedules, not for one, and they disagree
+ * enough that averaging them would hide the disagreement. The app's own line
+ * names whatever either rule catches.
  */
 heading('Not written yet');
-const stuck = active
-  .filter(card => card.reviews >= 4 && card.stage <= 3)
-  .sort((a, b) => b.reviews - a.reviews);
-for (const card of stuck) {
+const dropped = dropsBack(cards);
+const stalled = notClimbing(cards);
+const flagged = comingBack(cards);
+console.log(`  dropped back ${LAPSES_WORTH_A_LOOK}+ times: ${dropped.length}`);
+console.log(`  ${REVIEWS_WORTH_A_LOOK}+ reviews, still under stage ${CLIMBING_STAGE}: ${stalled.length}`);
+console.log(`  either rule: ${flagged.length} of ${active.length} still in the schedule`);
+console.log(`  both rules: ${dropped.filter(card => stalled.includes(card)).length}`);
+console.log('');
+for (const card of flagged) {
   const character = byKanji.get(card.kanji);
+  const rules = [dropped.includes(card) && 'dropped', stalled.includes(card) && 'stalled']
+    .filter(Boolean)
+    .join(' + ');
   console.log(
     `  ${card.kanji}  ${String(card.reviews).padStart(2)} reviews, stage ${card.stage},` +
       ` ${card.lapses} dropped, ${character?.strokes.length ?? '?'} strokes` +
-      `  ${character ? Object.values(character.meaning)[0] : ''}`,
+      `  ${(character ? Object.values(character.meaning)[0] : '').padEnd(22)} ${rules}`,
   );
 }
-console.log(`  ${stuck.length} of ${active.length}`);
 
 /**
  * Compounds held without their parts, which a re-sorted deck can leave behind.

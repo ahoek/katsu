@@ -1,6 +1,7 @@
 import { Injectable, computed, signal } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
+import { comingBack } from './srs/leech';
 import { MergeResult, mergeSchedules } from './sync/schedule-merge';
 import {
   Attempt,
@@ -11,6 +12,7 @@ import {
   applyReview,
   dueCards,
   gradeAttempt,
+  isReviewable,
   nextDue,
   startLearning,
 } from './srs/srs';
@@ -59,6 +61,12 @@ export class KanjiSrsService {
   readonly mastered = computed(
     () => new Set(this.cards().filter(card => card.stage === MASTERED_STAGE).map(card => card.kanji)),
   );
+
+  /**
+   * The kanji that keep coming back, worst first. Mastered ones are left out:
+   * however hard they were, they are done.
+   */
+  readonly comingBack = computed(() => comingBack(this.cards().filter(isReviewable)));
 
   readonly due = computed(() => dueCards(this.cards(), this.clock()));
 
