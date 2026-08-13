@@ -56,16 +56,40 @@ interface Written {
   dy?: number;
   scale?: number;
   hand?: number;
+  /** Each stroke on its own: this much of its length, held at its start. */
+  strokeScale?: number;
+  /** Each stroke on its own: up to this far from where it belongs. */
+  strokeOff?: number;
 }
 
 /** How many strokes of each character a deferred review would turn down. */
 function mistakesOver(deck: readonly { strokes: string[]; matcher: StrokeMatcher }[], how: Written) {
   const { dx = 0, dy = 0, scale = 1, hand = 0 } = how;
 
+  let random = 20260811;
+  const next = () => {
+    random = (random * 1103515245 + 12345) % 2 ** 31;
+    return (random / 2 ** 31) * 2 - 1;
+  };
+
   return deck.map(({ strokes, matcher }) =>
     strokes.reduce((mistakes, path, index) => {
-      const placed = place(flattenPath(path), dx, dy, scale);
-      const drawn = hand ? byHand(placed, index, hand) : placed;
+      let drawn = flattenPath(path);
+      if (how.strokeScale !== undefined) {
+        const [start] = drawn;
+        drawn = drawn.map(({ x, y }) => ({
+          x: start.x + (x - start.x) * how.strokeScale!,
+          y: start.y + (y - start.y) * how.strokeScale!,
+        }));
+      }
+      drawn = place(drawn, dx, dy, scale);
+      if (how.strokeOff) {
+        const [ox, oy] = [next() * how.strokeOff, next() * how.strokeOff];
+        drawn = drawn.map(({ x, y }) => ({ x: x + ox, y: y + oy }));
+      }
+      if (hand) {
+        drawn = byHand(drawn, index, hand);
+      }
       return matcher.match(drawn, index).result === 'correct' ? mistakes : mistakes + 1;
     }, 0),
   );
@@ -108,6 +132,22 @@ describe('a whole character judged at once', () => {
     expect(clean({ dx: -4, dy: 3, scale: 0.9, hand: 2 })).toBeGreaterThanOrEqual(
       Math.round(deck.length * 0.95),
     );
+  });
+
+  /**
+   * The case a learner actually reports: right shape, right order, but one
+   * stroke drawn shorter or longer than the model, or sitting a little off from
+   * where it belongs. Not the whole character moving together - each stroke on
+   * its own, which is what a hand does.
+   */
+  it('accepts strokes drawn a fifth short or long, each one on its own', () => {
+    expect(clean({ strokeScale: 0.8 })).toBe(deck.length);
+    expect(clean({ strokeScale: 1.2 })).toBeGreaterThanOrEqual(deck.length - 2);
+  });
+
+  it('accepts strokes each placed a few units off their own place', () => {
+    expect(clean({ strokeOff: 6 })).toBeGreaterThanOrEqual(deck.length - 2);
+    expect(clean({ strokeOff: 3, strokeScale: 0.9 })).toBe(deck.length);
   });
 
   /**
