@@ -81,8 +81,12 @@ console.log(`  by the day: ${fortnight.join(' ')}`);
 
 heading('What the writing is buying');
 console.log(`  ${reviews} reviews written, ${(reviews / days).toFixed(0)} a day`);
+// Where each card stands says how many net climbs it took, not how many it made:
+// a card that went up four and back two reads as two. So this is a floor on the
+// reviews that advanced something, and a ceiling on the ones that did not.
 const climbs = cards.reduce((total, card) => total + (card.stage - 1), 0);
-console.log(`  advanced a kanji: about ${climbs} (${pct(climbs, reviews)}); the rest held or dropped one`);
+console.log(`  advanced a kanji: at least ${climbs} (${pct(climbs, reviews)}), counting net climbs only`);
+console.log(`  so at most ${reviews - climbs} held or dropped one`);
 console.log(`  dropped a stage: ${lapses} (${pct(lapses, reviews)} of reviews, ${cards.filter(card => card.lapses > 0).length} kanji affected)`);
 
 heading('Lessons per day');
@@ -113,6 +117,12 @@ for (const card of stuck) {
 }
 console.log(`  ${stuck.length} of ${active.length}`);
 
+/**
+ * Compounds held without their parts, which a re-sorted deck can leave behind.
+ * A list and nothing more: comparing their lapse rate against the rest reads as
+ * a finding, and with a handful of cards - which are also the more complex and
+ * the earlier learned ones - it would only be noise wearing a percentage.
+ */
 heading('Taught before their parts');
 const missing = cards
   .map(card => ({
@@ -123,14 +133,7 @@ const missing = cards
 for (const { card, parts } of missing) {
   console.log(`  ${card.kanji} without ${parts.join('')}: ${card.reviews} reviews, ${card.lapses} dropped`);
 }
-const rate = list => {
-  const r = list.reduce((total, card) => total + card.reviews, 0);
-  const l = list.reduce((total, card) => total + card.lapses, 0);
-  return `${pct(l, r)} (${l}/${r})`;
-};
-const short = missing.map(entry => entry.card);
-console.log(`  ${missing.length} of ${cards.length}; they drop ${rate(short)} against ${
-  rate(cards.filter(card => !short.includes(card)))} for the rest`);
+console.log(`  ${missing.length} of ${cards.length}`);
 
 heading('Ahead');
 const remainingWait = stage => STAGES.slice(stage - 1).reduce((total, step) => total + step.interval, 0);
