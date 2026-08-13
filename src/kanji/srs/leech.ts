@@ -28,6 +28,17 @@ import type { Card } from './srs';
  * this file, which is how the thresholds get compared over real schedules.
  */
 
+/**
+ * How many to name on the path page. Fourteen characters in a row stops being a
+ * list and turns into a wall - the point is to know which ones to look at first,
+ * and past a handful nobody looks.
+ *
+ * No total beside them either: naming the pile behind the five would be a number
+ * to feel bad about, and it takes care of itself. Work at these and the next
+ * worst move up into view on their own.
+ */
+export const WORTH_NAMING = 5;
+
 /** Dropped back this many times or more. */
 export const LAPSES_WORTH_A_LOOK = 4;
 

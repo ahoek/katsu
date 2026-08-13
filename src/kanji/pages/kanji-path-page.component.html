@@ -134,12 +134,14 @@
            schedule caring. Nothing here changes what is due. -->
       @if (comingBack().length) {
         <p class="coming-back">
-          @if (comingBack().length === 1) {
+          @if (comingBackWorst().length === 1) {
             {{ 'kanji.path.coming-back-one' | translate }}
           } @else {
-            {{ 'kanji.path.coming-back' | translate: { count: comingBack().length } }}
+            {{ 'kanji.path.coming-back' | translate }}
           }
-          @for (card of comingBack(); track card.kanji) {
+        </p>
+        <p class="coming-back__list">
+          @for (card of comingBackWorst(); track card.kanji) {
             <a
               class="coming-back__kanji"
               lang="ja"

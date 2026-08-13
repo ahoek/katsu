@@ -16,6 +16,7 @@ import { arrowForward, brushOutline, chevronForward, phonePortraitOutline, schoo
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
 import { KanjiPaceService } from '../kanji-pace.service';
+import { WORTH_NAMING } from '../srs/leech';
 import {
   learningDayStart,
   leftOver,
@@ -75,6 +76,9 @@ export class KanjiPathPageComponent implements OnInit {
    * the schedule changes, and nothing is hidden or withheld.
    */
   readonly comingBack = this.srs.comingBack;
+
+  /** The worst few of them, which is as many as a line can usefully name. */
+  readonly comingBackWorst = computed(() => this.comingBack().slice(0, WORTH_NAMING));
 
   readonly learnedCount = computed(() => this.srs.learned().size);
 

@@ -71,16 +71,23 @@
   }
 }
 
-// Quiet, under the counts: a fact about the deck rather than a task list.
+// Quiet, under the counts: a fact about the deck rather than a task list. The
+// characters sit on their own line, so five of them line up the same way at
+// every width instead of wrapping out of the middle of a sentence.
 .coming-back {
   margin: 12px 0 0;
   font-size: .8rem;
-  line-height: 1.9;
   color: var(--ion-color-medium);
 
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 6px 0 0;
+  }
+
   &__kanji {
-    margin-left: 6px;
-    padding: 1px 6px;
+    padding: 1px 7px;
     border: 1px solid var(--ion-color-medium);
     border-radius: 6px;
     font-size: 1rem;
