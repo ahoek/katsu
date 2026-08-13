@@ -22,6 +22,16 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       'stroke-progress': 'Stroke {{current}} of {{total}}',
       'stroke-current': 'Stroke {{current}}',
       'pad-label': 'Writing pad for the kanji meaning {{meaning}}',
+      misfit: {
+        length: 'Stroke {{stroke}}: much longer or shorter than that stroke is',
+        start: 'Stroke {{stroke}}: started away from where that stroke starts',
+        end: 'Stroke {{stroke}}: stopped away from where that stroke ends',
+        shape: 'Stroke {{stroke}}: the right ends, but the line ran elsewhere',
+        bend: 'Stroke {{stroke}}: bends the other way',
+        hook: 'Stroke {{stroke}}: no closing hook',
+        elsewhere: 'Stroke {{stroke}}: reads as another stroke of this kanji',
+        through: 'Stroke {{stroke}}: ran on through a stroke it should stop at',
+      },
       feedback: {
         correct: 'Good',
         run: '{{count}} in a row',
@@ -194,6 +204,16 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       'stroke-progress': 'Streek {{current}} van {{total}}',
       'stroke-current': 'Streek {{current}}',
       'pad-label': 'Schrijfveld voor de kanji die {{meaning}} betekent',
+      misfit: {
+        length: 'Streek {{stroke}}: veel langer of korter dan die streek is',
+        start: 'Streek {{stroke}}: begon niet waar die streek begint',
+        end: 'Streek {{stroke}}: eindigde niet waar die streek eindigt',
+        shape: 'Streek {{stroke}}: goede uiteinden, maar de lijn liep er anders langs',
+        bend: 'Streek {{stroke}}: buigt de andere kant op',
+        hook: 'Streek {{stroke}}: geen haakje aan het eind',
+        elsewhere: 'Streek {{stroke}}: leest als een andere streek van deze kanji',
+        through: 'Streek {{stroke}}: liep door een streek waar hij moet stoppen',
+      },
       feedback: {
         correct: 'Goed',
         run: '{{count}} op rij',

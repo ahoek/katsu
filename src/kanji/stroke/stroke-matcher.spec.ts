@@ -117,7 +117,7 @@ describe('StrokeMatcher', () => {
   it('does not look back at strokes that are already written', () => {
     const matcher = new StrokeMatcher(SAN);
 
-    expect(matcher.match(trace(SAN[0]), 2)).toEqual({ result: 'no-match' });
+    expect(matcher.match(trace(SAN[0]), 2).result).toBe('no-match');
   });
 
   it('blames the nearest stroke when the line drifts towards it', () => {
@@ -132,14 +132,14 @@ describe('StrokeMatcher', () => {
     const matcher = new StrokeMatcher(SAN);
     const vertical = resample([{ x: 54, y: 15 }, { x: 54, y: 95 }], 24);
 
-    expect(matcher.match(vertical, 0)).toEqual({ result: 'no-match' });
+    expect(matcher.match(vertical, 0).result).toBe('no-match');
   });
 
   it('rejects a stroke that stops halfway', () => {
     const matcher = new StrokeMatcher(SAN);
     const half = trace(SAN[0]).slice(0, 8);
 
-    expect(matcher.match(half, 0)).toEqual({ result: 'no-match' });
+    expect(matcher.match(half, 0).result).toBe('no-match');
   });
 
   it('rejects scribble', () => {
@@ -149,7 +149,7 @@ describe('StrokeMatcher', () => {
       y: 20 + i * 2,
     }));
 
-    expect(matcher.match(scribble, 0)).toEqual({ result: 'no-match' });
+    expect(matcher.match(scribble, 0).result).toBe('no-match');
   });
 
   it('accepts a tap for a dot, in whatever direction', () => {
@@ -161,14 +161,14 @@ describe('StrokeMatcher', () => {
   it('does not accept a tap somewhere else on the grid', () => {
     const matcher = new StrokeMatcher(DOT);
 
-    expect(matcher.match([{ x: 20, y: 90 }], 0)).toEqual({ result: 'no-match' });
+    expect(matcher.match([{ x: 20, y: 90 }], 0).result).toBe('no-match');
   });
 
   it('does not accept a sweep where a dot belongs', () => {
     const matcher = new StrokeMatcher(DOT);
     const sweep = resample([{ x: 20, y: 40 }, { x: 90, y: 60 }], 24);
 
-    expect(matcher.match(sweep, 0)).toEqual({ result: 'no-match' });
+    expect(matcher.match(sweep, 0).result).toBe('no-match');
   });
 
   it('still expects a short tick to be drawn, not tapped', () => {
@@ -176,21 +176,21 @@ describe('StrokeMatcher', () => {
     const tick = trace(INU[3]);
 
     expect(matcher.match(tick, 3)).toEqual({ result: 'correct', strokeIndex: 3 });
-    expect(matcher.match([tick[Math.floor(tick.length / 2)]], 3)).toEqual({ result: 'no-match' });
+    expect(matcher.match([tick[Math.floor(tick.length / 2)]], 3).result).toBe('no-match');
   });
 
   it('rejects an empty stroke and an index outside the kanji', () => {
     const matcher = new StrokeMatcher(SAN);
 
-    expect(matcher.match([], 0)).toEqual({ result: 'no-match' });
-    expect(matcher.match(trace(SAN[0]), 3)).toEqual({ result: 'no-match' });
+    expect(matcher.match([], 0).result).toBe('no-match');
+    expect(matcher.match(trace(SAN[0]), 3).result).toBe('no-match');
   });
 
   it('forgives more when leniency is raised', () => {
     // Sideways, so the line stays far from the other two.
     const sloppy = shift(trace(SAN[1]), 26, 0);
 
-    expect(new StrokeMatcher(SAN).match(sloppy, 1)).toEqual({ result: 'no-match' });
+    expect(new StrokeMatcher(SAN).match(sloppy, 1).result).toBe('no-match');
     expect(new StrokeMatcher(SAN, { leniency: 2 }).match(sloppy, 1))
       .toEqual({ result: 'correct', strokeIndex: 1 });
   });
@@ -209,7 +209,7 @@ describe('StrokeMatcher', () => {
   it('holds a later stroke to the place the first one set', () => {
     const matcher = new StrokeMatcher(INU);
 
-    expect(matcher.match(shift(trace(INU[3]), 0, 24), 3)).toEqual({ result: 'no-match' });
+    expect(matcher.match(shift(trace(INU[3]), 0, 24), 3).result).toBe('no-match');
   });
 
   it('accepts a stroke that runs on past its end', () => {
@@ -224,7 +224,7 @@ describe('StrokeMatcher', () => {
   it('still asks a stroke to stop somewhere near its end', () => {
     const matcher = new StrokeMatcher(INU);
 
-    expect(matcher.match(runOn(trace(INU[3]), 40), 3)).toEqual({ result: 'no-match' });
+    expect(matcher.match(runOn(trace(INU[3]), 40), 3).result).toBe('no-match');
   });
 
   /**
@@ -236,7 +236,7 @@ describe('StrokeMatcher', () => {
     const matcher = new StrokeMatcher(SEKI);
 
     expect(matcher.match(trace(SEKI[1]), 1)).toEqual({ result: 'correct', strokeIndex: 1 });
-    expect(matcher.match(startEarly(trace(SEKI[1]), 22), 1)).toEqual({ result: 'no-match' });
+    expect(matcher.match(startEarly(trace(SEKI[1]), 22), 1).result).toBe('no-match');
   });
 
   it('accepts a stroke that is meant to cross what is on the pad', () => {
@@ -297,5 +297,44 @@ describe('StrokeMatcher over the whole deck', () => {
       .map(({ index }) => `${kanji} stroke ${index + 1}`));
 
     expect(accepted).toEqual([]);
+  });
+});
+
+/**
+ * The reason a stroke was turned down. It decides nothing - the verdict is the
+ * same either way - but it is what lets a rejection say something more useful
+ * than "wrong", both to the learner and to whoever reads a screenshot later.
+ */
+describe('why a stroke was turned down', () => {
+  const san = new StrokeMatcher(SAN);
+  const inu = new StrokeMatcher(INU);
+  const seki = new StrokeMatcher(SEKI);
+
+  it('names a stroke that belongs elsewhere in the kanji', () => {
+    expect(san.match(trace(SAN[0]), 2)).toEqual({ result: 'no-match', reason: 'elsewhere' });
+  });
+
+  it('names a tap where a stroke belongs, and a stroke that runs on', () => {
+    expect(san.match([{ x: 20, y: 90 }], 0)).toEqual({ result: 'no-match', reason: 'length' });
+    expect(inu.match(runOn(trace(INU[3]), 40), 3)).toEqual({ result: 'no-match', reason: 'length' });
+  });
+
+  it('names a stroke drawn through one already on the pad', () => {
+    expect(seki.match(startEarly(trace(SEKI[1]), 22), 1)).toEqual({
+      result: 'no-match',
+      reason: 'through',
+    });
+  });
+
+  it('names a stroke whose line runs somewhere else', () => {
+    expect(inu.match(shift(trace(INU[3]), 0, 24), 3)).toEqual({
+      result: 'no-match',
+      reason: 'shape',
+    });
+  });
+
+  /** Nothing to judge is not a fault of the writing; it still needs an answer. */
+  it('answers for an empty stroke', () => {
+    expect(san.match([], 0)).toEqual({ result: 'no-match', reason: 'shape' });
   });
 });

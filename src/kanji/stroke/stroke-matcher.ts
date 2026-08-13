@@ -159,7 +159,35 @@ export type StrokeResult =
   /** A stroke further down the order; the learner skipped ahead. */
   | { result: 'out-of-order'; strokeIndex: number }
   /** Not recognisable as any stroke that is still to be written. */
-  | { result: 'no-match' };
+  | { result: 'no-match'; reason: Misfit };
+
+/**
+ * Which check turned a stroke down. The first one that fails is the one
+ * reported, in the order they are asked below - so a stroke both too short and
+ * missing its hook reads as too short, which is the coarser fault and the one
+ * worth hearing first.
+ *
+ * This names what already happened; nothing here decides anything. It exists so
+ * a rejected stroke can say why, to the learner in the moment and to whoever is
+ * looking at a screenshot afterwards.
+ */
+export type Misfit =
+  /** Far longer or shorter than the stroke asked for. */
+  | 'length'
+  /** Started too far from where the stroke starts. */
+  | 'start'
+  /** Stopped too far from where it ends. */
+  | 'end'
+  /** The right ends, but the line between them runs elsewhere. */
+  | 'shape'
+  /** Bends the other way. */
+  | 'bend'
+  /** Missing the closing hook. */
+  | 'hook'
+  /** Looks more like a different stroke of this kanji. */
+  | 'elsewhere'
+  /** Runs on through a stroke the model stops at. */
+  | 'through';
 
 interface ModelStroke {
   /** The stroke as a polyline, for judging what it crosses. */
@@ -224,7 +252,7 @@ export class StrokeMatcher {
    */
   match(drawn: readonly Point[], strokeIndex: number): StrokeResult {
     if (drawn.length === 0 || strokeIndex < 0 || strokeIndex >= this.model.length) {
-      return { result: 'no-match' };
+      return { result: 'no-match', reason: 'shape' };
     }
     const samples = resample(drawn, SAMPLES);
     const length = polylineLength(drawn);
@@ -237,16 +265,17 @@ export class StrokeMatcher {
     if (rival >= 0 && this.fits(drawn, samples, length, this.model[rival], place)) {
       return rival > strokeIndex
         ? { result: 'out-of-order', strokeIndex: rival }
-        : { result: 'no-match' };
+        : { result: 'no-match', reason: 'elsewhere' };
     }
-    if (this.fits(drawn, samples, length, expected, place)) {
+    const why = this.misfit(drawn, samples, length, expected, place);
+    if (why === undefined) {
       if (this.writtenBackwards(samples, expected)) {
         return { result: 'reversed', strokeIndex };
       }
       // Right line, wrong character: the sweep of 石 hangs from the top line,
       // where the same sweep drawn through it is the sweep of 右.
       return this.cutsThroughWritten(drawn, strokeIndex)
-        ? { result: 'no-match' }
+        ? { result: 'no-match', reason: 'through' }
         : { result: 'correct', strokeIndex };
     }
     if (this.fitsReversed(samples, length, expected, place)) {
@@ -257,7 +286,9 @@ export class StrokeMatcher {
         return { result: 'out-of-order', strokeIndex: i };
       }
     }
-    return { result: 'no-match' };
+    // The stroke it was asked for is the one whose failure is worth reporting:
+    // that a drawing also fails to be some other stroke says nothing.
+    return { result: 'no-match', reason: why };
   }
 
   /**
@@ -297,23 +328,41 @@ export class StrokeMatcher {
   private fits(
     drawn: readonly Point[], samples: Point[], length: number, model: ModelStroke, place: number,
   ): boolean {
+    return this.misfit(drawn, samples, length, model, place) === undefined;
+  }
+
+  /** The first check this drawing fails against a stroke, or nothing. */
+  private misfit(
+    drawn: readonly Point[], samples: Point[], length: number, model: ModelStroke, place: number,
+  ): Misfit | undefined {
     if (model.isDot) {
       // Tapping a dot leaves almost no trace, so only ask that it is in the
       // right place and that it is not a long sweep.
-      return distance(centroid(samples), model.centroid) <= this.tolerance(ENDPOINT_TOLERANCE) + place
-        && length <= DOT_LENGTH * 2 + this.tolerance(ENDPOINT_TOLERANCE);
+      if (distance(centroid(samples), model.centroid) > this.tolerance(ENDPOINT_TOLERANCE) + place) {
+        return 'start';
+      }
+      return length <= DOT_LENGTH * 2 + this.tolerance(ENDPOINT_TOLERANCE) ? undefined : 'length';
     }
     if (length < model.length / LENGTH_RATIO
       || length > model.length * LENGTH_RATIO + this.tolerance(LENGTH_SLACK)) {
-      return false;
+      return 'length';
     }
     const slack = this.tolerance(model.length * LENGTH_ALLOWANCE);
     const room = this.tolerance(ENDPOINT_TOLERANCE) + slack + place;
-    return distance(samples[0], model.samples[0]) <= room
-      && this.endFits(samples, model, room)
-      && meanDistance(samples, model.samples) <= this.tolerance(SHAPE_TOLERANCE) + slack + place
-      && bendAgrees(samples, model)
-      && this.endsHooked(drawn, model);
+
+    if (distance(samples[0], model.samples[0]) > room) {
+      return 'start';
+    }
+    if (!this.endFits(samples, model, room)) {
+      return 'end';
+    }
+    if (meanDistance(samples, model.samples) > this.tolerance(SHAPE_TOLERANCE) + slack + place) {
+      return 'shape';
+    }
+    if (!bendAgrees(samples, model)) {
+      return 'bend';
+    }
+    return this.endsHooked(drawn, model) ? undefined : 'hook';
   }
 
   /**

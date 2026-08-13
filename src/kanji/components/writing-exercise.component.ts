@@ -6,7 +6,7 @@ import { backspaceOutline, bulbOutline, checkmarkCircle, pencilOutline, playOutl
 
 import { Attempt } from '../srs/srs';
 import { Point } from '../stroke/geometry';
-import { StrokeMatcher } from '../stroke/stroke-matcher';
+import { Misfit, StrokeMatcher, StrokeResult } from '../stroke/stroke-matcher';
 import { StrokeDemoComponent } from './stroke-demo.component';
 import { StrokePadComponent } from './stroke-pad.component';
 
@@ -31,6 +31,15 @@ function inkPath(points: readonly Point[]): string {
   return `M${first.x.toFixed(1)},${first.y.toFixed(1)}${rest
     .map(point => `L${point.x.toFixed(1)},${point.y.toFixed(1)}`)
     .join('')}`;
+}
+
+/**
+ * What is worth telling the learner about a stroke that was turned down. Drawn
+ * backwards and drawn out of turn already say themselves; the rest arrive as a
+ * reason from the matcher, which decides nothing by carrying it.
+ */
+function reasonOf(result: StrokeResult): Misfit | undefined {
+  return result.result === 'no-match' ? result.reason : undefined;
 }
 
 type Feedback =
@@ -168,6 +177,17 @@ type Feedback =
       }
     </p>
 
+    <!-- Why a stroke was turned down, one line each. It changes no verdict; it
+         is the difference between a red stroke and knowing that the hook was
+         missing. Only after the writing is finished, so it stays a test. -->
+    @if (deferred() && complete() && offReasons().length) {
+      <ul class="misfits">
+        @for (off of offReasons(); track off.stroke) {
+          <li>{{ off.key | translate: { stroke: off.stroke } }}</li>
+        }
+      </ul>
+    }
+
     <!-- The example below the writing, not under it: two characters on top of
          each other cannot be told apart once they get at all dense. Numbers
          and arrows carry the order and direction, which the ink cannot show.
@@ -195,6 +215,16 @@ type Feedback =
       // selection with its select/copy balloon.
       -webkit-user-select: none;
       user-select: none;
+    }
+
+    .misfits {
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+      font-size: .8rem;
+      line-height: 1.5;
+      text-align: center;
+      color: var(--ion-color-medium);
     }
 
     app-kanji-stroke-pad {
@@ -275,8 +305,15 @@ export class WritingExerciseComponent implements OnDestroy {
   private readonly mistakes = linkedSignal({ source: this.strokes, computation: () => 0 });
   private readonly hintsUsed = linkedSignal({ source: this.strokes, computation: () => this.example() });
 
-  /** The ink as it was drawn with its verdict, kept when judging is deferred. */
-  protected readonly drawnInk = linkedSignal<readonly string[], { path: string; correct: boolean }[]>({
+  /**
+   * The ink as it was drawn with its verdict, kept when judging is deferred, and
+   * for a stroke that was turned down what turned it down. The reason decides
+   * nothing; it is here so the reveal can say more than "this one was wrong".
+   */
+  protected readonly drawnInk = linkedSignal<
+    readonly string[],
+    { path: string; correct: boolean; reason?: Misfit }[]
+  >({
     source: this.strokes,
     computation: () => [],
   });
@@ -333,6 +370,19 @@ export class WritingExerciseComponent implements OnDestroy {
       ? this.drawnInk().flatMap((stroke, index) => (stroke.correct ? [] : [index]))
       : []);
 
+  /**
+   * The strokes that were turned down, each with the reason, for the reveal. One
+   * line per stroke: two strokes can go wrong in two different ways, and "one of
+   * them missed its hook" would leave the learner guessing which.
+   */
+  protected readonly offReasons = computed(() =>
+    this.complete()
+      ? this.drawnInk().flatMap((stroke, index) =>
+          stroke.correct || !stroke.reason
+            ? []
+            : [{ stroke: index + 1, key: `kanji.misfit.${stroke.reason}` }])
+      : []);
+
   protected readonly RUN_WORTH_SAYING = RUN_WORTH_SAYING;
 
   /**
@@ -376,7 +426,7 @@ export class WritingExerciseComponent implements OnDestroy {
     const result = this.matcher().match(points, this.written());
 
     if (this.deferred()) {
-      this.judgeQuietly(points, result.result === 'correct');
+      this.judgeQuietly(points, result);
       return;
     }
 
@@ -412,11 +462,12 @@ export class WritingExerciseComponent implements OnDestroy {
    * one is down, the example appears under the ink: the learner reads off what
    * went differently instead of being told along the way.
    */
-  private judgeQuietly(points: Point[], correct: boolean): void {
+  private judgeQuietly(points: Point[], result: StrokeResult): void {
+    const correct = result.result === 'correct';
     if (!correct) {
       this.mistakes.update(mistakes => mistakes + 1);
     }
-    this.drawnInk.update(ink => [...ink, { path: inkPath(points), correct }]);
+    this.drawnInk.update(ink => [...ink, { path: inkPath(points), correct, reason: reasonOf(result) }]);
     const written = this.written() + 1;
     this.written.set(written);
     if (written >= this.strokeCount()) {
