@@ -80,7 +80,7 @@ export const deck = [
   { kanji: '六', grade: 1, meaning: { en: 'six', nl: 'zes' }, on: 'ロク', kun: 'む.つ' },
   { kanji: '引', grade: 2, meaning: { en: 'pull', nl: 'trekken' }, on: 'イン', kun: 'ひ.く' },
   { kanji: '牛', grade: 2, meaning: { en: 'cow', nl: 'koe' }, on: 'ギュウ', kun: 'うし' },
-  { kanji: '元', grade: 2, meaning: { en: 'beginning', nl: 'begin' }, on: 'ゲン', kun: 'もと' },
+  { kanji: '元', grade: 2, meaning: { en: 'beginning, former', nl: 'begin, voormalig' }, on: 'ゲン', kun: 'もと' },
   { kanji: '戸', grade: 2, meaning: { en: 'door', nl: 'deur' }, on: 'コ', kun: 'と' },
   { kanji: '午', grade: 2, meaning: { en: 'midday hour', nl: 'twaalf uur' }, on: 'ゴ', kun: '' },
   { kanji: '公', grade: 2, meaning: { en: 'public', nl: 'openbaar' }, on: 'コウ', kun: '' },
