@@ -72,8 +72,12 @@ function mistakesOver(deck: readonly { strokes: string[]; matcher: StrokeMatcher
     return (random / 2 ** 31) * 2 - 1;
   };
 
-  return deck.map(({ strokes, matcher }) =>
-    strokes.reduce((mistakes, path, index) => {
+  return deck.map(({ strokes, matcher }) => {
+    // The ink stays on the pad as it fell, so each stroke is judged against the
+    // ones the hand already put down, exactly as the app judges it.
+    const written: Point[][] = [];
+
+    return strokes.reduce((mistakes, path, index) => {
       let drawn = flattenPath(path);
       if (how.strokeScale !== undefined) {
         const [start] = drawn;
@@ -90,9 +94,11 @@ function mistakesOver(deck: readonly { strokes: string[]; matcher: StrokeMatcher
       if (hand) {
         drawn = byHand(drawn, index, hand);
       }
-      return matcher.match(drawn, index).result === 'correct' ? mistakes : mistakes + 1;
-    }, 0),
-  );
+      const { result } = matcher.match(drawn, index, written);
+      written.push(drawn);
+      return result === 'correct' ? mistakes : mistakes + 1;
+    }, 0);
+  });
 }
 
 describe('a whole character judged at once', () => {
@@ -117,6 +123,17 @@ describe('a whole character judged at once', () => {
   it('accepts a character placed off-centre', () => {
     expect(clean({ dx: -6, dy: -6 })).toBeGreaterThanOrEqual(deck.length - 5);
     expect(clean({ dx: 5, dy: -4 })).toBeGreaterThanOrEqual(deck.length - 5);
+  });
+
+  /**
+   * The case a learner reported on 気: every stroke the right shape and the right
+   * direction, sitting right against the ones around it, and the whole character
+   * a row off. A row is twelve units - the gap between two horizontals of 三.
+   */
+  it('accepts a character written a whole row off', () => {
+    expect(clean({ dy: 12 })).toBe(deck.length);
+    expect(clean({ dy: -12 })).toBe(deck.length);
+    expect(clean({ dx: 12 })).toBe(deck.length);
   });
 
   it('accepts a character written smaller or larger than the square', () => {

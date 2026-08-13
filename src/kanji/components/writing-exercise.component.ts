@@ -335,7 +335,7 @@ export class WritingExerciseComponent implements OnDestroy {
    */
   protected readonly drawnInk = linkedSignal<
     readonly string[],
-    { path: string; correct: boolean; fault?: Fault }[]
+    { path: string; points: readonly Point[]; correct: boolean; fault?: Fault }[]
   >({
     source: this.strokes,
     computation: () => [],
@@ -382,6 +382,9 @@ export class WritingExerciseComponent implements OnDestroy {
   protected readonly offCount = computed(() => (this.deferred() ? this.mistakes() : 0));
 
   protected readonly inkPaths = computed(() => this.drawnInk().map(stroke => stroke.path));
+
+  /** The ink as points, for judging where the character is being written. */
+  private readonly inkPoints = computed(() => this.drawnInk().map(stroke => stroke.points));
 
   /**
    * Which drawn strokes to point out at the reveal, and only at the reveal:
@@ -450,7 +453,10 @@ export class WritingExerciseComponent implements OnDestroy {
     if (this.complete()) {
       return;
     }
-    const result = this.matcher().match(points, this.written());
+    // Where the character is being written is only ours to know where the ink on
+    // the pad is the learner's own. A guided writing lands each stroke as the
+    // model's, so the model is what the next stroke is placed against.
+    const result = this.matcher().match(points, this.written(), this.inkPoints());
 
     if (this.deferred()) {
       this.judgeQuietly(points, result);
@@ -494,7 +500,8 @@ export class WritingExerciseComponent implements OnDestroy {
     if (!correct) {
       this.mistakes.update(mistakes => mistakes + 1);
     }
-    this.drawnInk.update(ink => [...ink, { path: inkPath(points), correct, fault: faultOf(result) }]);
+    this.drawnInk.update(ink =>
+      [...ink, { path: inkPath(points), points, correct, fault: faultOf(result) }]);
     const written = this.written() + 1;
     this.written.set(written);
     if (written >= this.strokeCount()) {

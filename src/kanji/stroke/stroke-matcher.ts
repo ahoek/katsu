@@ -73,6 +73,14 @@ const DOT_LENGTH = 12;
 const RIVAL_MARGIN = 4;
 
 /**
+ * How far the ink already on the pad may sit from the model before the rival
+ * rule stops reading it as placement. A character written a whole row off is
+ * still that character; further than the endpoint tolerance and the drawing
+ * being aligned to is no longer the same figure.
+ */
+const DRIFT_LIMIT = ENDPOINT_TOLERANCE;
+
+/**
  * The closing hook of a stroke - the flick that ends 月's second stroke - is
  * at most this long. It is exactly the tail small enough to disappear inside
  * the endpoint tolerance, which is why it needs its own check: a longer
@@ -253,15 +261,22 @@ export class StrokeMatcher {
    * Judge a drawn stroke against the stroke expected at `strokeIndex`. Other
    * strokes are considered too, so the learner can be told they are writing the
    * right shape at the wrong moment instead of just being told "no".
+   *
+   * `written` is the learner's own ink for the strokes already down, for the
+   * writings where that ink is what is on the pad rather than the model's
+   * strokes. It says where this character is being written, which is the only
+   * thing that makes "you are writing another stroke" a fair reading.
    */
-  match(drawn: readonly Point[], strokeIndex: number): StrokeResult {
+  match(
+    drawn: readonly Point[], strokeIndex: number, written: readonly (readonly Point[])[] = [],
+  ): StrokeResult {
     if (drawn.length === 0 || strokeIndex < 0 || strokeIndex >= this.model.length) {
       return { result: 'no-match', reason: 'shape' };
     }
     const samples = resample(drawn, SAMPLES);
     const length = polylineLength(drawn);
     const expected = this.model[strokeIndex];
-    const rival = this.closerStroke(samples, strokeIndex);
+    const rival = this.closerStroke(samples, strokeIndex, this.drift(written));
     const place = strokeIndex === 0 ? this.tolerance(FIRST_STROKE_ALLOWANCE) : 0;
 
     // A drawing that sits clearly closer to another stroke is that stroke:
@@ -278,7 +293,7 @@ export class StrokeMatcher {
       }
       // Right line, wrong character: the sweep of 石 hangs from the top line,
       // where the same sweep drawn through it is the sweep of 右.
-      return this.cutsThroughWritten(drawn, strokeIndex)
+      return this.cutsThroughWritten(drawn, strokeIndex, written)
         ? { result: 'no-match', reason: 'through' }
         : { result: 'correct', strokeIndex };
     }
@@ -298,11 +313,34 @@ export class StrokeMatcher {
   /**
    * Index of the stroke the drawing resembles more than the expected one, or
    * -1 when the expected stroke is the closest.
+   *
+   * Asked twice: once where the model sits, and once where the character is
+   * actually being written. A row of ink placed low is a row of ink, and a
+   * stroke that belongs with the ones around it belongs with them wherever the
+   * hand put them - so unless the same stroke wins both ways, the drawing is not
+   * another stroke, it is this one, placed off.
+   *
+   * Only the same answer twice accuses. Where the ink shows no placement of its
+   * own the two readings are one, and this is the rule it always was.
    */
-  private closerStroke(samples: Point[], strokeIndex: number): number {
-    const target = this.cost(samples, this.model[strokeIndex]) - RIVAL_MARGIN;
+  private closerStroke(samples: Point[], strokeIndex: number, drift: Point): number {
+    // Nothing on the pad says where the first stroke of a character should sit,
+    // so nothing can say it is a different stroke. It is judged on its shape.
+    if (strokeIndex === 0) {
+      return -1;
+    }
+    const here = this.nearestOther(samples, strokeIndex);
+    if (here < 0) {
+      return -1;
+    }
+    const placed = samples.map(point => ({ x: point.x - drift.x, y: point.y - drift.y }));
+    return this.nearestOther(placed, strokeIndex) === here ? here : -1;
+  }
+
+  /** The other stroke this drawing sits closer to, by more than the margin. */
+  private nearestOther(samples: Point[], strokeIndex: number): number {
     let closest = -1;
-    let lowest = target;
+    let lowest = this.cost(samples, this.model[strokeIndex]) - RIVAL_MARGIN;
 
     this.model.forEach((model, index) => {
       if (index === strokeIndex) {
@@ -315,6 +353,36 @@ export class StrokeMatcher {
       }
     });
     return closest;
+  }
+
+  /**
+   * How far off the model the ink on the pad sits, as one offset: the average of
+   * what each written stroke is off by. A hand that starts a character low keeps
+   * writing low, and every stroke shows the same offset, so averaging them is
+   * reading the placement rather than any one stroke.
+   *
+   * Capped, because past a point the ink is not this character placed
+   * differently. A writing with nothing on the pad yet drifts nowhere.
+   */
+  private drift(written: readonly (readonly Point[])[]): Point {
+    const strokes = written.slice(0, this.model.length).filter(points => points.length > 0);
+    if (strokes.length === 0) {
+      return { x: 0, y: 0 };
+    }
+    const offsets = strokes.map((points, index) => {
+      const mine = centroid(resample(points, SAMPLES));
+      const model = centroid(this.model[index].samples);
+      return { x: mine.x - model.x, y: mine.y - model.y };
+    });
+    const mean = {
+      x: offsets.reduce((sum, offset) => sum + offset.x, 0) / offsets.length,
+      y: offsets.reduce((sum, offset) => sum + offset.y, 0) / offsets.length,
+    };
+    const reach = Math.hypot(mean.x, mean.y);
+    if (reach <= DRIFT_LIMIT) {
+      return mean;
+    }
+    return { x: (mean.x * DRIFT_LIMIT) / reach, y: (mean.y * DRIFT_LIMIT) / reach };
   }
 
   /** How far the drawing sits from a model stroke; lower is a better fit. */
@@ -443,14 +511,21 @@ export class StrokeMatcher {
    * the model stroke does not. Running on into empty space is a stroke drawn
    * long; running on through a line that was there to stop at is another
    * character.
+   *
+   * Held against the lines actually on the pad - the learner's own ink where
+   * that is what is showing - because crossing is a relation between two
+   * strokes, and a character written a row off crosses the model's lines
+   * everywhere while crossing its own nowhere.
    */
-  private cutsThroughWritten(drawn: readonly Point[], strokeIndex: number): boolean {
+  private cutsThroughWritten(
+    drawn: readonly Point[], strokeIndex: number, written: readonly (readonly Point[])[],
+  ): boolean {
     const model = this.model[strokeIndex];
     const allowed = this.tolerance(THROUGH_DEPTH);
 
     for (let i = 0; i < strokeIndex; i++) {
-      const written = this.model[i].points;
-      if (crossingDepth(drawn, written) > crossingDepth(model.points, written) + allowed) {
+      const line = written[i]?.length ? written[i] : this.model[i].points;
+      if (crossingDepth(drawn, line) > crossingDepth(model.points, this.model[i].points) + allowed) {
         return true;
       }
     }

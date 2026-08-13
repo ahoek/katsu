@@ -123,9 +123,34 @@ describe('StrokeMatcher', () => {
   it('blames the nearest stroke when the line drifts towards it', () => {
     const matcher = new StrokeMatcher(SAN);
 
-    // Drawn between the first two lines but closer to the second.
-    expect(matcher.match(shift(trace(SAN[0]), 0, 20), 0))
-      .toEqual({ result: 'out-of-order', strokeIndex: 1 });
+    // Drawn between the second and third lines but closer to the third, with the
+    // first two where the model has them: the ink says the character is not low.
+    const written = [trace(SAN[0]), trace(SAN[1])];
+    expect(matcher.match(shift(trace(SAN[1]), 0, 20), 1, written))
+      .toEqual({ result: 'out-of-order', strokeIndex: 2 });
+  });
+
+  /**
+   * Nothing on the pad says where the character sits until the first stroke is
+   * down, so that stroke cannot be the wrong one on account of where it sits -
+   * a 三 begun low is a 三 written low.
+   */
+  it('does not read a first stroke as another stroke for sitting low', () => {
+    const matcher = new StrokeMatcher(SAN);
+
+    expect(matcher.match(shift(trace(SAN[0]), 0, 20), 0).result).toBe('correct');
+  });
+
+  /**
+   * And once it is down, the strokes after it are placed against it. A character
+   * written a row low is written a row low, not written in the wrong order.
+   */
+  it('reads the strokes after it where the hand is writing them', () => {
+    const matcher = new StrokeMatcher(SAN);
+    const low = SAN.map(path => shift(trace(path), 0, 20));
+
+    expect(low.map((points, index) => matcher.match(points, index, low.slice(0, index)).result))
+      .toEqual(['correct', 'correct', 'correct']);
   });
 
   it('rejects a stroke drawn in the wrong place', () => {
