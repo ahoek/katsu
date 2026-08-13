@@ -126,7 +126,7 @@ export const deck = [
   { kanji: '北', grade: 2, meaning: { en: 'north', nl: 'noord' }, on: 'ホク', kun: 'きた' },
   { kanji: '用', grade: 2, meaning: { en: 'use', nl: 'gebruiken' }, on: 'ヨウ', kun: 'もち.いる' },
   { kanji: '央', grade: 3, meaning: { en: 'midpoint', nl: 'middelpunt' }, on: 'オウ', kun: '' },
-  { kanji: '去', grade: 3, meaning: { en: 'depart', nl: 'weggaan' }, on: 'キョ', kun: 'さ.る' },
+  { kanji: '去', grade: 3, meaning: { en: 'depart, past', nl: 'weggaan, verleden' }, on: 'キョ', kun: 'さ.る' },
   { kanji: '号', grade: 3, meaning: { en: 'issue, edition', nl: 'editie, uitgave' }, on: 'ゴウ', kun: '' },
   { kanji: '皿', grade: 3, meaning: { en: 'plate', nl: 'bord, schotel' }, on: '', kun: 'さら' },
   { kanji: '仕', grade: 3, meaning: { en: 'serve', nl: 'dienen' }, on: 'シ', kun: 'つか.える' },
