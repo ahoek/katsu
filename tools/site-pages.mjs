@@ -193,6 +193,26 @@ function breadcrumb(trail) {
   };
 }
 
+/**
+ * What the site is called, which is a different claim from what the app is.
+ *
+ * Google takes the name above a search result from WebSite structured data, and
+ * nothing else here was making that claim: WebApplication is a kind of
+ * SoftwareApplication, not a kind of WebSite. With no WebSite on a subdomain's
+ * home page Google falls back to the domain it sits on, which is why results
+ * read "arthurhoek.nl" rather than "Katsu".
+ *
+ * It belongs on the home page and nowhere else - the name is defined once for
+ * the root of a domain or subdomain, not per page.
+ */
+const webSite = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Katsu',
+  alternateName: '活用',
+  url: `${SITE}/`,
+};
+
 /** The app itself, described once, on the pages that are about the app. */
 const webApplication = {
   '@context': 'https://schema.org',
@@ -225,7 +245,7 @@ export function sitePages(translations, strokeData) {
       path: '',
       title: title.home,
       description: description.home,
-      linkedData: [webApplication],
+      linkedData: [webSite, webApplication],
     },
     // Where the empty path sends the router. Same page, so it points at the
     // page a visitor arrives on rather than competing with it.
