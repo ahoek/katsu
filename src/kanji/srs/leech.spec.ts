@@ -51,6 +51,25 @@ describe('the kanji that keep coming back', () => {
     expect(comingBack(cards).map(c => c.kanji)).toEqual(['科']);
   });
 
+  /**
+   * What a learner sees after writing one of these right: it is gone. Lapses are
+   * a lifetime tally, so without this the list would keep naming a kanji that is
+   * being written correctly, and there would be nothing to do about it.
+   */
+  it('lets go of a kanji that is climbing again', () => {
+    const recovering = card('夏', { lapses: 6, reviews: 11, stage: CLIMBING_STAGE });
+
+    expect(comingBack([recovering])).toEqual([]);
+    // The rule itself still knows what this card cost; the list is about now.
+    expect(dropsBack([recovering]).map(c => c.kanji)).toEqual(['夏']);
+  });
+
+  it('names it again as soon as it drops back', () => {
+    const fallen = card('夏', { lapses: 7, reviews: 12, stage: CLIMBING_STAGE - 1 });
+
+    expect(comingBack([fallen]).map(c => c.kanji)).toEqual(['夏']);
+  });
+
   it('puts the worst first: most dropped, then most written', () => {
     const cards = [
       card('早', { lapses: 3, reviews: 9, stage: 3 }),

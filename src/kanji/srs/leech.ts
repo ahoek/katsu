@@ -15,10 +15,11 @@ import type { Card } from './srs';
  *   holding at shaky each time.
  *
  * On the first real schedule they disagreed by a factor of three (five cards
- * against fourteen), so the app counts both and names the union: whichever rule
- * turns out to be the keeper, everything either of them catches is a kanji that
- * keeps coming back. `analyse-schedule.mjs` reports them apart, which is where
- * the threshold decision will come from.
+ * against fourteen), so the app counts both and names the union of what either
+ * catches while the kanji is still down there: whichever rule turns out to be
+ * the keeper, that is a kanji that keeps coming back. `analyse-schedule.mjs`
+ * reports the two rules apart and unconditionally, which is where the threshold
+ * decision will come from.
  *
  * Nothing here changes a schedule. Flagging is looking, not treating.
  *
@@ -61,11 +62,19 @@ export function notClimbing(cards: readonly Card[]): Card[] {
 }
 
 /**
- * Everything either rule catches, worst first - most lapses, then most reviews,
- * so the top of the list is the one to look at first.
+ * Everything either rule catches that is still down there, worst first - most
+ * lapses, then most reviews, so the top of the list is the one to look at first.
+ *
+ * Climbing again is how a kanji leaves this list. `lapses` is a tally for the
+ * card's whole life and only ever grows, so on its own it names a kanji that was
+ * once hard for as long as it lives: writing it right would change nothing, and
+ * the list would be a record of old trouble rather than the work in front of
+ * you. Fall back and it returns, with a higher count than before, which puts it
+ * nearer the top than it was.
  */
 export function comingBack(cards: readonly Card[]): Card[] {
-  const flagged = new Set([...dropsBack(cards), ...notClimbing(cards)]);
+  const struggling = cards.filter(card => card.stage < CLIMBING_STAGE);
+  const flagged = new Set([...dropsBack(struggling), ...notClimbing(struggling)]);
 
   return [...flagged].sort(
     (a, b) => b.lapses - a.lapses || b.reviews - a.reviews || a.kanji.localeCompare(b.kanji),
