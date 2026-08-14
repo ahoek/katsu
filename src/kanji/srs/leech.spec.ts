@@ -1,5 +1,5 @@
 import { CLIMBING_STAGE, LAPSES_WORTH_A_LOOK, comingBack, dropsBack, notClimbing } from './leech';
-import { MASTERED_STAGE, isReviewable, type Card } from './srs';
+import { MASTERED_STAGE, applyReview, isReviewable, type Card } from './srs';
 
 const NOW = new Date(2026, 7, 11, 12).getTime();
 
@@ -56,6 +56,15 @@ describe('the kanji that keep coming back', () => {
    * a lifetime tally, so without this the list would keep naming a kanji that is
    * being written correctly, and there would be nothing to do about it.
    */
+  /** One clean writing is a stage, and a stage is the whole distance to here. */
+  it('lets go of a kanji after one clean review from the bottom step', () => {
+    const bottom = card('夏', { lapses: 6, reviews: 11, stage: CLIMBING_STAGE - 1 });
+    const climbed = applyReview(bottom, 'clean', NOW);
+
+    expect(comingBack([bottom]).map(c => c.kanji)).toEqual(['夏']);
+    expect(comingBack([climbed])).toEqual([]);
+  });
+
   it('lets go of a kanji that is climbing again', () => {
     const recovering = card('夏', { lapses: 6, reviews: 11, stage: CLIMBING_STAGE });
 
@@ -72,10 +81,10 @@ describe('the kanji that keep coming back', () => {
 
   it('puts the worst first: most dropped, then most written', () => {
     const cards = [
-      card('早', { lapses: 3, reviews: 9, stage: 3 }),
-      card('空', { lapses: 5, reviews: 12, stage: 3 }),
+      card('早', { lapses: 3, reviews: 9, stage: 2 }),
+      card('空', { lapses: 5, reviews: 12, stage: 2 }),
       card('市', { lapses: 1, reviews: 6, stage: 2 }),
-      card('才', { lapses: 1, reviews: 8, stage: 3 }),
+      card('才', { lapses: 1, reviews: 8, stage: 1 }),
     ];
 
     expect(comingBack(cards).map(c => c.kanji)).toEqual(['空', '早', '才', '市']);

@@ -10,7 +10,7 @@ import type { Card } from './srs';
  *
  * - **Dropped back often.** Anki flags at eight lapses on a much longer ladder;
  *   eight stages want fewer.
- * - **Never climbing.** Plenty of reviews and still on one of the first few
+ * - **Never climbing.** Plenty of reviews and still on one of the same-day
  *   steps - a kanji can sit there for weeks without ever formally lapsing,
  *   holding at shaky each time.
  *
@@ -43,11 +43,27 @@ export const WORTH_NAMING = 5;
 /** Dropped back this many times or more. */
 export const LAPSES_WORTH_A_LOOK = 4;
 
-/** This many reviews without getting past the few-day steps. */
+/** This many reviews without getting past the same-day steps. */
 export const REVIEWS_WORTH_A_LOOK = 6;
 
-/** Above this stage a kanji is climbing, whatever it cost to get there. */
-export const CLIMBING_STAGE = 4;
+/**
+ * From this stage up a kanji is climbing, whatever it cost to get there. The
+ * ladder's third step is a day's wait, which is the first one that means the
+ * kanji survived a night - and, because only a clean writing climbs a stage, it
+ * is a step a kanji cannot be on without having been written right.
+ *
+ * That is what sets it here rather than a step higher: one clean review takes a
+ * kanji off the list. Anything stricter names kanji that the learner has just
+ * written correctly and can do nothing more about today, which is how the list
+ * stopped being work to do.
+ *
+ * The step it gives up: a kanji held at this stage by shaky writing, over and
+ * over, is not named. Only a poor writing drops a stage, so a hand that makes
+ * one or two mistakes every time parks here unseen. If that turns out to matter,
+ * the way to catch it is a second rule about how many reviews are behind a card
+ * at this stage - not raising this line, which would undo the above.
+ */
+export const CLIMBING_STAGE = 3;
 
 /** Cards that have dropped back often enough to notice. */
 export function dropsBack(cards: readonly Card[]): Card[] {
