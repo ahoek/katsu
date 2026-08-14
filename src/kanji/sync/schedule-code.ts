@@ -12,8 +12,37 @@ import type { Card } from '../srs/srs';
  * around 32 kB.
  */
 
-/** Marks the format, so a later version can be told apart or refused. */
+/**
+ * Marks the format, so a later version can be told apart or refused.
+ *
+ * Bump this only when the meaning of something already written changes - and
+ * then knowingly, because a bumped marker turns every older device away, and
+ * two devices that cannot read each other are two schedules.
+ *
+ * **Adding to the format needs no bump, and must not use one.** There is one
+ * shape of addition every version reads and passes over: a section after the
+ * rows, `k1|base|rows|yours`, because the split below takes the first three and
+ * drops the rest. A row with an eighth value is refused as damaged, and a row is
+ * refused whichever way its count is off - a count that has changed is damage
+ * far more often than it is a message from the future.
+ *
+ * So a section is the door, and a row field is a change that every device has to
+ * be ready for before any device may write it. That is what makes such a field
+ * worth gathering into one change with everything a foreseeable feature will
+ * want, rather than paying the wait twice.
+ *
+ * Which one fits is also about what may be lost. An older device that syncs
+ * writes the schedule back without anything it did not understand, so a section
+ * suits an annotation the app can do without, and a field the schedule cannot
+ * lose belongs on the row.
+ *
+ * Both halves are held by tests, through the real wire format rather than a
+ * stand-in, so what a later version may rely on cannot quietly change.
+ */
 const MARKER = 'k1';
+
+/** The values a row carries. Every version writes and expects exactly these. */
+const ROW_VALUES = 7;
 
 const MINUTE = 60 * 1000;
 
@@ -66,7 +95,7 @@ export async function decodeSchedule(code: string): Promise<Card[]> {
   let previous = 0;
   return rowsText.split(',').map(row => {
     const values = row.split('.').map(value => parseInt(value, 36));
-    if (values.length !== 7 || values.some(value => !Number.isFinite(value))) {
+    if (values.length !== ROW_VALUES || values.some(value => !Number.isFinite(value))) {
       throw new ScheduleCodeError('This schedule is damaged.');
     }
     const [pointDelta, stage, due, reviews, lapses, learnedAt, updatedAt] = values;
