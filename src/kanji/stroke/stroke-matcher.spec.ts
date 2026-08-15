@@ -358,15 +358,15 @@ describe('why a stroke was turned down', () => {
     });
   });
 
-  it('names a stroke whose line runs somewhere else', () => {
+  it('names a stroke that sits away from where its stroke runs', () => {
     expect(inu.match(shift(trace(INU[3]), 0, 24), 3)).toEqual({
       result: 'no-match',
-      reason: 'shape',
+      reason: 'place',
     });
   });
 
   /** Nothing to judge is not a fault of the writing; it still needs an answer. */
   it('answers for an empty stroke', () => {
-    expect(san.match([], 0)).toEqual({ result: 'no-match', reason: 'shape' });
+    expect(san.match([], 0)).toEqual({ result: 'no-match', reason: 'place' });
   });
 });

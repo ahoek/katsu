@@ -195,8 +195,17 @@ export type Misfit =
   | 'start'
   /** Stopped too far from where it ends. */
   | 'end'
-  /** The right ends, but the line between them runs elsewhere. */
-  | 'shape'
+  /**
+   * Too far from where the stroke runs, over the stroke as a whole.
+   *
+   * Named for where it sits rather than for its shape, because that is what it
+   * catches: measured over the deck, a stroke bowed as much as thirty units off
+   * its own line - both ends held - never lands here, since a wrong route is
+   * caught by the bend, hook and endpoint checks first. What lands here is a
+   * stroke whose shape is right and which sits somewhere else, past what the
+   * two endpoint checks allow on their own.
+   */
+  | 'place'
   /** Bends the other way. */
   | 'bend'
   /** Missing the closing hook. */
@@ -276,7 +285,7 @@ export class StrokeMatcher {
     drawn: readonly Point[], strokeIndex: number, written: readonly (readonly Point[])[] = [],
   ): StrokeResult {
     if (drawn.length === 0 || strokeIndex < 0 || strokeIndex >= this.model.length) {
-      return { result: 'no-match', reason: 'shape' };
+      return { result: 'no-match', reason: 'place' };
     }
     const samples = resample(drawn, SAMPLES);
     const length = polylineLength(drawn);
@@ -438,7 +447,7 @@ export class StrokeMatcher {
       return 'end';
     }
     if (meanDistance(samples, model.samples) > this.tolerance(SHAPE_TOLERANCE) + slack + place) {
-      return 'shape';
+      return 'place';
     }
     if (!bendAgrees(samples, model)) {
       return 'bend';
