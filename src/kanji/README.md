@@ -398,7 +398,7 @@ MIT-licensed code.
 
 The JLPT levels come from [Jonathan Waller's JLPT
 resources](https://www.tanos.co.uk/jlpt/) (CC BY) and the frequency ranks from
-[KANJIDIC2](https://www.edrdg.org/wiki/index.php/KANJIDIC_Project) by the
+[KANJIDIC2](https://www.edrdg.org/kanjidic/kanjd2index_legacy.html) by the
 Electronic Dictionary Research and Development Group (CC BY-SA 4.0), both via
 the [kanji-data](https://github.com/davidluzgouveia/kanji-data) aggregation
 (MIT), pinned at a commit. The generated JSON names all of this in its `ranks`
