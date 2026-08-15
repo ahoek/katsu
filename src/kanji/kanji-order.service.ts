@@ -29,8 +29,8 @@ export class KanjiOrderService {
 function read(): KanjiOrder {
   try {
     const stored = localStorage.getItem(STORAGE_KEY) as KanjiOrder | null;
-    return stored && KANJI_ORDERS.includes(stored) ? stored : 'grade';
+    return stored && KANJI_ORDERS.includes(stored) ? stored : 'lesson';
   } catch {
-    return 'grade';
+    return 'lesson';
   }
 }

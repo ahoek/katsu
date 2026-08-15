@@ -13,8 +13,8 @@ function service(): KanjiOrderService {
 describe('KanjiOrderService', () => {
   beforeEach(() => localStorage.removeItem(STORAGE_KEY));
 
-  it('starts on the school years, the order the list has always had', () => {
-    expect(service().order()).toBe('grade');
+  it('starts on the lesson order, the order the lessons themselves take', () => {
+    expect(service().order()).toBe('lesson');
   });
 
   it('remembers the choice', () => {
@@ -26,6 +26,6 @@ describe('KanjiOrderService', () => {
   it('starts from the default when the stored value is nonsense', () => {
     localStorage.setItem(STORAGE_KEY, 'by-vibes');
 
-    expect(service().order()).toBe('grade');
+    expect(service().order()).toBe('lesson');
   });
 });

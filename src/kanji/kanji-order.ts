@@ -1,9 +1,9 @@
 import { KanjiCharacter } from './kanji-data.service';
 
 /** The four ways the deck can be walked; 'lesson' is the deck's own order. */
-export type KanjiOrder = 'grade' | 'lesson' | 'jlpt' | 'frequency';
+export type KanjiOrder = 'lesson' | 'grade' | 'frequency' | 'jlpt';
 
-export const KANJI_ORDERS: readonly KanjiOrder[] = ['grade', 'lesson', 'jlpt', 'frequency'];
+export const KANJI_ORDERS: readonly KanjiOrder[] = ['lesson', 'grade', 'frequency', 'jlpt'];
 
 /** One section of the practice list. */
 export interface KanjiGroup {

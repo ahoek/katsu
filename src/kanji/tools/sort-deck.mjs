@@ -4,10 +4,12 @@
  * The order is a cascade. A kanji always comes after every deck kanji it is
  * built from (per KanjiVG's decomposition); below that rule the school grades
  * of the 学年別漢字配当表 run in order, and within a grade the more common
- * kanji come first, by KANJIDIC2's newspaper rank. The entry's present
- * position in the file breaks what ties remain, which is what keeps a school
- * year's worth of additions from shuffling the deck: append the new group at
- * the end of the file and run this.
+ * kanji come first, by KANJIDIC2's newspaper rank. What ties remain - only
+ * kanji the ranking does not reach - take the fewest strokes first, then code
+ * point order. Nothing in the sort looks at the file's present order, so
+ * adding kanji deliberately re-sorts the whole deck: whoever starts tomorrow
+ * gets the best order the deck can offer, and whoever is mid-path simply
+ * meets the new lessons where the cascade puts them.
  *
  * A part carries the priority of the earliest kanji built on it, not its
  * own. Without that, the first rule holds hostages: 花 is grade 1 but built
@@ -26,7 +28,7 @@ import { fileURLToPath } from 'node:url';
 
 import { deck } from './kanji-deck.mjs';
 import { fetchRanks } from './kanji-ranks.mjs';
-import { componentsOf, fetchSvg } from './kanjivg.mjs';
+import { componentsOf, fetchSvg, strokeCount } from './kanjivg.mjs';
 
 const DECK_FILE = join(dirname(fileURLToPath(import.meta.url)), 'kanji-deck.mjs');
 
@@ -39,20 +41,25 @@ for (const [index, entry] of deck.entries()) {
   const svg = await fetchSvg(entry.kanji);
   nodes.push({
     entry,
-    index,
+    strokes: strokeCount(svg),
     components: componentsOf(svg, entry.kanji, deckKanji),
   });
   process.stdout.write(`\r${index + 1}/${deck.length} ${entry.kanji}   `);
 }
 process.stdout.write('\n');
 
-/** [grade, frequency rank, present position], compared left to right. */
-const compare = (a, b) => a[0] - b[0] || a[1] - b[1] || a[2] - b[2];
+/** [grade, frequency rank, strokes, code point], compared left to right. */
+const compare = (a, b) => a[0] - b[0] || a[1] - b[1] || a[2] - b[2] || a[3] - b[3];
 
 const priority = new Map(
   nodes.map(node => [
     node.entry.kanji,
-    [node.entry.grade, ranks.get(node.entry.kanji).freq ?? Infinity, node.index],
+    [
+      node.entry.grade,
+      ranks.get(node.entry.kanji).freq ?? Infinity,
+      node.strokes,
+      node.entry.kanji.codePointAt(0),
+    ],
   ]),
 );
 
