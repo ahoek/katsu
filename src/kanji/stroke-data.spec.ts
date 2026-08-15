@@ -53,6 +53,38 @@ describe('the shipped stroke data', () => {
     expect(outside).toEqual([]);
   });
 
+  /**
+   * The ranks the practice list can be sorted by. A missing JLPT level is a
+   * fact about the lists - they skip a few kanji - but the skipped ones are
+   * known by name, so a regeneration that quietly loses the levels cannot
+   * pass as one that found four gaps.
+   */
+  it('carries a JLPT level for every kanji the lists have', () => {
+    const outside = strokeData.characters
+      .filter(character => character.jlpt === null)
+      .map(character => character.kanji);
+
+    expect(outside).toEqual(['分', '里', '身', '畑']);
+    for (const character of strokeData.characters) {
+      if (character.jlpt !== null) {
+        expect(character.jlpt).toBeGreaterThanOrEqual(1);
+        expect(character.jlpt).toBeLessThanOrEqual(5);
+      }
+    }
+  });
+
+  /**
+   * Every kanji of the first three school years is common enough to hold a
+   * newspaper frequency rank; kanji added later may fall outside KANJIDIC2's
+   * 2501 ranked and go null. A rank is a position, so no two kanji share one.
+   */
+  it('ranks every kanji by frequency, each rank its own', () => {
+    const ranks = strokeData.characters.map(character => character.freq);
+
+    expect(ranks.every(rank => Number.isInteger(rank) && rank >= 1)).toBe(true);
+    expect(new Set(ranks).size).toBe(ranks.length);
+  });
+
   it('has a meaning in both languages and at least one stroke', () => {
     for (const character of strokeData.characters) {
       expect(character.strokes.length).toBeGreaterThan(0);
