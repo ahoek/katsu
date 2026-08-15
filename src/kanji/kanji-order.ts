@@ -22,8 +22,9 @@ const LESSON_BAND = 100;
 
 /**
  * Frequency sections, by cumulative rank: the most common hundred first, then
- * widening bands. The last one ends where KANJIDIC2's ranking ends, so the
- * bands still hold once the deck grows towards the full 常用漢字.
+ * widening bands. The ranking covers every kanji the corpora saw, so whatever
+ * lies beyond the last band goes into one closing section rather than being
+ * dropped.
  */
 const FREQUENCY_BANDS = [100, 250, 500, 1000, 1500, 2000, 2500];
 
@@ -105,6 +106,15 @@ export function groupCharacters(
           });
         }
         from = to + 1;
+      }
+      const rest = ranked.filter(character => (character.freq as number) >= from);
+      if (rest.length) {
+        groups.push({
+          key: 'frequency-rest',
+          labelKey: 'kanji.browse.freq-rest',
+          labelParams: { from },
+          characters: rest,
+        });
       }
       const unranked = characters.filter(character => character.freq === null);
       if (unranked.length) {

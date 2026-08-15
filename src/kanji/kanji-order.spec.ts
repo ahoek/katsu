@@ -78,7 +78,15 @@ describe('groupCharacters', () => {
     ]);
   });
 
-  it('closes the frequency list with the kanji beyond the ranked 2501', () => {
+  it('keeps a section for whatever lies beyond the last band', () => {
+    const groups = groupCharacters([...deck, character('鬱', 8, null, 4321)], 'frequency');
+
+    expect(groups.at(-1)?.labelKey).toBe('kanji.browse.freq-rest');
+    expect(groups.at(-1)?.labelParams).toEqual({ from: 2501 });
+    expect(groups.at(-1)?.characters.map(c => c.kanji)).toEqual(['鬱']);
+  });
+
+  it('closes the frequency list with the kanji the corpora never saw', () => {
     const groups = groupCharacters([...deck, character('凹', 8, null, null)], 'frequency');
 
     expect(groups.at(-1)?.labelKey).toBe('kanji.browse.freq-none');

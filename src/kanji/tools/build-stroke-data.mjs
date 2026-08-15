@@ -10,9 +10,9 @@
  * the order of the array is the lesson order, and `grade` is the school year
  * of the 学年別漢字配当表. The other two are merged in here, per kanji: its
  * JLPT level (5 for N5 down to 1 for N1, null for the few kanji the lists
- * skip) and its frequency rank in newspaper text (1 is the most common, null
- * beyond KANJIDIC2's 2501 ranked). Both come from kanji-ranks.mjs, which
- * names the sources.
+ * skip) and its frequency rank over real texts (1 is the most common, null
+ * for a kanji the corpora never saw). Both come from kanji-ranks.mjs, which
+ * names the sources and the blend.
  *
  * Run from the repo root, after sort-deck.mjs has put any new kanji in place:
  *   node src/kanji/tools/build-stroke-data.mjs
@@ -22,7 +22,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { deck } from './kanji-deck.mjs';
-import { KANJI_DATA_REF, fetchRanks } from './kanji-ranks.mjs';
+import { KANJI_DATA_REF, KANJI_FREQUENCY_REF, fetchRanks } from './kanji-ranks.mjs';
 import { KANJIVG_REF, componentsOf, fetchSvg } from './kanjivg.mjs';
 
 const OUT_FILE = join(
@@ -110,11 +110,18 @@ const data = {
   licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
   // Where each kanji's jlpt and freq come from; the strokes are KanjiVG's.
   ranks: {
-    source: 'kanji-data',
-    sourceUrl: 'https://github.com/davidluzgouveia/kanji-data',
-    sourceRef: KANJI_DATA_REF,
-    jlpt: 'JLPT kanji lists by Jonathan Waller (tanos.co.uk, CC BY)',
-    frequency: 'KANJIDIC2 newspaper frequency rank (EDRDG, CC BY-SA 4.0)',
+    jlpt: {
+      source: 'kanji-data',
+      sourceUrl: 'https://github.com/davidluzgouveia/kanji-data',
+      sourceRef: KANJI_DATA_REF,
+      from: 'JLPT kanji lists by Jonathan Waller (tanos.co.uk, CC BY)',
+    },
+    frequency: {
+      source: 'kanji-frequency',
+      sourceUrl: 'https://github.com/scriptin/kanji-frequency',
+      sourceRef: KANJI_FREQUENCY_REF,
+      from: 'Character counts by Dmitry Shpika (CC BY 4.0), blended half Wikipedia, quarter Aozora Bunko, quarter Wikinews',
+    },
   },
   // Every KanjiVG glyph is drawn in this square; the app scales it to the pad.
   viewBox: 109,

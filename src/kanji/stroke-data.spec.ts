@@ -74,9 +74,9 @@ describe('the shipped stroke data', () => {
   });
 
   /**
-   * Every kanji of the first three school years is common enough to hold a
-   * newspaper frequency rank; kanji added later may fall outside KANJIDIC2's
-   * 2501 ranked and go null. A rank is a position, so no two kanji share one.
+   * Every kanji of the first three school years appears in the counted
+   * corpora and so holds a frequency rank; a kanji the corpora never saw
+   * would go null. A rank is a position, so no two kanji share one.
    */
   it('ranks every kanji by frequency, each rank its own', () => {
     const ranks = strokeData.characters.map(character => character.freq);

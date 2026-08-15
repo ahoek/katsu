@@ -13,7 +13,7 @@ export interface KanjiCharacter {
   kun: string;
   /** JLPT level, 5 (N5) down to 1 (N1); null for kanji the lists skip. */
   jlpt: number | null;
-  /** Frequency rank in newspaper text, 1 the most common; null beyond 2501. */
+  /** Frequency rank over real texts, 1 the most common; null if never seen. */
   freq: number | null;
   /** Deck kanji this one is built from, each taught earlier in the deck. */
   components: string[];

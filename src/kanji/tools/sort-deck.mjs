@@ -4,9 +4,9 @@
  * The order is a cascade. A kanji always comes after every deck kanji it is
  * built from (per KanjiVG's decomposition); below that rule the school grades
  * of the 学年別漢字配当表 run in order, and within a grade the more common
- * kanji come first, by KANJIDIC2's newspaper rank. What ties remain - only
- * kanji the ranking does not reach - take the fewest strokes first, then code
- * point order. Nothing in the sort looks at the file's present order, so
+ * kanji come first, by the blended corpus rank from kanji-ranks.mjs. What
+ * ties remain - only kanji the ranking does not reach - take the fewest
+ * strokes first, then code point order. Nothing in the sort looks at the file's present order, so
  * adding kanji deliberately re-sorts the whole deck: whoever starts tomorrow
  * gets the best order the deck can offer, and whoever is mid-path simply
  * meets the new lessons where the cascade puts them.

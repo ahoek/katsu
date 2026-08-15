@@ -94,7 +94,8 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'jlpt-none': 'Outside the JLPT lists',
         'lesson-band': 'Kanji {{from}}–{{to}}',
         'freq-band': 'Rank {{from}}–{{to}}',
-        'freq-none': 'Beyond the ranked 2501',
+        'freq-rest': 'Rank {{from}} and up',
+        'freq-none': 'Not seen in the counted texts',
       },
       // What a page about one character calls itself. The build writes the
       // same thing into the file (tools/site-pages.mjs); this keeps it right
@@ -290,7 +291,8 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'jlpt-none': 'Buiten de JLPT-lijsten',
         'lesson-band': 'Kanji {{from}}–{{to}}',
         'freq-band': 'Plaats {{from}}–{{to}}',
-        'freq-none': 'Voorbij de 2501 gerangschikte',
+        'freq-rest': 'Plaats {{from}} en verder',
+        'freq-none': 'Niet gezien in de getelde teksten',
       },
       seo: {
         title: '{{kanji}} streekvolgorde - schrijf de kanji voor ‘{{meaning}}’ - Katsu',

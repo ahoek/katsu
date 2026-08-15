@@ -228,7 +228,7 @@
     },
     "credits": {
       "title": "Credits",
-      "text": "The kanji stroke order comes from the KanjiVG project by Ulrich Apel, used under the CC BY-SA 3.0 license. The JLPT levels come from Jonathan Waller's JLPT resources (CC BY), and the frequency ranks from the KANJIDIC2 dictionary by the Electronic Dictionary Research and Development Group (CC BY-SA 4.0)."
+      "text": "The kanji stroke order comes from the KanjiVG project by Ulrich Apel, used under the CC BY-SA 3.0 license. The JLPT levels come from Jonathan Waller's JLPT resources (CC BY), and the frequency ranks are blended from Dmitry Shpika's kanji-frequency counts over Wikipedia, Aozora Bunko and Wikinews (CC BY 4.0)."
     }
   },
   "credit": {
