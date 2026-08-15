@@ -8,6 +8,8 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
+import { addIcons } from 'ionicons';
+import { libraryOutline, schoolOutline } from 'ionicons/icons';
 
 import { MenuButtonComponent } from '../components/nav-drawer/menu-button.component';
 
@@ -26,4 +28,10 @@ import { MenuButtonComponent } from '../components/nav-drawer/menu-button.compon
     MenuButtonComponent,
   ],
 })
-export class AboutPageComponent {}
+export class AboutPageComponent {
+  constructor() {
+    // Registered here rather than in the root component, so the credits can
+    // gain a row without growing the main bundle.
+    addIcons({ libraryOutline, schoolOutline });
+  }
+}
