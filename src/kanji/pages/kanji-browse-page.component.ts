@@ -13,14 +13,17 @@ import { arrowBack } from 'ionicons/icons';
 
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
+import { KANJI_ORDERS, KanjiOrder, groupCharacters } from '../kanji-order';
+import { KanjiOrderService } from '../kanji-order.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { FIRST_STAGE, MASTERED_STAGE } from '../srs/srs';
 
 import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
 
 /**
- * The whole deck at a glance, grouped by the school year it belongs to. Pick a
- * character to see it written; practising it is a step from there.
+ * The whole deck at a glance, in whichever of the four orders is chosen:
+ * school year, lesson order, JLPT level or frequency. Pick a character to see
+ * it written; practising it is a step from there.
  */
 @Component({
   selector: 'app-kanji-browse-page',
@@ -42,8 +45,12 @@ export class KanjiBrowsePageComponent implements OnInit {
   private readonly data = inject(KanjiDataService);
   private readonly srs = inject(KanjiSrsService);
   private readonly translate = inject(TranslateService);
+  private readonly orderService = inject(KanjiOrderService);
 
   readonly characters = signal<KanjiCharacter[]>([]);
+
+  protected readonly orders = KANJI_ORDERS;
+  readonly order = this.orderService.order;
 
   readonly learned = this.srs.learned;
   readonly mastered = this.srs.mastered;
@@ -58,14 +65,8 @@ export class KanjiBrowsePageComponent implements OnInit {
   /** The rungs a kanji climbs, for the bar under each tile. */
   protected readonly rungs = MASTERED_STAGE - FIRST_STAGE;
 
-  /** One section per school year, in deck order. */
-  readonly groups = computed(() => {
-    const grades = [...new Set(this.characters().map(character => character.grade))].sort();
-    return grades.map(grade => ({
-      grade,
-      characters: this.characters().filter(character => character.grade === grade),
-    }));
-  });
+  /** The deck cut into sections by the chosen order. */
+  readonly groups = computed(() => groupCharacters(this.characters(), this.order()));
 
   constructor() {
     installKanjiTranslations(this.translate);
@@ -80,6 +81,10 @@ export class KanjiBrowsePageComponent implements OnInit {
 
   meaningOf(character: KanjiCharacter): string {
     return this.data.meaningOf(character, this.translate.getCurrentLang());
+  }
+
+  setOrder(order: KanjiOrder): void {
+    this.orderService.set(order);
   }
 
   /** How many of a year's kanji have had their lesson. */

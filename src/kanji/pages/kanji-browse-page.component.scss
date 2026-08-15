@@ -17,6 +17,38 @@
   }
 }
 
+// The order the list is in, one pill per choice, like the review settings.
+.sorts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 12px;
+}
+
+.sort {
+  appearance: none;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--ion-color-medium);
+  background: transparent;
+  color: var(--ion-text-color);
+  font-size: .8rem;
+  font-family: inherit;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: background-color 150ms ease-in-out, border-color 150ms ease-in-out;
+
+  &:hover {
+    border-color: var(--ion-color-primary);
+  }
+
+  &--selected {
+    border-color: var(--ion-color-primary-shade);
+    background: var(--ion-color-primary-shade);
+    color: var(--ion-color-primary-contrast);
+  }
+}
+
 .group {
   margin-bottom: 24px;
 

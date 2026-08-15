@@ -16,6 +16,20 @@
       {{ 'kanji.progress' | translate: { done: learned().size, total: characters().length } }}
     </p>
 
+    <div class="sorts" role="group" [attr.aria-label]="'kanji.browse.sort' | translate">
+      @for (option of orders; track option) {
+        <button
+          type="button"
+          class="sort"
+          [class.sort--selected]="order() === option"
+          [attr.aria-pressed]="order() === option"
+          (click)="setOrder(option)"
+        >
+          {{ 'kanji.browse.sort-' + option | translate }}
+        </button>
+      }
+    </div>
+
     <!-- What the tiles are saying, said once. Without it a bar filling up is
          decoration; with it, it is a level. -->
     <p class="legend">
@@ -35,14 +49,16 @@
       }
     </p>
 
-    @for (group of groups(); track group.grade) {
+    @for (group of groups(); track group.key) {
       <section class="group">
-        <h2 class="group__title">
-          {{ 'kanji.grade' | translate: { grade: group.grade } }}
-          <span class="group__count">
-            {{ learnedIn(group.characters) }} / {{ group.characters.length }}
-          </span>
-        </h2>
+        @if (group.labelKey) {
+          <h2 class="group__title">
+            {{ group.labelKey | translate: group.labelParams }}
+            <span class="group__count">
+              {{ learnedIn(group.characters) }} / {{ group.characters.length }}
+            </span>
+          </h2>
+        }
 
         <div class="grid">
           @for (entry of group.characters; track entry.kanji) {
