@@ -1,13 +1,20 @@
 /**
  * Puts the deck in learning order and rewrites kanji-deck.mjs in place.
  *
- * A topological sort on KanjiVG's decomposition - a kanji comes after every
- * deck kanji it is built from - taking the fewest strokes first among whatever
- * is available, and the entry's present position in the file as the tie-break.
- * That last part is what keeps a school year's worth of additions from
- * shuffling the deck: append the new group at the end of the file, run this,
- * and the kanji already being taught keep the order they had except where a
- * newcomer is a part of one of them.
+ * The order is a cascade. A kanji always comes after every deck kanji it is
+ * built from (per KanjiVG's decomposition); below that rule the school grades
+ * of the 学年別漢字配当表 run in order, and within a grade the more common
+ * kanji come first, by KANJIDIC2's newspaper rank. The entry's present
+ * position in the file breaks what ties remain, which is what keeps a school
+ * year's worth of additions from shuffling the deck: append the new group at
+ * the end of the file and run this.
+ *
+ * A part carries the priority of the earliest kanji built on it, not its
+ * own. Without that, the first rule holds hostages: 花 is grade 1 but built
+ * from 化 (grade 3), and 分 is the 24th most common kanji but built from 刀
+ * (rank 1794), so each would sink to wherever its part happened to surface.
+ * Propagating the priority instead pulls 化 in right before 花: a part is
+ * borrowed across the cascade only when, and exactly where, it is needed.
  *
  * Run from the repo root after adding kanji, then rebuild the stroke data:
  *   node src/kanji/tools/sort-deck.mjs
@@ -18,11 +25,14 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { deck } from './kanji-deck.mjs';
-import { componentsOf, fetchSvg, strokeCount } from './kanjivg.mjs';
+import { fetchRanks } from './kanji-ranks.mjs';
+import { componentsOf, fetchSvg } from './kanjivg.mjs';
 
 const DECK_FILE = join(dirname(fileURLToPath(import.meta.url)), 'kanji-deck.mjs');
 
 const deckKanji = new Set(deck.map(entry => entry.kanji));
+
+const ranks = await fetchRanks(deck);
 
 const nodes = [];
 for (const [index, entry] of deck.entries()) {
@@ -30,12 +40,36 @@ for (const [index, entry] of deck.entries()) {
   nodes.push({
     entry,
     index,
-    strokes: strokeCount(svg),
     components: componentsOf(svg, entry.kanji, deckKanji),
   });
   process.stdout.write(`\r${index + 1}/${deck.length} ${entry.kanji}   `);
 }
 process.stdout.write('\n');
+
+/** [grade, frequency rank, present position], compared left to right. */
+const compare = (a, b) => a[0] - b[0] || a[1] - b[1] || a[2] - b[2];
+
+const priority = new Map(
+  nodes.map(node => [
+    node.entry.kanji,
+    [node.entry.grade, ranks.get(node.entry.kanji).freq ?? Infinity, node.index],
+  ]),
+);
+
+// A part inherits the best priority above it, however deep the tree.
+let inherited = true;
+while (inherited) {
+  inherited = false;
+  for (const node of nodes) {
+    const own = priority.get(node.entry.kanji);
+    for (const part of node.components) {
+      if (compare(own, priority.get(part)) < 0) {
+        priority.set(part, own);
+        inherited = true;
+      }
+    }
+  }
+}
 
 const written = new Set();
 const remaining = new Set(nodes);
@@ -48,7 +82,7 @@ while (remaining.size) {
     // this, and KanjiVG has none. It would be a silent infinite loop otherwise.
     throw new Error(`Cycle among ${[...remaining].map(node => node.entry.kanji).join('')}`);
   }
-  available.sort((a, b) => a.strokes - b.strokes || a.index - b.index);
+  available.sort((a, b) => compare(priority.get(a.entry.kanji), priority.get(b.entry.kanji)));
   const [next] = available;
 
   ordered.push(next);
@@ -64,15 +98,11 @@ const source = await readFile(DECK_FILE, 'utf8');
 const head = source.slice(0, source.indexOf('export const deck = ['));
 await writeFile(DECK_FILE, `${head}export const deck = [\n${ordered.map(node => line(node.entry)).join('\n')}\n];\n`);
 
-// What moved and why, since the alternative is diffing 400 lines by eye.
-const place = new Map(ordered.map((node, index) => [node.entry.kanji, index]));
-const overtaken = ordered.filter(
-  (node, index) => index && node.index < ordered[index - 1].index && node.components.length,
-);
-for (const node of overtaken.slice(0, 20)) {
-  const late = node.components.filter(part => place.get(part) > node.index);
-  if (late.length) {
-    console.log(`${node.entry.kanji} waits for ${late.join(' ')}`);
+// The parts taught out of their own grade, since that is the surprising move.
+for (const node of ordered) {
+  const effective = priority.get(node.entry.kanji);
+  if (effective[0] < node.entry.grade) {
+    console.log(`${node.entry.kanji} (grade ${node.entry.grade}) borrowed into grade ${effective[0]}`);
   }
 }
 console.log(`Wrote ${ordered.length} entries to ${DECK_FILE}`);
