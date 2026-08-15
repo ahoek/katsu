@@ -295,9 +295,11 @@ every device loses the code.
 
 ## The deck
 
-Grades 1 and 2 of the
-[学年別漢字配当表](https://en.wikipedia.org/wiki/Ky%C5%8Diku_kanji) in full: 80
-and 160 characters, both in the ministry's own aiueo order. Meanings and readings
+Grades 1, 2 and 3 of the
+[学年別漢字配当表](https://en.wikipedia.org/wiki/Ky%C5%8Diku_kanji) in full: 80,
+160 and 200 characters, in the learning order `tools/sort-deck.mjs` computes -
+parts before what is built from them, the school grades in order below that,
+the more common kanji first within a grade. Meanings and readings
 live in `tools/kanji-deck.mjs` and are deliberately short, so the prompt fits one
 line on a phone.
 
