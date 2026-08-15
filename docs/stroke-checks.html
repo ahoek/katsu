@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Katsu — hoe een streek beoordeeld wordt</title>
+<style>
+  :root {
+    --ink: #1b1b1b; --soft: #6b675f; --line: #dcd8cf; --paper: #fbfaf7; --pad: #efece4;
+    --wrong: #a8382c; --right: #4c7a4c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --ink: #e8e6df; --soft: #a19d94; --line: #3a3a34; --paper: #14160f; }
+  }
+  body { margin: 0; background: var(--paper); color: var(--ink);
+    font: 16px/1.6 system-ui, -apple-system, sans-serif; }
+  main { max-width: 68rem; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+  h1 { font-size: 1.8rem; margin: 0 0 .3rem; }
+  h2 { font-size: 1.15rem; margin: 2.5rem 0 .6rem; }
+  .lead { color: var(--soft); margin: 0 0 2rem; max-width: 46rem; }
+  p, li { max-width: 46rem; }
+  code { font-size: .9em; background: color-mix(in srgb, var(--ink) 8%, transparent);
+    padding: .1em .35em; border-radius: 4px; }
+  table { border-collapse: collapse; font-size: .9rem; margin: 1rem 0; }
+  th, td { text-align: left; padding: .35rem .8rem .35rem 0; border-bottom: 1px solid var(--line);
+    vertical-align: top; }
+  .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: .9rem; margin: 1.2rem 0 0; }
+  .c { border: 1px solid var(--line); border-radius: 12px; padding: .75rem;
+    background: color-mix(in srgb, var(--ink) 3%, transparent); }
+  .c.changed { border-color: color-mix(in srgb, var(--wrong) 45%, transparent); }
+  .c.proposed { border-style: dashed; }
+  .c svg { width: 100%; background: var(--pad); border-radius: 8px; display: block; }
+  .faint { fill: none; stroke: #9a978f; stroke-width: 6.5; stroke-linecap: round;
+    stroke-linejoin: round; opacity: .3; }
+  .should { fill: none; stroke: var(--right); stroke-width: 6.5; stroke-linecap: round;
+    stroke-linejoin: round; opacity: .6; }
+  .drew { fill: none; stroke: var(--wrong); stroke-width: 6.5; stroke-linecap: round;
+    stroke-linejoin: round; }
+  .c h3 { font-size: .95rem; margin: .65rem 0 .15rem; }
+  .asks { font-size: .75rem; color: var(--soft); margin: 0 0 .5rem; line-height: 1.45; }
+  .msg { font-size: .8rem; line-height: 1.5; }
+  .msg.old { text-decoration: line-through; opacity: .55; }
+  .tag { display: inline-block; font-size: .62rem; letter-spacing: .04em; text-transform: uppercase;
+    padding: .1em .5em; border-radius: 99px; background: color-mix(in srgb, var(--wrong) 15%, transparent);
+    color: var(--wrong); margin-left: .3em; vertical-align: .15em; }
+  .tag.new { background: color-mix(in srgb, var(--right) 15%, transparent); color: var(--right); }
+  .legend { font-size: .85rem; color: var(--soft); }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line);
+    font-size: .85rem; color: var(--soft); }
+</style>
+</head>
+<body>
+<main>
+
+<h1>Hoe een streek beoordeeld wordt</h1>
+<p class="lead">De checks die <code>src/kanji/stroke/stroke-matcher.ts</code> op elke getekende streek
+loslaat, in de volgorde waarin ze gevraagd worden, met de melding die de leerling te zien krijgt.
+Elk voorbeeld hieronder is door de matcher gehaald en levert echt die melding op.</p>
+
+<h2>De regel erachter</h2>
+<p>Uitvoering wordt vergeven, structuur niet. Wiebelen, een ronde hoek, net iets te vroeg stoppen —
+dat is een duim op een telefoon. Het haakje aan het eind en de kant waarop een streek buigt zijn
+onderdeel van wat je moet onthouden, dus daar wordt niet in toegegeven.</p>
+<p>Alles wordt gemeten in het 109×109-vierkant van KanjiVG, dus onafhankelijk van hoe groot de pad
+op het scherm is. Eén eenheid is ongeveer 3 beeldpunten op een telefoon.</p>
+
+<h2>Waar een streek staat</h2>
+<p>Bij <em>helemaal zelf schrijven</em> blijft je eigen inkt op de pad staan, en dan is die inkt de
+maatstaf: van de streken die er al staan wordt de gemiddelde verschuiving ten opzichte van het model
+bepaald, en die gaat er eerst af. Een kanji die je een rij te laag schrijft is een kanji die je een
+rij te laag schrijft, geen kanji met acht foute streken. Die verschuiving telt tot maximaal
+13 eenheden mee, zodat een kanji die je in een hoek propt nog steeds afgekeurd wordt.</p>
+<p>De eerste streek heeft niets om zich tegen te plaatsen en krijgt daarom 12 eenheden extra ruimte
+op alles wat over plaatsing gaat — en de rivaalregel zwijgt erover.</p>
+<p>Bij <em>geleid schrijven</em> landt elke goedgekeurde streek als de streek van het model, dus daar
+is de verschuiving nul en wordt alles tegen het model gemeten.</p>
+
+<h2>De maten</h2>
+<table>
+  <tr><th>maat</th><th class="num">eenheden</th><th>waarvoor</th></tr>
+  <tr><td>uiteinden</td><td class="num">26</td><td>hoe ver begin en eind van hun plek mogen zitten, plus 7% van de lengte</td></tr>
+  <tr><td>plaats</td><td class="num">18</td><td>gemiddelde afstand over de hele streek, plus 7% van de lengte</td></tr>
+  <tr><td>doorschieten</td><td class="num">16</td><td>extra ruimte als je verder doorloopt in de richting waar je al heen ging</td></tr>
+  <tr><td>lengte</td><td class="num">2,2×</td><td>hoeveel langer of korter, plus 10 eenheden speling voor korte streken</td></tr>
+  <tr><td>bolling telt</td><td class="num">14</td><td>zoveel moet het model zelf bollen voordat de kant ervan gevraagd wordt</td></tr>
+  <tr><td>bolling speling</td><td class="num">3</td><td>zover mag je naar de verkeerde kant bollen</td></tr>
+  <tr><td>rivaal</td><td class="num">4</td><td>zoveel dichter moet een andere streek zitten voordat het die streek is</td></tr>
+  <tr><td>doorlopen</td><td class="num">14</td><td>zoveel dieper dan het model mag je door een bestaande streek heen</td></tr>
+  <tr><td>verschuiving</td><td class="num">13</td><td>hoeveel je eigen inkt over de plaatsing mag zeggen</td></tr>
+</table>
+
+<h2>De checks</h2>
+<p class="legend">Groen = waar die streek loopt · rood = wat er getekend werd · grijs = de rest van de
+kanji. De volgorde is de volgorde waarin ze gevraagd worden: de eerste die faalt is de melding die
+je ziet, dus een streek die zowel te kort is als zijn haakje mist heet te kort.</p>
+
+<div class="grid">
+
+  <div class="c">
+    <svg viewBox="0 0 109 109">
+      <g class="faint"><path d="M28.75,55.14c3.13,0.76,6.46,0.43,9.64,0.2c10.03-0.72,23.97-2.63,34.73-3.12c2.7-0.12,5.45-0.16,8.13,0.3"/><path d="M13,87.83c3.94,1.01,7.72,0.96,11.75,0.72c18.41-1.07,41.27-3.39,61.12-4.07c3.63-0.13,7.2-0.1,10.75,0.78"/></g>
+      <path class="should" d="M27.5,23.65c3.09,0.73,6.29,0.36,9.4,0.06c10.2-1,27-2.94,38.97-3.57c3.06-0.16,6.09-0.2,9.14,0.23"/>
+      <path class="drew" d="M27.5 23.6L30.8 23.7L39.8 22.8L47.6 22.5"/>
+    </svg>
+    <h3>1 · Lengte</h3>
+    <p class="asks">Meer dan 2,2× langer of korter dan die streek</p>
+    <p class="msg">veel langer of korter dan die streek is</p>
+  </div>
+
+  <div class="c changed">
+    <svg viewBox="0 0 109 109">
+      <g class="faint"><path d="M27.5,23.65c3.09,0.73,6.29,0.36,9.4,0.06c10.2-1,27-2.94,38.97-3.57c3.06-0.16,6.09-0.2,9.14,0.23"/><path d="M13,87.83c3.94,1.01,7.72,0.96,11.75,0.72c18.41-1.07,41.27-3.39,61.12-4.07c3.63-0.13,7.2-0.1,10.75,0.78"/></g>
+      <path class="should" d="M28.75,55.14c3.13,0.76,6.46,0.43,9.64,0.2c10.03-0.72,23.97-2.63,34.73-3.12c2.7-0.12,5.45-0.16,8.13,0.3"/>
+      <path class="drew" d="M-4.8 49.7L17.6 53.3L33.6 55.6L55.5 53.7L74.5 52.2L81.3 52.5"/>
+    </svg>
+    <h3>2 · Begin <span class="tag">meet nu jouw plaatsing</span></h3>
+    <p class="asks">Het eerste punt meer dan 26 van waar die streek begint</p>
+    <p class="msg">begon niet waar die streek begint</p>
+  </div>
+
+  <div class="c changed">
+    <svg viewBox="0 0 109 109">
+      <g class="faint"><path d="M27.5,23.65c3.09,0.73,6.29,0.36,9.4,0.06c10.2-1,27-2.94,38.97-3.57c3.06-0.16,6.09-0.2,9.14,0.23"/><path d="M28.75,55.14c3.13,0.76,6.46,0.43,9.64,0.2c10.03-0.72,23.97-2.63,34.73-3.12c2.7-0.12,5.45-0.16,8.13,0.3"/></g>
+      <path class="should" d="M13,87.83c3.94,1.01,7.72,0.96,11.75,0.72c18.41-1.07,41.27-3.39,61.12-4.07c3.63-0.13,7.2-0.1,10.75,0.78"/>
+      <path class="drew" d="M13.0 87.8L18.6 88.2L28.1 87.5L38.1 86.8L48.0 86.2L53.1 86.6"/>
+    </svg>
+    <h3>3 · Eind <span class="tag">meet nu jouw plaatsing</span></h3>
+    <p class="asks">Stopt te ver van waar die streek eindigt. Doorschieten in de richting waar je al
+    heen ging mag 16 eenheden verder dan tekortkomen</p>
+    <p class="msg">eindigde niet waar die streek eindigt</p>
+  </div>
+
+  <div class="c changed">
+    <svg viewBox="0 0 109 109">
+      <g class="faint"><path d="M30.13,29.42c2.55,0.64,5.18,0.48,7.76,0.15c9.53-1.23,23.14-3.87,31.61-4.52c2.51-0.19,4.9-0.13,7.38,0.25"/><path d="M52.24,12.45c1.53,1.53,2.01,3.55,2.01,5.05c0,3.33,0.04,25.2,0,26.25"/><path d="M14.38,49.17c2.64,0.58,4.98,0.91,10.12,0.13c18.5-2.8,40.29-6,58.24-7.47c3.33-0.27,6.79-0.66,10.13-0.3"/><path d="M42.78,49.89c0.97,1.23,1.22,3.09,1.2,4.53c-0.22,15.82,0.15,26.07-8.72,37.82"/><path d="M61.02,46.83c1.39,1.39,2.01,2.92,2.01,5.02c0,13.52-0.06,30.44-0.06,35.4c0,12.25-3.71,5.75-6.71,2.75"/><path d="M78.77,63.83c3.86,3.92,9.11,12.92,10.98,19.17"/></g>
+      <path class="should" d="M28.53,63.89c0.35,1.23,0.25,2.31-0.02,3.18c-1.63,5.43-4.42,9.93-9.26,15.93"/>
+      <path class="drew" d="M28.5 41.9L28.7 44.1L28.5 45.1L23.4 55.4L19.3 61.0"/>
+    </svg>
+    <h3>4 · Plaats <span class="tag">heette vorm</span></h3>
+    <p class="asks">Gemiddeld te ver van die streek, over de hele lengte gemeten op 16 punten. Dit is
+    de krapste maat die over plaatsing gaat: voor een tik van 22 eenheden 19,5 tegen 27,5 bij de
+    uiteinden</p>
+    <p class="msg old">goede uiteinden, maar de lijn liep er anders langs</p>
+    <p class="msg">staat te ver van waar die streek loopt</p>
+  </div>
+
+  <div class="c">
+    <svg viewBox="0 0 109 109">
+      <path class="faint" d="M41.88,14.38c1,1.38,1.5,3.25,1.5,5.12c0,40.13-9.12,57.5-28.5,68.75"/>
+      <path class="should" d="M13.5,45.75c2.88,0.85,5.78,0.05,8.58-0.66c8.47-2.14,39.88-9.79,40.92-9.84c2.5-0.12,4.75,0.5,4.25,4.75c-0.5,4.25-5.5,20.75-7,32.5c-2.23,17.46,2,19.37,18.21,19.37c13.79,0,19.01-1.07,19.27-10.12"/>
+      <path class="drew" d="M13.5 45.8L19.0 52.4L35.3 80.7L41.9 90.3L46.5 88.6L57.6 71.5L74.5 52.3L82.3 52.6L98.9 69.3L97.7 81.8"/>
+    </svg>
+    <h3>5 · Bocht</h3>
+    <p class="asks">Bolt naar de andere kant dan die streek, gelezen op het diepste punt van het
+    model. Alleen gevraagd als het model zelf minstens 14 bolt, en met 3 eenheden speling</p>
+    <p class="msg">buigt de andere kant op</p>
+  </div>
+
+  <div class="c">
+    <svg viewBox="0 0 109 109">
+      <g class="faint"><path d="M30.13,29.42c2.55,0.64,5.18,0.48,7.76,0.15c9.53-1.23,23.14-3.87,31.61-4.52c2.51-0.19,4.9-0.13,7.38,0.25"/><path d="M52.24,12.45c1.53,1.53,2.01,3.55,2.01,5.05c0,3.33,0.04,25.2,0,26.25"/><path d="M14.38,49.17c2.64,0.58,4.98,0.91,10.12,0.13c18.5-2.8,40.29-6,58.24-7.47c3.33-0.27,6.79-0.66,10.13-0.3"/><path d="M42.78,49.89c0.97,1.23,1.22,3.09,1.2,4.53c-0.22,15.82,0.15,26.07-8.72,37.82"/><path d="M28.53,63.89c0.35,1.23,0.25,2.31-0.02,3.18c-1.63,5.43-4.42,9.93-9.26,15.93"/><path d="M78.77,63.83c3.86,3.92,9.11,12.92,10.98,19.17"/></g>
+      <path class="should" d="M61.02,46.83c1.39,1.39,2.01,2.92,2.01,5.02c0,13.52-0.06,30.44-0.06,35.4c0,12.25-3.71,5.75-6.71,2.75"/>
+      <path class="drew" d="M61.0 46.8L62.8 49.9L63.0 65.9L63.0 87.3L60.7 94.3"/>
+    </svg>
+    <h3>6 · Haakje</h3>
+    <p class="asks">Die streek eindigt met een flick en de tekening loopt recht door. Het getekende
+    haakje mag veel kleiner zijn dan dat van het model — het kleinste flickje telt</p>
+    <p class="msg">geen haakje aan het eind</p>
+  </div>
+
+  <div class="c changed">
+    <svg viewBox="0 0 109 109">
+      <path class="faint" d="M19.88,26.65c3.2,0.73,6.6,0.59,8.91,0.4c18.28-1.55,33.06-3.55,52.96-4.66c3.87-0.22,6.42-0.02,8.12,0.39"/>
+      <path class="should" d="M42.42,29.43c0.33,1.45,0.22,2.69-0.15,4.17C39.38,45,30.75,61.62,15,73.5"/>
+      <path class="drew" d="M38.9 3.7L41.3 20.8L42.6 31.5L40.3 39.7L33.5 53.4L15.0 73.5"/>
+    </svg>
+    <h3>7 · Doorlopen <span class="tag">meet nu jouw inkt</span></h3>
+    <p class="asks">Loopt 14 dieper dan het model door een streek die er al staat. Zo wordt 石 een 右.
+    Vergeleken met de inkt die er echt ligt, niet met waar het model die streek heeft</p>
+    <p class="msg">liep door een streek waar hij moet stoppen</p>
+  </div>
+
+  <div class="c changed">
+    <svg viewBox="0 0 109 109">
+      <g class="faint"><path d="M28.75,55.14c3.13,0.76,6.46,0.43,9.64,0.2c10.03-0.72,23.97-2.63,34.73-3.12c2.7-0.12,5.45-0.16,8.13,0.3"/></g>
+      <path class="should" d="M27.5,23.65c3.09,0.73,6.29,0.36,9.4,0.06c10.2-1,27-2.94,38.97-3.57c3.06-0.16,6.09-0.2,9.14,0.23"/>
+      <path class="drew" d="M13.0 87.8L24.8 88.5L44.4 87.2L65.3 85.6L85.9 84.5L96.6 85.3"/>
+    </svg>
+    <h3>8 · Andere streek <span class="tag">nu twee keer gevraagd</span></h3>
+    <p class="asks">Zit 4 dichter bij een andere streek dan bij deze. Alleen een beschuldiging als
+    dat zowel bij het model als bij jouw eigen plaatsing zo is — en nooit bij de eerste streek,
+    want er staat niets om die tegen te plaatsen</p>
+    <p class="msg">dit is streek 3, die later komt<br>dit is streek 1, die al geschreven was</p>
+  </div>
+
+  <div class="c">
+    <svg viewBox="0 0 109 109">
+      <g class="faint"><path d="M28.75,55.14c3.13,0.76,6.46,0.43,9.64,0.2c10.03-0.72,23.97-2.63,34.73-3.12c2.7-0.12,5.45-0.16,8.13,0.3"/><path d="M13,87.83c3.94,1.01,7.72,0.96,11.75,0.72c18.41-1.07,41.27-3.39,61.12-4.07c3.63-0.13,7.2-0.1,10.75,0.78"/></g>
+      <path class="should" d="M27.5,23.65c3.09,0.73,6.29,0.36,9.4,0.06c10.2-1,27-2.94,38.97-3.57c3.06-0.16,6.09-0.2,9.14,0.23"/>
+      <path class="drew" d="M85.0 20.4L75.9 20.1L62.7 21.1L48.9 22.5L33.8 24.0L27.5 23.6" marker-end="url(#arrow)"/>
+      <defs><marker id="arrow" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto"><path d="M0 0L5 2.5L0 5Z" fill="#a8382c"/></marker></defs>
+    </svg>
+    <h3>9 · Richting</h3>
+    <p class="asks">Zelfde lijn, van de andere kant begonnen. Over een korte tik liggen beide
+    uiteinden hoe dan ook binnen de maat, dus dan is welk eind waar past alle richting die er is</p>
+    <p class="msg">van de verkeerde kant getekend</p>
+  </div>
+
+  <div class="c proposed">
+    <svg viewBox="0 0 109 109">
+      <g class="faint"><path d="M30.13,29.42c2.55,0.64,5.18,0.48,7.76,0.15c9.53-1.23,23.14-3.87,31.61-4.52c2.51-0.19,4.9-0.13,7.38,0.25"/><path d="M52.24,12.45c1.53,1.53,2.01,3.55,2.01,5.05c0,3.33,0.04,25.2,0,26.25"/><path d="M14.38,49.17c2.64,0.58,4.98,0.91,10.12,0.13c18.5-2.8,40.29-6,58.24-7.47c3.33-0.27,6.79-0.66,10.13-0.3"/><path d="M42.78,49.89c0.97,1.23,1.22,3.09,1.2,4.53c-0.22,15.82,0.15,26.07-8.72,37.82"/><path d="M61.02,46.83c1.39,1.39,2.01,2.92,2.01,5.02c0,13.52-0.06,30.44-0.06,35.4c0,12.25-3.71,5.75-6.71,2.75"/><path d="M78.77,63.83c3.86,3.92,9.11,12.92,10.98,19.17"/></g>
+      <path class="should" d="M28.53,63.89c0.35,1.23,0.25,2.31-0.02,3.18c-1.63,5.43-4.42,9.93-9.26,15.93"/>
+      <path class="drew" d="M28.5 63.9L22.5 61.8L17.3 60.1L13.7 59.1L12.3 59.2L12.1 63.7L13.6 69.3L16.3 75.7L19.2 83.0"/>
+    </svg>
+    <h3>Vorm <span class="tag new">bestaat niet</span></h3>
+    <p class="asks">Bolt veel dieper of platter dan die streek. Dit voorbeeld — 18 eenheden bol met
+    beide uiteinden op hun plek — komt er vandaag zonder één melding doorheen</p>
+    <p class="msg">buigt anders dan die streek</p>
+  </div>
+
+</div>
+
+<h2>Wat er niet gecontroleerd wordt</h2>
+<p>Er is geen check op de route tussen de uiteinden. De bochtcheck komt het dichtst in de buurt,
+maar die vraagt alleen naar de <em>kant</em>, en alleen als het model zelf minstens 14 bolt. Gemeten
+over het deck: 497 streken bollen 14 of meer, en teken je die kaarsrecht, dan wordt 53% goedgekeurd —
+zonder dat de bochtcheck er ooit één van weigert, want een rechte lijn bolt naar geen kant en valt
+binnen de speling van 3. De rest sneuvelt toevallig op lengte, haakje of de rivaalregel.</p>
+<p>Een omweg mákén tussen twee vaste punten kan niet zonder langer te worden, en daar zit de vangst:
+bij 22 eenheden bolling keurt de lengtecheck er 322 af en de rivaalregel 439. Pas bij 36 eenheden
+komt de plaatscheck eraan te pas. Een echte vormcheck zou de diepte van de bolling vergelijken met
+die van het model; over het deck zit eerlijk handschrift (trillende hand, een vijfde te kort of te
+lang, 15% kleiner) tot in de 99e percentiel onder 7,7 eenheden verschil, waar een bolling van 10 al
+op mediaan 9,8 zit. Een grens rond 12 zou de twee scheiden.</p>
+
+<h2>Wat de vangnetten vastleggen</h2>
+<p><code>stroke-matcher-drift.spec.ts</code> beoordeelt het hele deck zoals een uitgestelde
+herhaling dat doet — de inkt blijft staan, elke streek wordt tegen zijn eigen model gelegd — en legt
+vast wat er geaccepteerd moet worden: exact getekend, een hand die tot 3 eenheden zwabbert, een
+karakter 16 eenheden ernaast in elke richting, 15% kleiner of 10% groter, streken los een vijfde te
+kort of te lang, streken los een paar eenheden ernaast. En de andere kant op: een karakter dat 26
+eenheden in beide richtingen verschoven is moet blijven falen, anders zouden al die eisen ook door
+een matcher gehaald worden die alles goedkeurt.</p>
+
+<footer>
+Bijgewerkt op 14 augustus 2026. De cijfers hierin komen uit metingen over het hele deck van 440
+kanji; de voorbeelden zijn door de matcher gehaald en leveren echt de genoemde melding op.
+</footer>
+
+</main>
+</body>
+</html>
