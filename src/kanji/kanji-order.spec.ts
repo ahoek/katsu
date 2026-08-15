@@ -21,12 +21,20 @@ const deck = [
 ];
 
 describe('groupCharacters', () => {
-  it('keeps the lesson order as one unbroken list', () => {
+  it('keeps the lesson order, cut into batches of a hundred', () => {
     const groups = groupCharacters(deck, 'lesson');
 
     expect(groups).toHaveLength(1);
-    expect(groups[0].labelKey).toBeNull();
+    expect(groups[0].labelKey).toBe('kanji.browse.lesson-band');
+    expect(groups[0].labelParams).toEqual({ from: 1, to: 5 });
     expect(groups[0].characters.map(c => c.kanji)).toEqual(['人', '刀', '丁', '分', '木']);
+
+    const long = Array.from({ length: 250 }, (_, i) => character(`k${i}`, 1, 5, i + 1));
+    expect(groupCharacters(long, 'lesson').map(g => g.labelParams)).toEqual([
+      { from: 1, to: 100 },
+      { from: 101, to: 200 },
+      { from: 201, to: 250 },
+    ]);
   });
 
   it('cuts the deck into school years, each kept in lesson order', () => {
@@ -53,19 +61,28 @@ describe('groupCharacters', () => {
     ]);
   });
 
-  it('runs from the most common kanji down', () => {
+  it('runs from the most common kanji down, in rank bands', () => {
     const groups = groupCharacters(deck, 'frequency');
 
-    expect(groups).toHaveLength(1);
-    expect(groups[0].characters.map(c => c.kanji)).toEqual(['分', '人', '木', '丁', '刀']);
+    expect(groups.map(g => g.labelParams)).toEqual([
+      { from: 1, to: 100 },
+      { from: 251, to: 500 },
+      { from: 1001, to: 1500 },
+      { from: 1501, to: 2000 },
+    ]);
+    expect(groups.map(g => g.characters.map(c => c.kanji))).toEqual([
+      ['分', '人'],
+      ['木'],
+      ['丁'],
+      ['刀'],
+    ]);
   });
 
   it('closes the frequency list with the kanji beyond the ranked 2501', () => {
     const groups = groupCharacters([...deck, character('凹', 8, null, null)], 'frequency');
 
-    expect(groups).toHaveLength(2);
-    expect(groups[1].labelKey).toBe('kanji.browse.freq-none');
-    expect(groups[1].characters.map(c => c.kanji)).toEqual(['凹']);
+    expect(groups.at(-1)?.labelKey).toBe('kanji.browse.freq-none');
+    expect(groups.at(-1)?.characters.map(c => c.kanji)).toEqual(['凹']);
   });
 
   it('has nothing to say about an empty deck', () => {

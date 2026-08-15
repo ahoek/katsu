@@ -92,6 +92,8 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'sort-frequency': 'Frequency',
         jlpt: 'JLPT N{{level}}',
         'jlpt-none': 'Outside the JLPT lists',
+        'lesson-band': 'Kanji {{from}}–{{to}}',
+        'freq-band': 'Rank {{from}}–{{to}}',
         'freq-none': 'Beyond the ranked 2501',
       },
       // What a page about one character calls itself. The build writes the
@@ -286,6 +288,8 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'sort-frequency': 'Frequentie',
         jlpt: 'JLPT N{{level}}',
         'jlpt-none': 'Buiten de JLPT-lijsten',
+        'lesson-band': 'Kanji {{from}}–{{to}}',
+        'freq-band': 'Plaats {{from}}–{{to}}',
         'freq-none': 'Voorbij de 2501 gerangschikte',
       },
       seo: {

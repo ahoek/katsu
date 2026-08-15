@@ -17,6 +17,16 @@ export interface KanjiGroup {
 
 const NO_PARAMS: Record<string, number> = {};
 
+/** Lesson-order sections: a batch of this many deck positions each. */
+const LESSON_BAND = 100;
+
+/**
+ * Frequency sections, by cumulative rank: the most common hundred first, then
+ * widening bands. The last one ends where KANJIDIC2's ranking ends, so the
+ * bands still hold once the deck grows towards the full 常用漢字.
+ */
+const FREQUENCY_BANDS = [100, 250, 500, 1000, 1500, 2000, 2500];
+
 /**
  * The deck cut into the sections the practice list shows, in the order the
  * detail page steps through them. Ties everywhere keep the deck's own order,
@@ -32,8 +42,19 @@ export function groupCharacters(
     return [];
   }
   switch (order) {
-    case 'lesson':
-      return [{ key: 'lesson', labelKey: null, labelParams: NO_PARAMS, characters: [...characters] }];
+    case 'lesson': {
+      const groups: KanjiGroup[] = [];
+      for (let from = 0; from < characters.length; from += LESSON_BAND) {
+        const batch = characters.slice(from, from + LESSON_BAND);
+        groups.push({
+          key: `lesson-${from + 1}`,
+          labelKey: 'kanji.browse.lesson-band',
+          labelParams: { from: from + 1, to: from + batch.length },
+          characters: batch,
+        });
+      }
+      return groups;
+    }
     case 'grade': {
       const grades = [...new Set(characters.map(character => character.grade))].sort((a, b) => a - b);
       return grades.map(grade => ({
@@ -68,9 +89,23 @@ export function groupCharacters(
       const ranked = characters
         .filter(character => character.freq !== null)
         .sort((a, b) => (a.freq as number) - (b.freq as number));
-      const groups: KanjiGroup[] = [
-        { key: 'frequency', labelKey: null, labelParams: NO_PARAMS, characters: ranked },
-      ];
+      const groups: KanjiGroup[] = [];
+      let from = 1;
+      for (const to of FREQUENCY_BANDS) {
+        const band = ranked.filter(character => {
+          const rank = character.freq as number;
+          return rank >= from && rank <= to;
+        });
+        if (band.length) {
+          groups.push({
+            key: `frequency-${to}`,
+            labelKey: 'kanji.browse.freq-band',
+            labelParams: { from, to },
+            characters: band,
+          });
+        }
+        from = to + 1;
+      }
       const unranked = characters.filter(character => character.freq === null);
       if (unranked.length) {
         groups.push({
