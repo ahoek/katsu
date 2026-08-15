@@ -126,21 +126,26 @@ describe('a whole character judged at once', () => {
   });
 
   /**
-   * The case a learner reported on 気: every stroke the right shape and the right
+   * The case learners report: every stroke the right shape and the right
    * direction, sitting right against the ones around it, and the whole character
-   * a row off. A row is twelve units - the gap between two horizontals of 三.
+   * off. A row is twelve units - the gap between two horizontals of 三 - and
+   * sixteen is where a 赤 written high had its 22-unit tick turned down for its
+   * shape, the tick being the stroke with the least room of all.
    */
-  it('accepts a character written a whole row off', () => {
-    expect(clean({ dy: 12 })).toBe(deck.length);
-    expect(clean({ dy: -12 })).toBe(deck.length);
-    expect(clean({ dx: 12 })).toBe(deck.length);
+  it('accepts a character written well off where it belongs', () => {
+    for (const off of [12, 16]) {
+      expect(clean({ dy: off })).toBe(deck.length);
+      expect(clean({ dy: -off })).toBe(deck.length);
+      expect(clean({ dx: off })).toBe(deck.length);
+      expect(clean({ dx: -off })).toBe(deck.length);
+    }
   });
 
   it('accepts a character written smaller or larger than the square', () => {
-    // One of the 440 loses a stroke at 15% smaller (駅, whose 馬 is a thicket of
-    // short strokes); the bound is tight on purpose, so widening it is a choice
-    // somebody has to make on purpose too.
-    expect(clean({ scale: 0.85 })).toBeGreaterThanOrEqual(deck.length - 1);
+    // 駅, whose 馬 is a thicket of short strokes, used to lose one at 15%
+    // smaller. Judging a stroke where the character is being written took the
+    // deck to all 440, which is what that stroke was short of.
+    expect(clean({ scale: 0.85 })).toBe(deck.length);
     expect(clean({ scale: 1.1 })).toBe(deck.length);
   });
 

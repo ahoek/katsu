@@ -73,12 +73,17 @@ const DOT_LENGTH = 12;
 const RIVAL_MARGIN = 4;
 
 /**
- * How far the ink already on the pad may sit from the model before the rival
- * rule stops reading it as placement. A character written a whole row off is
- * still that character; further than the endpoint tolerance and the drawing
- * being aligned to is no longer the same figure.
+ * How far the ink already on the pad may say the character sits. A hand that
+ * starts a character high keeps writing high, and every stroke after the first
+ * is then judged where the hand is writing rather than where the model sits.
+ *
+ * Half the endpoint tolerance, because this is added to the room a stroke
+ * already has and the two together still have to turn down a character written
+ * somewhere else entirely. It only has to cover a hand's own offset: a whole
+ * character sits nine to eleven units off in the writing this came from, and
+ * the deck's guards hold at a row of twelve.
  */
-const DRIFT_LIMIT = ENDPOINT_TOLERANCE;
+const DRIFT_LIMIT = ENDPOINT_TOLERANCE / 2;
 
 /**
  * The closing hook of a stroke - the flick that ends 月's second stroke - is
@@ -276,19 +281,24 @@ export class StrokeMatcher {
     const samples = resample(drawn, SAMPLES);
     const length = polylineLength(drawn);
     const expected = this.model[strokeIndex];
-    const rival = this.closerStroke(samples, strokeIndex, this.drift(written));
+    const drift = this.drift(written);
+    // Every check about where the stroke sits is asked where the character is
+    // being written. Shape, length, hooks and bends are the same wherever the
+    // hand put them, so only the placing moves.
+    const placed = samples.map(point => ({ x: point.x - drift.x, y: point.y - drift.y }));
+    const rival = this.closerStroke(samples, placed, strokeIndex);
     const place = strokeIndex === 0 ? this.tolerance(FIRST_STROKE_ALLOWANCE) : 0;
 
     // A drawing that sits clearly closer to another stroke is that stroke:
     // either one still to come, or one that is already on the pad.
-    if (rival >= 0 && this.fits(drawn, samples, length, this.model[rival], place)) {
+    if (rival >= 0 && this.fits(drawn, placed, length, this.model[rival], place)) {
       return rival > strokeIndex
         ? { result: 'out-of-order', strokeIndex: rival }
         : { result: 'no-match', reason: 'elsewhere', strokeIndex: rival };
     }
-    const why = this.misfit(drawn, samples, length, expected, place);
+    const why = this.misfit(drawn, placed, length, expected, place);
     if (why === undefined) {
-      if (this.writtenBackwards(samples, expected)) {
+      if (this.writtenBackwards(placed, expected)) {
         return { result: 'reversed', strokeIndex };
       }
       // Right line, wrong character: the sweep of 石 hangs from the top line,
@@ -297,11 +307,11 @@ export class StrokeMatcher {
         ? { result: 'no-match', reason: 'through' }
         : { result: 'correct', strokeIndex };
     }
-    if (this.fitsReversed(samples, length, expected, place)) {
+    if (this.fitsReversed(placed, length, expected, place)) {
       return { result: 'reversed', strokeIndex };
     }
     for (let i = strokeIndex + 1; i < this.model.length; i++) {
-      if (this.fits(drawn, samples, length, this.model[i], place)) {
+      if (this.fits(drawn, placed, length, this.model[i], place)) {
         return { result: 'out-of-order', strokeIndex: i };
       }
     }
@@ -323,7 +333,7 @@ export class StrokeMatcher {
    * Only the same answer twice accuses. Where the ink shows no placement of its
    * own the two readings are one, and this is the rule it always was.
    */
-  private closerStroke(samples: Point[], strokeIndex: number, drift: Point): number {
+  private closerStroke(samples: Point[], placed: Point[], strokeIndex: number): number {
     // Nothing on the pad says where the first stroke of a character should sit,
     // so nothing can say it is a different stroke. It is judged on its shape.
     if (strokeIndex === 0) {
@@ -333,7 +343,6 @@ export class StrokeMatcher {
     if (here < 0) {
       return -1;
     }
-    const placed = samples.map(point => ({ x: point.x - drift.x, y: point.y - drift.y }));
     return this.nearestOther(placed, strokeIndex) === here ? here : -1;
   }
 
