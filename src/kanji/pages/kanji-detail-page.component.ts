@@ -19,6 +19,8 @@ import { StrokeDemoComponent } from '../components/stroke-demo.component';
 import { WritingExerciseComponent } from '../components/writing-exercise.component';
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
+import { orderCharacters } from '../kanji-order';
+import { KanjiOrderService } from '../kanji-order.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { FIRST_STAGE, MASTERED_STAGE, countdown } from '../srs/srs';
 
@@ -68,8 +70,13 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly page = inject(PageMetaService);
+  private readonly orderService = inject(KanjiOrderService);
 
   readonly characters = signal<KanjiCharacter[]>([]);
+
+  /** The deck as the practice list lays it out; the arrows walk this. */
+  private readonly ordered = computed(() =>
+    orderCharacters(this.characters(), this.orderService.order()));
 
   /** The character named in the URL. */
   readonly kanji = signal('');
@@ -98,7 +105,7 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
   });
 
   readonly position = computed(() =>
-    this.characters().findIndex(character => character.kanji === this.kanji()));
+    this.ordered().findIndex(character => character.kanji === this.kanji()));
 
   /**
    * Where this kanji stands in the schedule, as a translation key and its
@@ -204,15 +211,15 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
     this.writeAgain();
   }
 
-  /** The kanji a step away in the deck, for naming where the arrows go. */
+  /** The kanji a step away in the practice list, for naming where the arrows go. */
   neighbour(offset: number): string {
-    const count = this.characters().length;
-    return count ? this.characters()[(this.position() + offset + count) % count].kanji : '';
+    const count = this.ordered().length;
+    return count ? this.ordered()[(this.position() + offset + count) % count].kanji : '';
   }
 
-  /** Step to the kanji before or after this one in the deck. */
+  /** Step to the kanji before or after this one in the practice list. */
   go(offset: number): void {
-    if (this.characters().length === 0) {
+    if (this.ordered().length === 0) {
       return;
     }
     // Replaced rather than pushed, so going back returns to the list instead of
