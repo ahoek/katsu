@@ -214,26 +214,30 @@ je ziet, dus een streek die zowel te kort is als zijn haakje mist heet te kort.<
       <path class="should" d="M28.53,63.89c0.35,1.23,0.25,2.31-0.02,3.18c-1.63,5.43-4.42,9.93-9.26,15.93"/>
       <path class="drew" d="M28.5 63.9L22.5 61.8L17.3 60.1L13.7 59.1L12.3 59.2L12.1 63.7L13.6 69.3L16.3 75.7L19.2 83.0"/>
     </svg>
-    <h3>Vorm <span class="tag new">bestaat niet</span></h3>
-    <p class="asks">Bolt veel dieper of platter dan die streek. Dit voorbeeld — 18 eenheden bol met
-    beide uiteinden op hun plek — komt er vandaag zonder één melding doorheen</p>
-    <p class="msg">buigt anders dan die streek</p>
+    <h3>Vorm <span class="tag new">bewust niet</span></h3>
+    <p class="asks">Hoevéél een streek bolt wordt niet gevraagd, dus dit voorbeeld — 18 eenheden bol
+    met beide uiteinden op hun plek — komt er zonder melding doorheen. Zie hieronder waarom dat een
+    keuze is en geen gat</p>
+    <p class="msg">—</p>
   </div>
 
 </div>
 
-<h2>Wat er niet gecontroleerd wordt</h2>
-<p>Er is geen check op de route tussen de uiteinden. De bochtcheck komt het dichtst in de buurt,
-maar die vraagt alleen naar de <em>kant</em>, en alleen als het model zelf minstens 14 bolt. Gemeten
-over het deck: 497 streken bollen 14 of meer, en teken je die kaarsrecht, dan wordt 53% goedgekeurd —
-zonder dat de bochtcheck er ooit één van weigert, want een rechte lijn bolt naar geen kant en valt
-binnen de speling van 3. De rest sneuvelt toevallig op lengte, haakje of de rivaalregel.</p>
-<p>Een omweg mákén tussen twee vaste punten kan niet zonder langer te worden, en daar zit de vangst:
-bij 22 eenheden bolling keurt de lengtecheck er 322 af en de rivaalregel 439. Pas bij 36 eenheden
-komt de plaatscheck eraan te pas. Een echte vormcheck zou de diepte van de bolling vergelijken met
-die van het model; over het deck zit eerlijk handschrift (trillende hand, een vijfde te kort of te
-lang, 15% kleiner) tot in de 99e percentiel onder 7,7 eenheden verschil, waar een bolling van 10 al
-op mediaan 9,8 zit. Een grens rond 12 zou de twee scheiden.</p>
+<h2>Wat er niet gecontroleerd wordt, en waarom</h2>
+<p>Hoevéél een streek bolt wordt nergens gevraagd. Alleen de kant, en alleen als het model zelf
+minstens 14 bolt. Dat is de regel van dit hele bestand: de kant waarop een streek buigt is iets dat
+je moet onthouden, hoe diep je hem trekt is je hand.</p>
+<p>Wat dat kost, over het deck gemeten: 497 streken bollen 14 of meer, en teken je die kaarsrecht,
+dan wordt 53% goedgekeurd — de bochtcheck weigert er geen enkele van, want een rechte lijn bolt naar
+geen kant en valt binnen de speling van 3. De rest sneuvelt toevallig op lengte, haakje of de
+rivaalregel. Een omweg mákén tussen twee vaste punten kan namelijk niet zonder langer te worden: bij
+22 eenheden bolling keurt de lengtecheck er 322 af en de rivaalregel 439.</p>
+<p>Een check op de diepte van de bolling is overwogen en niet gebouwd. Voor het structurele deel is
+hij dubbel — een gespiegelde bocht scoort op die maat rond 45 en wordt al door de bochtcheck gepakt.
+Wat hij daarbovenop zou toevoegen is precies de hoeveelheid, en dat is de vraag die hierboven al
+beantwoord is. Een grens zou bovendien niet te leggen zijn zonder eerlijk handschrift te raken: een
+streek van 九 bolt zelf 12, dus kaarsrecht getrokken scoort hij 12, terwijl een streek die je een
+vijfde korter trekt tot 10 komt.</p>
 
 <h2>Wat de vangnetten vastleggen</h2>
 <p><code>stroke-matcher-drift.spec.ts</code> beoordeelt het hele deck zoals een uitgestelde
