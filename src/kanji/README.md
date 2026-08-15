@@ -27,7 +27,7 @@ visitor's own progress - the lesson, the reviews and the sync page - carry
 | `/kanji`                 | Overview: what is due, the next lesson, progress  |
 | `/kanji/lesson`          | The lesson for the next unlearned kanji           |
 | `/kanji/review`          | A review session over everything that is due      |
-| `/kanji/practice`        | The whole deck, grouped by school year            |
+| `/kanji/practice`        | The whole deck, in one of four orders             |
 | `/kanji/practice/:kanji` | One kanji: watch it written, then write it        |
 
 The last two are the way around the deck outside the schedule: pick a character
@@ -35,6 +35,15 @@ from the list, watch it written, and write it yourself if you want to. The
 character itself is the route parameter - `/kanji/practice/水` - so a kanji can
 be linked to directly. A character that is not in the deck sends you back to the
 list rather than sitting on a page that never loads.
+
+The list can be put in four orders - school year, lesson order, JLPT level and
+newspaper frequency - and the character page's arrows walk the list exactly as
+it is laid out, whichever is chosen. `kanji-order.ts` cuts the deck into the
+sections the list shows and lays them end to end for the pager, so the two
+pages cannot disagree; `kanji-order.service.ts` remembers the choice in
+localStorage. A kanji the JLPT lists skip (four of the current deck), or one
+beyond KANJIDIC2's 2501 ranked (none yet, common among the later 常用漢字),
+closes its list under a heading of its own rather than being dropped.
 
 Both carry where a kanji stands in the schedule, since "how am I doing on this
 one" is asked of the character rather than of the session that happens to be
@@ -331,6 +340,15 @@ positions, and merges them with the deck above. It fails loudly when a character
 is missing, its stroke numbering has a gap, or it ends up with a different count
 of numbers and strokes. `stroke-data.spec.ts` guards the file that ships.
 
+The same run merges in the two sortable ranks, from a second pinned fetch
+(the kanji-data aggregation): the JLPT level per kanji from Jonathan Waller's
+lists - the de-facto standard, since the JLPT stopped publishing lists in
+2010 - and the frequency rank from KANJIDIC2's newspaper count. The
+aggregation's ranks were verified against KANJIDIC2 itself when the pin was
+chosen: all 440 match. Either field can be null, and stays null rather than
+being guessed at: the JLPT lists genuinely skip 分, 里, 身 and 畑, and
+KANJIDIC2 ranks only its 2501 most common.
+
 ## Reading a schedule back
 
 The sync page's **save a copy** writes the same code the sync service carries, so
@@ -375,6 +393,14 @@ generated JSON keeps that notice in its own fields, and the app credits it on
 the About page, one tap from every screen via the menu.
 Note that KanjiVG's share-alike terms cover the stroke data, not Katsu's own
 MIT-licensed code.
+
+The JLPT levels come from [Jonathan Waller's JLPT
+resources](https://www.tanos.co.uk/jlpt/) (CC BY) and the frequency ranks from
+[KANJIDIC2](https://www.edrdg.org/wiki/index.php/KANJIDIC_Project) by the
+Electronic Dictionary Research and Development Group (CC BY-SA 4.0), both via
+the [kanji-data](https://github.com/davidluzgouveia/kanji-data) aggregation
+(MIT), pinned at a commit. The generated JSON names all of this in its `ranks`
+field, and the About page credits both alongside KanjiVG.
 
 ## Known gaps
 
