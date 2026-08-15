@@ -6,7 +6,12 @@
  * of the 学年別漢字配当表 run in order, and within a grade the more common
  * kanji come first, by the blended corpus rank from kanji-ranks.mjs. What
  * ties remain - only kanji the ranking does not reach - take the fewest
- * strokes first, then code point order. Nothing in the sort looks at the file's present order, so
+ * strokes first, then code point order.
+ *
+ * The first grade alone swaps frequency and strokes: those lessons are where
+ * the hand is still being built, so they take the simplest strokes first and
+ * let frequency order what is equally simple. Without this the deck opened
+ * on 年, six strokes into the first lesson, with 一 waiting at seven. Nothing in the sort looks at the file's present order, so
  * adding kanji deliberately re-sorts the whole deck: whoever starts tomorrow
  * gets the best order the deck can offer, and whoever is mid-path simply
  * meets the new lessons where the cascade puts them.
@@ -48,19 +53,15 @@ for (const [index, entry] of deck.entries()) {
 }
 process.stdout.write('\n');
 
-/** [grade, frequency rank, strokes, code point], compared left to right. */
+/** [grade, ...grade's own keys, code point], compared left to right. */
 const compare = (a, b) => a[0] - b[0] || a[1] - b[1] || a[2] - b[2] || a[3] - b[3];
 
 const priority = new Map(
-  nodes.map(node => [
-    node.entry.kanji,
-    [
-      node.entry.grade,
-      ranks.get(node.entry.kanji).freq ?? Infinity,
-      node.strokes,
-      node.entry.kanji.codePointAt(0),
-    ],
-  ]),
+  nodes.map(node => {
+    const freq = ranks.get(node.entry.kanji).freq ?? Infinity;
+    const keys = node.entry.grade === 1 ? [node.strokes, freq] : [freq, node.strokes];
+    return [node.entry.kanji, [node.entry.grade, ...keys, node.entry.kanji.codePointAt(0)]];
+  }),
 );
 
 // A part inherits the best priority above it, however deep the tree.
