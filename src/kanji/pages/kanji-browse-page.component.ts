@@ -5,6 +5,7 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -36,6 +37,7 @@ import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button
     IonButtons,
     IonContent,
     IonHeader,
+    IonTitle,
     IonToolbar,
     TranslatePipe,
     MenuButtonComponent,
