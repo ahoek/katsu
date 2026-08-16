@@ -7,7 +7,7 @@ import { DefaultUrlSerializer, UrlTree } from '@angular/router';
  * `/about/` is the page. Angular's own serializer drops that slash, which put
  * the two out of step everywhere it mattered: the address bar rewrote a
  * canonical URL into the redirect to it the moment the app booted, and every
- * routerLink on a rendered page - all 440 tiles of the practice list - pointed
+ * routerLink on a rendered page - every tile of the practice list - pointed
  * at an address that answers 301. A crawler following them reaches each page
  * by a detour, and finds two URLs for it where the sitemap offers one.
  *

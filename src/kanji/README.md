@@ -1,6 +1,6 @@
 # Kanji writing (proof of concept)
 
-Learn to write the 440 kanji Japanese children learn in their first three years
+Learn to write the 642 kanji Japanese children learn in their first four years
 at school: a lesson per character, then written reviews on a spaced repetition
 schedule. Every stroke is
 checked as you draw it, so you find out at once when a stroke is in the wrong
@@ -79,7 +79,7 @@ recap of every kanji it asked for with the way each one went.
 
 ## How much at a time
 
-At 440 kanji a week away builds a pile nobody wants to start, and a pile nobody
+At 642 kanji a week away builds a pile nobody wants to start, and a pile nobody
 starts is how a schedule dies. Two caps hold the pace, and they are different in
 kind. `srs/pace.ts` holds both as pure functions; `kanji-pace.service.ts` holds
 nothing but the two settings, in localStorage.
@@ -226,7 +226,7 @@ is answered by the Worker and everything else carries on to GitHub Pages, which
 means the app calls it **same-origin**: no CORS, no allowed-origin list, and
 `SYNC_ENDPOINT` is just `/api/sync`. Route and binding live in `wrangler.toml`.
 
-A schedule is about 6 kB at 440 kanji and would be around 32 kB at 2500, so the
+A schedule is about 9 kB at 642 kanji and would be around 32 kB at 2500, so the
 storage and traffic are negligible; the reason to think twice is the moving part,
 not the bill.
 
@@ -295,9 +295,10 @@ every device loses the code.
 
 ## The deck
 
-Grades 1, 2 and 3 of the
+Grades 1 to 4 of the
 [学年別漢字配当表](https://en.wikipedia.org/wiki/Ky%C5%8Diku_kanji) in full: 80,
-160 and 200 characters, in the learning order `tools/sort-deck.mjs` computes -
+160, 200 and 202 characters (the 2020 revision, prefecture kanji included), in
+the learning order `tools/sort-deck.mjs` computes -
 parts before what is built from them, the school grades in order below that,
 the more common kanji first within a grade, except grade 1, which takes the
 simplest strokes first while the hand is still being built. Meanings and readings
@@ -330,7 +331,7 @@ against 林 *bos*, 内 *binnenkant* against 入 *binnengaan*.
 
 ## Regenerating the stroke data
 
-`src/assets/data/kanji/strokes.json` (436 kB, 3599 strokes) is generated, not
+`src/assets/data/kanji/strokes.json` (705 kB, 5594 strokes) is generated, not
 edited by hand:
 
 ```bash
