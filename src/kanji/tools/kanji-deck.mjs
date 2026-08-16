@@ -664,7 +664,7 @@ export const deck = [
   { kanji: '旗', grade: 4, meaning: { en: 'flag, banner', nl: 'vlag, vaandel' }, on: 'キ', kun: 'はた' },
   { kanji: '塩', grade: 4, meaning: { en: 'salt', nl: 'zout' }, on: 'エン', kun: 'しお' },
   { kanji: '借', grade: 4, meaning: { en: 'borrow', nl: 'lenen' }, on: 'シャク', kun: 'か.りる' },
-  { kanji: '訓', grade: 4, meaning: { en: 'kun reading', nl: 'kun-lezing' }, on: 'クン', kun: '' },
+  { kanji: '訓', grade: 4, meaning: { en: 'kun reading, precept', nl: 'kun-lezing, leerregel' }, on: 'クン', kun: '' },
   { kanji: '祝', grade: 4, meaning: { en: 'celebrate', nl: 'vieren' }, on: 'シュク', kun: 'いわ.う' },
   { kanji: '梨', grade: 4, meaning: { en: 'pear', nl: 'peer' }, on: 'リ', kun: 'なし' },
   { kanji: '漁', grade: 4, meaning: { en: 'fishing', nl: 'visserij' }, on: 'ギョ', kun: 'あさ.る' },
