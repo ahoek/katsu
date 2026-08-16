@@ -6,11 +6,14 @@ import strokeData from '../assets/data/kanji/strokes.json';
  * shipped, so a hand-edit or a half-finished regeneration cannot slip through.
  */
 describe('the shipped stroke data', () => {
-  it('has the whole deck: all three school years, in full', () => {
-    expect(strokeData.characters).toHaveLength(440);
+  it('has the whole deck: all four school years, in full', () => {
+    expect(strokeData.characters).toHaveLength(642);
     expect(strokeData.characters.filter(c => c.grade === 1)).toHaveLength(80);
     expect(strokeData.characters.filter(c => c.grade === 2)).toHaveLength(160);
     expect(strokeData.characters.filter(c => c.grade === 3)).toHaveLength(200);
+    // 202, not 200: the 2020 学年別漢字配当表 revision added the prefecture
+    // kanji to grade 4.
+    expect(strokeData.characters.filter(c => c.grade === 4)).toHaveLength(202);
     expect(strokeData.viewBox).toBe(109);
   });
 
@@ -64,7 +67,9 @@ describe('the shipped stroke data', () => {
       .filter(character => character.jlpt === null)
       .map(character => character.kanji);
 
-    expect(outside).toEqual(['分', '里', '身', '畑']);
+    expect(outside.sort()).toEqual(
+      ['分', '里', '身', '畑', '的', '無', '岡', '阪', '埼', '阜', '茨', '栃'].sort(),
+    );
     for (const character of strokeData.characters) {
       if (character.jlpt !== null) {
         expect(character.jlpt).toBeGreaterThanOrEqual(1);
@@ -74,7 +79,7 @@ describe('the shipped stroke data', () => {
   });
 
   /**
-   * Every kanji of the first three school years appears in the counted
+   * Every kanji of the first four school years appears in the counted
    * corpora and so holds a frequency rank; a kanji the corpora never saw
    * would go null. A rank is a position, so no two kanji share one.
    */

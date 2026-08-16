@@ -34,6 +34,10 @@ const RADICAL_FORMS = new Map([
   ['⺷', '羊'],
   ['飠', '食'],
   ['士', '土'],
+  // 老's own first four strokes, unchanged; and 衣 squeezed into the left
+  // half with its foot tucked in, the way 飠 is 食.
+  ['耂', '老'],
+  ['衤', '衣'],
 ]);
 
 /**
@@ -43,7 +47,9 @@ const RADICAL_FORMS = new Map([
  * beside the point - nothing of 水 is written in 海, so a learner sent to
  * write 水 first is looking for something that is not there.
  */
-const ETYMOLOGY_ONLY = new Set(['儿', '冫', '毋', '氵', '氺', '灬', '刂']);
+// ⻖ files under 阜, but its three strokes share nothing with how 阜 is
+// written - the 氵/水 case exactly.
+const ETYMOLOGY_ONLY = new Set(['儿', '冫', '毋', '氵', '氺', '灬', '刂', '⻖']);
 
 /**
  * The deck kanji this kanji is built from. A group whose element is the kanji
