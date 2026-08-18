@@ -132,7 +132,7 @@ type Feedback =
       [written]="written()"
       [drawn]="shownInk()"
       [offStrokes]="offStrokes()"
-      [showOutline]="exampleVisible()"
+      [showOutline]="outlineVisible()"
       [showStroke]="nextStrokeVisible()"
       [showStart]="startVisible()"
       [feedback]="padFeedback()"
@@ -413,6 +413,14 @@ export class WritingExerciseComponent implements OnDestroy {
    */
   protected readonly shownInk = computed(() =>
     this.deferred() || this.complete() ? this.inkPaths() : []);
+
+  /**
+   * The model, faded, behind the strokes. On screen for a lesson's first trace
+   * as something to write over, and again once the character is finished: with
+   * the learner's own ink revealed, the model behind it is what they measure it
+   * against - where a stroke sat too high or ran too long shows at a glance.
+   */
+  protected readonly outlineVisible = computed(() => this.exampleVisible() || this.complete());
 
   /** The ink as points, for judging where the character is being written. */
   private readonly inkPoints = computed(() => this.drawnInk().map(stroke => stroke.points));
