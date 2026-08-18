@@ -5,8 +5,9 @@ import { addIcons } from 'ionicons';
 import { backspaceOutline, bulbOutline, checkmarkCircle, pencilOutline, playOutline, trashOutline } from 'ionicons/icons';
 
 import { Attempt } from '../srs/srs';
-import { Point } from '../stroke/geometry';
+import { Point, polylineLength } from '../stroke/geometry';
 import { Misfit, StrokeMatcher, StrokeResult } from '../stroke/stroke-matcher';
+import { flattenPath } from '../stroke/svg-path';
 import { StrokeDemoComponent } from './stroke-demo.component';
 import { StrokePadComponent } from './stroke-pad.component';
 
@@ -18,6 +19,26 @@ const HINT_STROKE_AFTER = 3;
 
 /** How long the pad shows that a stroke was rejected. */
 const WRONG_FEEDBACK_MS = 350;
+
+/**
+ * A touch this much shorter than the stroke that is due did not mean to be
+ * that stroke: a palm against the screen, or a finger set down and lifted.
+ * The shortest stroke the deck asks for is about eight units, so a fifth of
+ * whatever is expected leaves every real attempt - a dot included - room to
+ * be judged and turned down on its merits.
+ */
+const STRAY_SHARE = 0.2;
+
+/**
+ * Was this touch too small to have been meant as the stroke that is due? A
+ * stray touch is not a mistake: it costs the review nothing and leaves no ink.
+ */
+export function isStrayTouch(points: readonly Point[], dueStroke: string): boolean {
+  if (!dueStroke) {
+    return false;
+  }
+  return polylineLength(points) < polylineLength(flattenPath(dueStroke)) * STRAY_SHARE;
+}
 
 /**
  * Strokes in a row before the count is worth naming. Below this it is not a run
@@ -109,7 +130,7 @@ type Feedback =
     <app-kanji-stroke-pad
       [strokes]="strokes()"
       [written]="written()"
-      [drawn]="inkPaths()"
+      [drawn]="shownInk()"
       [offStrokes]="offStrokes()"
       [showOutline]="exampleVisible()"
       [showStroke]="nextStrokeVisible()"
@@ -329,9 +350,10 @@ export class WritingExerciseComponent implements OnDestroy {
   private readonly hintsUsed = linkedSignal({ source: this.strokes, computation: () => this.example() });
 
   /**
-   * The ink as it was drawn with its verdict, kept when judging is deferred, and
-   * for a stroke that was turned down what turned it down. The reason decides
-   * nothing; it is here so the reveal can say more than "this one was wrong".
+   * The ink as it was drawn with its verdict - every accepted stroke in a
+   * guided writing, every stroke in a deferred one - and for a stroke that
+   * was turned down what turned it down. The reason decides nothing; it is
+   * here so the reveal can say more than "this one was wrong".
    */
   protected readonly drawnInk = linkedSignal<
     readonly string[],
@@ -382,6 +404,15 @@ export class WritingExerciseComponent implements OnDestroy {
   protected readonly offCount = computed(() => (this.deferred() ? this.mistakes() : 0));
 
   protected readonly inkPaths = computed(() => this.drawnInk().map(stroke => stroke.path));
+
+  /**
+   * The ink the pad shows. A deferred writing is the learner's own hand from
+   * the first stroke; a guided one shows the model while it is under way - the
+   * hints and the placing conversation live there - and reveals what the hand
+   * actually did once the character is finished.
+   */
+  protected readonly shownInk = computed(() =>
+    this.deferred() || this.complete() ? this.inkPaths() : []);
 
   /** The ink as points, for judging where the character is being written. */
   private readonly inkPoints = computed(() => this.drawnInk().map(stroke => stroke.points));
@@ -453,10 +484,17 @@ export class WritingExerciseComponent implements OnDestroy {
     if (this.complete()) {
       return;
     }
-    // Where the character is being written is only ours to know where the ink on
-    // the pad is the learner's own. A guided writing lands each stroke as the
-    // model's, so the model is what the next stroke is placed against.
-    const result = this.matcher().match(points, this.written(), this.inkPoints());
+    if (isStrayTouch(points, this.strokes()[this.written()] ?? '')) {
+      return;
+    }
+    // A guided writing shows each stroke as the model's while it is under way,
+    // so the model is what the next stroke is placed against - the learner's
+    // own ink is kept too, but only the reveal at the end shows it.
+    const result = this.matcher().match(
+      points,
+      this.written(),
+      this.deferred() ? this.inkPoints() : [],
+    );
 
     if (this.deferred()) {
       this.judgeQuietly(points, result);
@@ -465,6 +503,7 @@ export class WritingExerciseComponent implements OnDestroy {
 
     switch (result.result) {
       case 'correct': {
+        this.drawnInk.update(ink => [...ink, { path: inkPath(points), points, correct: true }]);
         const written = this.written() + 1;
         this.written.set(written);
         this.misses.set(0);
