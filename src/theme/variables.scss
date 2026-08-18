@@ -1,131 +1,168 @@
+// Katsu's palette is drawn from four Pilot iroshizuku inks - the fountain pen
+// inks a Japanese notebook gets written with, which is what the app is about.
+// Each ink is a token of its own below, and everything else is a role that
+// points at one: change an ink here and the whole app follows.
+//
+// Colours are written in oklch, which separates lightness from hue: one hue
+// per ink, so a deeper or paler take on it is the same ink held to the light
+// differently rather than a new colour someone had to guess at.
 :root {
-  // Light text on the brand greens and oranges cannot reach WCAG AA;
-  // both get dark contrast colours instead, in both themes.
-  --ion-color-primary: #86a93f;
-  --ion-color-primary-rgb: 134,169,63;
-  --ion-color-primary-contrast: #182600;
-  --ion-color-primary-contrast-rgb: 24,38,0;
-  --ion-color-primary-shade: #87aa3e;
-  --ion-color-primary-tint: #a3c759;
+  // 竹林 chiku-rin, "bamboo forest": the green Katsu is built on.
+  --ink-chiku-rin: oklch(0.687 0.139 125.4);
+  --ink-chiku-rin-pale: oklch(0.78 0.144 125.4);
+  --ink-chiku-rin-deep: oklch(0.489 0.124 125.4);
 
-  --ion-color-secondary: #e08e0a;
-  --ion-color-secondary-rgb: 224,142,10;
-  --ion-color-secondary-contrast: #131300;
+  // 夕焼け yu-yake, "sunset": what has been earned, and what the pad offers.
+  --ink-yu-yake: oklch(0.715 0.154 68.8);
+  --ink-yu-yake-pale: oklch(0.77 0.157 68.8);
+  --ink-yu-yake-deep: oklch(0.57 0.125 68.8);
+
+  // 天色 ama-iro, "the colour of the sky": what is asking to be done, and what
+  // the page says about a character rather than writes.
+  --ink-ama-iro: oklch(0.655 0.14 235.6);
+  --ink-ama-iro-pale: oklch(0.8 0.116 235.6);
+  --ink-ama-iro-deep: oklch(0.505 0.109 235.6);
+
+  // 竹炭 take-sumi, "bamboo charcoal": the ink kanji are written in.
+  --ink-take-sumi: oklch(0.218 0 0);
+
+  // Light text on the brand greens, oranges and blues cannot reach WCAG AA;
+  // all three get dark contrast colours instead, in both themes. The `-rgb`
+  // triplets are Ionic's own alpha mechanism - numbers for rgba(), not
+  // colours - so they are the one thing here that cannot be an oklch value.
+  --ion-color-primary: var(--ink-chiku-rin);
+  --ion-color-primary-rgb: 134,169,63;
+  --ion-color-primary-contrast: oklch(0.246 0.064 125.4);
+  --ion-color-primary-contrast-rgb: 25,38,0;
+  --ion-color-primary-shade: oklch(0.65 0.136 125.4);
+  --ion-color-primary-tint: var(--ink-chiku-rin-pale);
+
+  --ion-color-secondary: var(--ink-yu-yake);
+  --ion-color-secondary-rgb: 224,142,11;
+  --ion-color-secondary-contrast: oklch(0.181 0.039 110);
   --ion-color-secondary-contrast-rgb: 19,19,0;
-  --ion-color-secondary-shade: #a86603;
-  --ion-color-secondary-tint: #f1a122;
+  --ion-color-secondary-shade: var(--ink-yu-yake-deep);
+  --ion-color-secondary-tint: var(--ink-yu-yake-pale);
+
+  --ion-color-tertiary: var(--ink-ama-iro);
+  --ion-color-tertiary-rgb: 0,156,218;
+  --ion-color-tertiary-contrast: oklch(0.225 0.051 235.6);
+  --ion-color-tertiary-contrast-rgb: 0,31,48;
+  --ion-color-tertiary-shade: var(--ink-ama-iro-deep);
+  --ion-color-tertiary-tint: var(--ink-ama-iro-pale);
 
   // Readable on the canvas and on cards; brightened again in dark mode
-  --app-color-link: #4a6519;
+  --app-color-link: var(--ink-chiku-rin-deep);
 
-  --ion-text-color: #000;
+  --ion-text-color: oklch(0 0 0);
   --ion-text-color-rgb: 0,0,0;
 
-  --ion-color-tertiary: #7044ff;
-  --ion-color-tertiary-rgb: 112,68,255;
-  --ion-color-tertiary-contrast: #ffffff;
-  --ion-color-tertiary-contrast-rgb: 255,255,255;
-  --ion-color-tertiary-shade: #633ce0;
-  --ion-color-tertiary-tint: #7e57ff;
-
-  // State colours stay in the brand family: olive green and warm
-  // terracotta, dark enough for AA as text on the light canvas and as
+  // State colours stay in the brand family: chiku-rin held deep, and a warm
+  // terracotta, both dark enough for AA as text on the light canvas and as
   // background under white text. Dark mode brightens them.
-  --ion-color-success: #446e14;
-  --ion-color-success-rgb: 68,110,20;
-  --ion-color-success-contrast: #ffffff;
+  --ion-color-success: var(--ink-chiku-rin-deep);
+  --ion-color-success-rgb: 80,107,0;
+  --ion-color-success-contrast: oklch(1 0 0);
   --ion-color-success-contrast-rgb: 255,255,255;
-  --ion-color-success-shade: #3c6112;
-  --ion-color-success-tint: #577d2c;
+  --ion-color-success-shade: oklch(0.448 0.113 125.4);
+  --ion-color-success-tint: oklch(0.543 0.118 125.4);
 
-  --ion-color-warning: #ffce00;
+  --ion-color-warning: oklch(0.869 0.178 91.4);
   --ion-color-warning-rgb: 255,206,0;
-  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast: oklch(0 0 0);
   --ion-color-warning-contrast-rgb: 0,0,0;
-  --ion-color-warning-shade: #715b00;
-  --ion-color-warning-tint: #ffd31a;
+  --ion-color-warning-shade: oklch(0.479 0.098 91.4);
+  --ion-color-warning-tint: oklch(0.879 0.165 91.4);
 
-  --ion-color-danger: #a5402a;
+  --ion-color-danger: oklch(0.506 0.139 33.8);
   --ion-color-danger-rgb: 165,64,42;
-  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast: oklch(1 0 0);
   --ion-color-danger-contrast-rgb: 255,255,255;
-  --ion-color-danger-shade: #913825;
-  --ion-color-danger-tint: #b35340;
+  --ion-color-danger-shade: oklch(0.462 0.125 33.8);
+  --ion-color-danger-tint: oklch(0.559 0.129 33.8);
 
-  --ion-color-dark: #222428;
-  --ion-color-dark-rgb: 34,36,40;
-  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark: oklch(0.26 0.008 274.7);
+  --ion-color-dark-rgb: 35,36,40;
+  --ion-color-dark-contrast: oklch(1 0 0);
   --ion-color-dark-contrast-rgb: 255,255,255;
-  --ion-color-dark-shade: #1e2023;
-  --ion-color-dark-tint: #383a3e;
+  --ion-color-dark-shade: oklch(0.243 0.006 274.7);
+  --ion-color-dark-tint: oklch(0.348 0.008 274.7);
 
   // Dark enough to stay readable on the patterned light canvas
-  --ion-color-medium: #5f6169;
+  --ion-color-medium: oklch(0.494 0.013 274.7);
   --ion-color-medium-rgb: 95,97,105;
-  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast: oklch(1 0 0);
   --ion-color-medium-contrast-rgb: 255,255,255;
-  --ion-color-medium-shade: #54555c;
-  --ion-color-medium-tint: #6f7178;
+  --ion-color-medium-shade: oklch(0.451 0.011 274.7);
+  --ion-color-medium-tint: oklch(0.549 0.011 274.7);
 
-  --ion-color-light: #f4f5f8;
-  --ion-color-light-rgb: 244,245,248;
-  --ion-color-light-contrast: #000000;
+  --ion-color-light: oklch(0.97 0 0);
+  --ion-color-light-rgb: 245,245,245;
+  --ion-color-light-contrast: oklch(0 0 0);
   --ion-color-light-contrast-rgb: 0,0,0;
-  --ion-color-light-shade: #d7d8da;
-  --ion-color-light-tint: #f5f6f9;
+  --ion-color-light-shade: oklch(0.882 0 0);
+  --ion-color-light-tint: oklch(0.973 0 0);
 
-  --app-color-bg-dark: #ebebec;
-  --app-color-bg-light: #d5dedd;
+  --app-color-bg-dark: oklch(0.94 0 0);
+  --app-color-bg-light: oklch(0.893 0.01 190);
 
   // The writing pad is paper, in both themes: kanji are written in dark ink
   // on a light sheet everywhere off the phone, and practising them any other
   // way round teaches a picture the learner will never meet again. So these
-  // seven do not flip with the theme; only the sheet dims for a dark room.
-  // Values are the light theme's own, which are the ones chosen to read on
-  // something pale - the state colours brighten in dark mode and would be
-  // too faint here.
-  --app-color-paper: #f6f3ec;
-  --app-color-ink: #1a1a1a;
+  // do not flip with the theme; only the sheet dims for a dark room. Values
+  // are the light theme's own, which are the ones chosen to read on something
+  // pale - the state colours brighten in dark mode and would be too faint.
+  --app-color-paper: oklch(0.9645 0.01 88);
+  --app-color-ink: var(--ink-take-sumi);
   /** The stroke under the finger, still being laid down. */
-  --app-color-ink-wet: #4a6519;
+  --app-color-ink-wet: var(--ink-chiku-rin-deep);
   /** A stroke as it lands, and the whole character as it finishes. */
-  --app-color-ink-good: #446e14;
+  --app-color-ink-good: var(--ink-chiku-rin-deep);
   /** A stroke pointed out as gone wrong, at the reveal. */
-  --app-color-ink-off: #a5402a;
-  /** Grid, example outline and stroke numbers: on the paper, not written. */
-  --app-color-paper-rule: #5f6169;
+  --app-color-ink-off: oklch(0.506 0.139 33.8);
+  /** Grid and example outline: the sheet itself, not anything written on it. */
+  --app-color-paper-rule: oklch(0.494 0.013 274.7);
   /** What the pad offers rather than states: the guide stroke, the start dot. */
-  --app-color-paper-hint: #a86603;
+  --app-color-paper-hint: var(--ink-yu-yake-deep);
+  /** Stroke numbers and arrows: written about the character, not part of it. */
+  --app-color-paper-note: var(--ink-ama-iro-deep);
+  /** The same, for an arrow knocked into a stroke's own ink. */
+  --app-color-ink-note: var(--ink-ama-iro);
+
+  /** Readings: what a page says a character sounds like. */
+  --app-color-reading: var(--ink-ama-iro-deep);
 
   // Answer field state colours; amber needs dark text for legibility.
   --app-answer-correct-background: var(--ion-color-success);
-  --app-answer-correct-color: #fff;
+  --app-answer-correct-color: oklch(1 0 0);
   --app-answer-incorrect-background: var(--ion-color-danger);
-  --app-answer-incorrect-color: #fff;
+  --app-answer-incorrect-color: oklch(1 0 0);
   --app-answer-invalid-background: var(--ion-color-warning);
-  --app-answer-invalid-color: #000;
+  --app-answer-invalid-color: oklch(0 0 0);
 }
 
 // Dark theme values, applied when the user forces dark mode or when
 // the OS prefers dark and the user has not forced light mode.
 @mixin dark-theme {
-    --ion-color-medium: #989aa2;
+    --ion-color-medium: oklch(0.687 0.012 274.7);
     --ion-color-medium-rgb: 152,154,162;
-    --ion-color-medium-shade: #86888f;
-    --ion-color-medium-tint: #a2a4ab;
+    --ion-color-medium-shade: oklch(0.627 0.011 274.7);
+    --ion-color-medium-tint: oklch(0.719 0.01 274.7);
 
-    // Brighter takes on the same olive/terracotta family for dark
-    --ion-color-success: #a3c759;
-    --ion-color-success-rgb: 163,199,89;
-    --ion-color-success-shade: #8fb04e;
-    --ion-color-success-tint: #accd6a;
-    --ion-color-danger: #ec7358;
+    // The same inks held to the light: chiku-rin pale, terracotta brighter,
+    // and ama-iro pale for the readings.
+    --ion-color-success: var(--ink-chiku-rin-pale);
+    --ion-color-success-rgb: 162,199,90;
+    --ion-color-success-shade: oklch(0.712 0.132 125.4);
+    --ion-color-success-tint: oklch(0.802 0.132 125.4);
+    --ion-color-danger: oklch(0.692 0.156 33.8);
     --ion-color-danger-rgb: 236,115,88;
-    --ion-color-danger-shade: #d0654e;
-    --ion-color-danger-tint: #ef8169;
-    --ion-color-warning-shade: #e0b500;
-    --ion-color-secondary-shade: #d28508;
-    --app-color-link: #a3c759;
+    --ion-color-danger-shade: oklch(0.63 0.141 33.8);
+    --ion-color-danger-tint: oklch(0.72 0.14 33.8);
+    --ion-color-warning-shade: oklch(0.789 0.161 91.4);
+    --ion-color-secondary-shade: oklch(0.681 0.147 68.8);
+    --app-color-link: var(--ink-chiku-rin-pale);
+    --app-color-reading: var(--ink-ama-iro-pale);
 
     --ion-border-color: var(--ion-color-dark-shade);
     --ion-background-color: var(--ion-color-dark);
@@ -135,61 +172,61 @@
 
     // Darker, higher-contrast state colours so white text stays legible
     // on the answer field in dark mode. color-mix keeps the brand hue.
-    --app-answer-correct-background: color-mix(in srgb, var(--ion-color-success), #000 62%);
-    --app-answer-correct-color: #fff;
-    --app-answer-incorrect-background: color-mix(in srgb, var(--ion-color-danger), #000 55%);
-    --app-answer-incorrect-color: #fff;
-    --app-answer-invalid-background: color-mix(in srgb, var(--ion-color-warning), #000 60%);
-    --app-answer-invalid-color: #fff;
+    --app-answer-correct-background: color-mix(in srgb, var(--ion-color-success), oklch(0 0 0) 62%);
+    --app-answer-correct-color: oklch(1 0 0);
+    --app-answer-incorrect-background: color-mix(in srgb, var(--ion-color-danger), oklch(0 0 0) 55%);
+    --app-answer-incorrect-color: oklch(1 0 0);
+    --app-answer-invalid-background: color-mix(in srgb, var(--ion-color-warning), oklch(0 0 0) 60%);
+    --app-answer-invalid-color: oklch(1 0 0);
 
     /* Ionic 8 step variables (bg steps go background -> text,
        text steps go text -> background) */
-    --ion-background-color-step-50: #232323;
-    --ion-background-color-step-100: #2e2e2e;
-    --ion-background-color-step-150: #3a3a3a;
-    --ion-background-color-step-200: #454545;
-    --ion-background-color-step-250: #515151;
-    --ion-background-color-step-300: #5d5d5d;
-    --ion-background-color-step-350: #686868;
-    --ion-background-color-step-400: #747474;
-    --ion-background-color-step-450: #7f7f7f;
-    --ion-background-color-step-500: #8b8b8b;
-    --ion-background-color-step-550: #979797;
-    --ion-background-color-step-600: #a2a2a2;
-    --ion-background-color-step-650: #aeaeae;
-    --ion-background-color-step-700: #b9b9b9;
-    --ion-background-color-step-750: #c5c5c5;
-    --ion-background-color-step-800: #d1d1d1;
-    --ion-background-color-step-850: #dcdcdc;
-    --ion-background-color-step-900: #e8e8e8;
-    --ion-background-color-step-950: #f3f3f3;
+    --ion-background-color-step-50: oklch(0.256 0 0);
+    --ion-background-color-step-100: oklch(0.301 0 0);
+    --ion-background-color-step-150: oklch(0.348 0 0);
+    --ion-background-color-step-200: oklch(0.39 0 0);
+    --ion-background-color-step-250: oklch(0.435 0 0);
+    --ion-background-color-step-300: oklch(0.478 0 0);
+    --ion-background-color-step-350: oklch(0.517 0 0);
+    --ion-background-color-step-400: oklch(0.559 0 0);
+    --ion-background-color-step-450: oklch(0.597 0 0);
+    --ion-background-color-step-500: oklch(0.637 0 0);
+    --ion-background-color-step-550: oklch(0.676 0 0);
+    --ion-background-color-step-600: oklch(0.712 0 0);
+    --ion-background-color-step-650: oklch(0.751 0 0);
+    --ion-background-color-step-700: oklch(0.786 0 0);
+    --ion-background-color-step-750: oklch(0.823 0 0);
+    --ion-background-color-step-800: oklch(0.861 0 0);
+    --ion-background-color-step-850: oklch(0.895 0 0);
+    --ion-background-color-step-900: oklch(0.931 0 0);
+    --ion-background-color-step-950: oklch(0.964 0 0);
 
-    --ion-text-color-step-50: #e8e8e8;
-    --ion-text-color-step-100: #dcdcdc;
-    --ion-text-color-step-150: #d1d1d1;
-    --ion-text-color-step-200: #c5c5c5;
-    --ion-text-color-step-250: #b9b9b9;
-    --ion-text-color-step-300: #aeaeae;
-    --ion-text-color-step-350: #a2a2a2;
-    --ion-text-color-step-400: #979797;
-    --ion-text-color-step-450: #8b8b8b;
-    --ion-text-color-step-500: #8b8b8b;
-    --ion-text-color-step-550: #7f7f7f;
-    --ion-text-color-step-600: #747474;
-    --ion-text-color-step-650: #686868;
-    --ion-text-color-step-700: #5d5d5d;
-    --ion-text-color-step-750: #515151;
-    --ion-text-color-step-800: #454545;
-    --ion-text-color-step-850: #3a3a3a;
-    --ion-text-color-step-900: #2e2e2e;
-    --ion-text-color-step-950: #232323;
+    --ion-text-color-step-50: oklch(0.931 0 0);
+    --ion-text-color-step-100: oklch(0.895 0 0);
+    --ion-text-color-step-150: oklch(0.861 0 0);
+    --ion-text-color-step-200: oklch(0.823 0 0);
+    --ion-text-color-step-250: oklch(0.786 0 0);
+    --ion-text-color-step-300: oklch(0.751 0 0);
+    --ion-text-color-step-350: oklch(0.712 0 0);
+    --ion-text-color-step-400: oklch(0.676 0 0);
+    --ion-text-color-step-450: oklch(0.637 0 0);
+    --ion-text-color-step-500: oklch(0.637 0 0);
+    --ion-text-color-step-550: oklch(0.597 0 0);
+    --ion-text-color-step-600: oklch(0.559 0 0);
+    --ion-text-color-step-650: oklch(0.517 0 0);
+    --ion-text-color-step-700: oklch(0.478 0 0);
+    --ion-text-color-step-750: oklch(0.435 0 0);
+    --ion-text-color-step-800: oklch(0.39 0 0);
+    --ion-text-color-step-850: oklch(0.348 0 0);
+    --ion-text-color-step-900: oklch(0.301 0 0);
+    --ion-text-color-step-950: oklch(0.256 0 0);
 
-    --app-color-bg-dark: #131300;
-    --app-color-bg-light: #152524;
+    --app-color-bg-dark: oklch(0.181 0.039 110);
+    --app-color-bg-light: oklch(0.25 0.022 190);
 
     // Paper by lamplight: still plainly a sheet, but not a torch in a dark
     // room. Everything written on it keeps its colour.
-    --app-color-paper: #e3e0d7;
+    --app-color-paper: oklch(0.9066 0.013 88);
 }
 
 html.theme-dark {

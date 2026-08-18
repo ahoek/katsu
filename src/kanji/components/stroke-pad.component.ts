@@ -219,11 +219,11 @@ export function strokeTraceMs(path: string, scale = 1): number {
     }
 
     .directions polygon {
-      // Cut out of the stroke it sits in, so it adds nothing to the outline of
-      // the character. Kept faint: it only has to be findable when looked for,
-      // and a solid knock-out reads as part of the character.
-      fill: var(--app-color-paper);
-      opacity: .55;
+      // Knocked into the stroke it sits in, so it adds nothing to the outline
+      // of the character. Ama-iro rather than paper: an arrow is a note about
+      // how the stroke goes, and a note is written in blue, not left as a hole.
+      fill: var(--app-color-ink-note);
+      opacity: .85;
     }
 
     .numbers text {
@@ -231,7 +231,7 @@ export function strokeTraceMs(path: string, scale = 1): number {
       // smaller keeps the digit clear of a 5.5 unit stroke. The position is the
       // start of the baseline, so a smaller digit stays inside the same gap.
       font-size: 4.5px;
-      fill: var(--app-color-paper-rule);
+      fill: var(--app-color-paper-note);
       // A halo behind the digit, for where a number does touch a stroke.
       paint-order: stroke;
       stroke: var(--app-color-paper);

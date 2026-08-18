@@ -105,12 +105,14 @@
     }
 
     // Matches the dot on a due tile rather than its bar, so it is recognisable
-    // as the same mark.
+    // as the same mark. Ama-iro, where mastered is yu-yake: one says there is
+    // nothing left to do here, the other asks for something now, and they
+    // should not have to be told apart by shape alone.
     &--due {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--ion-color-secondary);
+      background: var(--ion-color-tertiary);
     }
   }
 }
@@ -185,7 +187,7 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--ion-color-secondary);
+    background: var(--ion-color-tertiary);
     animation: waiting 2s ease-in-out infinite;
   }
 }

@@ -30,12 +30,14 @@
     font-weight: 600;
   }
 
+  // Ama-iro: a reading is what the character sounds like, not part of the
+  // character itself, the way a textbook prints its kana in blue.
   &__readings {
     display: flex;
     gap: 10px;
     margin: 2px 0 0;
     font-size: .85rem;
-    color: var(--ion-color-medium);
+    color: var(--app-color-reading);
   }
 
   &__note {
@@ -77,7 +79,7 @@
   gap: 12px;
   margin: 2px 0 14px;
   font-size: .85rem;
-  color: var(--ion-color-medium);
+  color: var(--app-color-reading);
 }
 
 .answer {

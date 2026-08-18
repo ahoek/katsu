@@ -5,7 +5,11 @@ ruby {
   line-height: 2.4;
 }
 
+// Ama-iro, like the readings on a kanji page: kana printed above a word say
+// how it sounds, which is something about the word rather than the word.
+// Inherits instead on a coloured field, where the ink is chosen for contrast.
 rt {
   font-size: 50%;
   line-height: 1.1;
+  color: var(--app-color-reading);
 }
