@@ -344,6 +344,11 @@ positions, and merges them with the deck above. It fails loudly when a character
 is missing, its stroke numbering has a gap, or it ends up with a different count
 of numbers and strokes. `stroke-data.spec.ts` guards the file that ships.
 
+At 642 characters the run takes a few minutes, so a dropped connection retries
+rather than throwing the whole thing away - a 404 still stops it, since that
+character really is not in KanjiVG. Watch its exit code rather than its last
+line: piping the output to `tail` hides a crash behind the pipe's own success.
+
 The same run merges in the two sortable ranks, from `kanji-ranks.mjs` and its
 own pinned fetches: the JLPT level per kanji from Jonathan Waller's lists -
 the de-facto standard, since the JLPT stopped publishing lists in 2010 - and

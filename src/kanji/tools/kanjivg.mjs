@@ -11,13 +11,27 @@ const BASE_URL = `https://raw.githubusercontent.com/KanjiVG/kanjivg/${KANJIVG_RE
 /** KanjiVG names its files after the 5-digit lowercase hex code point. */
 const fileName = kanji => `${kanji.codePointAt(0).toString(16).padStart(5, '0')}.svg`;
 
-export async function fetchSvg(kanji) {
+/**
+ * One SVG per kanji, and the deck asks for hundreds in a row: a single dropped
+ * connection used to throw away the whole run, so a failed read waits and asks
+ * again. A 404 is not retried - that character is simply not in KanjiVG.
+ */
+export async function fetchSvg(kanji, attempts = 4) {
   const url = `${BASE_URL}/${fileName(kanji)}`;
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`${kanji}: ${response.status} ${url}`);
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw Object.assign(new Error(`${kanji}: ${response.status} ${url}`), { final: true });
+      }
+      return await response.text();
+    } catch (error) {
+      if (error.final || attempt >= attempts) {
+        throw error;
+      }
+      await new Promise(resolve => setTimeout(resolve, 500 * attempt));
+    }
   }
-  return response.text();
 }
 
 /**
