@@ -130,9 +130,9 @@ type Feedback =
     <app-kanji-stroke-pad
       [strokes]="strokes()"
       [written]="written()"
-      [drawn]="shownInk()"
+      [drawn]="inkPaths()"
       [offStrokes]="offStrokes()"
-      [showOutline]="outlineVisible()"
+      [showOutline]="exampleVisible()"
       [showStroke]="nextStrokeVisible()"
       [showStart]="startVisible()"
       [feedback]="padFeedback()"
@@ -350,10 +350,9 @@ export class WritingExerciseComponent implements OnDestroy {
   private readonly hintsUsed = linkedSignal({ source: this.strokes, computation: () => this.example() });
 
   /**
-   * The ink as it was drawn with its verdict - every accepted stroke in a
-   * guided writing, every stroke in a deferred one - and for a stroke that
-   * was turned down what turned it down. The reason decides nothing; it is
-   * here so the reveal can say more than "this one was wrong".
+   * The ink as it was drawn with its verdict, kept when judging is deferred, and
+   * for a stroke that was turned down what turned it down. The reason decides
+   * nothing; it is here so the reveal can say more than "this one was wrong".
    */
   protected readonly drawnInk = linkedSignal<
     readonly string[],
@@ -404,23 +403,6 @@ export class WritingExerciseComponent implements OnDestroy {
   protected readonly offCount = computed(() => (this.deferred() ? this.mistakes() : 0));
 
   protected readonly inkPaths = computed(() => this.drawnInk().map(stroke => stroke.path));
-
-  /**
-   * The ink the pad shows. A deferred writing is the learner's own hand from
-   * the first stroke; a guided one shows the model while it is under way - the
-   * hints and the placing conversation live there - and reveals what the hand
-   * actually did once the character is finished.
-   */
-  protected readonly shownInk = computed(() =>
-    this.deferred() || this.complete() ? this.inkPaths() : []);
-
-  /**
-   * The model, faded, behind the strokes. On screen for a lesson's first trace
-   * as something to write over, and again once the character is finished: with
-   * the learner's own ink revealed, the model behind it is what they measure it
-   * against - where a stroke sat too high or ran too long shows at a glance.
-   */
-  protected readonly outlineVisible = computed(() => this.exampleVisible() || this.complete());
 
   /** The ink as points, for judging where the character is being written. */
   private readonly inkPoints = computed(() => this.drawnInk().map(stroke => stroke.points));
@@ -495,14 +477,10 @@ export class WritingExerciseComponent implements OnDestroy {
     if (isStrayTouch(points, this.strokes()[this.written()] ?? '')) {
       return;
     }
-    // A guided writing shows each stroke as the model's while it is under way,
-    // so the model is what the next stroke is placed against - the learner's
-    // own ink is kept too, but only the reveal at the end shows it.
-    const result = this.matcher().match(
-      points,
-      this.written(),
-      this.deferred() ? this.inkPoints() : [],
-    );
+    // Where the character is being written is only ours to know where the ink on
+    // the pad is the learner's own. A guided writing lands each stroke as the
+    // model's, so the model is what the next stroke is placed against.
+    const result = this.matcher().match(points, this.written(), this.inkPoints());
 
     if (this.deferred()) {
       this.judgeQuietly(points, result);
@@ -511,7 +489,6 @@ export class WritingExerciseComponent implements OnDestroy {
 
     switch (result.result) {
       case 'correct': {
-        this.drawnInk.update(ink => [...ink, { path: inkPath(points), points, correct: true }]);
         const written = this.written() + 1;
         this.written.set(written);
         this.misses.set(0);
