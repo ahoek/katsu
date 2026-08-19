@@ -24,6 +24,7 @@ ion-button {
 .wordmark {
   // 4px toolbar padding + 12px = the 16px content gutter
   margin-inline-start: 12px;
+  margin-block: 0;
   font-size: 1.2rem;
   font-weight: 600;
 
@@ -31,6 +32,18 @@ ion-button {
     // Outweigh the global JP normal-weight rule; bold lowers the AA threshold
     font-weight: 600;
     color: var(--ion-color-secondary-shade);
+  }
+
+  // Which half of the app this is - Vervoeging or Kanji schrijven. Lighter
+  // than the name it follows: the app is called Katsu either way, and this
+  // only says which door you came through.
+  &__section {
+    font-weight: 400;
+    color: var(--ion-color-medium);
+
+    &::before {
+      content: ' ';
+    }
   }
 }
 

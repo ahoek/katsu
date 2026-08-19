@@ -1,6 +1,6 @@
 <ion-header class="app-chrome">
   <ion-toolbar>
-    <span class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu</span>
+    <h1 class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu<span class="wordmark__section">{{'menu.conjugation'|translate}}</span></h1>
     <ion-buttons slot="end">
       <app-menu-button></app-menu-button>
     </ion-buttons>
@@ -8,7 +8,6 @@
 </ion-header>
 
 <ion-content class="patterned" [fullscreen]="true">
-  <h1 class="sr-only">Katsu: practise Japanese conjugation and kanji - 活用</h1>
   <h2 class="page-heading">{{'setting.title'|translate}}</h2>
   <app-review-settings></app-review-settings>
   <app-credit></app-credit>

@@ -2,7 +2,7 @@
   <ion-toolbar>
     <!-- No back button: since the menu, this page is a sibling of the
          conjugation home, not a child of it. -->
-    <span class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu</span>
+    <h1 class="wordmark"><span lang="ja" aria-hidden="true">活用</span> Katsu<span class="wordmark__section">{{'home.kanji'|translate}}</span></h1>
     <ion-buttons slot="end">
       <app-menu-button></app-menu-button>
     </ion-buttons>
@@ -11,7 +11,6 @@
 
 <ion-content class="patterned" [fullscreen]="true">
   <div class="path">
-    <h1 class="path__heading">{{ 'kanji.path.title' | translate }}</h1>
 
     <section class="card frosted-card">
       <h2 class="card__title">
