@@ -143,7 +143,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         privacy: 'A sync code holds nothing but your review schedule. No name, no email, no account.',
       },
       path: {
-        title: 'Your kanji path',
+        title: 'The way of kanji',
         'reviews-title': 'Reviews',
         'reviews-due': '{{count}} ready to review',
         'reviews-one': '1 ready to review',
@@ -336,7 +336,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         privacy: 'Een synccode bevat niets anders dan je herhalingsschema. Geen naam, geen e-mail, geen account.',
       },
       path: {
-        title: 'Jouw kanjipad',
+        title: 'De weg van de kanji',
         'reviews-title': 'Herhalingen',
         'reviews-due': '{{count}} klaar om te herhalen',
         'reviews-one': '1 klaar om te herhalen',
