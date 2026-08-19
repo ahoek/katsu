@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  IonButtons,
   IonBackButton,
+  IonButtons,
   IonCheckbox,
   IonContent,
   IonHeader,
@@ -14,6 +14,7 @@ import {
   IonNote,
   IonSelect,
   IonSelectOption,
+  IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -47,6 +48,7 @@ import { ThemePreference, ThemeService } from '../shared/theme.service';
     IonNote,
     IonSelect,
     IonSelectOption,
+    IonTitle,
     IonToolbar,
     TranslatePipe,
   ],

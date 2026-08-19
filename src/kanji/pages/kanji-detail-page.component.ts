@@ -8,6 +8,7 @@ import {
   IonFooter,
   IonHeader,
   IonIcon,
+  IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -56,6 +57,7 @@ import { PageMetaService } from '../../app/shared/page-meta.service';
     IonFooter,
     IonHeader,
     IonIcon,
+    IonTitle,
     IonToolbar,
     TranslatePipe,
     StrokeDemoComponent,

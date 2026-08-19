@@ -15,6 +15,12 @@
       <app-menu-button></app-menu-button>
     </ion-buttons>
 
+    <!-- While a session runs the toolbar counts it out; once it is over the
+         count is gone and the page can say what it is. -->
+    @if (finished()) {
+      <ion-title><h1 class="toolbar-heading">{{ 'kanji.review.title' | translate }}</h1></ion-title>
+    }
+
     @if (!finished() && queue().length) {
       <span class="counter">
         {{ 'kanji.review.progress' | translate: { done: position() + 1, total: queue().length } }}

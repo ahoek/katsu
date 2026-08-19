@@ -7,6 +7,7 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
+  IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
@@ -72,6 +73,7 @@ const STREAK_WORTH_SHOWING = 2;
     IonContent,
     IonHeader,
     IonIcon,
+    IonTitle,
     IonToolbar,
     TranslatePipe,
     WritingExerciseComponent,

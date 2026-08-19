@@ -5,11 +5,12 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
+    <!-- Still the page's h1: the toolbar is where the title sits, not what it is. -->
+    <ion-title><h1 class="toolbar-heading">{{'preferences.title'|translate}}</h1></ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="patterned" [fullscreen]="true">
-  <h1 class="page-title">{{'preferences.title'|translate}}</h1>
   <ion-list>
     <!-- The unlabeled first group is the app-wide one; only the trainers'
          own sections need saying whose they are. -->

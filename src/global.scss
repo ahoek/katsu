@@ -247,3 +247,13 @@ ion-content.patterned {
     radial-gradient(circle at 100% 50%, var(--wave) 5%, var(--app-color-bg-dark) 6%, var(--app-color-bg-dark) 15%, var(--wave) 16%, var(--wave) 20%, var(--app-color-bg-dark) 21%, var(--app-color-bg-dark) 30%, var(--wave) 31%, var(--wave) 35%, var(--app-color-bg-dark) 36%, var(--app-color-bg-dark) 45%, var(--wave) 46%, var(--wave) 49%, transparent 50%, transparent) 0 0 / 100px 50px,
     radial-gradient(circle at 0    50%, var(--wave) 5%, var(--app-color-bg-dark) 6%, var(--app-color-bg-dark) 15%, var(--wave) 16%, var(--wave) 20%, var(--app-color-bg-dark) 21%, var(--app-color-bg-dark) 30%, var(--wave) 31%, var(--wave) 35%, var(--app-color-bg-dark) 36%, var(--app-color-bg-dark) 45%, var(--wave) 46%, var(--wave) 49%, transparent 50%, transparent) 0 0 / 100px 50px var(--app-color-bg-dark);
 }
+
+// A page's h1 sitting in the toolbar, dressed as the title bar it lives in.
+// The heading belongs to the page either way; the toolbar is only where it is
+// kept, and on a page whose content changes under it - writing a kanji rather
+// than watching it - the toolbar is the one place it does not go away.
+.toolbar-heading {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}

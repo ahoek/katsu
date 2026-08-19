@@ -3,6 +3,8 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/kanji"></ion-back-button>
     </ion-buttons>
+    <!-- Still the page's h1: the toolbar is where the title sits, not what it is. -->
+    <ion-title><h1 class="toolbar-heading">{{ 'kanji.sync.title' | translate }}</h1></ion-title>
     <ion-buttons slot="end">
       <app-menu-button></app-menu-button>
     </ion-buttons>
@@ -11,7 +13,6 @@
 
 <ion-content class="patterned" [fullscreen]="true">
   <div class="sync">
-    <h1 class="sync__heading">{{ 'kanji.sync.title' | translate }}</h1>
     <p class="sync__lead">{{ 'kanji.sync.lead' | translate }}</p>
 
     @if (outcome(); as result) {

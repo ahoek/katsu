@@ -3,6 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/kanji/practice"></ion-back-button>
     </ion-buttons>
+    <!-- The meaning, not the character: this page is also reached by writing
+         it from memory, and the toolbar would be giving away the answer. It is
+         the page's h1 here rather than in the block below, which the writing
+         view replaces. -->
+    <ion-title><h1 class="toolbar-heading">{{ meaning() }}</h1></ion-title>
     <ion-buttons slot="end">
       <app-menu-button></app-menu-button>
     </ion-buttons>
@@ -28,7 +33,7 @@
         <div class="meet">
           <span class="meet__glyph" lang="ja">{{ kanji.kanji }}</span>
           <div class="meet__facts">
-            <h1 class="meet__meaning">{{ meaning() }}</h1>
+            <p class="meet__meaning">{{ meaning() }}</p>
             <p class="meet__readings">
               @if (kanji.on) {
                 <span lang="ja">{{ kanji.on }}</span>
