@@ -10,7 +10,7 @@ export const kanjiRoutes: Routes = [
     title: 'title.kanji',
     data: { description: 'description.kanji' },
     loadComponent: () =>
-      import('./pages/kanji-path-page.component').then(m => m.KanjiPathPageComponent),
+      import('./pages/kanji-home-page.component').then(m => m.KanjiHomePageComponent),
   },
   {
     path: 'lesson',

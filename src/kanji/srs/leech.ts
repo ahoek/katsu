@@ -30,7 +30,7 @@ import type { Card } from './srs';
  */
 
 /**
- * How many to name on the path page. Fourteen characters in a row stops being a
+ * How many to name on the kanji home. Fourteen characters in a row stops being a
  * list and turns into a wall - the point is to know which ones to look at first,
  * and past a handful nobody looks.
  *

@@ -103,9 +103,9 @@
           </p>
         }
 
-        <!-- Why the session stopped where it did. The way to carry on is on the
-             path, so the decision to overrun a session's cap is made in one
-             place rather than offered at the end of every session. -->
+        <!-- Why the session stopped where it did. The way to carry on is on
+             the kanji home, so the decision to overrun a session's cap is made
+             in one place rather than offered at the end of every session. -->
         @if (stillWaiting() > 0) {
           <p class="summary__waiting">
             {{ 'kanji.review.still-waiting' | translate: { count: stillWaiting() } }}

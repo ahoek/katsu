@@ -36,10 +36,10 @@ import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button
  * far through the hundred kanji the learner is.
  */
 @Component({
-  selector: 'app-kanji-path-page',
+  selector: 'app-kanji-home-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'kanji-path-page.component.html',
-  styleUrls: ['kanji-path-page.component.scss'],
+  templateUrl: 'kanji-home-page.component.html',
+  styleUrls: ['kanji-home-page.component.scss'],
   imports: [
     RouterLink,
     IonRouterLink,
@@ -53,7 +53,7 @@ import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button
     MenuButtonComponent,
   ],
 })
-export class KanjiPathPageComponent implements OnInit {
+export class KanjiHomePageComponent implements OnInit {
   private readonly data = inject(KanjiDataService);
   private readonly pace = inject(KanjiPaceService);
   private readonly refresh = inject(KanjiRefreshService);
@@ -152,6 +152,6 @@ export class KanjiPathPageComponent implements OnInit {
 
   /** Translation key for the countdown, which differs per unit. */
   nextReviewKey(unit: 'minute' | 'hour' | 'day'): string {
-    return `kanji.path.next-${unit}`;
+    return `kanji.home.next-${unit}`;
   }
 }

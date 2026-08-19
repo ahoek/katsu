@@ -84,7 +84,7 @@ starts is how a schedule dies. Two caps hold the pace, and they are different in
 kind. `srs/pace.ts` holds both as pure functions; `kanji-pace.service.ts` holds
 nothing but the two settings, in localStorage.
 
-**Reviews are rationed per session** - twenty by default - and the path page says
+**Reviews are rationed per session** - twenty by default - and the kanji home says
 which it is doing: "20 ready to review, of 34 due". A session is the unit a
 learner decides on, one queue or coffee break at a time, and it needs no
 calendar: the count is against what is due, which is already true. This was a cap

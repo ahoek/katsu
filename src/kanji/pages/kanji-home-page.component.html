@@ -10,27 +10,27 @@
 </ion-header>
 
 <ion-content class="patterned" [fullscreen]="true">
-  <div class="path">
+  <div class="hub">
 
     <section class="card frosted-card">
       <h2 class="card__title">
         <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-        {{ 'kanji.path.reviews-title' | translate }}
+        {{ 'kanji.home.reviews-title' | translate }}
       </h2>
 
       @if (dueCount() > 0) {
         <p class="card__lead">
           @if (batchCount() === 1) {
-            {{ 'kanji.path.reviews-one' | translate }}
+            {{ 'kanji.home.reviews-one' | translate }}
           } @else {
-            {{ 'kanji.path.reviews-due' | translate: { count: batchCount() } }}
+            {{ 'kanji.home.reviews-due' | translate: { count: batchCount() } }}
           }
         </p>
         @if (leftOverCount() > 0) {
-          <p class="card__note">{{ 'kanji.path.batch-of' | translate: { count: dueCount() } }}</p>
+          <p class="card__note">{{ 'kanji.home.batch-of' | translate: { count: dueCount() } }}</p>
         }
         <ion-button expand="block" routerLink="/kanji/review" routerDirection="forward">
-          {{ 'kanji.path.start-reviews' | translate }}
+          {{ 'kanji.home.start-reviews' | translate }}
           <ion-icon slot="end" name="arrow-forward"></ion-icon>
         </ion-button>
         @if (leftOverCount() > 0) {
@@ -44,11 +44,11 @@
             [queryParams]="{ all: 1 }"
             routerDirection="forward"
           >
-            {{ 'kanji.path.batch-continue' | translate: { count: dueCount() } }}
+            {{ 'kanji.home.batch-continue' | translate: { count: dueCount() } }}
           </ion-button>
         }
       } @else {
-        <p class="card__lead card__lead--quiet">{{ 'kanji.path.reviews-none' | translate }}</p>
+        <p class="card__lead card__lead--quiet">{{ 'kanji.home.reviews-none' | translate }}</p>
         @if (nextReview(); as next) {
           <p class="card__note">{{ nextReviewKey(next.unit) | translate: { value: next.value } }}</p>
         }
@@ -58,7 +58,7 @@
     <section class="card frosted-card">
       <h2 class="card__title">
         <ion-icon name="school-outline" aria-hidden="true"></ion-icon>
-        {{ 'kanji.path.lessons-title' | translate }}
+        {{ 'kanji.home.lessons-title' | translate }}
       </h2>
 
       @if (nextLesson(); as lesson) {
@@ -67,9 +67,9 @@
                than as a rule, because the cost is the whole reason for the line
                - and one more lesson is still right there. -->
           <p class="card__lead card__lead--quiet">
-            {{ 'kanji.path.lessons-enough' | translate: { count: lessonsToday() } }}
+            {{ 'kanji.home.lessons-enough' | translate: { count: lessonsToday() } }}
           </p>
-          <p class="card__note">{{ 'kanji.path.lessons-enough-note' | translate }}</p>
+          <p class="card__note">{{ 'kanji.home.lessons-enough-note' | translate }}</p>
           <ion-button
             expand="block"
             fill="clear"
@@ -77,23 +77,23 @@
             routerLink="/kanji/lesson"
             routerDirection="forward"
           >
-            {{ 'kanji.path.lesson-anyway' | translate }}
+            {{ 'kanji.home.lesson-anyway' | translate }}
           </ion-button>
         } @else {
           <p class="card__lead">
             <span class="card__glyph" lang="ja">{{ lesson.kanji }}</span>
-            {{ 'kanji.path.lesson-next' | translate: { meaning: meaningOf(lesson) } }}
+            {{ 'kanji.home.lesson-next' | translate: { meaning: meaningOf(lesson) } }}
           </p>
           @if (lessonsToday() > 0) {
-            <p class="card__note">{{ 'kanji.path.lessons-today' | translate: { count: lessonsToday() } }}</p>
+            <p class="card__note">{{ 'kanji.home.lessons-today' | translate: { count: lessonsToday() } }}</p>
           }
           <ion-button expand="block" fill="outline" routerLink="/kanji/lesson" routerDirection="forward">
-            {{ 'kanji.path.start-lesson' | translate }}
+            {{ 'kanji.home.start-lesson' | translate }}
             <ion-icon slot="end" name="arrow-forward"></ion-icon>
           </ion-button>
         }
       } @else {
-        <p class="card__lead card__lead--quiet">{{ 'kanji.path.lessons-done' | translate }}</p>
+        <p class="card__lead card__lead--quiet">{{ 'kanji.home.lessons-done' | translate }}</p>
       }
     </section>
 
@@ -115,15 +115,15 @@
       </div>
       <dl class="counts">
         <div>
-          <dt>{{ 'kanji.path.learning' | translate }}</dt>
+          <dt>{{ 'kanji.home.learning' | translate }}</dt>
           <dd>{{ reviewingCount() }}</dd>
         </div>
         <div>
-          <dt>{{ 'kanji.path.mastered' | translate }}</dt>
+          <dt>{{ 'kanji.home.mastered' | translate }}</dt>
           <dd>{{ masteredCount() }}</dd>
         </div>
         <div>
-          <dt>{{ 'kanji.path.to-learn' | translate }}</dt>
+          <dt>{{ 'kanji.home.to-learn' | translate }}</dt>
           <dd>{{ toLearnCount() }}</dd>
         </div>
       </dl>
@@ -134,9 +134,9 @@
       @if (comingBack().length) {
         <p class="coming-back">
           @if (comingBackWorst().length === 1) {
-            {{ 'kanji.path.coming-back-one' | translate }}
+            {{ 'kanji.home.coming-back-one' | translate }}
           } @else {
-            {{ 'kanji.path.coming-back' | translate }}
+            {{ 'kanji.home.coming-back' | translate }}
           }
         </p>
         <p class="coming-back__list">
@@ -152,14 +152,14 @@
       }
     </section>
 
-    <!-- The two ways off the path: neither is part of the schedule, so they sit
+    <!-- The two ways out of the schedule: neither is part of it, so they sit
          apart from the cards above rather than competing with them. -->
     <nav class="detours">
       <a class="detour frosted-card" routerLink="/kanji/practice" routerDirection="forward">
         <ion-icon class="detour__icon" name="brush-outline" aria-hidden="true"></ion-icon>
         <span class="detour__text">
           <span class="detour__title">{{ 'kanji.browse.title' | translate }}</span>
-          <span class="detour__note">{{ 'kanji.path.practice-note' | translate }}</span>
+          <span class="detour__note">{{ 'kanji.home.practice-note' | translate }}</span>
         </span>
         <ion-icon class="detour__go" name="chevron-forward" aria-hidden="true"></ion-icon>
       </a>
@@ -168,7 +168,7 @@
         <ion-icon class="detour__icon" name="phone-portrait-outline" aria-hidden="true"></ion-icon>
         <span class="detour__text">
           <span class="detour__title">{{ 'kanji.sync.title' | translate }}</span>
-          <span class="detour__note">{{ 'kanji.path.devices-note' | translate }}</span>
+          <span class="detour__note">{{ 'kanji.home.devices-note' | translate }}</span>
         </span>
         <ion-icon class="detour__go" name="chevron-forward" aria-hidden="true"></ion-icon>
       </a>

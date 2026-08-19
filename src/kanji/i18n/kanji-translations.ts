@@ -142,7 +142,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         import: 'Restore from a file',
         privacy: 'A sync code holds nothing but your review schedule. No name, no email, no account.',
       },
-      path: {
+      home: {
         'reviews-title': 'Reviews',
         'reviews-due': '{{count}} ready to review',
         'reviews-one': '1 ready to review',
@@ -334,7 +334,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         import: 'Terugzetten uit bestand',
         privacy: 'Een synccode bevat niets anders dan je herhalingsschema. Geen naam, geen e-mail, geen account.',
       },
-      path: {
+      home: {
         'reviews-title': 'Herhalingen',
         'reviews-due': '{{count}} klaar om te herhalen',
         'reviews-one': '1 klaar om te herhalen',
