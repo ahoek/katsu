@@ -117,7 +117,9 @@
   align-items: center;
   gap: 2px;
   padding: 6px 2px;
-  background: var(--ion-background-color);
+  // The surface token, not Ionic's background: the light theme leaves that one
+  // unset, which made every tile fall through to the waves behind it.
+  background: var(--app-color-surface);
   border: 1px solid var(--ion-color-medium);
   border-radius: 8px;
   color: var(--ion-text-color);
@@ -159,12 +161,12 @@
   // In the schedule, and out of it again once mastered
   &--learned {
     border-color: var(--ion-color-success);
-    background: color-mix(in srgb, var(--ion-color-success) 12%, var(--ion-background-color));
+    background: color-mix(in srgb, var(--ion-color-success) 12%, var(--app-color-surface));
   }
 
   &--mastered {
     border-color: var(--ion-color-secondary-shade);
-    background: color-mix(in srgb, var(--ion-color-secondary) 16%, var(--ion-background-color));
+    background: color-mix(in srgb, var(--ion-color-secondary) 16%, var(--app-color-surface));
 
     .tile__climbed {
       background: var(--ion-color-secondary);
