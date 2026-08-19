@@ -1,5 +1,15 @@
+<ion-header class="app-chrome">
+  <ion-toolbar>
+    <!-- No back button: back is the session that just ended. The way on from
+         here is the footer's own button, which closes it. -->
+    <ion-title><h1 class="toolbar-heading">{{'summary.title'|translate}}</h1></ion-title>
+    <ion-buttons slot="end">
+      <app-menu-button></app-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="patterned" [fullscreen]="true">
-  <h1 class="page-title">{{'summary.title'|translate}}</h1>
 
   @if (items.length > 0) {
     <div class="score">

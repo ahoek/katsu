@@ -1,11 +1,3 @@
-.page-title {
-  max-width: 720px;
-  // No header on this page, so keep clear of the status bar ourselves
-  margin: calc(16px + env(safe-area-inset-top)) auto 4px;
-  padding: 0 16px;
-  font-size: 1.6rem;
-}
-
 .score {
   max-width: 720px;
   margin: 8px auto 0;
