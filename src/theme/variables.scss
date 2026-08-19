@@ -105,9 +105,14 @@
 
   // The canvas the seigaiha waves are drawn on, base and crest. 青海波 means
   // "blue sea waves", so they are ama-iro's own hue: the pattern is the one
-  // place in the app that is literally water.
-  --app-color-bg-dark: oklch(0.94 0 0);
-  --app-color-bg-light: oklch(0.888 0.022 235.6);
+  // place in the app that is literally water. Crest and base sit close
+  // together on purpose - the waves are meant to be felt rather than read.
+  --app-color-bg-dark: oklch(0.925 0.004 235.6);
+  --app-color-bg-light: oklch(0.898 0.018 235.6);
+  /** What floats on the canvas: cards, the chrome, an outlined button. Its own
+      tone rather than the canvas's, so a card is a surface lying on the water
+      instead of a patch where the pattern happens to stop. */
+  --app-color-surface: oklch(0.995 0 0);
 
   // The writing pad is paper, in both themes: kanji are written in dark ink
   // on a light sheet everywhere off the phone, and practising them any other
@@ -228,11 +233,12 @@
     // hue 110 - the same value as the dark text on yu-yake, borrowed rather
     // than chosen - which put a yellow-green cast over every page and left
     // the waves blending across eighty degrees of hue to reach teal. Both
-    // ends sit on ama-iro's hue now, and the crest is pulled closer to the
-    // base so the pattern reads as texture rather than as a motif competing
-    // with the cards on top of it.
-    --app-color-bg-dark: oklch(0.175 0.026 235.6);
-    --app-color-bg-light: oklch(0.235 0.036 235.6);
+    // ends sit on ama-iro's hue now, deeper than before, with the crest close
+    // enough to the base that the pattern is texture rather than a motif.
+    --app-color-bg-dark: oklch(0.145 0.022 235.6);
+    --app-color-bg-light: oklch(0.185 0.03 235.6);
+    // Lifted well clear of that water, which is what the cards were missing.
+    --app-color-surface: oklch(0.235 0.019 235.6);
 
     // Paper by lamplight: still plainly a sheet, but not a torch in a dark
     // room. Everything written on it keeps its colour.

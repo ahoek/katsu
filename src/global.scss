@@ -36,10 +36,10 @@ ion-button {
 
 // A frosted surface for content floating on the patterned canvas: the same
 // glass as the app chrome, but opaque enough to keep text at AA on top of
-// the pattern. --app-color-bg-dark exists in both themes, unlike Ionic's
+// the pattern. --app-color-surface exists in both themes, unlike Ionic's
 // --ion-background-color, which the light theme leaves unset.
 .frosted-card {
-  background: color-mix(in srgb, var(--app-color-bg-dark) 72%, transparent);
+  background: color-mix(in srgb, var(--app-color-surface) 90%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--ion-border-color, var(--ion-color-light-shade));
@@ -50,7 +50,7 @@ ion-button {
 // buttons on the pattern instead of floating outlines. Document styles on
 // the host outrank the :host rules inside Ionic's shadow DOM.
 ion-button[fill='outline'] {
-  --background: color-mix(in srgb, var(--app-color-bg-dark) 72%, transparent);
+  --background: color-mix(in srgb, var(--app-color-surface) 90%, transparent);
 }
 
 ion-button[fill='outline']::part(native) {
@@ -63,7 +63,7 @@ ion-button[fill='outline']::part(native) {
 // set [fullscreen]="true" on ion-content so the canvas runs underneath.
 ion-header.app-chrome {
   box-shadow: none;
-  background: color-mix(in srgb, var(--app-color-bg-dark) 45%, transparent);
+  background: color-mix(in srgb, var(--app-color-surface) 55%, transparent);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 
@@ -173,7 +173,7 @@ ion-button.flow-cta {
 
 ion-footer.app-footer {
   box-shadow: none;
-  background: color-mix(in srgb, var(--app-color-bg-dark) 45%, transparent);
+  background: color-mix(in srgb, var(--app-color-surface) 55%, transparent);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 
@@ -241,11 +241,14 @@ ion-footer.app-footer {
 ion-content.patterned {
   // Halve the wave contrast against the base colour
   --wave: color-mix(in srgb, var(--app-color-bg-light) 50%, var(--app-color-bg-dark));
-  --background: radial-gradient(circle at 100% 150%, var(--app-color-bg-dark) 24%, var(--wave) 25%, var(--wave) 28%, var(--app-color-bg-dark) 29%, var(--app-color-bg-dark) 36%, var(--wave) 36%, var(--wave) 40%, transparent 40%, transparent) 0 0 / 100px 50px,
-    radial-gradient(circle at 0    150%, var(--app-color-bg-dark) 24%, var(--wave) 25%, var(--wave) 28%, var(--app-color-bg-dark) 29%, var(--app-color-bg-dark) 36%, var(--wave) 36%, var(--wave) 40%, transparent 40%, transparent) 0 0 / 100px 50px,
-    radial-gradient(circle at 50%  100%, var(--wave) 10%, var(--app-color-bg-dark) 11%, var(--app-color-bg-dark) 23%, var(--wave) 24%, var(--wave) 30%, var(--app-color-bg-dark) 31%, var(--app-color-bg-dark) 43%, var(--wave) 44%, var(--wave) 50%, var(--app-color-bg-dark) 51%, var(--app-color-bg-dark) 63%, var(--wave) 64%, var(--wave) 71%, transparent 71%, transparent) 0 0 / 100px 50px,
-    radial-gradient(circle at 100% 50%, var(--wave) 5%, var(--app-color-bg-dark) 6%, var(--app-color-bg-dark) 15%, var(--wave) 16%, var(--wave) 20%, var(--app-color-bg-dark) 21%, var(--app-color-bg-dark) 30%, var(--wave) 31%, var(--wave) 35%, var(--app-color-bg-dark) 36%, var(--app-color-bg-dark) 45%, var(--wave) 46%, var(--wave) 49%, transparent 50%, transparent) 0 0 / 100px 50px,
-    radial-gradient(circle at 0    50%, var(--wave) 5%, var(--app-color-bg-dark) 6%, var(--app-color-bg-dark) 15%, var(--wave) 16%, var(--wave) 20%, var(--app-color-bg-dark) 21%, var(--app-color-bg-dark) 30%, var(--wave) 31%, var(--wave) 35%, var(--app-color-bg-dark) 36%, var(--app-color-bg-dark) 45%, var(--wave) 46%, var(--wave) 49%, transparent 50%, transparent) 0 0 / 100px 50px var(--app-color-bg-dark);
+  // One knob for how big the waves are drawn. Wider than a thumb reads as a
+  // sea; the 100x50 it started at read as wallpaper.
+  --wave-size: 160px 80px;
+  --background: radial-gradient(circle at 100% 150%, var(--app-color-bg-dark) 24%, var(--wave) 25%, var(--wave) 28%, var(--app-color-bg-dark) 29%, var(--app-color-bg-dark) 36%, var(--wave) 36%, var(--wave) 40%, transparent 40%, transparent) 0 0 / var(--wave-size),
+    radial-gradient(circle at 0    150%, var(--app-color-bg-dark) 24%, var(--wave) 25%, var(--wave) 28%, var(--app-color-bg-dark) 29%, var(--app-color-bg-dark) 36%, var(--wave) 36%, var(--wave) 40%, transparent 40%, transparent) 0 0 / var(--wave-size),
+    radial-gradient(circle at 50%  100%, var(--wave) 10%, var(--app-color-bg-dark) 11%, var(--app-color-bg-dark) 23%, var(--wave) 24%, var(--wave) 30%, var(--app-color-bg-dark) 31%, var(--app-color-bg-dark) 43%, var(--wave) 44%, var(--wave) 50%, var(--app-color-bg-dark) 51%, var(--app-color-bg-dark) 63%, var(--wave) 64%, var(--wave) 71%, transparent 71%, transparent) 0 0 / var(--wave-size),
+    radial-gradient(circle at 100% 50%, var(--wave) 5%, var(--app-color-bg-dark) 6%, var(--app-color-bg-dark) 15%, var(--wave) 16%, var(--wave) 20%, var(--app-color-bg-dark) 21%, var(--app-color-bg-dark) 30%, var(--wave) 31%, var(--wave) 35%, var(--app-color-bg-dark) 36%, var(--app-color-bg-dark) 45%, var(--wave) 46%, var(--wave) 49%, transparent 50%, transparent) 0 0 / var(--wave-size),
+    radial-gradient(circle at 0    50%, var(--wave) 5%, var(--app-color-bg-dark) 6%, var(--app-color-bg-dark) 15%, var(--wave) 16%, var(--wave) 20%, var(--app-color-bg-dark) 21%, var(--app-color-bg-dark) 30%, var(--wave) 31%, var(--wave) 35%, var(--app-color-bg-dark) 36%, var(--app-color-bg-dark) 45%, var(--wave) 46%, var(--wave) 49%, transparent 50%, transparent) 0 0 / var(--wave-size) var(--app-color-bg-dark);
 }
 
 // A page's h1 sitting in the toolbar, dressed as the title bar it lives in.
