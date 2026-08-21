@@ -135,6 +135,24 @@ count beats a measurement.
   second time. Every tile named is a different matter: 上 is 卜 and 一, and 三 is
   three 一.
 
+A part is only ever shown where KanjiVG asserts it, never where a shape merely
+resembles one. 米 is written with 木's four strokes in 木's order, and it is not
+a tree: it is grain on a stalk, and the stalk is not a trunk. Matching stroke
+sequences finds a taught kanji inside 40 of the 63 characters that do not
+divide, and it cannot tell that hit from its own noise - 木 "contains" 人
+because it ends in a ㇒ and a ㇏, 車 "contains" 早, 臣 "contains" 工. Narrowing
+it to matches covering two thirds of the strokes leaves three that are real
+writing hooks - 米 as 木 under two dots, 目 as 日 with a bar, 生 as 王 with a
+stroke on top - and they are still not what those characters are made of.
+
+Teaching them under "built from" would teach an etymology that does not exist,
+which is worse than teaching nothing: a learner who believes rice is a kind of
+tree has to unlearn it later, and they will trust the page that told them. The
+same rule is what `ETYMOLOGY_ONLY` is for at the other end - 海's 氵 really does
+descend from 水, and no stroke of 水 is written in 海, so it links nowhere. A
+derivation KanjiVG marks is a fact about the character; a resemblance is a fact
+about the reader.
+
 ### Why not CHISE IDS
 
 [cjkvi-ids](https://github.com/cjkvi/cjkvi-ids) names parts KanjiVG leaves
