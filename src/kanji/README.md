@@ -66,6 +66,17 @@ in words the learner has been taught instead of introducing dictionary English
 to explain Dutch - and it needs no translating, which is the only reason a part
 like 宀 can be shown at all.
 
+Where a shape gives way, its pieces are boxed together and the shape is named
+on the box: 鏡 is 金 beside a 竟, and 竟 is what its 音 and 儿 are between them -
+without the box the page would be saying a mirror is metal, a sound and a pair
+of legs side by side. That is not the same question as which piece carries the
+reading: 竟 does and 教's 孝 does not, and both are units.
+
+A part that links to its own page says so twice over - the link's colour around
+it and a corner turned down like a page - because the ones that go nowhere look
+identical otherwise, and tapping tiles to find out which respond is not an
+answer.
+
 KanjiVG's mark for the piece that carries the reading is kept in the data and
 not shown. It reads well on 海 - water and *a sound*, rather than water and
 "every" - and badly the moment an unknown phonetic shape divides into the

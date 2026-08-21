@@ -121,6 +121,11 @@ export function partsOf(svg, kanji, deckKanji) {
   // shapes on the paper, and hiding them inside a part with no name at all
   // taught less. A parent that carries the reading passes that down - 努's 女
   // and 又 are the sound between them, so both say so.
+  // Where a shape gives way, the pieces it gave way to are still that shape
+  // between them, and the page has to be able to say so: 鏡 is 金 and 竟, and
+  // 竟 is what its 音 and 儿 are together. Not the same question as which piece
+  // carries the reading - 竟 does here, 孝 in 教 does not, and both are units.
+  let unit = 0;
   const divided = top.flatMap(part => {
     if (known(part.element, deckKanji) || part.children.length < 2) {
       return [part];
@@ -128,7 +133,13 @@ export function partsOf(svg, kanji, deckKanji) {
     if (!part.children.some(child => known(child.element, deckKanji))) {
       return [part];
     }
-    return part.children.map(child => ({ ...child, phon: child.phon ?? part.phon }));
+    unit += 1;
+    return part.children.map(child => ({
+      ...child,
+      phon: child.phon ?? part.phon,
+      unit,
+      unitOf: part.element,
+    }));
   });
 
   // A numbered shape is collected from wherever its pieces are, however deep.
@@ -176,6 +187,8 @@ export function partsOf(svg, kanji, deckKanji) {
     ...(deckPart(part, deckKanji) ? { kanji: deckPart(part, deckKanji) } : {}),
     ...(part.position ? { position: part.position } : {}),
     ...(part.phon ? { sound: true } : {}),
+    ...(part.unit ? { unit: part.unit } : {}),
+    ...(part.unitOf ? { unitOf: part.unitOf } : {}),
     strokes: [...part.strokes].sort((a, b) => a - b),
   }));
 }

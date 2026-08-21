@@ -21,6 +21,15 @@ export interface KanjiPart {
    */
   sound?: boolean;
   /**
+   * Parts that are one shape between them share a unit number: 鏡's 音 and 儿
+   * are its 竟, which is not a shape the deck teaches, so it is shown as the
+   * two taught shapes inside it - grouped, or the page would be claiming that
+   * a mirror is metal, a sound and a pair of legs side by side.
+   */
+  unit?: number;
+  /** What that shape is called, where KanjiVG names it. */
+  unitOf?: string;
+  /**
    * Which of the character's strokes this part is written in, 1-based. Not a
    * range: an enclosure is written in two goes, 国's box being strokes 1, 2
    * and then 8 with the 玉 inside it drawn in between.

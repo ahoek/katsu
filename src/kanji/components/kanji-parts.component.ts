@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -29,22 +29,29 @@ const VIEW_BOX = 109;
       <p class="parts__title">{{ 'kanji.parts.title' | translate }}</p>
 
       <ol class="parts__list">
-        @for (part of parts(); track $index) {
-          <li>
-            @if (part.kanji) {
-              <!-- Written earlier in the deck, so it has a page of its own. -->
-              <a
-                class="part"
-                [routerLink]="['/kanji/practice', part.kanji]"
-                routerDirection="forward"
-                [attr.aria-label]="label(part, $index)"
-              >
-                <ng-container [ngTemplateOutlet]="glyph" [ngTemplateOutletContext]="{ part }" />
-              </a>
-            } @else {
-              <span class="part" [attr.aria-label]="label(part, $index)">
-                <ng-container [ngTemplateOutlet]="glyph" [ngTemplateOutletContext]="{ part }" />
-              </span>
+        @for (group of groups(); track $index) {
+          <!-- Parts that are one shape between them are boxed together, with
+               that shape named where KanjiVG names it. -->
+          <li class="group" [class.group--unit]="group.unit">
+            @for (part of group.parts; track $index) {
+              @if (part.kanji) {
+                <!-- Written earlier in the deck, so it has a page of its own. -->
+                <a
+                  class="part part--linked"
+                  [routerLink]="['/kanji/practice', part.kanji]"
+                  routerDirection="forward"
+                  [attr.aria-label]="label(part)"
+                >
+                  <ng-container [ngTemplateOutlet]="glyph" [ngTemplateOutletContext]="{ part }" />
+                </a>
+              } @else {
+                <span class="part" [attr.aria-label]="label(part)">
+                  <ng-container [ngTemplateOutlet]="glyph" [ngTemplateOutletContext]="{ part }" />
+                </span>
+              }
+            }
+            @if (group.unitOf) {
+              <span class="group__name" lang="ja" aria-hidden="true">{{ group.unitOf }}</span>
             }
           </li>
         }
@@ -88,14 +95,40 @@ const VIEW_BOX = 109;
     .parts__list {
       display: flex;
       flex-wrap: wrap;
+      align-items: flex-start;
       gap: 6px;
       margin: 0;
       padding: 0;
       list-style: none;
     }
 
+    .group {
+      display: flex;
+      gap: 4px;
+    }
+
+    // Held together, and named where the name exists: the two tiles of 鏡's 竟
+    // are that shape between them, not two things standing beside the 金.
+    .group--unit {
+      position: relative;
+      gap: 2px;
+      padding: 3px 3px 12px;
+      border: 1px dashed color-mix(in srgb, var(--ion-color-medium) 55%, transparent);
+      border-radius: 10px;
+    }
+
+    .group__name {
+      position: absolute;
+      right: 5px;
+      bottom: 1px;
+      font-size: .6rem;
+      line-height: 1;
+      color: var(--ion-color-medium);
+    }
+
     // Paper, like the pad: what is drawn on it is written, whatever the theme.
     .part {
+      position: relative;
       display: block;
       width: 46px;
       padding: 3px;
@@ -105,8 +138,28 @@ const VIEW_BOX = 109;
       text-decoration: none;
     }
 
-    a.part:hover {
-      border-color: var(--ion-color-primary);
+    // A shape the deck teaches has a page, and a shape it does not cannot be
+    // tapped - so the ones that go somewhere say so twice over: the link's own
+    // colour around them, and a corner turned down like a page waiting to be
+    // opened. Guessing which tiles respond by tapping them is not an answer.
+    .part--linked {
+      border-color: color-mix(in srgb, var(--app-color-link) 55%, transparent);
+
+      &::after {
+        content: '';
+        position: absolute;
+        right: -1px;
+        bottom: -1px;
+        border-style: solid;
+        border-width: 0 0 9px 9px;
+        border-color: transparent transparent var(--app-color-link) transparent;
+        border-bottom-right-radius: 7px;
+      }
+
+      &:hover {
+        border-color: var(--app-color-link);
+        background: color-mix(in srgb, var(--app-color-link) 8%, var(--app-color-paper));
+      }
     }
 
     .part__glyph {
@@ -147,6 +200,24 @@ export class KanjiPartsComponent {
 
   protected readonly viewBox = VIEW_BOX;
 
+  /**
+   * The parts in runs: the ones that are one shape between them together, each
+   * of the others on its own. Consecutive by construction - a shape gives way
+   * to its own pieces in place - so a run is all that has to be found.
+   */
+  protected readonly groups = computed(() => {
+    const groups: { unit?: number; unitOf?: string; parts: KanjiPart[] }[] = [];
+    for (const part of this.parts()) {
+      const last = groups.at(-1);
+      if (part.unit && last?.unit === part.unit) {
+        last.parts.push(part);
+        continue;
+      }
+      groups.push({ unit: part.unit, unitOf: part.unitOf, parts: [part] });
+    }
+    return groups;
+  });
+
   protected inPart(part: KanjiPart, index: number): boolean {
     return part.strokes.includes(index + 1);
   }
@@ -156,9 +227,9 @@ export class KanjiPartsComponent {
    * kanji a part is where the deck names it, and its place in the character
    * otherwise.
    */
-  protected label(part: KanjiPart, index: number): string {
-    const which = `${index + 1}/${this.parts().length}`;
+  protected label(part: KanjiPart): string {
     const name = part.kanji ?? part.element ?? '';
-    return [which, name, part.strokes.join(',')].filter(Boolean).join(' ');
+    const unit = part.unitOf ? `${part.unitOf}:` : '';
+    return [unit, name, part.strokes.join(',')].filter(Boolean).join(' ');
   }
 }
