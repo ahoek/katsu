@@ -203,9 +203,10 @@ describe('the shipped stroke data', () => {
   });
 
   /**
-   * A review shows the meaning and asks for the character, so two kanji may
-   * never lay claim to the same word: asked for "grond", a learner who wrote 土
-   * cannot be told 地 was wanted.
+   * A review shows the meaning and asks for the character, so a word two
+   * kanji share must never be the whole question: asked for "grond" alone, a
+   * learner who wrote 土 cannot be told 地 was wanted. Asked for "aarde,
+   * grond" against "grond, terrein", they can.
    *
    * A word in brackets is not a claim but the sense the word is being used in,
    * which is how one word can serve two kanji: "licht (gewicht)" is 軽 and
@@ -225,7 +226,9 @@ describe('the shipped stroke data', () => {
   it('never gives the same meaning to two kanji', () => {
     const family = ['older', 'younger', 'brother', 'sister', 'oudere', 'jongere', 'broer', 'zus'];
     // Shared on purpose, told apart by the words beside them.
-    const distinguished = ['zeker', 'beschermen', 'verzorgen', 'houden'];
+    const distinguished = ['zeker', 'beschermen', 'verzorgen', 'houden',
+      'toevertrouwen', 'entrust', 'basis', 'beeld', 'image', 'rest', 'verlies', 'loss',
+      'grond', 'uur', 'hour', 'turn'];
 
     for (const language of ['en', 'nl'] as const) {
       const claims = new Map<string, { kanji: string; sense: string; words: string[] }[]>();
