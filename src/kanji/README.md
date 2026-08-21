@@ -72,10 +72,16 @@ without the box the page would be saying a mirror is metal, a sound and a pair
 of legs side by side. That is not the same question as which piece carries the
 reading: 竟 does and 教's 孝 does not, and both are units.
 
-A part that links to its own page says so twice over - the link's colour around
-it and a corner turned down like a page - because the ones that go nowhere look
-identical otherwise, and tapping tiles to find out which respond is not an
-answer.
+The box is only drawn where KanjiVG names the shape, because a box that cannot
+say what its tiles are between them has nothing to tell the reader. KanjiVG
+nests without always naming: 三 is a 一 over a nameless pair of 一, and 品 a 口
+over a nameless pair of 口, and boxing those says the bottom two belong together
+in a way the top one does not. Three equal lines are three equal lines.
+
+A part that links to its own page is a card lifted off the paper, with the
+kanji and a chevron under it in the link colour; a part that goes nowhere lies
+flat and spends the same line on its own name. Without that they look
+identical, and tapping tiles to find out which respond is not an answer.
 
 KanjiVG's mark for the piece that carries the reading is kept in the data and
 not shown. It reads well on 海 - water and *a sound*, rather than water and
@@ -94,18 +100,35 @@ one of those is a shape it does: 死 is 一, 夕 and 匕 rather than 歹 and 匕
 栃 shows the 万 that was hidden inside its right-hand side. Shapes with no page
 to link to come along as they are - 厂 and 又 are still shapes on the paper.
 
+Strokes KanjiVG never grouped are parts too, in the runs they are written in.
+It hangs them straight off the character where it has no group to put them in,
+and reading only groups lost them and the division with them: 石 is two strokes
+and a 口, so the 口 stood alone and one part is not a division. They carry no
+name, because there is none to carry, but a shape on the paper with the rest
+faint behind it is what the tiles are for - 石 as a corner and a 口, 言 as four
+lines over a 口, 里 as a 日 over a 土.
+
 Parts may share a stroke, because characters do: 重's long vertical is the last
-stroke of its 千 and the middle of its 里, and twelve kanji are written that
-way. What parts may not do is leave a stroke out.
+stroke of its 千 and the middle of its 里, and 23 kanji are written that way.
+What parts may not do is leave a stroke out.
 
-535 of the 642 divide. The rest are left alone on purpose:
+Where KanjiVG hands a shared stroke to only one of the two parts, it is found
+by where it is instead. A stroke that runs the length of a part, sits inside
+it, and has the part's own strokes standing on both sides is that part's spine
+as well: 様's 氺 is four dots around that vertical, and without it four dots
+around nothing. Only where the count is not already known, though - 配's 酉 is a
+西 with one more line through it and 必 a 心 with one more across it, and both
+of those lines pass every test a spine passes while belonging to the other
+part. Where the deck teaches a shape it also says how many strokes it is, and a
+count beats a measurement.
 
-- 70 do not divide at all - the pictographs, where "it is a picture of a tree"
+569 of the 642 divide. The other 73 are left alone on purpose:
+
+- 46 have no groups at all - the pictographs, where "it is a picture of a tree"
   is the explanation and there is no composition to show.
-- the rest divide into pieces KanjiVG only partly names, like 五 being a 二 over
-  a 二 with the two crossing strokes in neither, or into nothing but stroke
-  groups - 二 as its top stroke and its bottom stroke is true and says nothing
-  the stroke count does not already say.
+- 27 divide into pieces KanjiVG only partly names, like 五 being a 二 over a 二
+  with the two crossing strokes in neither: half a division is worse than none,
+  both to draw and to think about.
 
 ### Why not CHISE IDS
 
