@@ -865,7 +865,7 @@ export const deck = [
   { kanji: '銅', grade: 5, meaning: { en: 'copper', nl: 'koper (metaal)' }, on: 'ドウ', kun: '' },
   { kanji: '貸', grade: 5, meaning: { en: 'lend', nl: 'uitlenen' }, on: 'タイ', kun: 'か.す' },
   { kanji: '慣', grade: 5, meaning: { en: 'accustomed, habituate', nl: 'wennen' }, on: 'カン', kun: 'な.れる' },
-  { kanji: '飼', grade: 5, meaning: { en: 'keep (a pet)', nl: 'dieren verzorgen' }, on: 'シ', kun: 'か.う' },
+  { kanji: '飼', grade: 5, meaning: { en: 'keep (a pet)', nl: 'dieren houden' }, on: 'シ', kun: 'か.う' },
   { kanji: '粉', grade: 5, meaning: { en: 'flour, powder', nl: 'poeder, meel' }, on: 'フン', kun: 'こな' },
   { kanji: '脈', grade: 5, meaning: { en: 'vein, pulse', nl: 'ader, polsslag' }, on: 'ミャク', kun: '' },
   { kanji: '鉱', grade: 5, meaning: { en: 'ore', nl: 'erts' }, on: 'コウ', kun: '' },

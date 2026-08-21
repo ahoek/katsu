@@ -225,7 +225,7 @@ describe('the shipped stroke data', () => {
   it('never gives the same meaning to two kanji', () => {
     const family = ['older', 'younger', 'brother', 'sister', 'oudere', 'jongere', 'broer', 'zus'];
     // Shared on purpose, told apart by the words beside them.
-    const distinguished = ['zeker', 'beschermen', 'verzorgen'];
+    const distinguished = ['zeker', 'beschermen', 'verzorgen', 'houden'];
 
     for (const language of ['en', 'nl'] as const) {
       const claims = new Map<string, { kanji: string; sense: string; words: string[] }[]>();
