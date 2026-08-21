@@ -55,12 +55,13 @@ export async function fetchSvg(kanji, attempts = 4) {
  * worth showing when at least one side of it is something in its own right.
  */
 export function partsOf(svg, kanji, deckKanji) {
+  const all = [];
   const open = [];
   let rootDepth = null;
-  const parts = [];
+  const top = [];
 
-  // Groups and strokes in document order: a stroke belongs to every group
-  // still open around it.
+  // Groups and strokes in document order: a stroke belongs to every group still
+  // open around it, so a group's strokes are its own and its children's.
   for (const [, close, attrs, stroke] of svg.matchAll(/<(\/?)g([^>]*)>|<path id="kvg:[^"]*?-s(\d+)"/g)) {
     if (stroke !== undefined) {
       for (const group of open) {
@@ -89,13 +90,14 @@ export function partsOf(svg, kanji, deckKanji) {
       strokes: [],
       children: [],
     };
+    all.push(group);
     if (rootDepth === null && element === kanji) {
       open.push(group);
       rootDepth = open.length;
       continue;
     }
     if (rootDepth !== null && open.length === rootDepth) {
-      parts.push(group);
+      top.push(group);
     }
     if (open.length) {
       open[open.length - 1].children.push(group);
@@ -103,86 +105,71 @@ export function partsOf(svg, kanji, deckKanji) {
     open.push(group);
   }
 
-  if (parts.length < 2) {
+  if (top.length < 2) {
     return [];
   }
 
   // One level down is the right depth for a shape the learner knows, and one
-  // level too shallow for a shape they do not: 死 divides into 歹 and 匕, and
+  // level too shallow for a shape they do not. 死 divides into 歹 and 匕, and
   // 歹 is not a kanji anybody here has written - but the 一 and 夕 inside it
-  // are. So an unknown shape gives way to its own pieces where every one of
-  // them is known. A shape that carries the reading stays whole whatever it is
-  // made of: 語's 吾 is the sound, and 五 over 口 is not.
-  const divided = parts.flatMap(part => {
-    if (known(part.element, deckKanji) || part.phon || part.children.length < 2) {
+  // are. 栃 divides into 木 and a nameless right-hand side that has a 万 in it,
+  // and 努 into 力 and a 奴 whose left half is 女.
+  //
+  // So a shape the deck does not teach gives way to what it is made of, as
+  // soon as any one of those is a shape the deck does teach. The rest come
+  // along as they are: 厂 and 又 have no page to link to, but they are still
+  // shapes on the paper, and hiding them inside a part with no name at all
+  // taught less. A parent that carries the reading passes that down - 努's 女
+  // and 又 are the sound between them, so both say so.
+  const divided = top.flatMap(part => {
+    if (known(part.element, deckKanji) || part.children.length < 2) {
       return [part];
     }
-    return part.children.every(child => known(child.element, deckKanji))
-      ? part.children
-      : [part];
+    if (!part.children.some(child => known(child.element, deckKanji))) {
+      return [part];
+    }
+    return part.children.map(child => ({ ...child, phon: child.phon ?? part.phon }));
   });
 
-  const strokeCount = [...svg.matchAll(/<path id="kvg:[^"]*?-s\d+"/g)].length;
-  const covered = divided.flatMap(part => part.strokes);
-  if (covered.length !== strokeCount || new Set(covered).size !== strokeCount) {
-    return [];
-  }
-  if (!divided.some(part => part.element)) {
-    return [];
-  }
-
-  // One shape can be written in more than one group: KanjiVG draws 国's box as
-  // strokes 1-2 and then closes it with stroke 8, on either side of the 玉 it
-  // encloses. That is one part in two goes, not two parts, so the same shape in
-  // the same place is folded together and keeps both runs of strokes. Anonymous
-  // groups are left alone - with nothing to name them by, two of them are not
-  // known to be the same thing.
-  const merged = [];
+  // A numbered shape is collected from wherever its pieces are, however deep.
+  // 国's box is two pieces at this level, both of the same box; 重's 千 is two
+  // strokes here and a third down inside the 里, because the long vertical
+  // serves them both. Kanji do share strokes that way, so parts may overlap -
+  // what they may not do is leave one out.
+  const parts = [];
   for (const part of divided) {
-    // Only numbered pieces fold: 品 is three separate 口 and stays three, while
-    // 国's box is one shape KanjiVG happens to draw in two goes.
-    const same = part.element && part.piece
-      ? merged.find(other => other.piece && other.element === part.element
-          && other.position === part.position)
-      : undefined;
-    if (same) {
-      same.strokes.push(...part.strokes);
-      same.phon ||= part.phon;
-      same.found += 1;
+    if (!part.piece || !part.element) {
+      parts.push({ ...part, strokes: [...part.strokes] });
       continue;
     }
-    merged.push({ ...part, strokes: [...part.strokes], found: 1 });
+    if (parts.some(other => other.piece && other.element === part.element)) {
+      continue;
+    }
+    const strokes = new Set();
+    for (const group of all) {
+      if (group.piece && group.element === part.element) {
+        for (const stroke of group.strokes) {
+          strokes.add(stroke);
+        }
+      }
+    }
+    parts.push({ ...part, strokes: [...strokes] });
   }
 
-  // A numbered piece whose siblings are not all up here is a shape we would be
-  // drawing half of: 重's 千 is its first two strokes and then one more from
-  // inside the 里 below it, so a tile labelled 千 would light up two thirds of
-  // it. KanjiVG puts 国's box in two pieces at this level, which the fold above
-  // puts back together; where it does not, there is nothing honest to show.
-  const pieces = new Map();
-  for (const [, attrs] of svg.matchAll(/<g([^>]*)>/g)) {
-    if (!/kvg:part="/.test(attrs)) {
-      continue;
-    }
-    const element = /kvg:element="([^"]+)"/.exec(attrs)?.[1];
-    if (element) {
-      pieces.set(element, (pieces.get(element) ?? 0) + 1);
-    }
-  }
-  // The name goes, not the division: 重's first two strokes really are a chunk
-  // of their own, they just are not all of the 千 that KanjiVG calls them. Left
-  // unnamed they say something true, and the 里 beside them still says its own.
-  for (const part of merged) {
-    if (part.piece && part.element && (pieces.get(part.element) ?? 0) > part.found) {
-      part.element = undefined;
-      part.incomplete = true;
-    }
-  }
-  if (!merged.some(part => part.element)) {
+  if (!parts.some(part => part.element)) {
     return [];
   }
 
-  return merged.map(part => ({
+  // KanjiVG sometimes names only some of a character's pieces - 五 is a 二 over
+  // a 二 with the two crossing strokes in neither - and half a division is
+  // worse than none, both to draw and to think about.
+  const strokeCount = [...svg.matchAll(/<path id="kvg:[^"]*?-s\d+"/g)].length;
+  const covered = new Set(parts.flatMap(part => part.strokes));
+  if (covered.size !== strokeCount) {
+    return [];
+  }
+
+  return parts.map(part => ({
     // The shape as it is written here - 亻 rather than 人 - and, when the deck
     // teaches it, the kanji it is, so a part can be linked to its own page.
     ...(part.element ? { element: part.element } : {}),
@@ -210,9 +197,6 @@ function known(element, deckKanji) {
  * something that is not there.
  */
 function deckPart(part, deckKanji) {
-  if (part.incomplete) {
-    return undefined;
-  }
   if (part.element && ETYMOLOGY_ONLY.has(part.element)) {
     return undefined;
   }

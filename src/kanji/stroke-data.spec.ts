@@ -92,15 +92,15 @@ describe('the shipped stroke data', () => {
 
   /**
    * The parts a character divides into, for the decomposition shown on its own
-   * page. They are only written where they tile the character, so wherever the
-   * field is there at all it has to account for every stroke exactly once and
-   * in writing order - a part drawn from a range that is off by one would
-   * highlight somebody else's strokes.
+   * page. Every stroke has to belong to one of them, or the division is only
+   * part of the character. Two parts may claim the same stroke, which is not a
+   * mistake: 重's long vertical is the last stroke of its 千 and the middle of
+   * its 里, and characters are written that way.
    */
   it('divides a character into parts that account for all of it', () => {
     const divided = strokeData.characters.filter(character => 'parts' in character);
 
-    expect(divided.length).toBe(546);
+    expect(divided.length).toBe(535);
     for (const character of divided) {
       const parts = (character as { parts: { strokes: number[]; element?: string }[] }).parts;
       expect(parts.length).toBeGreaterThanOrEqual(2);
@@ -114,7 +114,6 @@ describe('the shipped stroke data', () => {
         return part.strokes;
       });
 
-      expect(covered.length).toBe(character.strokes.length);
       expect(new Set(covered).size).toBe(character.strokes.length);
     }
   });

@@ -74,15 +74,23 @@ the whole tree into the deck kanji hiding anywhere inside, right for teaching
 parts before wholes and wrong for showing how a character is built. 語 is 言
 and 吾, not 二, 五, 口 and 言.
 
-546 of the 642 have one. The rest are left alone on purpose:
+A shape the deck does not teach gives way to what it is made of, as soon as any
+one of those is a shape it does: 死 is 一, 夕 and 匕 rather than 歹 and 匕, and
+栃 shows the 万 that was hidden inside its right-hand side. Shapes with no page
+to link to come along as they are - 厂 and 又 are still shapes on the paper.
+
+Parts may share a stroke, because characters do: 重's long vertical is the last
+stroke of its 千 and the middle of its 里, and twelve kanji are written that
+way. What parts may not do is leave a stroke out.
+
+535 of the 642 divide. The rest are left alone on purpose:
 
 - 70 do not divide at all - the pictographs, where "it is a picture of a tree"
   is the explanation and there is no composition to show.
-- 13 divide into pieces KanjiVG only partly names, like 五 being a 二 over a 二
-  with the two crossing strokes in neither. Half a division is worse than none.
-- 13 divide into nothing but stroke groups: KanjiVG splits 二 into its top
-  stroke and its bottom stroke, which is true and says nothing the stroke count
-  does not already say.
+- the rest divide into pieces KanjiVG only partly names, like 五 being a 二 over
+  a 二 with the two crossing strokes in neither, or into nothing but stroke
+  groups - 二 as its top stroke and its bottom stroke is true and says nothing
+  the stroke count does not already say.
 
 ### Why not CHISE IDS
 
