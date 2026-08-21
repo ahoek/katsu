@@ -101,12 +101,13 @@ one of those is a shape it does: 死 is 一, 夕 and 匕 rather than 歹 and 匕
 to link to come along as they are - 厂 and 又 are still shapes on the paper.
 
 Strokes KanjiVG never grouped are parts too, in the runs they are written in.
-It hangs them straight off the character where it has no group to put them in,
-and reading only groups lost them and the division with them: 石 is two strokes
-and a 口, so the 口 stood alone and one part is not a division. They carry no
-name, because there is none to carry, but a shape on the paper with the rest
-faint behind it is what the tiles are for - 石 as a corner and a 口, 言 as four
-lines over a 口, 里 as a 日 over a 土.
+It hangs them straight off whatever they sit inside, and reading only groups
+lost them and the division with them: 石 is two strokes and a 口, so the 口
+stood alone and one part is not a division, and 楽's top is a 白, a 冫 and two
+loose strokes that went the same way. They carry no name, because there is none
+to carry, but a shape on the paper with the rest faint behind it is what the
+tiles are for - 石 as a corner and a 口, 言 as four lines over a 口, 里 as a 日
+over a 土.
 
 Parts may share a stroke, because characters do: 重's long vertical is the last
 stroke of its 千 and the middle of its 里, and 23 kanji are written that way.
@@ -122,13 +123,17 @@ of those lines pass every test a spine passes while belonging to the other
 part. Where the deck teaches a shape it also says how many strokes it is, and a
 count beats a measurement.
 
-569 of the 642 divide. The other 73 are left alone on purpose:
+579 of the 642 divide. The other 63 are left alone on purpose:
 
 - 46 have no groups at all - the pictographs, where "it is a picture of a tree"
-  is the explanation and there is no composition to show.
-- 27 divide into pieces KanjiVG only partly names, like 五 being a 二 over a 二
-  with the two crossing strokes in neither: half a division is worse than none,
-  both to draw and to think about.
+  is the explanation and there is no composition to show. 女 is one of them: the
+  くノ一 trick people remember it by is about its three strokes, which the pad
+  above already writes out, and not about anything the character is made of.
+- 17 come out as more tiles than half their strokes with a nameless shape among
+  them. 飛 is six tiles across nine strokes, four of them shapes nothing can
+  name, and 不 is a 一, a 丿, a 丨 and a dot - which is the stroke order told a
+  second time. Every tile named is a different matter: 上 is 卜 and 一, and 三 is
+  three 一.
 
 ### Why not CHISE IDS
 

@@ -112,22 +112,8 @@ export function partsOf(svg, kanji, deckKanji, deckStrokes = new Map()) {
   // would be dropped and take the whole division with it. Loose strokes stand
   // as parts of their own, in the runs they are written in - nameless, but a
   // shape on the paper for the 口 to be seen beside.
-  const grouped = new Set(top.flatMap(group => group.strokes));
-  const loose = [];
-  for (let stroke = 1; stroke <= strokeCount; stroke += 1) {
-    if (grouped.has(stroke)) {
-      continue;
-    }
-    const run = loose.at(-1);
-    if (run && run.strokes.at(-1) === stroke - 1) {
-      run.strokes.push(stroke);
-    } else {
-      loose.push({ strokes: [stroke], children: [] });
-    }
-  }
-
-  const pieces = [...top, ...loose].sort(
-    (a, b) => Math.min(...a.strokes) - Math.min(...b.strokes));
+  const all_strokes = Array.from({ length: strokeCount }, (_, index) => index + 1);
+  const pieces = inOrder([...top, ...looseRuns(all_strokes, top)]);
 
   if (pieces.length < 2) {
     return [];
@@ -162,11 +148,15 @@ export function partsOf(svg, kanji, deckKanji, deckStrokes = new Map()) {
     // 三 is a 一 over a nameless pair of 一, and 品 a 口 over a nameless pair of
     // 口. Boxing those says the bottom two belong together in a way the top one
     // does not, which is not true of three equal lines.
+    // Its own loose strokes come along with its children, or they go the way
+    // 楽's 丿 and 丶 went: inside the top group beside the 白 and the 冫, in no
+    // group of their own, and dropped with the whole division behind them.
+    const given = inOrder([...part.children, ...looseRuns(part.strokes, part.children)]);
     if (!part.element) {
-      return part.children.map(child => ({ ...child, phon: child.phon ?? part.phon }));
+      return given.map(child => ({ ...child, phon: child.phon ?? part.phon }));
     }
     unit += 1;
-    return part.children.map(child => ({
+    return given.map(child => ({
       ...child,
       phon: child.phon ?? part.phon,
       unit,
@@ -220,7 +210,18 @@ export function partsOf(svg, kanji, deckKanji, deckStrokes = new Map()) {
     part.strokes.push(...spinesOf(part.strokes, boxes));
   }
 
-  if (!parts.some(part => part.element)) {
+  // A division nothing can be named in says no more than the stroke count.
+  const named = parts.filter(part => part.element).length;
+  if (named === 0) {
+    return [];
+  }
+
+  // Nor does one with more tiles than half the strokes and a nameless shape
+  // among them: 飛 comes out as six tiles across nine strokes, four of them
+  // shapes nothing can name, and that is the stroke order told a second time
+  // by a pad that already tells it once. 上 as 卜 and 一 is two tiles across
+  // three strokes and every one of them named, which is worth seeing.
+  if (named < parts.length && parts.length > strokeCount / 2) {
     return [];
   }
 
@@ -386,6 +387,34 @@ function boxOf(path) {
   }
 
   return { x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys) };
+}
+
+/** Pieces in the order they are written, so a boxed run stays a run. */
+function inOrder(pieces) {
+  return [...pieces].sort((a, b) => Math.min(...a.strokes) - Math.min(...b.strokes));
+}
+
+/**
+ * The strokes of a shape that no group of its own holds, in the runs they are
+ * written in. KanjiVG hangs them straight off whatever they are inside: 石 is
+ * two strokes and a 口, and 楽's top is a 白, a 冫 and two more strokes. They
+ * have no name to carry, but a shape on the paper is what the tiles are for.
+ */
+function looseRuns(strokes, groups) {
+  const taken = new Set(groups.flatMap(group => group.strokes));
+  const runs = [];
+  for (const stroke of strokes) {
+    if (taken.has(stroke)) {
+      continue;
+    }
+    const run = runs.at(-1);
+    if (run && run.strokes.at(-1) === stroke - 1) {
+      run.strokes.push(stroke);
+    } else {
+      runs.push({ strokes: [stroke], children: [] });
+    }
+  }
+  return runs;
 }
 
 /** A shape the deck teaches, either as itself or as a radical form of one. */

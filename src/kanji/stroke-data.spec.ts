@@ -101,7 +101,7 @@ describe('the shipped stroke data', () => {
   it('divides a character into parts that account for all of it', () => {
     const divided = strokeData.characters.filter(character => 'parts' in character);
 
-    expect(divided.length).toBe(569);
+    expect(divided.length).toBe(579);
     for (const character of divided) {
       const parts = (character as { parts: { strokes: number[]; element?: string }[] }).parts;
       expect(parts.length).toBeGreaterThanOrEqual(2);
