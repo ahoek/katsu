@@ -28,7 +28,11 @@ const VIEW_BOX = 109;
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgTemplateOutlet, IonIcon, RouterLink, TranslatePipe],
   template: `
-    <section class="parts" [attr.aria-label]="'kanji.parts.title' | translate">
+    <section
+      class="parts"
+      [class.parts--centred]="centred()"
+      [attr.aria-label]="'kanji.parts.title' | translate"
+    >
       <p class="parts__title">{{ 'kanji.parts.title' | translate }}</p>
 
       <ol class="parts__list">
@@ -115,6 +119,14 @@ const VIEW_BOX = 109;
       margin: 0;
       padding: 0;
       list-style: none;
+    }
+
+    .parts--centred {
+      text-align: center;
+
+      .parts__list {
+        justify-content: center;
+      }
     }
 
     // Every part carries the box's geometry whether it is in one or not, so a
@@ -247,6 +259,13 @@ export class KanjiPartsComponent {
   }
 
   readonly parts = input.required<readonly KanjiPart[]>();
+
+  /**
+   * Whether the tiles run down the middle. The review screen is one centred
+   * column - prompt, verdict, the line about the schedule - and a row of tiles
+   * hanging off the left edge of it reads as something that came loose.
+   */
+  readonly centred = input(false);
 
   /** Every stroke of the character, in writing order. */
   readonly strokes = input.required<readonly string[]>();

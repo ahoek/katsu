@@ -24,6 +24,7 @@ import {
   trendingUpOutline,
 } from 'ionicons/icons';
 
+import { KanjiPartsComponent } from '../components/kanji-parts.component';
 import { WritingExerciseComponent } from '../components/writing-exercise.component';
 import { installKanjiTranslations } from '../i18n/kanji-translations';
 import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
@@ -77,6 +78,7 @@ const STREAK_WORTH_SHOWING = 2;
     IonToolbar,
     TranslatePipe,
     WritingExerciseComponent,
+    KanjiPartsComponent,
     MenuButtonComponent,
   ],
 })

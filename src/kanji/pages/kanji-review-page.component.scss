@@ -138,6 +138,14 @@
   color: var(--ion-color-medium);
 }
 
+// The division, on the reviews that lost ground. Held off the answer pad above
+// it and off the ladder below, so it reads as a note about the character rather
+// than either the pad's furniture or part of the verdict.
+.divided {
+  display: block;
+  margin: 14px 0 18px;
+}
+
 .outcome {
   margin-top: 4px;
 
