@@ -54,7 +54,7 @@ export async function fetchSvg(kanji, attempts = 4) {
  * the stroke count and the demonstration already carry it. A division is only
  * worth showing when at least one side of it is something in its own right.
  */
-export function partsOf(svg, kanji, deckKanji) {
+export function partsOf(svg, kanji, deckKanji, deckStrokes = new Map()) {
   const all = [];
   const open = [];
   let rootDepth = null;
@@ -167,6 +167,27 @@ export function partsOf(svg, kanji, deckKanji) {
     parts.push({ ...part, strokes: [...strokes] });
   }
 
+  // A stroke two parts share is KanjiVG's to hand out, and it hands it to
+  // whichever it lists first: 様's long vertical goes to the 羊 above, and the
+  // 氺 below is left as four dots around nothing. Where a stroke runs the whole
+  // length of a part and that part's own strokes stand on both sides of it, it
+  // is that part's spine as well - which is geometry, so it needs no list of
+  // characters to make exceptions of.
+  //
+  // Only where the shape's stroke count is not already known, though. 配's 酉
+  // is a 西 with one more line through it, and 必 a 心 with one more across it;
+  // both of those lines pass every test a spine passes, and both belong to the
+  // other part. Where the deck teaches the shape it says how many strokes it
+  // is, and a count beats a measurement.
+  const boxes = strokeBoxes(svg);
+  for (const part of parts) {
+    const whole = deckStrokes.get(deckPart(part, deckKanji));
+    if (whole !== undefined && part.strokes.length >= whole) {
+      continue;
+    }
+    part.strokes.push(...spinesOf(part.strokes, boxes));
+  }
+
   if (!parts.some(part => part.element)) {
     return [];
   }
@@ -191,6 +212,149 @@ export function partsOf(svg, kanji, deckKanji) {
     ...(part.unitOf ? { unitOf: part.unitOf } : {}),
     strokes: [...part.strokes].sort((a, b) => a - b),
   }));
+}
+
+/**
+ * A stroke of another part that this one is written around: the long vertical
+ * of 様's 氺, which KanjiVG counts with the 羊 above it. It has to run the
+ * length of the part - a stroke merely reaching into it is a neighbour - and
+ * the part's own strokes have to stand on both sides of it, which is what
+ * makes it a spine rather than an edge.
+ */
+function spinesOf(own, boxes) {
+  const mine = own.map(stroke => boxes[stroke - 1]);
+  if (own.length < 2 || mine.some(box => !box)) {
+    return [];
+  }
+  const around = {
+    x0: Math.min(...mine.map(box => box.x0)),
+    x1: Math.max(...mine.map(box => box.x1)),
+    y0: Math.min(...mine.map(box => box.y0)),
+    y1: Math.max(...mine.map(box => box.y1)),
+  };
+
+  const spines = [];
+  for (let stroke = 1; stroke <= boxes.length; stroke += 1) {
+    const box = boxes[stroke - 1];
+    if (own.includes(stroke) || !box) {
+      continue;
+    }
+    const down =
+      box.x0 >= around.x0 && box.x1 <= around.x1 &&
+      spans(box.y0, box.y1, around.y0, around.y1) &&
+      mine.some(other => other.x1 < box.x0) && mine.some(other => other.x0 > box.x1);
+    const across =
+      box.y0 >= around.y0 && box.y1 <= around.y1 &&
+      spans(box.x0, box.x1, around.x0, around.x1) &&
+      mine.some(other => other.y1 < box.y0) && mine.some(other => other.y0 > box.y1);
+    if (down || across) {
+      spines.push(stroke);
+    }
+  }
+  return spines;
+}
+
+/** Whether a stroke covers nearly all of the part it would be the spine of. */
+function spans(from, to, low, high) {
+  const overlap = Math.min(to, high) - Math.max(from, low);
+  return overlap >= .8 * (high - low);
+}
+
+/**
+ * Every stroke's box, in the order they are written. KanjiVG draws in cubic
+ * curves, whose control points sit outside the ink, so the curves are walked
+ * rather than measured by their handles.
+ */
+function strokeBoxes(svg) {
+  return [...svg.matchAll(/<path id="kvg:[^"]*?-s\d+"[^>]*\bd="([^"]+)"/g)]
+    .map(([, path]) => boxOf(path));
+}
+
+const SAMPLES = [.25, .5, .75, 1];
+
+/** The box a single path's ink falls in. */
+function boxOf(path) {
+  const tokens = path.match(/[A-Za-z]|-?\d*\.?\d+/g) ?? [];
+  const xs = [];
+  const ys = [];
+  let x = 0;
+  let y = 0;
+  let command = '';
+  let reflectX = 0;
+  let reflectY = 0;
+  let index = 0;
+
+  const at = () => Number(tokens[index++]);
+  const mark = (px, py) => {
+    xs.push(px);
+    ys.push(py);
+  };
+
+  while (index < tokens.length) {
+    if (/[A-Za-z]/.test(tokens[index])) {
+      command = tokens[index++];
+    }
+    const relative = command === command.toLowerCase();
+    const originX = relative ? x : 0;
+    const originY = relative ? y : 0;
+
+    switch (command.toUpperCase()) {
+      case 'M':
+      case 'L': {
+        x = originX + at();
+        y = originY + at();
+        mark(x, y);
+        break;
+      }
+      case 'H': {
+        x = originX + at();
+        mark(x, y);
+        break;
+      }
+      case 'V': {
+        y = originY + at();
+        mark(x, y);
+        break;
+      }
+      case 'C':
+      case 'S': {
+        let x1;
+        let y1;
+        if (command.toUpperCase() === 'S') {
+          x1 = 2 * x - reflectX;
+          y1 = 2 * y - reflectY;
+        } else {
+          x1 = originX + at();
+          y1 = originY + at();
+        }
+        const x2 = originX + at();
+        const y2 = originY + at();
+        const x3 = originX + at();
+        const y3 = originY + at();
+        for (const t of SAMPLES) {
+          const u = 1 - t;
+          mark(
+            u * u * u * x + 3 * u * u * t * x1 + 3 * u * t * t * x2 + t * t * t * x3,
+            u * u * u * y + 3 * u * u * t * y1 + 3 * u * t * t * y2 + t * t * t * y3,
+          );
+        }
+        reflectX = x2;
+        reflectY = y2;
+        x = x3;
+        y = y3;
+        break;
+      }
+      default:
+        // Z, and anything KanjiVG does not draw strokes with.
+        index += 1;
+    }
+    if (command.toUpperCase() !== 'C' && command.toUpperCase() !== 'S') {
+      reflectX = x;
+      reflectY = y;
+    }
+  }
+
+  return { x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys) };
 }
 
 /** A shape the deck teaches, either as itself or as a radical form of one. */

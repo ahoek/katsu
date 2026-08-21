@@ -36,6 +36,11 @@ const OUT_FILE = join(
 
 const deckKanji = new Set(deck.map(entry => entry.kanji));
 
+// How many strokes each kanji is written in, filled in as the deck is built.
+// A part only ever names a kanji taught before it, so by the time one is asked
+// about it has been counted.
+const deckStrokes = new Map();
+
 /**
  * Pull the stroke paths out of a KanjiVG document, ordered by stroke number.
  * Ids look like `kvg:06c34-s2`; the suffix is the stroke's position.
@@ -88,7 +93,8 @@ function strokeNumbers(svg, kanji, strokeCount) {
 async function fetchKanji(entry, ranks) {
   const svg = await fetchSvg(entry.kanji);
   const strokes = strokePaths(svg, entry.kanji);
-  const parts = partsOf(svg, entry.kanji, deckKanji);
+  deckStrokes.set(entry.kanji, strokes.length);
+  const parts = partsOf(svg, entry.kanji, deckKanji, deckStrokes);
   return {
     ...entry,
     ...ranks.get(entry.kanji),
