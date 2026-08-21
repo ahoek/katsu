@@ -146,18 +146,29 @@
   margin: 14px 0 18px;
 }
 
+// Its own band, well clear of whatever it follows. Pressed against the parts
+// above it, the ladder read as a progress bar belonging to those tiles.
 .outcome {
-  margin-top: 4px;
+  margin-top: 22px;
 
   &__line {
-    margin: 0 0 8px;
+    margin: 0 0 1px;
     text-align: center;
-    font-size: .85rem;
+    font-size: .9rem;
+    font-weight: 600;
     color: var(--ion-color-medium);
 
     ion-icon {
       vertical-align: -2px;
     }
+  }
+
+  // When it comes back is worth knowing and not worth reading first.
+  &__when {
+    margin: 0 0 12px;
+    text-align: center;
+    font-size: .8rem;
+    color: var(--ion-color-medium);
   }
 
   &--clean &__line {
@@ -179,10 +190,12 @@
     width: 18px;
     height: 4px;
     border-radius: 2px;
-    background: color-mix(in srgb, var(--ion-color-medium) 35%, transparent);
+    background: color-mix(in srgb, var(--ion-color-medium) 22%, transparent);
 
+    // Muted, so eight rungs read as a position rather than a row of lights.
+    // The one that was lost is the only thing here worth a colour.
     &--filled {
-      background: var(--ion-color-success);
+      background: color-mix(in srgb, var(--ion-color-success) 55%, transparent);
     }
 
     // The rung just won, or just lost. Either way it is the one to look at.

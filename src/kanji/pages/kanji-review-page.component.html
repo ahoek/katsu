@@ -183,25 +183,31 @@
             }
           </span>
 
+          <!-- Two things in two weights: what just happened to this kanji,
+               and when it comes back. One sentence carrying both had the fact
+               you act on and the fact you only note reading as one. -->
           <p class="outcome__line">
             @if (result.mastered) {
               {{ 'kanji.review.mastered' | translate }}
             } @else if (result.stage > result.previousStage) {
               <ion-icon name="trending-up-outline" aria-hidden="true"></ion-icon>
               {{ 'kanji.review.stage-up' | translate: {
-                from: result.previousStage, to: result.stage, interval: result.intervalKey | translate
+                from: result.previousStage, to: result.stage
               } }}
             } @else if (result.stage < result.previousStage) {
               <ion-icon name="trending-down-outline" aria-hidden="true"></ion-icon>
-              {{ 'kanji.review.stage-down' | translate: {
-                to: result.stage, interval: result.intervalKey | translate
-              } }}
+              {{ 'kanji.review.stage-down' | translate: { to: result.stage } }}
             } @else {
-              {{ 'kanji.review.stage-held' | translate: {
-                stage: result.stage, interval: result.intervalKey | translate
-              } }}
+              {{ 'kanji.review.stage-held' | translate: { stage: result.stage } }}
             }
           </p>
+
+          @if (!result.mastered) {
+            <p class="outcome__when">
+              {{ (result.stage < result.previousStage ? 'kanji.review.again-in' : 'kanji.review.back-in')
+                 | translate: { interval: result.intervalKey | translate } }}
+            </p>
+          }
           <ion-button expand="block" class="flow-cta" (click)="next()">
             {{ 'kanji.review.continue' | translate }}
             <ion-icon slot="end" name="arrow-forward"></ion-icon>
