@@ -12,6 +12,13 @@ export interface KanjiPart {
   element?: string;
   kanji?: string;
   position?: string;
+  /**
+   * KanjiVG's mark for the piece that carries the reading rather than the
+   * meaning. Nothing shows it: once an unknown phonetic shape divides into the
+   * taught shapes inside it, the mark lands on each of them, and 唱 as 口 with
+   * two 日 both labelled "sound" reads as nonsense. Kept because it is true of
+   * the character and the thing a mnemonic would need.
+   */
   sound?: boolean;
   /**
    * Which of the character's strokes this part is written in, 1-based. Not a

@@ -60,7 +60,6 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       },
       parts: {
         title: 'Written in',
-        sound: 'sound',
       },
       undo: 'Erase stroke',
       restart: 'Erase all',
@@ -259,7 +258,6 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       },
       parts: {
         title: 'Opgebouwd uit',
-        sound: 'klank',
       },
       undo: 'Wis streek',
       restart: 'Wis alles',

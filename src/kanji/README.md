@@ -64,9 +64,13 @@ Nothing is glossed, deliberately. A part the deck teaches links to its own
 page, where the meaning already written for it lives, so an explanation stays
 in words the learner has been taught instead of introducing dictionary English
 to explain Dutch - and it needs no translating, which is the only reason a part
-like 宀 can be shown at all. Where KanjiVG marks a piece as carrying the
-reading rather than the meaning, it says so: 海 is water and *a sound*, not
-water and "every".
+like 宀 can be shown at all.
+
+KanjiVG's mark for the piece that carries the reading is kept in the data and
+not shown. It reads well on 海 - water and *a sound*, rather than water and
+"every" - and badly the moment an unknown phonetic shape divides into the
+taught shapes inside it, which puts the mark on each of them: 唱 is a 口 and
+two 日, and labelling both "sound" says nothing anybody can use.
 
 `partsOf` in `tools/kanjivg.mjs` reads the division out of KanjiVG's nested
 groups, which is a different question from `componentsOf` - that one flattens

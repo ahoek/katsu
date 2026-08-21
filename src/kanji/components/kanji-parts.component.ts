@@ -67,9 +67,6 @@ const VIEW_BOX = 109;
           />
         }
       </svg>
-      @if (part.sound) {
-        <span class="part__sound">{{ 'kanji.parts.sound' | translate }}</span>
-      }
     </ng-template>
   `,
   styles: `
@@ -91,7 +88,6 @@ const VIEW_BOX = 109;
     .parts__list {
       display: flex;
       flex-wrap: wrap;
-      align-items: stretch;
       gap: 6px;
       margin: 0;
       padding: 0;
@@ -100,13 +96,8 @@ const VIEW_BOX = 109;
 
     // Paper, like the pad: what is drawn on it is written, whatever the theme.
     .part {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
+      display: block;
       width: 46px;
-      height: 100%;
-      gap: 1px;
       padding: 3px;
       background: var(--app-color-paper);
       border: 1px solid color-mix(in srgb, var(--app-color-paper-rule) 40%, transparent);
@@ -143,15 +134,6 @@ const VIEW_BOX = 109;
       opacity: .22;
     }
 
-    // Which piece only carries the reading. Named rather than glossed: the
-    // useful thing about it is that there is no meaning to look for.
-    .part__sound {
-      font-size: .5rem;
-      line-height: 1.1;
-      text-transform: uppercase;
-      letter-spacing: .03em;
-      color: var(--app-color-paper-hint);
-    }
   `,
 })
 export class KanjiPartsComponent {
