@@ -98,9 +98,12 @@ while (remaining.size) {
   remaining.delete(next);
 }
 
+// A gloss may hold an apostrophe - "child (one's own)" - so quoting is real.
+const quote = text => `'${text.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
+
 const line = ({ kanji, grade, meaning, on, kun }) =>
-  `  { kanji: '${kanji}', grade: ${grade}, meaning: ` +
-  `{ en: '${meaning.en}', nl: '${meaning.nl}' }, on: '${on}', kun: '${kun}' },`;
+  `  { kanji: ${quote(kanji)}, grade: ${grade}, meaning: ` +
+  `{ en: ${quote(meaning.en)}, nl: ${quote(meaning.nl)} }, on: ${quote(on)}, kun: ${quote(kun)} },`;
 
 const source = await readFile(DECK_FILE, 'utf8');
 const head = source.slice(0, source.indexOf('export const deck = ['));
