@@ -138,16 +138,17 @@ const VIEW_BOX = 109;
     // Room for the name, and only where there is a name to write - 塩's unit is
     // one KanjiVG does not name, and an empty line under it is just a gap.
     .group--named {
-      padding-bottom: 18px;
+      padding-bottom: 26px;
     }
 
-    // The shape the cards in the box are, between them. At .6rem it was a mark
-    // rather than a character: this is a kanji somebody has to read.
+    // The shape the cards in the box are, between them. Set at the size of the
+    // captions under the cards rather than the size of a footnote: 竟 is eleven
+    // strokes, and shrunk to fit a corner it stops being a character.
     .group__name {
       position: absolute;
-      right: 6px;
-      bottom: 1px;
-      font-size: .85rem;
+      right: 7px;
+      bottom: 2px;
+      font-size: 1.15rem;
       line-height: 1.1;
       color: var(--ion-color-medium);
     }

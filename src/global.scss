@@ -208,11 +208,20 @@ ion-footer.app-footer {
   border: 0;
 }
 
-[lang='ja'],
-[lang='ja'] * {
+// Furigana is the one Japanese that belongs small: it is kana, and printing it
+// at the size of the word it annotates is not a reading aid, it is two words.
+[lang='ja']:not(rt),
+[lang='ja'] *:not(rt) {
   //font-family: 'YuKyokasho Yoko', sans-serif;
   font-family: "Hiragino Kaku Gothic Pro", "Meiryo", "Source Han Sans Japanese", "NotoSansCJK", "TakaoPGothic", "Yu Gothic", "ヒラギノ角ゴ Pro W3", "メイリオ", "Osaka", "MS PGothic", "ＭＳ Ｐゴシック", "Noto Sans JP", sans-serif;
   font-weight: normal;
+  // A floor, not a size: whatever the surrounding text is set at, Japanese is
+  // never set below 1rem here. Latin shrinks to a caption and stays readable
+  // because a letter is a handful of strokes; 顔 is eighteen in the same box,
+  // and at 10px it is a smudge that happens to be the right shape. Anything
+  // that wants Japanese smaller than its neighbours has to want something
+  // else instead.
+  font-size: max(1rem, 1em);
 }
 
 @keyframes spin {
