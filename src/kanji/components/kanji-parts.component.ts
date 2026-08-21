@@ -175,18 +175,22 @@ const VIEW_BOX = 109;
     // The line under the shape. On a card that goes nowhere it is the shape's
     // own name in the ink of the paper's own rules; on one that does, it is the
     // kanji and the chevron, in the colour every other link in the app uses.
+    // The line is kept whether there is anything to write on it or not, and at
+    // the height the writing actually takes: 後's right-hand side is a shape
+    // KanjiVG does not name, and a line reserved for a smaller caption than the
+    // one beside it left that tile standing shorter than the 彳 next to it.
     .part__foot {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1px;
-      min-height: 13px;
-      font-size: .6rem;
-      line-height: 1;
+      gap: 2px;
+      min-height: 1.2rem;
+      font-size: 1rem;
+      line-height: 1.2;
       color: var(--app-color-paper-rule);
 
       ion-icon {
-        font-size: .7rem;
+        font-size: .75em;
       }
     }
 
