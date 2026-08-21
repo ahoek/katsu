@@ -133,6 +133,14 @@ export function partsOf(svg, kanji, deckKanji, deckStrokes = new Map()) {
     if (!part.children.some(child => known(child.element, deckKanji))) {
       return [part];
     }
+    // A box around a run of tiles is there to say what they are between them,
+    // so it takes a shape it can name. KanjiVG nests without always naming:
+    // 三 is a 一 over a nameless pair of 一, and 品 a 口 over a nameless pair of
+    // 口. Boxing those says the bottom two belong together in a way the top one
+    // does not, which is not true of three equal lines.
+    if (!part.element) {
+      return part.children.map(child => ({ ...child, phon: child.phon ?? part.phon }));
+    }
     unit += 1;
     return part.children.map(child => ({
       ...child,

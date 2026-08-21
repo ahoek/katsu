@@ -27,7 +27,13 @@ export interface KanjiPart {
    * a mirror is metal, a sound and a pair of legs side by side.
    */
   unit?: number;
-  /** What that shape is called, where KanjiVG names it. */
+  /**
+   * What that shape is called. Always set where unit is: a box that cannot say
+   * what its tiles are between them has nothing to tell the reader, and KanjiVG
+   * nests without always naming - 三 is a 一 over a nameless pair of 一, and
+   * boxing those would say the bottom two belong together in a way the top one
+   * does not.
+   */
   unitOf?: string;
   /**
    * Which of the character's strokes this part is written in, 1-based. Not a

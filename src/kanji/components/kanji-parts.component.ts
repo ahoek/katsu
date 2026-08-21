@@ -35,7 +35,7 @@ const VIEW_BOX = 109;
         @for (group of groups(); track $index) {
           <!-- Parts that are one shape between them are boxed together, with
                that shape named where KanjiVG names it. -->
-          <li class="group" [class.group--unit]="group.unit" [class.group--named]="group.unitOf">
+          <li class="group" [class.group--unit]="group.unitOf">
             @for (part of group.parts; track $index) {
               @if (part.kanji) {
                 <!-- Written earlier in the deck, so it has a page of its own. -->
@@ -129,16 +129,12 @@ const VIEW_BOX = 109;
       border-radius: 10px;
     }
 
-    // Held together: the two tiles of 鏡's 竟 are that shape between them, not
-    // two things standing beside the 金.
+    // Held together, and named: the two tiles of 鏡's 竟 are that shape between
+    // them, not two things standing beside the 金. A box is only ever drawn
+    // where there is a shape to name, so the room for the name goes with it.
     .group--unit {
-      border-color: color-mix(in srgb, var(--ion-color-medium) 55%, transparent);
-    }
-
-    // Room for the name, and only where there is a name to write - 塩's unit is
-    // one KanjiVG does not name, and an empty line under it is just a gap.
-    .group--named {
       padding-bottom: 26px;
+      border-color: color-mix(in srgb, var(--ion-color-medium) 55%, transparent);
     }
 
     // The shape the cards in the box are, between them. Set at the size of the
