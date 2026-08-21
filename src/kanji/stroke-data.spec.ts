@@ -90,6 +90,53 @@ describe('the shipped stroke data', () => {
     expect(new Set(ranks).size).toBe(ranks.length);
   });
 
+  /**
+   * The parts a character divides into, for the decomposition shown on its own
+   * page. They are only written where they tile the character, so wherever the
+   * field is there at all it has to account for every stroke exactly once and
+   * in writing order - a part drawn from a range that is off by one would
+   * highlight somebody else's strokes.
+   */
+  it('divides a character into parts that account for all of it', () => {
+    const divided = strokeData.characters.filter(character => 'parts' in character);
+
+    expect(divided.length).toBe(546);
+    for (const character of divided) {
+      const parts = (character as { parts: { from: number; to: number; element?: string }[] }).parts;
+      expect(parts.length).toBeGreaterThanOrEqual(2);
+      // A division nothing can be named in says no more than the stroke count.
+      expect(parts.some(part => part.element)).toBe(true);
+
+      const covered = parts.flatMap(part => {
+        expect(part.from).toBeGreaterThanOrEqual(1);
+        expect(part.to).toBeGreaterThanOrEqual(part.from);
+        expect(part.to).toBeLessThanOrEqual(character.strokes.length);
+        return Array.from({ length: part.to - part.from + 1 }, (_, i) => part.from + i);
+      });
+
+      expect(covered.length).toBe(character.strokes.length);
+      expect(new Set(covered).size).toBe(character.strokes.length);
+    }
+  });
+
+  /**
+   * A part that names a deck kanji is a link to that kanji's own page, and the
+   * lesson order has to have taught it first - which componentsOf already
+   * guarantees for the parts it finds, but a part is free to name a kanji
+   * componentsOf drops as etymology only.
+   */
+  it('only points a part at a kanji the deck has already taught', () => {
+    const position = new Map(strokeData.characters.map((character, index) => [character.kanji, index]));
+
+    const late = strokeData.characters.flatMap((character, index) =>
+      ((character as { parts?: { kanji?: string }[] }).parts ?? [])
+        .filter(part => part.kanji && (position.get(part.kanji) ?? Infinity) > index)
+        .map(part => `${character.kanji} links back to ${part.kanji}`),
+    );
+
+    expect(late).toEqual([]);
+  });
+
   it('has a meaning in both languages and at least one stroke', () => {
     for (const character of strokeData.characters) {
       expect(character.strokes.length).toBeGreaterThan(0);

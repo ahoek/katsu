@@ -58,6 +58,10 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         example: 'Example',
         stroke: 'Show stroke',
       },
+      parts: {
+        title: 'Written in',
+        sound: 'sound',
+      },
       undo: 'Erase stroke',
       restart: 'Erase all',
       next: 'Next',
@@ -252,6 +256,10 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       hint: {
         example: 'Voorbeeld',
         stroke: 'Toon streek',
+      },
+      parts: {
+        title: 'Opgebouwd uit',
+        sound: 'klank',
       },
       undo: 'Wis streek',
       restart: 'Wis alles',

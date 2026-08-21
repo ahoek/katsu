@@ -2,6 +2,22 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
+/**
+ * One shape a kanji is written in, as the run of strokes it owns. `element` is
+ * the shape as KanjiVG names it (亻, 宀), `kanji` the deck kanji it is where
+ * the deck teaches one, so the part can be linked to its own page. `sound`
+ * marks the piece that carries the reading rather than the meaning.
+ */
+export interface KanjiPart {
+  element?: string;
+  kanji?: string;
+  position?: string;
+  sound?: boolean;
+  /** 1-based, inclusive, into the character's own strokes. */
+  from: number;
+  to: number;
+}
+
 /** One kanji of the deck, with its strokes in writing order. */
 export interface KanjiCharacter {
   kanji: string;
@@ -17,6 +33,8 @@ export interface KanjiCharacter {
   freq: number | null;
   /** Deck kanji this one is built from, each taught earlier in the deck. */
   components: string[];
+  /** How it divides into shapes, absent where it does not divide cleanly. */
+  parts?: KanjiPart[];
   /** SVG paths, one per stroke, drawn in a 109x109 square. */
   strokes: string[];
   /** Where to print each stroke's number, one per stroke, from KanjiVG. */

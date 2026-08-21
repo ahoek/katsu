@@ -6,6 +6,10 @@
  * the path data for the deck, so the app ships one small JSON instead of 100
  * SVG documents.
  *
+ * Each kanji also carries how it divides into the shapes it is written in,
+ * where KanjiVG divides it cleanly: a part per direct child of its own group,
+ * as the run of strokes that part owns. See partsOf in kanjivg.mjs.
+ *
  * The practice list can be walked four ways. Two are already in the deck:
  * the order of the array is the lesson order, and `grade` is the school year
  * of the 学年別漢字配当表. The other two are merged in here, per kanji: its
@@ -23,7 +27,7 @@ import { fileURLToPath } from 'node:url';
 
 import { deck } from './kanji-deck.mjs';
 import { KANJI_DATA_REF, KANJI_FREQUENCY_REF, fetchRanks } from './kanji-ranks.mjs';
-import { KANJIVG_REF, componentsOf, fetchSvg } from './kanjivg.mjs';
+import { KANJIVG_REF, componentsOf, fetchSvg, partsOf } from './kanjivg.mjs';
 
 const OUT_FILE = join(
   dirname(fileURLToPath(import.meta.url)),
@@ -84,10 +88,14 @@ function strokeNumbers(svg, kanji, strokeCount) {
 async function fetchKanji(entry, ranks) {
   const svg = await fetchSvg(entry.kanji);
   const strokes = strokePaths(svg, entry.kanji);
+  const parts = partsOf(svg, entry.kanji, deckKanji);
   return {
     ...entry,
     ...ranks.get(entry.kanji),
     components: componentsOf(svg, entry.kanji, deckKanji),
+    // Left out entirely where KanjiVG does not divide the character cleanly,
+    // so the app can take the field's presence as the whole question.
+    ...(parts.length ? { parts } : {}),
     strokes,
     numbers: strokeNumbers(svg, entry.kanji, strokes.length),
   };

@@ -16,6 +16,7 @@ import { addIcons } from 'ionicons';
 import { arrowBack, arrowForward, pencilOutline, schoolOutline } from 'ionicons/icons';
 import { Subscription } from 'rxjs';
 
+import { KanjiPartsComponent } from '../components/kanji-parts.component';
 import { StrokeDemoComponent } from '../components/stroke-demo.component';
 import { WritingExerciseComponent } from '../components/writing-exercise.component';
 import { installKanjiTranslations } from '../i18n/kanji-translations';
@@ -62,6 +63,7 @@ import { PageMetaService } from '../../app/shared/page-meta.service';
     TranslatePipe,
     StrokeDemoComponent,
     WritingExerciseComponent,
+    KanjiPartsComponent,
     MenuButtonComponent,
   ],
 })

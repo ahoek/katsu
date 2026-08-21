@@ -60,6 +60,17 @@
           </div>
         </div>
 
+        <!-- How the character divides, where KanjiVG divides it cleanly. Above
+             the demonstration: it is what to look at before writing, and it
+             says nothing the animation is about to say. -->
+        @if (kanji.parts; as parts) {
+          <app-kanji-parts
+            [parts]="parts"
+            [strokes]="strokes()"
+            [kanji]="kanji.kanji"
+          ></app-kanji-parts>
+        }
+
         <app-kanji-stroke-demo
           [strokes]="strokes()"
           [numbers]="numbers()"

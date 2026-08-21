@@ -35,6 +35,112 @@ export async function fetchSvg(kanji, attempts = 4) {
 }
 
 /**
+ * How a kanji divides into the shapes it is written in, one level down: the
+ * direct children of its own group, each as the run of strokes it owns.
+ *
+ * This is a different question from componentsOf, which flattens the whole
+ * tree into the deck kanji hiding anywhere inside - the right answer for
+ * teaching parts before wholes, the wrong one for showing how a character is
+ * built. 語 is 言 plus 吾, not 二, 五, 口 and 言; and 海 is water plus a sound,
+ * where componentsOf drops the water for being etymology only.
+ *
+ * Parts are only returned when they tile the character: every stroke in
+ * exactly one part. KanjiVG sometimes names only some of a character's pieces
+ * - 五 is a 二 over a 二 with the two crossing strokes in neither - and half a
+ * decomposition is worse than none, both to draw and to think about.
+ *
+ * They are also dropped when not one part names a shape. KanjiVG divides 二
+ * into its top stroke and its bottom stroke, which is true and says nothing:
+ * the stroke count and the demonstration already carry it. A division is only
+ * worth showing when at least one side of it is something in its own right.
+ */
+export function partsOf(svg, kanji, deckKanji) {
+  const open = [];
+  let rootDepth = null;
+  const parts = [];
+
+  // Groups and strokes in document order: a stroke belongs to every group
+  // still open around it.
+  for (const [, close, attrs, stroke] of svg.matchAll(/<(\/?)g([^>]*)>|<path id="kvg:[^"]*?-s(\d+)"/g)) {
+    if (stroke !== undefined) {
+      for (const group of open) {
+        group.strokes.push(Number(stroke));
+      }
+      continue;
+    }
+    if (close) {
+      open.pop();
+      if (rootDepth !== null && open.length < rootDepth) {
+        rootDepth = null;
+      }
+      continue;
+    }
+    const element = /kvg:element="([^"]+)"/.exec(attrs)?.[1];
+    const group = {
+      element,
+      original: /kvg:original="([^"]+)"/.exec(attrs)?.[1],
+      position: /kvg:position="([^"]+)"/.exec(attrs)?.[1],
+      // KanjiVG marks the piece that carries the reading rather than the
+      // meaning. Worth keeping: it is the difference between "water and every"
+      // and "water, and a piece that only says how it sounds".
+      phon: /kvg:phon="([^"]+)"/.exec(attrs)?.[1],
+      strokes: [],
+    };
+    if (rootDepth === null && element === kanji) {
+      open.push(group);
+      rootDepth = open.length;
+      continue;
+    }
+    if (rootDepth !== null && open.length === rootDepth) {
+      parts.push(group);
+    }
+    open.push(group);
+  }
+
+  if (parts.length < 2) {
+    return [];
+  }
+
+  const strokeCount = [...svg.matchAll(/<path id="kvg:[^"]*?-s\d+"/g)].length;
+  const covered = parts.flatMap(part => part.strokes);
+  if (covered.length !== strokeCount || new Set(covered).size !== strokeCount) {
+    return [];
+  }
+  if (!parts.some(part => part.element)) {
+    return [];
+  }
+
+  return parts.map(part => ({
+    // The shape as it is written here - 亻 rather than 人 - and, when the deck
+    // teaches it, the kanji it is, so a part can be linked to its own page.
+    ...(part.element ? { element: part.element } : {}),
+    ...(deckPart(part, deckKanji) ? { kanji: deckPart(part, deckKanji) } : {}),
+    ...(part.position ? { position: part.position } : {}),
+    ...(part.phon ? { sound: true } : {}),
+    from: Math.min(...part.strokes),
+    to: Math.max(...part.strokes),
+  }));
+}
+
+/**
+ * Which deck kanji a part is, so it can be linked to its own page - and only
+ * where that page is about the same shape. An etymology-only form is where
+ * this differs from the element itself: 冬's 冫 files under 氷 and 院's ⻖
+ * under 阜, but neither writes anything of the kanji it descends from, so the
+ * shape is shown and left unlinked rather than sending a learner off to write
+ * something that is not there.
+ */
+function deckPart(part, deckKanji) {
+  if (part.element && ETYMOLOGY_ONLY.has(part.element)) {
+    return undefined;
+  }
+  if (part.element && deckKanji.has(part.element)) {
+    return part.element;
+  }
+  return part.original && deckKanji.has(part.original) ? part.original : undefined;
+}
+
+/**
  * The radical forms that count as the kanji itself. The test is the hand, not
  * the dictionary: somebody who can write 人 has written 亻, and 飠 is 食 with
  * its foot tucked in, the way 釒 is 金. Where the form keeps the kanji's own

@@ -52,6 +52,48 @@ once mastered, with a dot on anything due now; on the character's own page it is
 said in words, stage and all, next to the stroke count. Free practice still
 changes none of it.
 
+### How a character divides
+
+A character's own page shows the shapes it is written in, each drawn as the
+whole character with only its own strokes inked - the rest of it left faint
+behind them, so a part reads as a piece of something rather than a shape on
+its own. 休 is these two strokes and then those four, and the eye can see that
+亻 is the left of it.
+
+Nothing is glossed, deliberately. A part the deck teaches links to its own
+page, where the meaning already written for it lives, so an explanation stays
+in words the learner has been taught instead of introducing dictionary English
+to explain Dutch - and it needs no translating, which is the only reason a part
+like 宀 can be shown at all. Where KanjiVG marks a piece as carrying the
+reading rather than the meaning, it says so: 海 is water and *a sound*, not
+water and "every".
+
+`partsOf` in `tools/kanjivg.mjs` reads the division out of KanjiVG's nested
+groups, which is a different question from `componentsOf` - that one flattens
+the whole tree into the deck kanji hiding anywhere inside, right for teaching
+parts before wholes and wrong for showing how a character is built. 語 is 言
+and 吾, not 二, 五, 口 and 言.
+
+546 of the 642 have one. The rest are left alone on purpose:
+
+- 70 do not divide at all - the pictographs, where "it is a picture of a tree"
+  is the explanation and there is no composition to show.
+- 13 divide into pieces KanjiVG only partly names, like 五 being a 二 over a 二
+  with the two crossing strokes in neither. Half a division is worse than none.
+- 13 divide into nothing but stroke groups: KanjiVG splits 二 into its top
+  stroke and its bottom stroke, which is true and says nothing the stroke count
+  does not already say.
+
+### Why not CHISE IDS
+
+[cjkvi-ids](https://github.com/cjkvi/cjkvi-ids) names parts KanjiVG leaves
+anonymous - 親 is ⿰亲見 there, where KanjiVG has an unnamed group - and it
+would fill in 29 of the 113 blanks. It is not used, for two reasons. It has no
+strokes in it, so it cannot say *which* strokes a part owns, and that mapping
+is the whole feature. And `ids.txt` is CHISE-derived and GPLv2, which does not
+sit with Katsu's MIT licence the way KanjiVG's CC BY-SA does over the stroke
+data alone.
+
 A **lesson** runs in four steps: meet the character, watch its strokes written
 in order, trace it once with the example on screen, then write it again from
 memory with the example gone. Finishing puts the kanji into the schedule at the
