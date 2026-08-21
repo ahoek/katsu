@@ -105,7 +105,31 @@ export function partsOf(svg, kanji, deckKanji, deckStrokes = new Map()) {
     open.push(group);
   }
 
-  if (top.length < 2) {
+  const strokeCount = [...svg.matchAll(/<path id="kvg:[^"]*?-s\d+"/g)].length;
+
+  // KanjiVG hangs strokes straight off the character where it has no group to
+  // put them in: 石 is two loose strokes and a 口, so the 厂 it never named
+  // would be dropped and take the whole division with it. Loose strokes stand
+  // as parts of their own, in the runs they are written in - nameless, but a
+  // shape on the paper for the 口 to be seen beside.
+  const grouped = new Set(top.flatMap(group => group.strokes));
+  const loose = [];
+  for (let stroke = 1; stroke <= strokeCount; stroke += 1) {
+    if (grouped.has(stroke)) {
+      continue;
+    }
+    const run = loose.at(-1);
+    if (run && run.strokes.at(-1) === stroke - 1) {
+      run.strokes.push(stroke);
+    } else {
+      loose.push({ strokes: [stroke], children: [] });
+    }
+  }
+
+  const pieces = [...top, ...loose].sort(
+    (a, b) => Math.min(...a.strokes) - Math.min(...b.strokes));
+
+  if (pieces.length < 2) {
     return [];
   }
 
@@ -126,7 +150,7 @@ export function partsOf(svg, kanji, deckKanji, deckStrokes = new Map()) {
   // 竟 is what its 音 and 儿 are together. Not the same question as which piece
   // carries the reading - 竟 does here, 孝 in 教 does not, and both are units.
   let unit = 0;
-  const divided = top.flatMap(part => {
+  const divided = pieces.flatMap(part => {
     if (known(part.element, deckKanji) || part.children.length < 2) {
       return [part];
     }
@@ -203,7 +227,6 @@ export function partsOf(svg, kanji, deckKanji, deckStrokes = new Map()) {
   // KanjiVG sometimes names only some of a character's pieces - 五 is a 二 over
   // a 二 with the two crossing strokes in neither - and half a division is
   // worse than none, both to draw and to think about.
-  const strokeCount = [...svg.matchAll(/<path id="kvg:[^"]*?-s\d+"/g)].length;
   const covered = new Set(parts.flatMap(part => part.strokes));
   if (covered.size !== strokeCount) {
     return [];

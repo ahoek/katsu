@@ -95,12 +95,13 @@ describe('the shipped stroke data', () => {
    * page. Every stroke has to belong to one of them, or the division is only
    * part of the character. Two parts may claim the same stroke, which is not a
    * mistake: 重's long vertical is the last stroke of its 千 and the middle of
-   * its 里, and characters are written that way.
+   * its 里, and 様's is the spine of both its 羊 and its 氺. Characters are
+   * written that way.
    */
   it('divides a character into parts that account for all of it', () => {
     const divided = strokeData.characters.filter(character => 'parts' in character);
 
-    expect(divided.length).toBe(535);
+    expect(divided.length).toBe(569);
     for (const character of divided) {
       const parts = (character as { parts: { strokes: number[]; element?: string }[] }).parts;
       expect(parts.length).toBeGreaterThanOrEqual(2);
@@ -124,6 +125,21 @@ describe('the shipped stroke data', () => {
    * guarantees for the parts it finds, but a part is free to name a kanji
    * componentsOf drops as etymology only.
    */
+  /**
+   * A box around a run of tiles says they are one shape between them, and the
+   * name under it says which. Without a name there is nothing for it to say,
+   * and 三 would be boxed as a 一 over a pair of 一.
+   */
+  it('names every shape it boxes a run of parts as', () => {
+    const nameless = strokeData.characters.flatMap(character =>
+      ((character as { parts?: { unit?: number; unitOf?: string }[] }).parts ?? [])
+        .filter(part => part.unit && !part.unitOf)
+        .map(() => character.kanji),
+    );
+
+    expect(nameless).toEqual([]);
+  });
+
   it('only points a part at a kanji the deck has already taught', () => {
     const position = new Map(strokeData.characters.map((character, index) => [character.kanji, index]));
 
