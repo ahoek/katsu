@@ -76,7 +76,7 @@ export function partsOf(svg, kanji, deckKanji, deckStrokes = new Map()) {
       }
       continue;
     }
-    const element = /kvg:element="([^"]+)"/.exec(attrs)?.[1];
+    const element = nameOf(attrs);
     const group = {
       element,
       original: /kvg:original="([^"]+)"/.exec(attrs)?.[1],
@@ -417,6 +417,20 @@ function looseRuns(strokes, groups) {
   return runs;
 }
 
+/**
+ * The shape a group is, where that is a shape and not a filing code. KanjiVG
+ * names what it can with the character itself and falls back to an identifier
+ * where Unicode has none: 原's 白 and 小 are one shape between them, and that
+ * shape is "CDP-8BC4". True, and not a thing to write under a tile - so it
+ * counts as unnamed, and the rules for a shape with no name take it from there.
+ */
+function nameOf(attrs) {
+  const element = /kvg:element="([^"]+)"/.exec(attrs)?.[1];
+  return element && /^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\u2E80-\u2FFF\u31C0-\u31EF\u3005\u303B]+$/u.test(element)
+    ? element
+    : undefined;
+}
+
 /** A shape the deck teaches, either as itself or as a radical form of one. */
 function known(element, deckKanji) {
   if (!element || ETYMOLOGY_ONLY.has(element)) {
@@ -502,7 +516,7 @@ export function componentsOf(svg, kanji, deckKanji) {
   const found = new Set();
 
   for (const [, attrs] of svg.matchAll(/<g([^>]*)>/g)) {
-    const element = /kvg:element="([^"]+)"/.exec(attrs)?.[1];
+    const element = nameOf(attrs);
     const original = /kvg:original="([^"]+)"/.exec(attrs)?.[1];
 
     if (!element || element === kanji) {

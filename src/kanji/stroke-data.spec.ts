@@ -126,6 +126,25 @@ describe('the shipped stroke data', () => {
    * componentsOf drops as etymology only.
    */
   /**
+   * Every name is a shape somebody can read. KanjiVG falls back to a filing
+   * code where Unicode has no character for a shape - 原's 白 and 小 are one
+   * shape between them and that shape is "CDP-8BC4" - and a tile is no place
+   * for it.
+   */
+  it('never writes a filing code where a shape should be', () => {
+    const shape = /^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\u2E80-\u2FFF\u31C0-\u31EF\u3005\u303B]+$/u;
+
+    const codes = strokeData.characters.flatMap(character =>
+      ((character as { parts?: { element?: string; unitOf?: string }[] }).parts ?? [])
+        .flatMap(part => [part.element, part.unitOf])
+        .filter((name): name is string => !!name && !shape.test(name))
+        .map(name => `${character.kanji}: ${name}`),
+    );
+
+    expect(codes).toEqual([]);
+  });
+
+  /**
    * A box around a run of tiles says they are one shape between them, and the
    * name under it says which. Without a name there is nothing for it to say,
    * and 三 would be boxed as a 一 over a pair of 一.
