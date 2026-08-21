@@ -440,6 +440,14 @@ function deckPart(part, deckKanji) {
   if (part.element && deckKanji.has(part.element)) {
     return part.element;
   }
+  // An `original` counts only where the form is declared to be that kanji by
+  // hand, which is the rule componentsOf works by. Following any original
+  // KanjiVG records is how a tile came to link 売's 士 to 土: not a form of it
+  // as far as this app is concerned, and nothing the two functions should be
+  // able to disagree about.
+  if (!part.element || RADICAL_FORMS.get(part.element) !== part.original) {
+    return undefined;
+  }
   return part.original && deckKanji.has(part.original) ? part.original : undefined;
 }
 
@@ -447,8 +455,8 @@ function deckPart(part, deckKanji) {
  * The radical forms that count as the kanji itself. The test is the hand, not
  * the dictionary: somebody who can write 人 has written 亻, and 飠 is 食 with
  * its foot tucked in, the way 釒 is 金. Where the form keeps the kanji's own
- * strokes - 扌 is 手 without its first sweep, 士 is 土 with the lines a
- * different length - the part is worth teaching first.
+ * strokes - 扌 is 手 without its first sweep - the part is worth teaching
+ * first.
  */
 const RADICAL_FORMS = new Map([
   ['亻', '人'],
@@ -456,7 +464,6 @@ const RADICAL_FORMS = new Map([
   ['⺌', '小'],
   ['⺷', '羊'],
   ['飠', '食'],
-  ['士', '土'],
   // 老's own first four strokes, unchanged; and 衣 squeezed into the left
   // half with its foot tucked in, the way 飠 is 食.
   ['耂', '老'],
@@ -464,15 +471,21 @@ const RADICAL_FORMS = new Map([
 ]);
 
 /**
- * And the ones that are a different mark on the page. KanjiVG's `original`
+ * And the ones an `original` may not be followed to. KanjiVG's `original`
  * records where a shape came from as well as how it is written: 冬's 冫 is
  * filed under 氷, 元's 儿 under 八, 海's 氵 under 水. Etymology is right and
  * beside the point - nothing of 水 is written in 海, so a learner sent to
  * write 水 first is looking for something that is not there.
+ *
+ * 士 is here for the opposite reason. KanjiVG marks 売's and 声's top as a
+ * variant of 土 and it is written almost exactly like one, which is precisely
+ * the trouble: 士 and 土 are two kanji that a learner has to keep apart, and a
+ * page that quietly files one under the other teaches them to merge. Told that
+ * the shape is 士, they can go on to learn where the long line goes.
  */
 // ⻖ files under 阜, but its three strokes share nothing with how 阜 is
 // written - the 氵/水 case exactly.
-const ETYMOLOGY_ONLY = new Set(['儿', '冫', '毋', '氵', '氺', '灬', '刂', '⻖']);
+const ETYMOLOGY_ONLY = new Set(['儿', '冫', '士', '毋', '氵', '氺', '灬', '刂', '⻖']);
 
 /**
  * The deck kanji this kanji is built from. A group whose element is the kanji

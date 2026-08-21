@@ -140,6 +140,28 @@ describe('the shipped stroke data', () => {
     expect(nameless).toEqual([]);
   });
 
+  /**
+   * 士 and 土 are two kanji a learner has to keep apart, and KanjiVG files the
+   * top of 売 and 声 under 土 as a variant. Following that would put the page
+   * on the wrong side of the one difference that matters, so the shape is shown
+   * as the 士 it is written as and links nowhere.
+   */
+  it('never sends a 士 to the page for 土', () => {
+    const merged = strokeData.characters.flatMap(character =>
+      ((character as { parts?: { element?: string; kanji?: string }[] }).parts ?? [])
+        .filter(part => part.element === '士' && part.kanji)
+        .map(part => `${character.kanji}: 士 links to ${part.kanji}`),
+    );
+
+    expect(merged).toEqual([]);
+    const builtOnEarth = strokeData.characters
+      .filter(character => (character.components as string[]).includes('土'))
+      .map(character => character.kanji);
+
+    expect(builtOnEarth).not.toContain('売');
+    expect(builtOnEarth).not.toContain('声');
+  });
+
   it('only points a part at a kanji the deck has already taught', () => {
     const position = new Map(strokeData.characters.map((character, index) => [character.kanji, index]));
 
