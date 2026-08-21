@@ -127,18 +127,48 @@ type Feedback =
         </ion-button>
       </app-kanji-stroke-demo>
     } @else {
-    <app-kanji-stroke-pad
-      [strokes]="strokes()"
-      [written]="written()"
-      [drawn]="inkPaths()"
-      [offStrokes]="offStrokes()"
-      [showOutline]="exampleVisible()"
-      [showStroke]="nextStrokeVisible()"
-      [showStart]="startVisible()"
-      [feedback]="padFeedback()"
-      [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
-      (strokeDrawn)="judge($event)"
-    ></app-kanji-stroke-pad>
+    <!-- The pad is the width of the screen for as long as there is writing to
+         do. Once it has been judged it halves and the model comes alongside:
+         the whole point of the reveal is the comparison, and stacked full-width
+         they can never be seen at once. -->
+    <div class="written" [class.written--paired]="paired()">
+      <div class="written__col">
+        @if (paired()) {
+          <p class="written__t">{{ 'kanji.reveal.yours' | translate }}</p>
+        }
+        <app-kanji-stroke-pad
+          [strokes]="strokes()"
+          [written]="written()"
+          [drawn]="inkPaths()"
+          [offStrokes]="offStrokes()"
+          [faults]="faultNumbers()"
+          [showOutline]="exampleVisible()"
+          [showStroke]="nextStrokeVisible()"
+          [showStart]="startVisible()"
+          [feedback]="padFeedback()"
+          [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
+          (strokeDrawn)="judge($event)"
+        ></app-kanji-stroke-pad>
+      </div>
+
+      <!-- Shown even for a clean writing: the matcher can be wrong too, and the
+           learner's own eye should get to overrule a pass as well as a fail.
+           Numbers and arrows carry the order and direction, which ink cannot. -->
+      @if (paired()) {
+        <div class="written__col">
+          <p class="written__t">{{ 'kanji.reveal.model' | translate }}</p>
+          <app-kanji-stroke-pad
+            [strokes]="strokes()"
+            [written]="strokeCount()"
+            [numbers]="numbers()"
+            [showNumbers]="true"
+            [showDirection]="true"
+            [interactive]="false"
+            [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
+          ></app-kanji-stroke-pad>
+        </div>
+      }
+    </div>
 
     <!-- The pad's own tools, on the instrument. They leave with the writing:
          once the character is finished there is nothing they could still do.
@@ -178,6 +208,7 @@ type Feedback =
       role="status"
       [class.status--wrong]="mistake()"
       [class.status--done]="feedback().kind === 'complete' && offCount() === 0"
+      [class.status--off]="feedback().kind === 'complete' && offCount() > 0"
     >
       @switch (feedback().kind) {
         @case ('complete') {
@@ -188,9 +219,9 @@ type Feedback =
           @if (flawless()) {
             {{ 'kanji.feedback.flawless' | translate }}
           } @else if (offCount() === 1) {
-            {{ 'kanji.feedback.off-one' | translate }}
+            {{ 'kanji.feedback.off-one' | translate: { total: strokeCount() } }}
           } @else if (offCount() > 1) {
-            {{ 'kanji.feedback.off' | translate: { count: offCount() } }}
+            {{ 'kanji.feedback.off' | translate: { count: offCount(), total: strokeCount() } }}
           } @else {
             {{ 'kanji.feedback.complete' | translate }}
           }
@@ -227,27 +258,12 @@ type Feedback =
     @if (deferred() && complete() && offReasons().length) {
       <ul class="misfits">
         @for (off of offReasons(); track off.stroke) {
-          <li>{{ off.key | translate: { stroke: off.stroke, read: off.read } }}</li>
+          <li>
+            <span class="misfits__n">{{ off.stroke }}</span>
+            <span class="misfits__why">{{ off.key | translate: { read: off.read } }}</span>
+          </li>
         }
       </ul>
-    }
-
-    <!-- The example below the writing, not under it: two characters on top of
-         each other cannot be told apart once they get at all dense. Numbers
-         and arrows carry the order and direction, which the ink cannot show.
-         Shown even for a clean writing: the matcher can be wrong too, and the
-         learner's own eye should get to overrule a pass as well as a fail. -->
-    @if (deferred() && complete()) {
-      <app-kanji-stroke-pad
-        class="answer-pad"
-        [strokes]="strokes()"
-        [written]="strokeCount()"
-        [numbers]="numbers()"
-        [showNumbers]="true"
-        [showDirection]="true"
-        [interactive]="false"
-        [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
-      ></app-kanji-stroke-pad>
     }
 
     }
@@ -261,13 +277,34 @@ type Feedback =
       user-select: none;
     }
 
+    // A list, not ten centred sentences. The number is a numeral of its own
+    // rather than the first two words of every line, and it is the same numeral
+    // that stands on the stroke up on the pad.
     .misfits {
-      margin: 8px 0 0;
+      margin: 2px 0 0;
       padding: 0;
       list-style: none;
-      font-size: .8rem;
-      line-height: 1.5;
-      text-align: center;
+
+      li {
+        display: flex;
+        gap: 8px;
+        align-items: baseline;
+        padding: 1px 0;
+      }
+    }
+
+    .misfits__n {
+      flex: 0 0 1.3em;
+      text-align: right;
+      color: var(--app-color-ink-off);
+      font-size: .82rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .misfits__why {
+      font-size: .82rem;
+      line-height: 1.45;
       color: var(--ion-color-medium);
     }
 
@@ -284,6 +321,17 @@ type Feedback =
       font-size: .9rem;
       color: var(--ion-color-medium);
 
+      // When it counts the strokes that went differently it is the heading of
+      // the list under it, so it stands where those rows start rather than in
+      // the middle of a line of its own.
+      &.status--off {
+        min-height: 0;
+        margin-bottom: 4px;
+        text-align: left;
+        font-size: .82rem;
+        color: var(--ion-color-danger);
+      }
+
       ion-icon {
         vertical-align: -2px;
         color: var(--ion-color-success);
@@ -299,9 +347,28 @@ type Feedback =
       }
     }
 
-    .answer-pad {
-      width: min(58%, 200px);
-      margin: 4px auto 10px;
+    // Side by side once the writing has been judged, each half the width it
+    // was. Bigger numbers on the model with it: they are laid out for a pad the
+    // width of the screen.
+    .written--paired {
+      display: flex;
+      gap: 10px;
+      --kanji-number-size: 7px;
+
+      .written__col {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+    }
+
+    .written__t {
+      margin: 0 0 5px;
+      text-align: center;
+      font-size: .72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--ion-color-medium);
     }
 
   `,
@@ -412,6 +479,24 @@ export class WritingExerciseComponent implements OnDestroy {
    * pointed out earlier, they would be the running commentary this mode is
    * doing without.
    */
+  /** Judged and done with, so the model can stand beside it. */
+  protected readonly paired = computed(() => this.deferred() && this.complete());
+
+  /**
+   * Where to write the number of a stroke that went differently: at the start
+   * of the learner's own stroke. Not at the model's, since a stroke that landed
+   * somewhere else entirely would be numbered beside ink that is not it.
+   */
+  protected readonly faultNumbers = computed(() =>
+    this.complete()
+      ? this.drawnInk().flatMap((stroke, index) => {
+          const start = stroke.points[0];
+          return stroke.correct || !start
+            ? []
+            : [{ stroke: index + 1, x: start.x - 1, y: start.y - 3 }];
+        })
+      : []);
+
   protected readonly offStrokes = computed(() =>
     this.complete()
       ? this.drawnInk().flatMap((stroke, index) => (stroke.correct ? [] : [index]))

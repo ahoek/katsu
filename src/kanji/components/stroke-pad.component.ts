@@ -114,6 +114,13 @@ export function strokeTraceMs(path: string, scale = 1): number {
         </g>
       }
 
+      <!-- The number of a stroke that went differently, on the stroke itself:
+           the list underneath says what was wrong with stroke 6, and this is
+           where stroke 6 is. -->
+      @for (fault of faults(); track fault.stroke) {
+        <text class="fault" [attr.x]="fault.x" [attr.y]="fault.y" aria-hidden="true">{{ fault.stroke }}</text>
+      }
+
       @if (livePath(); as path) {
         <path class="live" [attr.d]="path" />
       }
@@ -149,6 +156,16 @@ export function strokeTraceMs(path: string, scale = 1): number {
       &.pad--taking {
         touch-action: none;
       }
+    }
+
+    .fault {
+      font-size: var(--kanji-fault-size, 11px);
+      font-weight: 700;
+      fill: var(--app-color-ink-off);
+      paint-order: stroke;
+      stroke: var(--app-color-paper);
+      stroke-width: 2.5px;
+      stroke-linejoin: round;
     }
 
     .pad--wrong {
@@ -238,7 +255,9 @@ export function strokeTraceMs(path: string, scale = 1): number {
       // KanjiVG lays these out for a font-size of 8 in the 109 unit square;
       // smaller keeps the digit clear of a 5.5 unit stroke. The position is the
       // start of the baseline, so a smaller digit stays inside the same gap.
-      font-size: 4.5px;
+      // A knob, because the pad is not always the width of the screen: at half
+      // that, on a reveal beside the writing it judges, 4.5 units is a smudge.
+      font-size: var(--kanji-number-size, 4.5px);
       fill: var(--app-color-paper-note);
       // A halo behind the digit, for where a number does touch a stroke.
       paint-order: stroke;
@@ -307,6 +326,9 @@ export class StrokePadComponent {
 
   /** Indexes of drawn strokes to point out as having gone wrong. */
   readonly offStrokes = input<readonly number[]>([]);
+
+  /** Numbers to write on the strokes that went differently, at their own ink. */
+  readonly faults = input<readonly { stroke: number; x: number; y: number }[]>([]);
 
   /** Show the whole kanji faintly, as an example to trace. */
   readonly showOutline = input(false);
