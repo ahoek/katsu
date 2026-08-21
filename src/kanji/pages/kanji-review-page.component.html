@@ -148,15 +148,16 @@
       <!-- What the review did to the schedule, in the flow under the writing
            it judges, with the one decision left - carrying on - right below. -->
       @if (outcome(); as result) {
-        <!-- After a review that lost ground, and only then: the learner has
-             just shown they do not have this character, and 休 being 亻 and 木
-             is the thing that would have helped. It gives nothing away - the
-             answer is already on the pad above it.
+        <!-- After any review that did not come out clean - a stage dropped or
+             a stage held with mistakes in it. The learner has just shown they
+             do not have this character, and 休 being 亻 and 木 is the thing
+             that would have helped. It gives nothing away: the answer is
+             already on the pad above it.
 
              Above the ladder rather than below the line, so that the ladder,
              the line and the way on stay the same three things in the same
              order however the review went. -->
-        @if (result.grade === 'poor') {
+        @if (result.grade !== 'clean') {
           @if (kanji.parts; as divided) {
             <app-kanji-parts
               class="divided"
