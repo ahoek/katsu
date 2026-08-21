@@ -32,7 +32,7 @@ const VIEW_BOX = 109;
         @for (group of groups(); track $index) {
           <!-- Parts that are one shape between them are boxed together, with
                that shape named where KanjiVG names it. -->
-          <li class="group" [class.group--unit]="group.unit">
+          <li class="group" [class.group--unit]="group.unit" [class.group--named]="group.unitOf">
             @for (part of group.parts; track $index) {
               @if (part.kanji) {
                 <!-- Written earlier in the deck, so it has a page of its own. -->
@@ -102,19 +102,28 @@ const VIEW_BOX = 109;
       list-style: none;
     }
 
+    // Every part carries the box's geometry whether it is in one or not, so a
+    // tile standing alone lines up with the tiles inside a box instead of
+    // riding a border and a padding higher than them.
     .group {
+      position: relative;
       display: flex;
-      gap: 4px;
+      gap: 2px;
+      padding: 3px;
+      border: 1px dashed transparent;
+      border-radius: 10px;
     }
 
-    // Held together, and named where the name exists: the two tiles of 鏡's 竟
-    // are that shape between them, not two things standing beside the 金.
+    // Held together: the two tiles of 鏡's 竟 are that shape between them, not
+    // two things standing beside the 金.
     .group--unit {
-      position: relative;
-      gap: 2px;
-      padding: 3px 3px 12px;
-      border: 1px dashed color-mix(in srgb, var(--ion-color-medium) 55%, transparent);
-      border-radius: 10px;
+      border-color: color-mix(in srgb, var(--ion-color-medium) 55%, transparent);
+    }
+
+    // Room for the name, and only where there is a name to write - 塩's unit is
+    // one KanjiVG does not name, and an empty line under it is just a gap.
+    .group--named {
+      padding-bottom: 12px;
     }
 
     .group__name {
@@ -143,22 +152,24 @@ const VIEW_BOX = 109;
     // colour around them, and a corner turned down like a page waiting to be
     // opened. Guessing which tiles respond by tapping them is not an answer.
     .part--linked {
-      border-color: color-mix(in srgb, var(--app-color-link) 55%, transparent);
+      border-color: var(--app-color-link);
 
+      // Bigger than it was, and drawn on the paper rather than tucked into the
+      // corner radius: at nine pixels in the rounding it read as an artefact of
+      // the border. This is a dog-ear.
       &::after {
         content: '';
         position: absolute;
-        right: -1px;
-        bottom: -1px;
+        right: 0;
+        bottom: 0;
         border-style: solid;
-        border-width: 0 0 9px 9px;
+        border-width: 0 0 15px 15px;
         border-color: transparent transparent var(--app-color-link) transparent;
         border-bottom-right-radius: 7px;
       }
 
       &:hover {
-        border-color: var(--app-color-link);
-        background: color-mix(in srgb, var(--app-color-link) 8%, var(--app-color-paper));
+        background: color-mix(in srgb, var(--app-color-link) 10%, var(--app-color-paper));
       }
     }
 
