@@ -74,11 +74,13 @@ const VIEW_BOX = 109;
   `,
   styles: `
     .parts {
-      margin: 4px 0 0;
+      margin: 10px 0 0;
     }
 
+    // Small tiles rather than full-width ones: this is a footnote to the pad
+    // above it, not a second pad.
     .parts__title {
-      margin: 0 0 6px;
+      margin: 0 0 5px;
       font-size: .7rem;
       font-weight: 600;
       text-transform: uppercase;
@@ -86,13 +88,11 @@ const VIEW_BOX = 109;
       color: var(--ion-color-medium);
     }
 
-    // Stretched, so a part that is only a sound does not make its own tile
-    // taller than the one beside it.
     .parts__list {
       display: flex;
       flex-wrap: wrap;
       align-items: stretch;
-      gap: 8px;
+      gap: 6px;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -104,10 +104,10 @@ const VIEW_BOX = 109;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
+      width: 46px;
       height: 100%;
-      gap: 2px;
-      width: 62px;
-      padding: 4px;
+      gap: 1px;
+      padding: 3px;
       background: var(--app-color-paper);
       border: 1px solid color-mix(in srgb, var(--app-color-paper-rule) 40%, transparent);
       border-radius: 8px;
@@ -132,21 +132,21 @@ const VIEW_BOX = 109;
 
     .part__ink {
       stroke: var(--app-color-ink);
-      stroke-width: 6;
+      stroke-width: 7;
     }
 
     // The other strokes: there for the shape's place in the character, quiet
     // enough that the part is what gets read.
     .part__rest {
       stroke: var(--app-color-paper-rule);
-      stroke-width: 4;
+      stroke-width: 5;
       opacity: .22;
     }
 
     // Which piece only carries the reading. Named rather than glossed: the
     // useful thing about it is that there is no meaning to look for.
     .part__sound {
-      font-size: .55rem;
+      font-size: .5rem;
       line-height: 1.1;
       text-transform: uppercase;
       letter-spacing: .03em;
@@ -166,8 +166,7 @@ export class KanjiPartsComponent {
   protected readonly viewBox = VIEW_BOX;
 
   protected inPart(part: KanjiPart, index: number): boolean {
-    const stroke = index + 1;
-    return stroke >= part.from && stroke <= part.to;
+    return part.strokes.includes(index + 1);
   }
 
   /**
@@ -178,7 +177,6 @@ export class KanjiPartsComponent {
   protected label(part: KanjiPart, index: number): string {
     const which = `${index + 1}/${this.parts().length}`;
     const name = part.kanji ?? part.element ?? '';
-    const strokes = part.from === part.to ? `${part.from}` : `${part.from}-${part.to}`;
-    return [which, name, strokes].filter(Boolean).join(' ');
+    return [which, name, part.strokes.join(',')].filter(Boolean).join(' ');
   }
 }

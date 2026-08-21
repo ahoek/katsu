@@ -13,9 +13,12 @@ export interface KanjiPart {
   kanji?: string;
   position?: string;
   sound?: boolean;
-  /** 1-based, inclusive, into the character's own strokes. */
-  from: number;
-  to: number;
+  /**
+   * Which of the character's strokes this part is written in, 1-based. Not a
+   * range: an enclosure is written in two goes, 国's box being strokes 1, 2
+   * and then 8 with the 玉 inside it drawn in between.
+   */
+  strokes: number[];
 }
 
 /** One kanji of the deck, with its strokes in writing order. */

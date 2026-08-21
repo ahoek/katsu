@@ -84,7 +84,10 @@ export function partsOf(svg, kanji, deckKanji) {
       // meaning. Worth keeping: it is the difference between "water and every"
       // and "water, and a piece that only says how it sounds".
       phon: /kvg:phon="([^"]+)"/.exec(attrs)?.[1],
+      // A shape written in more than one go is numbered rather than repeated.
+      piece: /kvg:part="/.test(attrs),
       strokes: [],
+      children: [],
     };
     if (rootDepth === null && element === kanji) {
       open.push(group);
@@ -94,6 +97,9 @@ export function partsOf(svg, kanji, deckKanji) {
     if (rootDepth !== null && open.length === rootDepth) {
       parts.push(group);
     }
+    if (open.length) {
+      open[open.length - 1].children.push(group);
+    }
     open.push(group);
   }
 
@@ -101,25 +107,98 @@ export function partsOf(svg, kanji, deckKanji) {
     return [];
   }
 
+  // One level down is the right depth for a shape the learner knows, and one
+  // level too shallow for a shape they do not: 死 divides into 歹 and 匕, and
+  // 歹 is not a kanji anybody here has written - but the 一 and 夕 inside it
+  // are. So an unknown shape gives way to its own pieces where every one of
+  // them is known. A shape that carries the reading stays whole whatever it is
+  // made of: 語's 吾 is the sound, and 五 over 口 is not.
+  const divided = parts.flatMap(part => {
+    if (known(part.element, deckKanji) || part.phon || part.children.length < 2) {
+      return [part];
+    }
+    return part.children.every(child => known(child.element, deckKanji))
+      ? part.children
+      : [part];
+  });
+
   const strokeCount = [...svg.matchAll(/<path id="kvg:[^"]*?-s\d+"/g)].length;
-  const covered = parts.flatMap(part => part.strokes);
+  const covered = divided.flatMap(part => part.strokes);
   if (covered.length !== strokeCount || new Set(covered).size !== strokeCount) {
     return [];
   }
-  if (!parts.some(part => part.element)) {
+  if (!divided.some(part => part.element)) {
     return [];
   }
 
-  return parts.map(part => ({
+  // One shape can be written in more than one group: KanjiVG draws 国's box as
+  // strokes 1-2 and then closes it with stroke 8, on either side of the 玉 it
+  // encloses. That is one part in two goes, not two parts, so the same shape in
+  // the same place is folded together and keeps both runs of strokes. Anonymous
+  // groups are left alone - with nothing to name them by, two of them are not
+  // known to be the same thing.
+  const merged = [];
+  for (const part of divided) {
+    // Only numbered pieces fold: 品 is three separate 口 and stays three, while
+    // 国's box is one shape KanjiVG happens to draw in two goes.
+    const same = part.element && part.piece
+      ? merged.find(other => other.piece && other.element === part.element
+          && other.position === part.position)
+      : undefined;
+    if (same) {
+      same.strokes.push(...part.strokes);
+      same.phon ||= part.phon;
+      same.found += 1;
+      continue;
+    }
+    merged.push({ ...part, strokes: [...part.strokes], found: 1 });
+  }
+
+  // A numbered piece whose siblings are not all up here is a shape we would be
+  // drawing half of: 重's 千 is its first two strokes and then one more from
+  // inside the 里 below it, so a tile labelled 千 would light up two thirds of
+  // it. KanjiVG puts 国's box in two pieces at this level, which the fold above
+  // puts back together; where it does not, there is nothing honest to show.
+  const pieces = new Map();
+  for (const [, attrs] of svg.matchAll(/<g([^>]*)>/g)) {
+    if (!/kvg:part="/.test(attrs)) {
+      continue;
+    }
+    const element = /kvg:element="([^"]+)"/.exec(attrs)?.[1];
+    if (element) {
+      pieces.set(element, (pieces.get(element) ?? 0) + 1);
+    }
+  }
+  // The name goes, not the division: 重's first two strokes really are a chunk
+  // of their own, they just are not all of the 千 that KanjiVG calls them. Left
+  // unnamed they say something true, and the 里 beside them still says its own.
+  for (const part of merged) {
+    if (part.piece && part.element && (pieces.get(part.element) ?? 0) > part.found) {
+      part.element = undefined;
+      part.incomplete = true;
+    }
+  }
+  if (!merged.some(part => part.element)) {
+    return [];
+  }
+
+  return merged.map(part => ({
     // The shape as it is written here - 亻 rather than 人 - and, when the deck
     // teaches it, the kanji it is, so a part can be linked to its own page.
     ...(part.element ? { element: part.element } : {}),
     ...(deckPart(part, deckKanji) ? { kanji: deckPart(part, deckKanji) } : {}),
     ...(part.position ? { position: part.position } : {}),
     ...(part.phon ? { sound: true } : {}),
-    from: Math.min(...part.strokes),
-    to: Math.max(...part.strokes),
+    strokes: [...part.strokes].sort((a, b) => a - b),
   }));
+}
+
+/** A shape the deck teaches, either as itself or as a radical form of one. */
+function known(element, deckKanji) {
+  if (!element || ETYMOLOGY_ONLY.has(element)) {
+    return false;
+  }
+  return deckKanji.has(element) || deckKanji.has(RADICAL_FORMS.get(element));
 }
 
 /**
@@ -131,6 +210,9 @@ export function partsOf(svg, kanji, deckKanji) {
  * something that is not there.
  */
 function deckPart(part, deckKanji) {
+  if (part.incomplete) {
+    return undefined;
+  }
   if (part.element && ETYMOLOGY_ONLY.has(part.element)) {
     return undefined;
   }

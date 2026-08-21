@@ -102,16 +102,16 @@ describe('the shipped stroke data', () => {
 
     expect(divided.length).toBe(546);
     for (const character of divided) {
-      const parts = (character as { parts: { from: number; to: number; element?: string }[] }).parts;
+      const parts = (character as { parts: { strokes: number[]; element?: string }[] }).parts;
       expect(parts.length).toBeGreaterThanOrEqual(2);
       // A division nothing can be named in says no more than the stroke count.
       expect(parts.some(part => part.element)).toBe(true);
 
       const covered = parts.flatMap(part => {
-        expect(part.from).toBeGreaterThanOrEqual(1);
-        expect(part.to).toBeGreaterThanOrEqual(part.from);
-        expect(part.to).toBeLessThanOrEqual(character.strokes.length);
-        return Array.from({ length: part.to - part.from + 1 }, (_, i) => part.from + i);
+        expect(part.strokes.length).toBeGreaterThan(0);
+        expect(Math.min(...part.strokes)).toBeGreaterThanOrEqual(1);
+        expect(Math.max(...part.strokes)).toBeLessThanOrEqual(character.strokes.length);
+        return part.strokes;
       });
 
       expect(covered.length).toBe(character.strokes.length);

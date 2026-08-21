@@ -60,9 +60,15 @@
           </div>
         </div>
 
-        <!-- How the character divides, where KanjiVG divides it cleanly. Above
-             the demonstration: it is what to look at before writing, and it
-             says nothing the animation is about to say. -->
+        <app-kanji-stroke-demo
+          [strokes]="strokes()"
+          [numbers]="numbers()"
+          [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
+        ></app-kanji-stroke-demo>
+
+        <!-- How the character divides, under the demonstration rather than over
+             it: the character comes first at full size, and the parts read as
+             something about what was just written. -->
         @if (kanji.parts; as parts) {
           <app-kanji-parts
             [parts]="parts"
@@ -70,12 +76,6 @@
             [kanji]="kanji.kanji"
           ></app-kanji-parts>
         }
-
-        <app-kanji-stroke-demo
-          [strokes]="strokes()"
-          [numbers]="numbers()"
-          [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
-        ></app-kanji-stroke-demo>
 
         @if (unlearned()) {
           <ion-button expand="block" fill="outline" class="flow-cta" (click)="startLesson()">
