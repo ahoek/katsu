@@ -6,14 +6,15 @@ import strokeData from '../assets/data/kanji/strokes.json';
  * shipped, so a hand-edit or a half-finished regeneration cannot slip through.
  */
 describe('the shipped stroke data', () => {
-  it('has the whole deck: all four school years, in full', () => {
-    expect(strokeData.characters).toHaveLength(642);
+  it('has the whole deck: all five school years, in full', () => {
+    expect(strokeData.characters).toHaveLength(835);
     expect(strokeData.characters.filter(c => c.grade === 1)).toHaveLength(80);
     expect(strokeData.characters.filter(c => c.grade === 2)).toHaveLength(160);
     expect(strokeData.characters.filter(c => c.grade === 3)).toHaveLength(200);
     // 202, not 200: the 2020 学年別漢字配当表 revision added the prefecture
     // kanji to grade 4.
     expect(strokeData.characters.filter(c => c.grade === 4)).toHaveLength(202);
+    expect(strokeData.characters.filter(c => c.grade === 5)).toHaveLength(193);
     expect(strokeData.viewBox).toBe(109);
   });
 
@@ -68,7 +69,7 @@ describe('the shipped stroke data', () => {
       .map(character => character.kanji);
 
     expect(outside.sort()).toEqual(
-      ['分', '里', '身', '畑', '的', '無', '岡', '阪', '埼', '阜', '茨', '栃'].sort(),
+      ['分', '里', '身', '畑', '的', '無', '岡', '阪', '埼', '阜', '茨', '栃', '可'].sort(),
     );
     for (const character of strokeData.characters) {
       if (character.jlpt !== null) {
@@ -101,7 +102,7 @@ describe('the shipped stroke data', () => {
   it('divides a character into parts that account for all of it', () => {
     const divided = strokeData.characters.filter(character => 'parts' in character);
 
-    expect(divided.length).toBe(579);
+    expect(divided.length).toBe(767);
     for (const character of divided) {
       const parts = (character as { parts: { strokes: number[]; element?: string }[] }).parts;
       expect(parts.length).toBeGreaterThanOrEqual(2);

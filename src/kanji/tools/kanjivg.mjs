@@ -498,8 +498,11 @@ const RADICAL_FORMS = new Map([
  * the shape is 士, they can go on to learn where the long line goes.
  */
 // ⻖ files under 阜, but its three strokes share nothing with how 阜 is
-// written - the 氵/水 case exactly.
-const ETYMOLOGY_ONLY = new Set(['儿', '冫', '士', '毋', '氵', '氺', '灬', '刂', '⻖']);
+// written - the 氵/水 case exactly. So are 礻 under 示, 犭 under 犬 and 忄
+// under 心, which grade 5 brought in: each is a genuinely different mark,
+// not the kanji written small.
+// 卩 files under 刀 in 留; two strokes that never were a sword by hand.
+const ETYMOLOGY_ONLY = new Set(['儿', '冫', '士', '毋', '氵', '氺', '灬', '刂', '⻖', '礻', '犭', '⺨', '忄', '⺖', '卩']);
 
 /**
  * The deck kanji this kanji is built from. A group whose element is the kanji
