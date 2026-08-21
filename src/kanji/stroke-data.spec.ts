@@ -214,23 +214,44 @@ describe('the shipped stroke data', () => {
    * means, and no two of them say the same. The family words survive as they
    * are, because they are never alone - "oudere broer" and "oudere zus" still
    * name one kanji each.
+   *
+   * Synonyms are the other way to share. "beslist, zeker, gegarandeerd" and
+   * "stellig, zeker" both hold "zeker", and no learner confuses them: the
+   * words around it do the telling apart. Such sharing is deliberate, so the
+   * word goes in the list below - and the test still demands that every
+   * claimant keeps at least one word of its own, or the surrounding synonyms
+   * are not doing the work the sharing leans on.
    */
   it('never gives the same meaning to two kanji', () => {
     const family = ['older', 'younger', 'brother', 'sister', 'oudere', 'jongere', 'broer', 'zus'];
+    // Shared on purpose, told apart by the words beside them.
+    const distinguished = ['zeker', 'beschermen', 'verzorgen'];
 
     for (const language of ['en', 'nl'] as const) {
-      const claims = new Map<string, { kanji: string; sense: string }[]>();
+      const claims = new Map<string, { kanji: string; sense: string; words: string[] }[]>();
       for (const character of strokeData.characters) {
+        const words = character.meaning[language]
+          .toLowerCase()
+          .replace(/\([^)]*\)/g, '')
+          .split(/[,\s]+/)
+          .filter(Boolean);
         for (const phrase of character.meaning[language].toLowerCase().split(',')) {
           const sense = /\(([^)]*)\)/.exec(phrase)?.[1] ?? '';
           for (const word of phrase.replace(/\([^)]*\)/g, '').split(/\s+/).filter(Boolean)) {
-            claims.set(word, [...(claims.get(word) ?? []), { kanji: character.kanji, sense }]);
+            claims.set(word, [...(claims.get(word) ?? []), { kanji: character.kanji, sense, words }]);
           }
         }
       }
 
+      // Every claimant keeps a word no other claimant of this word has.
+      const discriminated = (claimants: { words: string[] }[]) =>
+        claimants.every(claimant =>
+          claimant.words.some(word =>
+            claimants.every(other => other === claimant || !other.words.includes(word))));
+
       const shared = [...claims]
         .filter(([word, claimants]) => claimants.length > 1 && !family.includes(word))
+        .filter(([word, claimants]) => !(distinguished.includes(word) && discriminated(claimants)))
         .filter(
           ([, claimants]) =>
             claimants.some(claimant => !claimant.sense) ||
