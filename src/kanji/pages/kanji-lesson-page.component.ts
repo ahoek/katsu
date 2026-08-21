@@ -14,6 +14,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { arrowBack, arrowForward, checkmarkCircle, refreshOutline } from 'ionicons/icons';
 
+import { KanjiPartsComponent } from '../components/kanji-parts.component';
 import { StrokeDemoComponent } from '../components/stroke-demo.component';
 import { StrokePadComponent } from '../components/stroke-pad.component';
 import { WritingExerciseComponent } from '../components/writing-exercise.component';
@@ -48,6 +49,7 @@ import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button
     IonTitle,
     IonToolbar,
     TranslatePipe,
+    KanjiPartsComponent,
     StrokeDemoComponent,
     StrokePadComponent,
     WritingExerciseComponent,

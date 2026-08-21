@@ -51,6 +51,19 @@
             [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
           ></app-kanji-stroke-demo>
 
+          <!-- How the character divides, which is worth more here than
+               anywhere: this is where it is met, and 休 being 亻 and 木 is
+               easier to take on than six strokes in a row. Only here - the
+               writing steps would have it under the pad as a second answer,
+               and by the summary the character has been written twice. -->
+          @if (kanji.parts; as divided) {
+            <app-kanji-parts
+              [parts]="divided"
+              [strokes]="strokes()"
+              [kanji]="kanji.kanji"
+            ></app-kanji-parts>
+          }
+
           <ion-button expand="block" class="flow-cta" (click)="startTracing()">
             {{ 'kanji.lesson.trace' | translate }}
             <ion-icon slot="end" name="arrow-forward"></ion-icon>
@@ -83,6 +96,7 @@
             [meaning]="meaning()"
             (finished)="finishRecall()"
           ></app-kanji-writing-exercise>
+
         }
 
         @case ('done') {
