@@ -47,6 +47,7 @@ export function strokeTraceMs(path: string, scale = 1): number {
       [class.pad--wrong]="feedback() === 'wrong'"
       [class.pad--complete]="feedback() === 'complete'"
       [class.pad--interactive]="interactive()"
+      [class.pad--taking]="taking()"
       [style.--kanji-trace-duration]="traceMs() + 'ms'"
       [attr.viewBox]="'0 0 ' + viewBox + ' ' + viewBox"
       [attr.role]="interactive() ? 'application' : 'img'"
@@ -130,9 +131,8 @@ export function strokeTraceMs(path: string, scale = 1): number {
       // Paper in both themes; see the palette in theme/variables.scss.
       background: var(--app-color-paper);
       border-radius: 10px;
-      // The pad owns every gesture inside it: no scrolling, no double-tap
-      // zoom, and no text selection popping its select/copy balloon mid-stroke.
-      touch-action: none;
+      // No text selection popping its select/copy balloon mid-stroke, and no
+      // double-tap zoom, whatever the pad is for.
       -webkit-user-select: none;
       user-select: none;
       -webkit-touch-callout: none;
@@ -140,6 +140,14 @@ export function strokeTraceMs(path: string, scale = 1): number {
 
       &:not(.pad--interactive) {
         cursor: default;
+      }
+
+      // Gestures are the pad's only while there is a stroke left to make. A
+      // finished character and a pad that is only being shown have nothing to
+      // do with a drag, and taking it anyway leaves a page that will not
+      // scroll under the biggest thing on it.
+      &.pad--taking {
+        touch-action: none;
       }
     }
 
@@ -330,6 +338,14 @@ export class StrokePadComponent {
 
   /** Off while a stroke order is being demonstrated. */
   readonly interactive = input(true);
+
+  /**
+   * Whether a stroke could still land here, which is not the same as being
+   * interactive: the pad a character was just written on stays interactive so
+   * the ink and its verdict keep their place, and it has nothing left to take.
+   */
+  protected readonly taking = computed(() =>
+    this.interactive() && this.written() < this.strokes().length);
 
   /**
    * Scales the writing pace. A demonstration runs faster than a hint, so it can
