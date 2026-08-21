@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { IonIcon } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
+import { addIcons } from 'ionicons';
+import { chevronForward } from 'ionicons/icons';
 
 import { KanjiPart } from '../kanji-data.service';
 
@@ -23,7 +26,7 @@ const VIEW_BOX = 109;
 @Component({
   selector: 'app-kanji-parts',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgTemplateOutlet, RouterLink, TranslatePipe],
+  imports: [NgTemplateOutlet, IonIcon, RouterLink, TranslatePipe],
   template: `
     <section class="parts" [attr.aria-label]="'kanji.parts.title' | translate">
       <p class="parts__title">{{ 'kanji.parts.title' | translate }}</p>
@@ -74,6 +77,18 @@ const VIEW_BOX = 109;
           />
         }
       </svg>
+
+      <!-- The line under the shape: the kanji it is, and the chevron this app
+           puts on anything that goes somewhere. A shape with no page keeps the
+           line and spends it on its own name, so the cards stay one height. -->
+      <span class="part__foot" aria-hidden="true">
+        @if (part.kanji) {
+          <span lang="ja">{{ part.kanji }}</span>
+          <ion-icon name="chevron-forward"></ion-icon>
+        } @else if (part.element) {
+          <span lang="ja">{{ part.element }}</span>
+        }
+      </span>
     </ng-template>
   `,
   styles: `
@@ -108,8 +123,8 @@ const VIEW_BOX = 109;
     .group {
       position: relative;
       display: flex;
-      gap: 2px;
-      padding: 3px;
+      gap: 3px;
+      padding: 4px;
       border: 1px dashed transparent;
       border-radius: 10px;
     }
@@ -123,53 +138,80 @@ const VIEW_BOX = 109;
     // Room for the name, and only where there is a name to write - 塩's unit is
     // one KanjiVG does not name, and an empty line under it is just a gap.
     .group--named {
-      padding-bottom: 12px;
+      padding-bottom: 18px;
     }
 
+    // The shape the cards in the box are, between them. At .6rem it was a mark
+    // rather than a character: this is a kanji somebody has to read.
     .group__name {
       position: absolute;
-      right: 5px;
+      right: 6px;
       bottom: 1px;
-      font-size: .6rem;
-      line-height: 1;
+      font-size: .85rem;
+      line-height: 1.1;
       color: var(--ion-color-medium);
     }
 
     // Paper, like the pad: what is drawn on it is written, whatever the theme.
     .part {
-      position: relative;
       display: block;
-      width: 46px;
-      padding: 3px;
+      width: 64px;
+      padding: 4px 4px 2px;
       background: var(--app-color-paper);
-      border: 1px solid color-mix(in srgb, var(--app-color-paper-rule) 40%, transparent);
+      border: 1px solid color-mix(in srgb, var(--app-color-paper-rule) 35%, transparent);
       border-radius: 8px;
       text-decoration: none;
     }
 
-    // A shape the deck teaches has a page, and a shape it does not cannot be
-    // tapped - so the ones that go somewhere say so twice over: the link's own
-    // colour around them, and a corner turned down like a page waiting to be
-    // opened. Guessing which tiles respond by tapping them is not an answer.
-    .part--linked {
-      border-color: var(--app-color-link);
+    // The line under the shape. On a card that goes nowhere it is the shape's
+    // own name in the ink of the paper's own rules; on one that does, it is the
+    // kanji and the chevron, in the colour every other link in the app uses.
+    .part__foot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
+      min-height: 13px;
+      font-size: .6rem;
+      line-height: 1;
+      color: var(--app-color-paper-rule);
 
-      // Bigger than it was, and drawn on the paper rather than tucked into the
-      // corner radius: at nine pixels in the rounding it read as an artefact of
-      // the border. This is a dog-ear.
-      &::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        border-style: solid;
-        border-width: 0 0 15px 15px;
-        border-color: transparent transparent var(--app-color-link) transparent;
-        border-bottom-right-radius: 7px;
+      ion-icon {
+        font-size: .7rem;
+      }
+    }
+
+    // A card that opens a page is lifted off the paper and says where it goes.
+    // Elevation and the chevron are what the rest of the app uses for that, and
+    // between them they need no trick in the corner.
+    .part--linked {
+      border-color: color-mix(in srgb, var(--app-color-paper-link) 45%, transparent);
+      box-shadow: 0 1px 2px rgb(0 0 0 / .16);
+      transition: box-shadow 120ms ease-out, transform 120ms ease-out;
+
+      .part__foot {
+        color: var(--app-color-paper-link);
+        font-weight: 600;
       }
 
       &:hover {
-        background: color-mix(in srgb, var(--app-color-link) 10%, var(--app-color-paper));
+        box-shadow: 0 3px 6px rgb(0 0 0 / .22);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        box-shadow: 0 1px 2px rgb(0 0 0 / .2);
+        transform: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .part--linked {
+        transition: none;
+
+        &:hover {
+          transform: none;
+        }
       }
     }
 
@@ -201,6 +243,12 @@ const VIEW_BOX = 109;
   `,
 })
 export class KanjiPartsComponent {
+  constructor() {
+    // Registered here rather than in the root component, so a card can point
+    // somewhere without the icon landing in the main bundle.
+    addIcons({ chevronForward });
+  }
+
   readonly parts = input.required<readonly KanjiPart[]>();
 
   /** Every stroke of the character, in writing order. */

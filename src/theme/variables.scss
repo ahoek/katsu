@@ -137,6 +137,14 @@
   /** The same, for an arrow knocked into a stroke's own ink. */
   --app-color-ink-note: var(--ink-ama-iro);
 
+  /**
+   * A link drawn on the paper: the chiku-rin the rest of the app links in, held
+   * at the deep end. --app-color-link brightens in a dark room, which is right
+   * everywhere except here, where the sheet stays pale and a pale green on it
+   * comes to 1.5:1.
+   */
+  --app-color-paper-link: var(--ink-chiku-rin-deep);
+
   /** Readings: what a page says a character sounds like. */
   --app-color-reading: var(--ink-ama-iro-deep);
 
