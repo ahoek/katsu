@@ -192,19 +192,19 @@
     border-radius: 2px;
     background: color-mix(in srgb, var(--ion-color-medium) 22%, transparent);
 
-    // Muted, so eight rungs read as a position rather than a row of lights.
-    // The one that was lost is the only thing here worth a colour.
+    // The rungs already behind it: filled, and darker than the one it stands
+    // on, so eight rungs read as a position rather than a row of lights.
     &--filled {
-      background: color-mix(in srgb, var(--ion-color-success) 55%, transparent);
+      background: color-mix(in srgb, var(--ion-color-success) 32%, transparent);
     }
 
-    // The rung just won, or just lost. Either way it is the one to look at.
-    &--gained {
-      animation: pip-gained .5s ease-out;
-    }
-
-    &--lost {
-      background: var(--ion-color-danger);
+    // Where the kanji stands now. It beats once as the verdict lands - a ring
+    // opening out and fading, which is a heartbeat rather than a jump - and
+    // stays the brightest thing on the ladder afterwards, whether the review
+    // won a rung, held one or cost one.
+    &--current {
+      background: var(--ion-color-success);
+      animation: pip-now .6s ease-out;
     }
   }
 
@@ -217,13 +217,22 @@
   from { opacity: 0; transform: translateY(4px); }
 }
 
-@keyframes pip-gained {
-  0% { transform: scaleY(.4); opacity: .3; }
-  60% { transform: scaleY(2); }
+@keyframes pip-now {
+  0% {
+    transform: scaleY(.5);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--ion-color-success) 60%, transparent);
+  }
+  55% {
+    transform: scaleY(2.2);
+  }
+  100% {
+    transform: scaleY(1);
+    box-shadow: 0 0 0 8px color-mix(in srgb, var(--ion-color-success) 0%, transparent);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .streak, .ladder__pip--gained {
+  .streak, .ladder__pip--current {
     animation: none;
   }
 }

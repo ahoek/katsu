@@ -171,14 +171,19 @@
 
         <div class="outcome" [class]="'outcome--' + result.grade">
           <!-- The ladder the stage numbers refer to. A line saying "stage 3
-               to 4" is a fact; eight pips with four of them lit is a position. -->
+               to 4" is a fact; eight pips with four of them lit is a position.
+               The rung it stands on now is the one worth looking at, whichever
+               way the review went, so that one pulses as the verdict lands and
+               stays lit; the rungs below it are context and stay quiet. The
+               rung it fell from is not marked - it is not where the kanji is,
+               and the highlight sitting lower than the run says the same thing
+               without a second colour to read. -->
           <span class="ladder" [class.ladder--mastered]="result.mastered" aria-hidden="true">
             @for (step of ladder; track step) {
               <span
                 class="ladder__pip"
-                [class.ladder__pip--filled]="result.mastered || step <= result.stage"
-                [class.ladder__pip--gained]="step === result.stage && result.stage > result.previousStage"
-                [class.ladder__pip--lost]="step === result.previousStage && result.stage < result.previousStage"
+                [class.ladder__pip--filled]="result.mastered || step < result.stage"
+                [class.ladder__pip--current]="!result.mastered && step === result.stage"
               ></span>
             }
           </span>
