@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, computed, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+  computed,
+  effect,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonBackButton,
@@ -146,7 +156,18 @@ export class KanjiDetailPageComponent implements OnInit, OnDestroy {
     return { key: `kanji.card.due-${wait.unit}`, params: { value: wait.value } };
   });
 
+  private readonly scroller = viewChild(IonContent);
+
   constructor() {
+    // Switching to writing, or starting another attempt, replaces the page
+    // under a viewport that may be scrolled down to the button that did it -
+    // and a pad being written on does not give its gestures back for scrolling.
+    effect(() => {
+      this.mode();
+      this.writeAttempt();
+      void this.scroller()?.scrollToTop();
+    });
+
     installKanjiTranslations(this.translate);
     addIcons({ arrowBack, arrowForward, pencilOutline, schoolOutline });
 

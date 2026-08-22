@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  computed,
+  effect,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonBackButton,
@@ -94,7 +103,18 @@ export class KanjiLessonPageComponent implements OnInit {
    */
   readonly showCharacter = computed(() => this.phase() === 'watch' || this.phase() === 'done');
 
+  private readonly scroller = viewChild(IonContent);
+
   constructor() {
+    // Each step is its own screen, and they are not the same height: the
+    // summary carries a verdict, a note and two buttons, and the step reached
+    // from the bottom of it is a pad that owns every gesture on it. Without
+    // this, "write it again" opened under a viewport that could not be moved.
+    effect(() => {
+      this.phase();
+      void this.scroller()?.scrollToTop();
+    });
+
     installKanjiTranslations(this.translate);
     addIcons({ arrowBack, arrowForward, checkmarkCircle, refreshOutline });
   }

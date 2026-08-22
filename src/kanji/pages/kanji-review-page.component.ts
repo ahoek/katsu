@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  computed,
+  effect,
+  inject,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   IonBackButton,
@@ -179,7 +188,27 @@ export class KanjiReviewPageComponent implements OnInit {
   /** The rungs of the ladder, for the pips under a finished review. */
   protected readonly ladder = Array.from({ length: MASTERED_STAGE - 1 }, (_, index) => index + 1);
 
+  private readonly scroller = viewChild(IonContent);
+
   constructor() {
+    /**
+     * A new question starts where a question starts. A reveal is taller than
+     * the writing it judges - two pads, the strokes that went differently, the
+     * parts, the schedule - so answering one leaves the page scrolled down, and
+     * the next question opened halfway through itself. Worse than untidy: the
+     * pad takes every gesture inside it while there is something to write, so
+     * once the short next screen was under a scrolled viewport there was no
+     * room left to scroll back up with.
+     *
+     * On the position rather than in next(), so stopping mid-session lands at
+     * the top of its summary too, and so does anything that moves the queue on
+     * later.
+     */
+    effect(() => {
+      this.position();
+      void this.scroller()?.scrollToTop();
+    });
+
     installKanjiTranslations(this.translate);
     addIcons({
       arrowBack,
