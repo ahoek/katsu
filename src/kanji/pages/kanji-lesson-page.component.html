@@ -99,6 +99,13 @@
         }
 
         @case ('done') {
+          <!-- The pad may not move between steps, so the line the other three
+               put above it is held open here too. This step has nothing to say
+               there - its verdict belongs under the writing it judges - and an
+               empty line that keeps the paper still is worth more than a line
+               of text that shifts it. -->
+          <p class="step step--held" aria-hidden="true"></p>
+
           <app-kanji-stroke-pad
             [strokes]="strokes()"
             [written]="strokes().length"

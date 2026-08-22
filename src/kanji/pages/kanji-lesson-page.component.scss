@@ -52,6 +52,10 @@
 // change. What changes is the sentence above it, so that is what arrives.
 .step {
   animation: step-in 220ms ease-out;
+  // Held open whether there is a sentence in it or not: this is the line the
+  // pad sits under, and the pad staying put across the four steps matters more
+  // than the space being used.
+  min-height: 1.35em;
   margin: 0 0 10px;
   text-align: center;
   font-size: .9rem;
@@ -87,6 +91,11 @@ app-kanji-stroke-pad {
   display: block;
   border-radius: 10px;
   box-shadow: 0 1px 3px rgb(0 0 0 / .18);
+}
+
+// Nothing to fade in an empty line, and nothing to read out either.
+.step--held {
+  animation: none;
 }
 
 @keyframes step-in {
