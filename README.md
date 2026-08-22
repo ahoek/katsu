@@ -111,6 +111,33 @@ sync service for the kanji writing feature - a Cloudflare Worker configured in
 [wrangler.toml](wrangler.toml) - when the Cloudflare secrets are present. Its
 one-time setup is in [src/kanji/README.md](src/kanji/README.md).
 
+### Caching at the edge
+
+Cloudflare fronts the site; GitHub Pages sends `max-age=600` for everything it
+serves. Cloudflare caches only the extensions it caches by default - `.js`,
+`.css`, `.txt`, `.svg` - and rewrites those to a year through Browser Cache TTL.
+Everything else passes through as `cf-cache-status: DYNAMIC` and keeps the ten
+minutes.
+
+That split happens to land correctly, which is why it is left alone: the year
+goes to the content-hashed bundles, whose names change whenever their contents
+do. Everything that changes *in place* and matters - the HTML, the sitemap,
+`ngsw.json`, the i18n JSON, `strokes.json` - is uncached, so a deploy that grows
+the kanji deck reaches visitors within ten minutes.
+
+Three files get the year while keeping a stable name: `robots.txt`, the favicon,
+and `ngsw-worker.js` (harmless - browsers cap a service worker script at 24
+hours regardless, so update checks still happen). **If one of those ever has to
+change, purge that URL** rather than waiting a year: zone `arthurhoek.nl` →
+Caching → Configuration → Purge Cache → Custom Purge → URL. A stale
+`/robots.txt` at the edge cost an afternoon of confusion on 2026-08-08 before an
+unrelated deploy happened to refresh it.
+
+One lever deliberately not pulled: HTML is not edge-cached at all, so every page
+request travels to GitHub. Caching it would cut time-to-first-byte, but it needs
+either a short edge TTL or a purge on every deploy, and the largest paint is
+dominated by the JavaScript bundle rather than by the document.
+
 ## Acknowledgements
 
 The word definitions were retrieved from the online dictionary [Jisho](https://jisho.org/).
