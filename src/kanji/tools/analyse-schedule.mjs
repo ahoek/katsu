@@ -192,10 +192,13 @@ const flaggedRare = flagged.filter(card =>
 console.log(`  of the ${flagged.length} coming back, ${flaggedRare.length} sit in the rarest quarter`);
 
 /**
- * Whether learning is getting easier: the cards grouped by the week their
- * lesson fell in, each cohort with its current standing. Reviews and drops
- * are lifetime totals per card, so older cohorts have had more chances to
- * drop - the honest comparison is drops per review, not drops.
+ * Whether learning is getting easier: the kanji grouped by the week their
+ * lesson fell in, each week's batch with its current standing. Reviews and
+ * drops are lifetime totals per card, so older batches have had more chances
+ * to drop - the honest comparison is drops per review, not drops. And the
+ * deck itself ramps up: later weeks hold denser kanji by design, so the
+ * average stroke count is printed beside the drop rate - a rising drop rate
+ * beside a rising stroke count is the deck, not the learner.
  */
 heading('By learning week');
 const weekOf = at => Math.floor((learningDayStart(at) - learningDayStart(Math.min(...cards.map(c => c.learnedAt)))) / (7 * DAY));
@@ -208,8 +211,10 @@ for (const [week, batch] of [...cohorts].sort((a, b) => a[0] - b[0])) {
   const batchReviews = batch.reduce((total, card) => total + card.reviews, 0);
   const batchLapses = batch.reduce((total, card) => total + card.lapses, 0);
   const avgStage = batch.reduce((total, card) => total + card.stage, 0) / batch.length;
+  const avgStrokes = batch.reduce(
+    (total, card) => total + (byKanji.get(card.kanji)?.strokes.length ?? 0), 0) / batch.length;
   console.log(
-    `  week ${week + 1}  ${String(batch.length).padStart(3)} kanji` +
+    `  week ${week + 1}  ${String(batch.length).padStart(3)} kanji, avg ${avgStrokes.toFixed(1)} strokes` +
       `  avg stage ${avgStage.toFixed(1)}  ${String(batchReviews).padStart(4)} reviews` +
       `  drops ${pct(batchLapses, batchReviews)} of them`,
   );
