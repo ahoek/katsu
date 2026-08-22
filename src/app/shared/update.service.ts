@@ -26,7 +26,13 @@ export interface Build {
  */
 @Injectable({ providedIn: 'root' })
 export class UpdateService {
-  private readonly swUpdate = inject(SwUpdate);
+  /**
+   * Optional, because the menu button reads this service and the menu button is
+   * on every page: without it, every test that renders any page would have to
+   * provide a service worker it does not use. It is also genuinely absent
+   * wherever the worker is not registered, which is every development build.
+   */
+  private readonly swUpdate = inject(SwUpdate, { optional: true });
 
   /** A new version is downloaded and waiting for the word. */
   readonly ready = signal(false);
@@ -37,7 +43,7 @@ export class UpdateService {
   start() {
     this.readBuild();
 
-    if (!this.swUpdate.isEnabled) {
+    if (!this.swUpdate?.isEnabled) {
       return;
     }
 
@@ -67,8 +73,8 @@ export class UpdateService {
    */
   async apply(): Promise<void> {
     try {
-      await this.swUpdate.checkForUpdate();
-      if (!(await this.swUpdate.activateUpdate())) {
+      await this.swUpdate?.checkForUpdate();
+      if (!(await this.swUpdate?.activateUpdate())) {
         await this.discardWorker();
       }
     } catch {
@@ -89,7 +95,7 @@ export class UpdateService {
    */
   private async check(): Promise<void> {
     try {
-      await this.swUpdate.checkForUpdate();
+      await this.swUpdate?.checkForUpdate();
     } catch {
       // Offline, or the worker is busy. Comparing stamps still works.
     }

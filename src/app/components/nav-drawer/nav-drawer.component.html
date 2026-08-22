@@ -81,11 +81,24 @@
         <ion-icon class="drawer__options-chevron" name="chevron-forward" aria-hidden="true"></ion-icon>
       </a>
 
-      <!-- Which build is being served, straight out of the worker's manifest.
-           It is here because "did my update arrive" was a question nobody in
-           the app could answer, least of all on a phone that had been
-           restarted five times. A development build has no manifest and leaves
-           the line out. -->
+      <!-- Which build is running, straight out of this page's own head. It is
+           here because "did my update arrive" was a question nobody in the app
+           could answer, least of all on a phone that had been restarted five
+           times. A development build has no stamp and leaves the line out.
+
+           And where a newer one is waiting, taking it belongs here too: beside
+           the line that says which version you are on, reached by the same tap
+           that went looking for it. It reloads on that tap and never on its
+           own - one navigation per tap cannot loop, which is what the
+           automatic reload this replaces could not promise. -->
+      @if (updates.ready()) {
+        <button type="button" class="drawer__update" (click)="updates.apply()">
+          <ion-icon name="arrow-down-circle-outline" aria-hidden="true"></ion-icon>
+          <span>{{ 'update.ready' | translate }}</span>
+          <strong>{{ 'update.apply' | translate }}</strong>
+        </button>
+      }
+
       @if (build(); as version) {
         <p class="drawer__build">
           {{ 'update.build' | translate: { when: version.at | date: 'y-MM-dd HH:mm' } }}

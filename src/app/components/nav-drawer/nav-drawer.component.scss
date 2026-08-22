@@ -154,6 +154,41 @@
   font-size: 1rem;
 }
 
+// Where a version is taken: a row like the ones above it, in the link colour so
+// it reads as the one thing here that does something.
+.drawer__update {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: calc(100% - 16px);
+  margin: 12px 8px 0;
+  padding: 12px 8px;
+  border: 0;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--ion-color-primary) 14%, transparent);
+  color: var(--ion-text-color);
+  font-family: inherit;
+  font-size: .95rem;
+  text-align: left;
+
+  ion-icon {
+    flex: 0 0 auto;
+    color: var(--app-color-link);
+    font-size: 20px;
+  }
+
+  span {
+    flex: 1 1 auto;
+  }
+
+  strong {
+    flex: 0 0 auto;
+    color: var(--app-color-link);
+    font-weight: 600;
+    font-size: .85rem;
+  }
+}
+
 // Under everything, in the quietest voice the sheet has: a fact for whoever is
 // checking whether their update arrived, and invisible to everyone else. Lined
 // up with the rows above it - same inline margin, same padding - so it reads as

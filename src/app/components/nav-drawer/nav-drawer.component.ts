@@ -4,7 +4,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonIcon, IonRouterLinkWithHref } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
-import { brushOutline, chevronForward, helpCircleOutline, personCircleOutline, repeatOutline, settingsOutline } from 'ionicons/icons';
+import { arrowDownCircleOutline, brushOutline, chevronForward, helpCircleOutline, personCircleOutline, repeatOutline, settingsOutline } from 'ionicons/icons';
 
 import { NavDrawerService } from './nav-drawer.service';
 import { UpdateService } from '../../shared/update.service';
@@ -27,14 +27,16 @@ import { UpdateService } from '../../shared/update.service';
 export class NavDrawerComponent implements AfterViewInit {
   protected readonly drawer = inject(NavDrawerService);
 
-  /** Which deploy is being served; see the note in the template. */
-  protected readonly build = inject(UpdateService).build;
+  protected readonly updates = inject(UpdateService);
+
+  /** Which deploy is running; see the note in the template. */
+  protected readonly build = this.updates.build;
 
   private readonly dialogRef = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
   private readonly scrollerRef = viewChild.required<ElementRef<HTMLElement>>('scroller');
 
   constructor() {
-    addIcons({ brushOutline, chevronForward, helpCircleOutline, personCircleOutline, repeatOutline, settingsOutline });
+    addIcons({ arrowDownCircleOutline, brushOutline, chevronForward, helpCircleOutline, personCircleOutline, repeatOutline, settingsOutline });
     effect(() => (this.drawer.isOpen() ? this.slideIn() : this.slideOut()));
   }
 

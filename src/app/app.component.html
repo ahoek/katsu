@@ -1,16 +1,4 @@
 <ion-app>
   <app-nav-drawer></app-nav-drawer>
   <ion-router-outlet id="main-content"></ion-router-outlet>
-
-  <!-- A version that has finished downloading, waiting to be asked for. It
-       reloads on the tap and never on its own: one navigation per tap is a
-       thing that cannot loop, which is what the automatic reload this replaces
-       could not promise. -->
-  @if (updates.ready()) {
-    <button type="button" class="update" (click)="updates.apply()">
-      <ion-icon name="arrow-down-circle-outline" aria-hidden="true"></ion-icon>
-      <span>{{ 'update.ready' | translate }}</span>
-      <strong>{{ 'update.apply' | translate }}</strong>
-    </button>
-  }
 </ion-app>

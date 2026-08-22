@@ -237,11 +237,12 @@
   "menu": {
     "close": "Close menu",
     "conjugation": "Conjugation",
-    "title": "Menu"
+    "title": "Menu",
+    "title-update": "Menu — new version ready"
   },
   "update": {
     "ready": "New version ready",
-    "apply": "Reload",
+    "apply": "Update now",
     "build": "Build of {{when}}"
   }
 }

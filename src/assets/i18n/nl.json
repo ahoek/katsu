@@ -237,11 +237,12 @@
   "menu": {
     "close": "Menu sluiten",
     "conjugation": "Vervoeging",
-    "title": "Menu"
+    "title": "Menu",
+    "title-update": "Menu — nieuwe versie klaar"
   },
   "update": {
     "ready": "Nieuwe versie klaar",
-    "apply": "Herladen",
+    "apply": "Nu bijwerken",
     "build": "Versie van {{when}}"
   }
 }
