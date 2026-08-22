@@ -204,7 +204,7 @@
     // won a rung, held one or cost one.
     &--current {
       background: var(--ion-color-success);
-      animation: pip-now .6s ease-out;
+      animation: pip-now 1.4s ease-out;
     }
   }
 
@@ -222,12 +222,16 @@
     transform: scaleY(.5);
     box-shadow: 0 0 0 0 color-mix(in srgb, var(--ion-color-success) 60%, transparent);
   }
-  55% {
+  25% {
     transform: scaleY(2.2);
+  }
+  60% {
+    transform: scaleY(1.35);
+    box-shadow: 0 0 0 7px color-mix(in srgb, var(--ion-color-success) 22%, transparent);
   }
   100% {
     transform: scaleY(1);
-    box-shadow: 0 0 0 8px color-mix(in srgb, var(--ion-color-success) 0%, transparent);
+    box-shadow: 0 0 0 11px color-mix(in srgb, var(--ion-color-success) 0%, transparent);
   }
 }
 
