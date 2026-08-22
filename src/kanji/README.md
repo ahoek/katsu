@@ -406,9 +406,9 @@ every device loses the code.
 
 ## The deck
 
-Grades 1 to 4 of the
+Grades 1 to 5 of the
 [学年別漢字配当表](https://en.wikipedia.org/wiki/Ky%C5%8Diku_kanji) in full: 80,
-160, 200 and 202 characters (the 2020 revision, prefecture kanji included), in
+160, 200, 202 and 193 characters (the 2020 revision, prefecture kanji included), in
 the learning order `tools/sort-deck.mjs` computes -
 parts before what is built from them, the school grades in order below that,
 the more common kanji first within a grade, except grade 1, which takes the
@@ -433,16 +433,28 @@ A word that means two things asks the wrong question: 台 as *standaard* reads a
 dictionary's own senses side by side, *platform, standaard*, each ruling the
 other's second meaning out.
 
-No two kanji may claim the same word either, in either language: asked for
-*grond*, someone who writes 土 cannot be told 地 was wanted. `stroke-data.spec.ts`
-fails on any overlap in the generated file, allowing only the family words, which
-are never alone - *oudere broer* against *oudere zus*. The loser of a collision
-gets the sense that separates it: 画 *beeld* against 絵 *tekening*, 森 *woud*
-against 林 *bos*, 内 *binnenkant* against 入 *binnengaan*.
+A word two kanji share may never be the whole question either, in either
+language: asked for *grond* alone, someone who writes 土 cannot be told 地 was
+wanted. There are two ways to share one anyway. Distinct senses in brackets on
+every claimant - *licht (gewicht)* against *licht (schijnsel)* - or plain
+synonyms where each keeps a word of its own, which reads more naturally:
+*beslist, zeker, gegarandeerd* against *stellig, zeker*. Those deliberately
+shared words are listed in `tools/gloss-rules.ts`, which also enforces the
+own-word half, so synonyms that are not actually separating anything still
+fail. The family words are exempt, being never alone - *oudere broer* against
+*oudere zus*.
+
+`stroke-data.spec.ts` asks that rule of the generated file. Ask it of the deck
+source first, which takes a second instead of a regeneration:
+
+```bash
+node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON \
+  src/kanji/tools/check-glosses.mjs
+```
 
 ## Regenerating the stroke data
 
-`src/assets/data/kanji/strokes.json` (705 kB, 5594 strokes) is generated, not
+`src/assets/data/kanji/strokes.json` (1.0 MB, 7641 strokes) is generated, not
 edited by hand:
 
 ```bash
@@ -455,7 +467,7 @@ positions, and merges them with the deck above. It fails loudly when a character
 is missing, its stroke numbering has a gap, or it ends up with a different count
 of numbers and strokes. `stroke-data.spec.ts` guards the file that ships.
 
-At 642 characters the run takes a few minutes, so a dropped connection retries
+At 835 characters the run takes a few minutes, so a dropped connection retries
 rather than throwing the whole thing away - a 404 still stops it, since that
 character really is not in KanjiVG. Watch its exit code rather than its last
 line: piping the output to `tail` hides a crash behind the pipe's own success.
@@ -468,6 +480,68 @@ Wikipedia and a quarter each Aozora Bunko and Wikinews, so no single
 register's bias decides the order. Either field can be null, and stays null
 rather than being guessed at: the JLPT lists genuinely skip 分, 里, 身 and
 畑, and a kanji the corpora never saw has no share to rank.
+
+## Adding a school year
+
+The order the steps have to run in, and what each of them tends to catch. Grade
+5 went in on 2026-08-22 this way; the traps below are the ones it actually hit.
+
+1. **Take the character list from a fresh KANJIDIC2**, not from the pinned
+   kanji-data snapshot `kanji-ranks.mjs` fetches. That snapshot's grades predate
+   the 2020 revision, which moved twenty-odd characters between grades 4, 5 and
+   6: it reports 185 for grade 5 where the current list has 193.
+
+   ```bash
+   curl -s http://www.edrdg.org/kanjidic/kanjidic2.xml.gz | gunzip > /tmp/kanjidic2.xml
+   ```
+
+   Readings come from the same file - `ja_on` and `ja_kun`, dot marking the
+   okurigana boundary - so they need no second source.
+
+2. **Write the meanings by hand** into `tools/kanji-deck.mjs`, appended anywhere;
+   the sort rewrites the file. Then `check-glosses.mjs` until it exits zero. A
+   school year is 190-odd meanings and the first pass will collide a few dozen
+   times; each fix is a choice between a bracketed sense, a synonym pair, or a
+   different word entirely, and the tool names the claimants either way.
+
+3. **Sort, then build.** `sort-deck.mjs` re-sorts the *whole* deck, on purpose -
+   a part is pulled in right before the earliest kanji that needs it, so new
+   characters that turn out to be parts of old ones land in the older grades'
+   stretch.
+
+   ```bash
+   node src/kanji/tools/sort-deck.mjs
+   node src/kanji/tools/build-stroke-data.mjs
+   ```
+
+   Expect the sort to stop on a radical form no list has seen yet: *KanjiVG
+   writes 示 as 礻. If that is 示 by hand, add it to RADICAL_FORMS; if it only
+   shares an ancestor, add it to ETYMOLOGY_ONLY.* That is the tool asking for a
+   judgement, not a bug - grade 5 brought four (礻 under 示, ⺨ under 犬, ⺖ under
+   心, 卩 under 刀, all etymology-only). Two things about them: the test is the
+   hand, not the dictionary, and KanjiVG uses the CJK radical block for some, so
+   the character that stops the sort may be ⺨ where the deck would write 犭 -
+   paste the one from the error message.
+
+4. **Update what the spec counts.** `stroke-data.spec.ts` pins the totals per
+   grade, how many characters divide into parts, the kanji the JLPT lists skip,
+   and the handful the stretched-stroke sweep turns down. All four move. Read
+   the new numbers off the built file rather than guessing them:
+
+   ```bash
+   node -e "const d=require('./src/assets/data/kanji/strokes.json');
+     console.log(d.characters.length, d.characters.filter(c=>c.parts).length,
+       d.characters.filter(c=>c.jlpt===null).map(c=>c.kanji).join(''))"
+   ```
+
+5. **Then the usual gates**: `npm test`, `npm run lint`, `npm run build`. Watch
+   the build's exit code rather than its last line.
+
+One thing worth doing before writing any meanings: ask what the new year costs
+the old one. Characters that are parts of already-taught kanji make the existing
+divisions coarser and truer - grade 5's 可 turns 何 from 亻+丁+口 into 亻+可 -
+and every common word the new glosses take is a word a later year cannot have.
+Grade 6 is already owed *betoog* (論), *twijfelen* (疑) and *gebied* (域).
 
 ## Reading a schedule back
 
