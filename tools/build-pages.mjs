@@ -56,6 +56,19 @@ function check(list) {
   }
 }
 
+/**
+ * The manifest's own build time, so the pages carry the same number the app
+ * later compares against. A development build has no manifest; the clock now
+ * is close enough for something that is never deployed.
+ */
+const builtAt = await (async () => {
+  try {
+    return JSON.parse(await readFile(join(DIST, 'ngsw.json'), 'utf8')).timestamp ?? Date.now();
+  } catch {
+    return Date.now();
+  }
+})();
+
 const template = await readFile(join(DIST, 'index.html'), 'utf8');
 const pages = sitePages(await readJson(TRANSLATIONS), await readJson(STROKE_DATA));
 
@@ -64,7 +77,7 @@ check(pages);
 for (const page of pages) {
   const file = page.path ? join(DIST, page.path, 'index.html') : join(DIST, 'index.html');
   await mkdir(dirname(file), { recursive: true });
-  await writeFile(file, renderPage(template, page));
+  await writeFile(file, renderPage(template, page, builtAt));
 }
 
 // GitHub Pages serves this for anything with no file of its own, with a 404
@@ -77,7 +90,7 @@ await writeFile(
     indexable: false,
     shell: null,
     linkedData: [],
-  }),
+  }, builtAt),
 );
 
 const sitemap = renderSitemap(pages);

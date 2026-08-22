@@ -338,10 +338,14 @@ export function sitePages(translations, strokeData) {
  * would be told which build is available for download, which is exactly the
  * confusion the line exists to end. The page in front of the reader came out of
  * their own service worker's cache, so the stamp in its head is theirs.
+ *
+ * The caller hands in the service worker manifest's own timestamp rather than
+ * the clock now, so the number in the page and the number in ngsw.json are the
+ * same number. The app compares those two to notice a waiting version, and two
+ * clocks seconds apart would make that comparison a coin toss.
  */
-const BUILT_AT = new Date().toISOString();
-
-export function renderPage(template, page) {
+export function renderPage(template, page, builtAt = Date.now()) {
+  const stamp = new Date(builtAt).toISOString();
   const jsonLd = page.linkedData.length
     ? `<script type="application/ld+json">\n${JSON.stringify(
         page.linkedData.length === 1 ? page.linkedData[0] : page.linkedData,
@@ -359,7 +363,7 @@ export function renderPage(template, page) {
     .replace(
       /<link rel="canonical" href="[^"]*">/,
       `<link rel="canonical" href="${page.canonical}">` +
-        `\n  <meta name="katsu-build" content="${BUILT_AT}">` +
+        `\n  <meta name="katsu-build" content="${stamp}">` +
         (page.indexable ? '' : `\n  <meta name="robots" content="noindex, follow">`),
     )
     .replace(

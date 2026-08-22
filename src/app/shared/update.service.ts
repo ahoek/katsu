@@ -48,8 +48,7 @@ export class UpdateService {
     });
     this.swUpdate.unrecoverable.subscribe(() => void this.discardWorker());
 
-    // Looking costs a request against a manifest that is not cached, and the
-    // moment worth looking is when the app comes back to the front: a phone
+    // The moment worth looking is when the app comes back to the front: a phone
     // returning from someone's pocket is where a waiting version is met.
     void this.check();
     document.addEventListener('visibilitychange', () => {
@@ -59,20 +58,55 @@ export class UpdateService {
     });
   }
 
-  /** Take the version that is waiting. Only ever from a tap. */
+  /**
+   * Take the version that is waiting. Only ever from a tap, and it has to leave
+   * something changed: a tap that reloads onto the same version reads as a
+   * broken button. So the worker is asked to fetch and swap, and if it will not
+   * - the usual reason being that it has nothing downloaded yet - its caches go
+   * and the network serves the reload instead.
+   */
   async apply(): Promise<void> {
     try {
-      await this.swUpdate.activateUpdate();
+      await this.swUpdate.checkForUpdate();
+      if (!(await this.swUpdate.activateUpdate())) {
+        await this.discardWorker();
+      }
+    } catch {
+      await this.discardWorker();
     } finally {
       location.reload();
     }
   }
 
+  /**
+   * Two ways of noticing, because the worker's own announcement is not enough.
+   * A version that finished downloading during an earlier visit has already
+   * been announced to whoever was there, and a page opened afterwards is served
+   * the old version without being told anything - which is exactly the state
+   * somebody restarting a phone app five times ends up in. So the stamp in this
+   * document is compared against the one the server is handing out, and a
+   * newer one there is a version waiting here.
+   */
   private async check(): Promise<void> {
     try {
       await this.swUpdate.checkForUpdate();
     } catch {
-      // Offline, or the worker is busy. The next time the app is opened will do.
+      // Offline, or the worker is busy. Comparing stamps still works.
+    }
+
+    const running = this.build()?.at.getTime();
+    if (running === undefined) {
+      return;
+    }
+
+    try {
+      const response = await fetch('ngsw.json', { cache: 'no-store' });
+      const manifest = (await response.json()) as { timestamp?: number };
+      if (manifest.timestamp && manifest.timestamp > running) {
+        this.ready.set(true);
+      }
+    } catch {
+      // Offline. Nothing to offer, and nothing broken.
     }
   }
 
