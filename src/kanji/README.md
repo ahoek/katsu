@@ -567,9 +567,10 @@ sorting rather than about the learner.
 
 ## Two things that grow the main bundle
 
-Neither is a reason to hold back while this is a proof of concept - the initial
-bundle currently runs about 2 kB over its 1 MB `maximumWarning`, knowingly,
-and an optimisation pass comes later. Worth knowing where the weight goes:
+Neither is a reason to hold back while this is a proof of concept, and neither
+is where the weight actually is - the measurement lives in the root README under
+"What the bundle is made of". These two are simply the ways *this feature* can
+add to it by accident:
 
 - **Translations** in `src/assets/i18n/*.json` are imported by the root
   component, so anything added there ships in the main bundle. The feature's own

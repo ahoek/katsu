@@ -111,6 +111,38 @@ sync service for the kanji writing feature - a Cloudflare Worker configured in
 [wrangler.toml](wrangler.toml) - when the Cloudflare secrets are present. Its
 one-time setup is in [src/kanji/README.md](src/kanji/README.md).
 
+### What the bundle is made of
+
+Measured from `ng build --stats-json` on 2026-08-22, at 835 kanji: the initial
+bundle is 1.08 MB raw against a 1.2 MB warning budget, of which `main` is
+965 kB raw and 246 kB gzipped. Where that goes, by bytes as they land in
+`main`:
+
+| part | raw | share |
+| --- | --- | --- |
+| `@ionic/core` | 476 kB | 49% |
+| `@angular/*` (core, router, forms, common, platform-browser) | 285 kB | 30% |
+| `@ionic/angular` | 45 kB | 5% |
+| `ionicons` | 44 kB | 5% |
+| **the app's own** | **39 kB** | **4%** |
+| `localforage`, `rxjs`, `ngx-translate` | 63 kB | 7% |
+
+Two things worth knowing before hunting for savings. Half of the app's own
+39 kB is not code but the two translation files - `nl.json` 9.9 kB and
+`en.json` 9.4 kB, imported by the root component - so a string added in the
+wrong place costs more than a component does. And no kanji data reaches `main`
+at all: it holds no CJK character, so `strokes.json` and the verb dictionary
+really do travel with their lazy routes.
+
+Inside Ionic, the two form controls are the only components with real weight -
+`ion-input` 41 kB and `ion-select` 40 kB - and roughly 240 kB is Stencil's own
+runtime, animation and gesture machinery, pulled in by `ion-app` and
+`ion-router-outlet` and not tree-shakeable. So the ranked levers, if this ever
+matters: making the conjugation trainer lazy beats everything, then swapping
+those two controls for native `<input>` and `<select>` (~80 kB), then leaving
+Ionic entirely (~550 kB raw, and days of work). Judge any of it by the
+compressed number, since Cloudflare fronts the site.
+
 ### Caching at the edge
 
 Cloudflare fronts the site; GitHub Pages sends `max-age=600` for everything it
