@@ -72,9 +72,9 @@
                 @if (result.mastered) {
                   <ion-icon name="ribbon"></ion-icon>
                 } @else if (result.moved === 'up') {
-                  <ion-icon name="trending-up-outline"></ion-icon>
+                  <ion-icon name="arrow-up"></ion-icon>
                 } @else if (result.moved === 'down') {
-                  <ion-icon name="trending-down-outline"></ion-icon>
+                  <ion-icon name="arrow-down"></ion-icon>
                 } @else {
                   <ion-icon name="remove-outline"></ion-icon>
                 }
@@ -195,12 +195,12 @@
             @if (result.mastered) {
               {{ 'kanji.review.mastered' | translate }}
             } @else if (result.stage > result.previousStage) {
-              <ion-icon name="trending-up-outline" aria-hidden="true"></ion-icon>
+              <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
               {{ 'kanji.review.stage-up' | translate: {
                 from: result.previousStage, to: result.stage
               } }}
             } @else if (result.stage < result.previousStage) {
-              <ion-icon name="trending-down-outline" aria-hidden="true"></ion-icon>
+              <ion-icon name="arrow-down" aria-hidden="true"></ion-icon>
               {{ 'kanji.review.stage-down' | translate: { to: result.stage } }}
             } @else {
               {{ 'kanji.review.stage-held' | translate: { stage: result.stage } }}

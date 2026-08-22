@@ -198,13 +198,14 @@
       background: color-mix(in srgb, var(--ion-color-success) 32%, transparent);
     }
 
-    // Where the kanji stands now. It beats once as the verdict lands - a ring
-    // opening out and fading, which is a heartbeat rather than a jump - and
-    // stays the brightest thing on the ladder afterwards, whether the review
-    // won a rung, held one or cost one.
+    // Where the kanji stands now. It keeps beating for as long as the verdict
+    // is on screen rather than once as it appears: a single beat is over
+    // before the eye leaves the pad it was writing on. The rung itself holds
+    // still and stays the brightest thing on the ladder - only the ring around
+    // it breathes, so a pulse that repeats is not also a twitch.
     &--current {
       background: var(--ion-color-success);
-      animation: pip-now 1.4s ease-out;
+      animation: pip-now 1.8s ease-out infinite;
     }
   }
 
@@ -217,26 +218,40 @@
   from { opacity: 0; transform: translateY(4px); }
 }
 
+// A halo is too quiet on a bar four pixels tall - it was running and nobody
+// could see it. The bar itself swells and brightens instead, which is legible
+// at that size, with the ring left in as the softer half of the beat.
 @keyframes pip-now {
   0% {
-    transform: scaleY(.5);
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--ion-color-success) 60%, transparent);
+    transform: scale(1);
+    filter: brightness(1);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--ion-color-success) 50%, transparent);
   }
-  25% {
-    transform: scaleY(2.2);
+  35% {
+    transform: scale(1.3);
+    filter: brightness(1.45);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--ion-color-success) 28%, transparent);
   }
-  60% {
-    transform: scaleY(1.35);
-    box-shadow: 0 0 0 7px color-mix(in srgb, var(--ion-color-success) 22%, transparent);
+  75% {
+    transform: scale(1);
+    filter: brightness(1);
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--ion-color-success) 0%, transparent);
   }
   100% {
-    transform: scaleY(1);
-    box-shadow: 0 0 0 11px color-mix(in srgb, var(--ion-color-success) 0%, transparent);
+    transform: scale(1);
+    filter: brightness(1);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--ion-color-success) 0%, transparent);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .streak, .ladder__pip--current {
+  .streak {
     animation: none;
+  }
+
+  // No beat, so the rung says where it is with a ring that simply stays.
+  .ladder__pip--current {
+    animation: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ion-color-success) 30%, transparent);
   }
 }

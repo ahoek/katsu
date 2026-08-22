@@ -23,14 +23,14 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import {
   arrowBack,
+  arrowDown,
   arrowForward,
+  arrowUp,
   checkmarkCircle,
   flame,
   pauseCircle,
   removeOutline,
   ribbon,
-  trendingDownOutline,
-  trendingUpOutline,
 } from 'ionicons/icons';
 
 import { KanjiPartsComponent } from '../components/kanji-parts.component';
@@ -218,8 +218,8 @@ export class KanjiReviewPageComponent implements OnInit {
       pauseCircle,
       removeOutline,
       ribbon,
-      trendingDownOutline,
-      trendingUpOutline,
+      arrowDown,
+      arrowUp,
     });
   }
 
