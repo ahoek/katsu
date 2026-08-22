@@ -154,6 +154,43 @@ for (const { card, parts } of missing) {
 }
 console.log(`  ${missing.length} of ${cards.length}`);
 
+/**
+ * Whether the writing is going where the value is. Arthur's observation
+ * (2026-08-22): the rare ones keep coming back and the common ones recede, so
+ * a session drifts toward the least useful kanji. This measures that drift
+ * instead of feeling it: the scheduled cards ranked by the deck's blended
+ * corpus frequency, split in four, with the reviews each quarter consumed.
+ *
+ * Quartiles are within the schedule, not the deck - early on everything
+ * learned is common, and deck-wide quartiles would file the whole schedule
+ * under "frequent" and report nothing. The caveat the writing-first principle
+ * demands: corpus frequency measures reading, so "rare" here under-values the
+ * kanji people write by hand more than they read.
+ */
+heading('Where the writing goes, by frequency');
+const ranked = cards
+  .map(card => ({ card, freq: byKanji.get(card.kanji)?.freq ?? Number.MAX_SAFE_INTEGER }))
+  .sort((a, b) => a.freq - b.freq);
+const quarterSize = Math.ceil(ranked.length / 4);
+for (let quarter = 0; quarter < 4; quarter += 1) {
+  const slice = ranked.slice(quarter * quarterSize, (quarter + 1) * quarterSize);
+  if (slice.length === 0) {
+    continue;
+  }
+  const quarterReviews = slice.reduce((total, entry) => total + entry.card.reviews, 0);
+  const quarterLapses = slice.reduce((total, entry) => total + entry.card.lapses, 0);
+  const label = ['most common', 'second', 'third', 'rarest'][quarter];
+  console.log(
+    `  ${label.padEnd(12)} rank ${String(slice[0].freq).padStart(4)}-${String(slice.at(-1).freq).padEnd(4)}` +
+      ` ${String(slice.length).padStart(3)} kanji  ${String(quarterReviews).padStart(4)} reviews` +
+      ` (${pct(quarterReviews, reviews)})  ${(quarterReviews / slice.length).toFixed(1)}/kanji` +
+      `  ${quarterLapses} drops`,
+  );
+}
+const flaggedRare = flagged.filter(card =>
+  ranked.findIndex(entry => entry.card === card) >= ranked.length - quarterSize);
+console.log(`  of the ${flagged.length} coming back, ${flaggedRare.length} sit in the rarest quarter`);
+
 heading('Ahead');
 const remainingWait = stage => STAGES.slice(stage - 1).reduce((total, step) => total + step.interval, 0);
 const soonest = Math.min(...active.map(card => card.due + remainingWait(card.stage + 1)));
