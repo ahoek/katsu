@@ -99,12 +99,15 @@
         }
 
         @case ('done') {
-          <!-- The pad may not move between steps, so the line the other three
-               put above it is held open here too. This step has nothing to say
-               there - its verdict belongs under the writing it judges - and an
-               empty line that keeps the paper still is worth more than a line
-               of text that shifts it. -->
-          <p class="step step--held" aria-hidden="true"></p>
+          <!-- Above the pad, where the other three steps put their own line.
+               It is the name of this step as much as a verdict - watch it,
+               write it, write it again, well written - so it belongs in the
+               same place as the rest of them, and the paper does not move
+               between steps. -->
+          <p class="step step--done" role="status">
+            <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
+            {{ 'kanji.lesson.done' | translate }}
+          </p>
 
           <app-kanji-stroke-pad
             [strokes]="strokes()"
@@ -115,13 +118,6 @@
             [interactive]="false"
             [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
           ></app-kanji-stroke-pad>
-
-          <!-- What happened goes under the pad, where every other verdict of
-               these screens lives; above it is for what to do. -->
-          <p class="step step--done" role="status">
-            <ion-icon name="checkmark-circle" aria-hidden="true"></ion-icon>
-            {{ 'kanji.lesson.done' | translate }}
-          </p>
 
           <p class="step__note">
             {{ 'kanji.lesson.add-note' | translate: { interval: firstInterval() | translate } }}

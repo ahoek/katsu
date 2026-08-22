@@ -52,9 +52,8 @@
 // change. What changes is the sentence above it, so that is what arrives.
 .step {
   animation: step-in 220ms ease-out;
-  // Held open whether there is a sentence in it or not: this is the line the
-  // pad sits under, and the pad staying put across the four steps matters more
-  // than the space being used.
+  // Every step names itself on this line, and the pad sits under it, so it is
+  // held open at one height whether the sentence runs to one line or two.
   min-height: 1.35em;
   margin: 0 0 10px;
   text-align: center;
@@ -68,9 +67,9 @@
     opacity: .85;
   }
 
-  // Below the pad rather than above it: verdicts live under the writing.
+  // The same line as the other three steps, so it keeps their spacing: it is
+  // the name of this step, only in the colour of having got there.
   &--done {
-    margin: 10px 0 6px;
     color: var(--ion-color-success);
     font-weight: 600;
 
@@ -91,11 +90,6 @@ app-kanji-stroke-pad {
   display: block;
   border-radius: 10px;
   box-shadow: 0 1px 3px rgb(0 0 0 / .18);
-}
-
-// Nothing to fade in an empty line, and nothing to read out either.
-.step--held {
-  animation: none;
 }
 
 @keyframes step-in {
