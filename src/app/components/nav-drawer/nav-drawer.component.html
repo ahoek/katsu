@@ -80,6 +80,17 @@
         <span>{{ 'preferences.title' | translate }}</span>
         <ion-icon class="drawer__options-chevron" name="chevron-forward" aria-hidden="true"></ion-icon>
       </a>
+
+      <!-- Which build is being served, straight out of the worker's manifest.
+           It is here because "did my update arrive" was a question nobody in
+           the app could answer, least of all on a phone that had been
+           restarted five times. A development build has no manifest and leaves
+           the line out. -->
+      @if (build(); as version) {
+        <p class="drawer__build">
+          {{ 'update.build' | translate: { when: version.at | date: 'y-MM-dd HH:mm' } }}
+        </p>
+      }
     </nav>
   </div>
 </dialog>

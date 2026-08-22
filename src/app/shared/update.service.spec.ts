@@ -46,6 +46,7 @@ function setUp() {
     keys: () => Promise.resolve(['ngsw:/:db:control', 'ngsw:/:1:assets:app:cache', 'unrelated']),
     delete: (name: string) => { deleted.push(name); return Promise.resolve(true); },
   });
+  vi.stubGlobal('fetch', () => Promise.reject(new Error('no manifest in a test')));
   vi.stubGlobal('navigator', {
     serviceWorker: {
       getRegistration: () =>
@@ -54,18 +55,21 @@ function setUp() {
   });
   service.start();
 
-  return { swUpdate, reload, deleted, unregistered };
+  return { swUpdate, reload, deleted, unregistered, service };
 }
 
 describe('UpdateService', () => {
   afterEach(() => vi.unstubAllGlobals());
 
   /**
-   * The guarantee this file exists for. Three reload loops in one day came from
-   * this service deciding to reload; nothing here can any more.
+   * The guarantee this file exists for, and the one thing that survived the
+   * service learning to offer versions: three reload loops in one day came from
+   * this service deciding *by itself* to reload. Told about any number of
+   * versions, told the worker is broken, and woken by the page coming back to
+   * the front, it still reloads nothing on its own.
    */
-  it('never reloads the page and never touches the version, whatever it is told', async () => {
-    const { swUpdate, reload } = setUp();
+  it('never reloads or activates on its own, whatever it is told', async () => {
+    const { swUpdate, reload, service } = setUp();
 
     for (const version of ['a', 'b', 'c', 'a']) {
       swUpdate.versionUpdates.next(ready(version));
@@ -76,7 +80,28 @@ describe('UpdateService', () => {
 
     expect(reload).not.toHaveBeenCalled();
     expect(swUpdate.activated).toBe(0);
-    expect(swUpdate.checks).toBe(0);
+    // It does look, which is the half that changed: a version nobody looks for
+    // arrives only once every tab on the old one has closed.
+    expect(service.ready()).toBe(true);
+  });
+
+  /** And it reloads exactly once when it is finally asked to. */
+  it('takes the waiting version on request, and only then', async () => {
+    const { swUpdate, reload, service } = setUp();
+
+    swUpdate.versionUpdates.next(ready('next'));
+    expect(reload).not.toHaveBeenCalled();
+
+    await service.apply();
+
+    expect(swUpdate.activated).toBe(1);
+    expect(reload).toHaveBeenCalledTimes(1);
+  });
+
+  it('says nothing about a build when there is no manifest to read', async () => {
+    const { service } = setUp();
+
+    await vi.waitFor(() => expect(service.build()).toBeUndefined());
   });
 
   it('discards a broken worker along with its caches, sparing the rest', async () => {

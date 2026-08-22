@@ -1,12 +1,13 @@
 import { Component, DOCUMENT, inject } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { TranslateService } from '@ngx-translate/core';
+import { IonApp, IonIcon, IonRouterOutlet } from '@ionic/angular/standalone';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import {
   alertCircle,
   arrowBack,
+  arrowDownCircleOutline,
   arrowForward,
   barcodeOutline,
   briefcaseOutline,
@@ -45,7 +46,8 @@ import { UpdateService } from './shared/update.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet, NavDrawerComponent],
+  styleUrls: ['app.component.scss'],
+  imports: [IonApp, IonIcon, IonRouterOutlet, NavDrawerComponent, TranslatePipe],
 })
 export class AppComponent {
   private readonly analytics = inject(AnalyticsService);
@@ -53,14 +55,16 @@ export class AppComponent {
   private readonly router = inject(Router);
   private readonly title = inject(Title);
   private readonly doc = inject(DOCUMENT);
-  private readonly updates = inject(UpdateService);
+  // Read by the template, so the banner can offer what it found.
+  protected readonly updates = inject(UpdateService);
   private readonly settings = inject(SettingsService);
   private readonly theme = inject(ThemeService);
 
   constructor() {
     this.updates.start();
     addIcons({
-      alertCircle, arrowBack, arrowForward, barcodeOutline, briefcaseOutline, brushOutline,
+      alertCircle, arrowBack,
+      arrowDownCircleOutline, arrowForward, barcodeOutline, briefcaseOutline, brushOutline,
       checkmarkCircle, chevronDown, close, closeCircle, codeWorkingOutline, helpCircleOutline,
       languageOutline, logoGithub, logoPaypal, mailOutline, moonOutline, optionsOutline,
       personCircleOutline, playBackOutline,

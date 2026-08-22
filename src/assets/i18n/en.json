@@ -238,5 +238,10 @@
     "close": "Close menu",
     "conjugation": "Conjugation",
     "title": "Menu"
+  },
+  "update": {
+    "ready": "New version ready",
+    "apply": "Reload",
+    "build": "Build of {{when}}"
   }
 }

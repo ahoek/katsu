@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, effect, inject, viewChild } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonIcon, IonRouterLinkWithHref } from '@ionic/angular/standalone';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -6,6 +7,7 @@ import { addIcons } from 'ionicons';
 import { brushOutline, chevronForward, helpCircleOutline, personCircleOutline, repeatOutline, settingsOutline } from 'ionicons/icons';
 
 import { NavDrawerService } from './nav-drawer.service';
+import { UpdateService } from '../../shared/update.service';
 
 /**
  * The app's one navigation: every trainer and every shell page, so a new
@@ -20,10 +22,13 @@ import { NavDrawerService } from './nav-drawer.service';
   selector: 'app-nav-drawer',
   templateUrl: 'nav-drawer.component.html',
   styleUrls: ['nav-drawer.component.scss'],
-  imports: [IonIcon, IonRouterLinkWithHref, RouterLink, RouterLinkActive, TranslatePipe],
+  imports: [DatePipe, IonIcon, IonRouterLinkWithHref, RouterLink, RouterLinkActive, TranslatePipe],
 })
 export class NavDrawerComponent implements AfterViewInit {
   protected readonly drawer = inject(NavDrawerService);
+
+  /** Which deploy is being served; see the note in the template. */
+  protected readonly build = inject(UpdateService).build;
 
   private readonly dialogRef = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
   private readonly scrollerRef = viewChild.required<ElementRef<HTMLElement>>('scroller');

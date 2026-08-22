@@ -153,3 +153,16 @@
   margin-inline-start: auto;
   font-size: 1rem;
 }
+
+// Under everything, in the quietest voice the sheet has: a fact for whoever is
+// checking whether their update arrived, and invisible to everyone else. Lined
+// up with the rows above it - same inline margin, same padding - so it reads as
+// the last line of the sheet rather than something loose in the corner.
+.drawer__build {
+  margin: 14px 8px 0;
+  // Indented past the icon column so it starts where every label above it
+  // starts: 8px of row padding, a 20px icon, and the 14px gap between them.
+  padding: 0 8px 0 42px;
+  font-size: .72rem;
+  color: color-mix(in srgb, var(--ion-color-medium) 75%, transparent);
+}

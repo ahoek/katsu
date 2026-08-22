@@ -330,6 +330,17 @@ export function sitePages(translations, strokeData) {
  * cards, the structured data - is different per page; the script tags and the
  * styles Angular put there are left exactly as they were.
  */
+/**
+ * When this build was made, written into every page it writes.
+ *
+ * It has to travel *inside* the version rather than be looked up from the
+ * server, or it answers the wrong question: the app asking "which build am I"
+ * would be told which build is available for download, which is exactly the
+ * confusion the line exists to end. The page in front of the reader came out of
+ * their own service worker's cache, so the stamp in its head is theirs.
+ */
+const BUILT_AT = new Date().toISOString();
+
 export function renderPage(template, page) {
   const jsonLd = page.linkedData.length
     ? `<script type="application/ld+json">\n${JSON.stringify(
@@ -348,6 +359,7 @@ export function renderPage(template, page) {
     .replace(
       /<link rel="canonical" href="[^"]*">/,
       `<link rel="canonical" href="${page.canonical}">` +
+        `\n  <meta name="katsu-build" content="${BUILT_AT}">` +
         (page.indexable ? '' : `\n  <meta name="robots" content="noindex, follow">`),
     )
     .replace(

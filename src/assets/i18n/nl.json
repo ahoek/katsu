@@ -238,5 +238,10 @@
     "close": "Menu sluiten",
     "conjugation": "Vervoeging",
     "title": "Menu"
+  },
+  "update": {
+    "ready": "Nieuwe versie klaar",
+    "apply": "Herladen",
+    "build": "Versie van {{when}}"
   }
 }
