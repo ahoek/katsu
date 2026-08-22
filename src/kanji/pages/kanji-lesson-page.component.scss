@@ -46,7 +46,12 @@
   }
 }
 
+// Only the instruction moves between steps. Fading the whole step was worse
+// than nothing: the pad looks the same before and after - an empty square
+// either way - so a pad fading out and back in read as a glitch rather than a
+// change. What changes is the sentence above it, so that is what arrives.
 .step {
+  animation: step-in 220ms ease-out;
   margin: 0 0 10px;
   text-align: center;
   font-size: .9rem;
@@ -82,6 +87,19 @@ app-kanji-stroke-pad {
   display: block;
   border-radius: 10px;
   box-shadow: 0 1px 3px rgb(0 0 0 / .18);
+}
+
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step {
+    animation: none;
+  }
 }
 
 .loading {

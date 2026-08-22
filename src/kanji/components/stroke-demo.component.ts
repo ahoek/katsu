@@ -43,6 +43,7 @@ const PAUSE_MS = 200;
       [numbers]="numbers()"
       [interactive]="false"
       [traceScale]="scale"
+      [namesake]="namesake()"
       [label]="label()"
     ></app-kanji-stroke-pad>
 
@@ -89,6 +90,9 @@ export class StrokeDemoComponent implements OnDestroy {
   readonly numbers = input<readonly Point[]>([]);
 
   readonly label = input('');
+
+  /** Passed to the pad: 活 gets a nod on its own page. See the pad's own note. */
+  readonly namesake = input(false);
 
   /** Strokes written out so far. */
   readonly shown = signal(0);

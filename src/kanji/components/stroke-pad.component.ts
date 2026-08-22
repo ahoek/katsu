@@ -48,6 +48,7 @@ export function strokeTraceMs(path: string, scale = 1): number {
       [class.pad--complete]="feedback() === 'complete'"
       [class.pad--interactive]="interactive()"
       [class.pad--taking]="taking()"
+      [class.pad--namesake]="namesake() && written() >= strokes().length"
       [style.--kanji-trace-duration]="traceMs() + 'ms'"
       [attr.viewBox]="'0 0 ' + viewBox + ' ' + viewBox"
       [attr.role]="interactive() ? 'application' : 'img'"
@@ -210,6 +211,13 @@ export function strokeTraceMs(path: string, scale = 1): number {
       stroke-width: 5.5;
     }
 
+    // Gated on the whole character being on the paper rather than on the
+    // writing flow's own "complete": a demonstration never sets that, and this
+    // is the page where 活 is watched being written.
+    .pad--namesake .ink {
+      animation: alive 2.4s ease-in-out .35s;
+    }
+
     // Plays once, when the path is created: a stroke lands green and thickens
     // for a moment, then dries into ink like the ones before it.
     .ink--landed {
@@ -293,6 +301,11 @@ export function strokeTraceMs(path: string, scale = 1): number {
 
     // The whole square breathes out once. Small on purpose: the character has
     // to stay readable through it, since reading it back is half the reward.
+    // 活: lively. The ink drifts to the wordmark's own colour and back again.
+    @keyframes alive {
+      35%, 65% { stroke: var(--ink-yu-yake-deep); }
+    }
+
     @keyframes settle {
       40% { transform: scale(1.035); }
     }
@@ -304,7 +317,7 @@ export function strokeTraceMs(path: string, scale = 1): number {
       }
 
       // Not a nicety: without it the success colour is the last frame drawn.
-      .pad--complete .ink, .ink--landed {
+      .pad--complete .ink, .ink--landed, .pad--namesake .ink {
         animation: none;
       }
     }
@@ -360,6 +373,14 @@ export class StrokePadComponent {
 
   /** Off while a stroke order is being demonstrated. */
   readonly interactive = input(true);
+
+  /**
+   * The app is named after 活用, and 活 means lively. On its own page the ink
+   * warms once to the colour the wordmark is written in, after the character
+   * finishes - a hello from the app to the one character that is half its name,
+   * quiet enough that only somebody who writes it will ever meet it.
+   */
+  readonly namesake = input(false);
 
   /**
    * Whether a stroke could still land here, which is not the same as being

@@ -60,6 +60,8 @@ interface Result {
   grade: Grade;
   moved: 'up' | 'held' | 'down';
   mastered: boolean;
+  /** How many strokes it took, for the one summary line about the writing. */
+  strokes: number;
 }
 
 /** Clean answers in a row before the run is worth showing. */
@@ -119,6 +121,17 @@ export class KanjiReviewPageComponent implements OnInit {
   /** Clean answers in a row, and the longest such run of the session. */
   readonly streak = signal(0);
   readonly bestStreak = signal(0);
+
+  /**
+   * How much writing the session was. The counts say how it went and the clock
+   * says how long it took; neither says what was done, and in an app about
+   * writing by hand that is the number with the work in it.
+   */
+  readonly strokesWritten = computed(() =>
+    this.results().reduce((total, result) => total + result.strokes, 0));
+
+  /** Kanji that reached the top of the ladder here - rare, and worth saying. */
+  readonly mastered = computed(() => this.results().filter(result => result.mastered).length);
 
   readonly ready = signal(false);
 
@@ -264,6 +277,7 @@ export class KanjiReviewPageComponent implements OnInit {
       grade,
       moved: card.stage > previousStage ? 'up' : card.stage < previousStage ? 'down' : 'held',
       mastered,
+      strokes: character.strokes.length,
     }]);
 
     // Only a clean answer keeps a run alive; a stage held is not a miss, but it

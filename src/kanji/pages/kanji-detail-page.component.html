@@ -63,6 +63,7 @@
         <app-kanji-stroke-demo
           [strokes]="strokes()"
           [numbers]="numbers()"
+          [namesake]="kanji.kanji === '活'"
           [label]="'kanji.pad-label' | translate: { meaning: meaning() }"
         ></app-kanji-stroke-demo>
 

@@ -66,7 +66,11 @@
              say how it went; this says which ones went that way. -->
         <ul class="recap">
           @for (result of results(); track $index) {
-            <li class="recap__item" [class]="'recap__item--' + result.grade">
+            <li
+              class="recap__item"
+              [class]="'recap__item--' + result.grade"
+              [style.--delay]="$index * 28 + 'ms'"
+            >
               <span class="recap__kanji" lang="ja">{{ result.kanji }}</span>
               <span class="recap__move" aria-hidden="true">
                 @if (result.mastered) {
@@ -100,6 +104,25 @@
         @if (spent(); as time) {
           <p class="summary__spent">
             {{ spentKey(time.unit) | translate: { value: time.value, seconds: time.seconds } }}
+            ·
+            @if (strokesWritten() === 1) {
+              {{ 'kanji.review.strokes-one' | translate }}
+            } @else {
+              {{ 'kanji.review.strokes' | translate: { count: strokesWritten() } }}
+            }
+          </p>
+        }
+
+        <!-- The rarest thing that can happen in a session, and it used to pass
+             without a word: a kanji that will not come back. -->
+        @if (mastered() > 0) {
+          <p class="summary__mastered">
+            <ion-icon name="ribbon" aria-hidden="true"></ion-icon>
+            @if (mastered() === 1) {
+              {{ 'kanji.review.mastered-one' | translate }}
+            } @else {
+              {{ 'kanji.review.mastered-count' | translate: { count: mastered() } }}
+            }
           </p>
         }
 

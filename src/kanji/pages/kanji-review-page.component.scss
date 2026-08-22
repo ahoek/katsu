@@ -47,11 +47,25 @@
   }
 }
 
+// Once a session, so it can afford a moment the review loop cannot: the blocks
+// arrive in the order they are read rather than all at once. Small numbers on
+// purpose - 4px and 260ms - so it reads as the page settling, not as a reveal.
 .summary {
   max-width: 420px;
   margin: 0 auto;
   padding: 48px 16px calc(24px + env(safe-area-inset-bottom));
   text-align: center;
+
+  > * {
+    animation: summary-in 260ms ease-out backwards;
+  }
+
+  > *:nth-child(1) { animation-delay: 0ms; }
+  > *:nth-child(2) { animation-delay: 60ms; }
+  > *:nth-child(3) { animation-delay: 120ms; }
+  > *:nth-child(4) { animation-delay: 180ms; }
+  > *:nth-child(5) { animation-delay: 240ms; }
+  > *:nth-child(n + 6) { animation-delay: 300ms; }
 
   &__title {
     margin: 0 0 8px;
@@ -82,6 +96,17 @@
     font-size: .8rem;
     color: var(--ion-color-medium);
   }
+
+  // The one line that has earned a colour: a kanji that will not come back.
+  &__mastered {
+    margin: -12px 0 20px;
+    font-size: .85rem;
+    color: var(--ion-color-secondary);
+
+    ion-icon {
+      vertical-align: -2px;
+    }
+  }
 }
 
 .recap {
@@ -101,6 +126,10 @@
     padding: 4px 6px 2px;
     border: 1px solid var(--ion-color-medium);
     border-radius: 8px;
+    // In the order they were written, at 28ms apart: enough to read as a hand
+    // dealing them out, not enough to wait for. Twenty kanji land in half a
+    // second, and the last one is never the one being looked at first.
+    animation: recap-in 220ms ease-out var(--delay, 0ms) backwards;
 
     &--clean {
       border-color: var(--ion-color-success);
@@ -214,6 +243,20 @@
   }
 }
 
+@keyframes summary-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@keyframes recap-in {
+  from {
+    opacity: 0;
+    transform: scale(.9);
+  }
+}
+
 @keyframes streak-in {
   from { opacity: 0; transform: translateY(4px); }
 }
@@ -245,7 +288,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .streak {
+  .streak,
+  .summary > *,
+  .recap__item {
     animation: none;
   }
 
