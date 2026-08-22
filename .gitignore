@@ -18,6 +18,10 @@
 *.sublime-project
 *.sublime-workspace
 
+# Notes kept beside the code rather than in it: the roadmap and the learning
+# research. Read and written every session, published never.
+/context/
+
 # Misc
 *~
 *.log
