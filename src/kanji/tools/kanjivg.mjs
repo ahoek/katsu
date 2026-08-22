@@ -164,13 +164,45 @@ export function partsOf(svg, kanji, deckKanji, deckStrokes = new Map()) {
     }));
   });
 
+  // A shape that is one shape written twice gives way as well, whether or not
+  // the deck teaches it. 質's top is 斤 beside 斤 and was drawn as eight strokes
+  // with nothing to say about them; two tiles say "this, and then the same
+  // again", which is the whole of what there is to know and is worth more to a
+  // hand than a name would be. It runs after the descent above rather than
+  // inside it, so a pair sitting a level deeper is caught too - 協's second and
+  // third 力 hid under the 劦 that had already given way, and both are kanji
+  // the deck teaches.
+  // Only a tile that says nothing gives way to its halves. A tile that names a
+  // shape already says the better thing: 森 is 木 and 林, not three 木; 実 holds
+  // a 三 and not three 一; 開's 开 beats a pair of 干. Those all have a name to
+  // stand on, and this rule is for the ones that do not.
+  const repeated = piece =>
+    !piece.element &&
+    piece.children.length > 1 &&
+    piece.children.every(child => child.element && child.element === piece.children[0].element);
+
+  const split = divided.flatMap(piece => {
+    if (!repeated(piece)) {
+      return [piece];
+    }
+    const given = inOrder([...piece.children, ...looseRuns(piece.strokes, piece.children)]);
+    return given.map(child => ({
+      ...child,
+      phon: child.phon ?? piece.phon,
+      // The box and its name carry over: the halves are still whatever the
+      // whole was part of.
+      unit: piece.unit,
+      unitOf: piece.unitOf,
+    }));
+  });
+
   // A numbered shape is collected from wherever its pieces are, however deep.
   // 国's box is two pieces at this level, both of the same box; 重's 千 is two
   // strokes here and a third down inside the 里, because the long vertical
   // serves them both. Kanji do share strokes that way, so parts may overlap -
   // what they may not do is leave one out.
   const parts = [];
-  for (const part of divided) {
+  for (const part of split) {
     if (!part.piece || !part.element) {
       parts.push({ ...part, strokes: [...part.strokes] });
       continue;
