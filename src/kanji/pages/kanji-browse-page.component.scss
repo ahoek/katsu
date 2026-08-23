@@ -184,10 +184,18 @@
     }
   }
 
-  // In the schedule, and out of it again once mastered
+  // In the schedule, and out of it again once mastered. The border tells the
+  // phases apart the same way the bar does: muted while writing is guided,
+  // full once the kanji is written whole - so a wall of learned tiles shows
+  // which ones have crossed without reading forty tiny bars.
   &--learned {
+    border-color: color-mix(in srgb, var(--ion-color-success) 55%, transparent);
+    background: color-mix(in srgb, var(--ion-color-success) 8%, var(--app-color-surface));
+  }
+
+  &--free {
     border-color: var(--ion-color-success);
-    background: color-mix(in srgb, var(--ion-color-success) 12%, var(--app-color-surface));
+    background: color-mix(in srgb, var(--ion-color-success) 14%, var(--app-color-surface));
   }
 
   &--mastered {

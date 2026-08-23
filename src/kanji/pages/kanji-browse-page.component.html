@@ -70,6 +70,7 @@
             <a
               class="tile"
               [class.tile--learned]="learned().has(entry.kanji)"
+              [class.tile--free]="writesFreely(entry.kanji)"
               [class.tile--mastered]="mastered().has(entry.kanji)"
               [class.tile--due]="dueNow().has(entry.kanji)"
               [routerLink]="['/kanji/practice', entry.kanji]"

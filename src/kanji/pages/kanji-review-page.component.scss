@@ -51,9 +51,14 @@
 // arrive in the order they are read rather than all at once. Small numbers on
 // purpose - 4px and 260ms - so it reads as the page settling, not as a reveal.
 .summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 100%;
   max-width: 420px;
   margin: 0 auto;
-  padding: 48px 16px calc(24px + env(safe-area-inset-bottom));
+  padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
   text-align: center;
 
   > * {
@@ -120,7 +125,7 @@
     }
 
     &--shaky::before {
-      background: color-mix(in srgb, var(--ion-color-medium) 65%, transparent);
+      background: var(--ion-color-medium);
     }
 
     &--poor::before {
@@ -267,16 +272,18 @@
     }
 
     // A rung that was just won arrives: it fills in from empty before it
-    // starts to breathe, so a step forward is something seen, not deduced.
+    // starts to breathe, so a step forward is something seen, not deduced. It
+    // waits half a second first - the eye is still on the pad when the verdict
+    // lands, and an arrival nobody saw might as well not have happened.
     &--current.ladder__pip--gained {
-      animation: pip-in .5s ease-out backwards, pip-now 1.8s ease-out .5s infinite;
+      animation: pip-in .8s ease-out .5s backwards, pip-now 1.8s ease-out 1.3s infinite;
     }
 
-    // And a rung just lost goes out: filled a moment ago, empty when the eye
-    // arrives. It ends as any unfilled rung - the loss is the going out, not
-    // a mark that stays.
+    // And a rung just lost goes out: it stands bright through the same half
+    // second, holds a beat, then dims to any unfilled rung. The loss is the
+    // going out, not a mark that stays.
     &--fading {
-      animation: pip-out 1.6s ease-out both;
+      animation: pip-out 2.4s ease-in .5s both;
     }
   }
 
@@ -309,17 +316,24 @@
 @keyframes pip-in {
   from {
     background: color-mix(in srgb, var(--ion-color-medium) 22%, transparent);
-    transform: scaleY(.6);
+    transform: scaleY(.5);
+  }
+
+  60% {
+    transform: scaleY(1.8);
   }
 }
 
 @keyframes pip-out {
-  from {
-    background: color-mix(in srgb, var(--ion-color-success) 48%, transparent);
+  0%,
+  35% {
+    background: var(--ion-color-success);
+    transform: scaleY(1.4);
   }
 
-  to {
+  100% {
     background: color-mix(in srgb, var(--ion-color-medium) 22%, transparent);
+    transform: scaleY(1);
   }
 }
 

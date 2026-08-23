@@ -121,15 +121,7 @@
             <li>{{ 'kanji.review.best-streak' | translate: { count: bestStreak() } }}</li>
           }
           @if (spent(); as time) {
-            <li>
-              {{ spentKey(time.unit) | translate: { value: time.value, seconds: time.seconds } }}
-              ·
-              @if (strokesWritten() === 1) {
-                {{ 'kanji.review.strokes-one' | translate }}
-              } @else {
-                {{ 'kanji.review.strokes' | translate: { count: strokesWritten() } }}
-              }
-            </li>
+            <li>{{ spentKey(time.unit) | translate: { value: time.value, seconds: time.seconds } }}</li>
           }
           @if (mastered() > 0) {
             <li class="facts__mastered">
