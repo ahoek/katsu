@@ -27,7 +27,7 @@ import {
 import { KanjiRefreshService } from '../kanji-refresh.service';
 import { KanjiSrsService } from '../kanji-srs.service';
 import { KanjiSyncService } from '../sync/kanji-sync.service';
-import { countdown } from '../srs/srs';
+import { MASTERED_STAGE, MATURE_STAGE, countdown } from '../srs/srs';
 
 import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
 
@@ -84,7 +84,15 @@ export class KanjiHomePageComponent implements OnInit {
 
   readonly masteredCount = computed(() => this.srs.mastered().size);
 
-  readonly reviewingCount = computed(() => this.learnedCount() - this.masteredCount());
+  /**
+   * The levels the bar and the overview both rank by: familiar once a kanji is
+   * written whole and judged at the end, known while it is still guided.
+   */
+  readonly familiarCount = computed(() =>
+    this.srs.cards().filter(card => card.stage >= MATURE_STAGE && card.stage < MASTERED_STAGE).length);
+
+  readonly knownCount = computed(() =>
+    this.learnedCount() - this.masteredCount() - this.familiarCount());
 
   readonly toLearnCount = computed(() => Math.max(this.characters().length - this.learnedCount(), 0));
 
@@ -119,6 +127,12 @@ export class KanjiHomePageComponent implements OnInit {
     const due = this.srs.nextDue();
     return due === undefined ? undefined : countdown(due, this.srs.now());
   });
+
+  /** A count as a share of the whole deck, for one segment of the bar. */
+  percentOf(count: number): number {
+    const total = this.characters().length;
+    return total === 0 ? 0 : (count / total) * 100;
+  }
 
   readonly progressPercent = computed(() => {
     const total = this.characters().length;

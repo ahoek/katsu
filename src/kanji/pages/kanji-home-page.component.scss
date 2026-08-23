@@ -91,6 +91,7 @@
 }
 
 .bar {
+  display: flex;
   height: 8px;
   margin-bottom: 14px;
   // Track has to read as empty in both themes, so it is mixed from the text
@@ -99,10 +100,23 @@
   border-radius: 999px;
   overflow: hidden;
 
-  &__fill {
+  // The overview's three level colours, in the order the deck is worked
+  // through: mastered, then familiar, then known, then the empty track.
+  &__segment {
     display: block;
     height: 100%;
-    background: var(--ion-color-primary-shade);
+
+    &--mastered {
+      background: var(--ion-color-secondary);
+    }
+
+    &--familiar {
+      background: var(--ion-color-success);
+    }
+
+    &--known {
+      background: color-mix(in srgb, var(--ion-color-success) 55%, transparent);
+    }
   }
 }
 

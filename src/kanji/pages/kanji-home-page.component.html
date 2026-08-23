@@ -111,16 +111,27 @@
         aria-valuemin="0"
         aria-valuemax="100"
       >
-        <span class="bar__fill" [style.width.%]="progressPercent()"></span>
+        <!-- The same three levels the overview shows, in the same colours and
+             the same order the deck is worked through: mastered first, then
+             familiar, then known. One green fill said how many; this says how
+             far along the many are. -->
+        <span class="bar__segment bar__segment--mastered" [style.width.%]="percentOf(masteredCount())"></span>
+        <span class="bar__segment bar__segment--familiar" [style.width.%]="percentOf(familiarCount())"></span>
+        <span class="bar__segment bar__segment--known" [style.width.%]="percentOf(knownCount())"></span>
       </div>
+      <!-- In the bar's own order, so the row doubles as its legend. -->
       <dl class="counts">
-        <div>
-          <dt>{{ 'kanji.home.learning' | translate }}</dt>
-          <dd>{{ reviewingCount() }}</dd>
-        </div>
         <div>
           <dt>{{ 'kanji.home.mastered' | translate }}</dt>
           <dd>{{ masteredCount() }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'kanji.home.familiar' | translate }}</dt>
+          <dd>{{ familiarCount() }}</dd>
+        </div>
+        <div>
+          <dt>{{ 'kanji.home.known' | translate }}</dt>
+          <dd>{{ knownCount() }}</dd>
         </div>
         <div>
           <dt>{{ 'kanji.home.to-learn' | translate }}</dt>

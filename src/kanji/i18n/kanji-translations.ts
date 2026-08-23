@@ -90,8 +90,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       },
       browse: {
         title: 'All kanji',
-        'legend-guided': 'Known',
-        'legend-free': 'Familiar',
+
         'legend-due': '{{count}} ready now',
         sort: 'Order',
         'sort-grade': 'School year',
@@ -173,7 +172,8 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'start-lesson': 'Start lesson',
         'practice-note': 'Every kanji at a glance, free practice included',
         'devices-note': 'Sync between devices, or keep a backup',
-        learning: 'In reviews',
+        known: 'Known',
+        familiar: 'Familiar',
         mastered: 'Mastered',
         'to-learn': 'To learn',
       },
@@ -299,8 +299,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       },
       browse: {
         title: 'Alle kanji',
-        'legend-guided': 'Bekend',
-        'legend-free': 'Vertrouwd',
+
         'legend-due': '{{count}} nu klaar',
         sort: 'Volgorde',
         'sort-grade': 'Schooljaar',
@@ -379,7 +378,8 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'start-lesson': 'Start les',
         'practice-note': 'Elke kanji in beeld, vrij oefenen kan ook',
         'devices-note': 'Synchroniseer of bewaar een back-up',
-        learning: 'In herhaling',
+        known: 'Bekend',
+        familiar: 'Vertrouwd',
         mastered: 'Beheerst',
         'to-learn': 'Te leren',
       },
