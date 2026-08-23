@@ -87,53 +87,64 @@
           }
         </ul>
 
-        <p class="summary__lead">
-          {{ 'kanji.review.summary-counts' | translate: {
-            clean: tally().clean, shaky: tally().shaky, poor: tally().poor
-          } }}
+        <!-- The facts of the session, one list in one voice. These used to be
+             four paragraphs in four sizes, which read as four afterthoughts;
+             a list says they are the same kind of thing. The counts row wears
+             the tiles' own colours, so it doubles as the recap's legend. What
+             is zero is not said.
+
+             The cost row is deliberately spare - no average, no best, nothing
+             to beat: a personal record turns a slow evening into a failure.
+             And the last row explains why the session stopped where it did;
+             the way to carry on lives on the kanji home, so overrunning the
+             cap is decided in one place rather than offered after every
+             session. -->
+        <ul class="facts">
+          <li class="facts__counts">
+            @if (tally().clean > 0) {
+              <span class="facts__grade facts__grade--clean">
+                {{ 'kanji.review.count-clean' | translate: { count: tally().clean } }}
+              </span>
+            }
+            @if (tally().shaky > 0) {
+              <span class="facts__grade facts__grade--shaky">
+                {{ 'kanji.review.count-shaky' | translate: { count: tally().shaky } }}
+              </span>
+            }
+            @if (tally().poor > 0) {
+              <span class="facts__grade facts__grade--poor">
+                {{ 'kanji.review.count-poor' | translate: { count: tally().poor } }}
+              </span>
+            }
+          </li>
           @if (bestStreak() >= 2 && !perfectSession()) {
-            <br />
-            {{ 'kanji.review.best-streak' | translate: { count: bestStreak() } }}
+            <li>{{ 'kanji.review.best-streak' | translate: { count: bestStreak() } }}</li>
           }
-        </p>
-
-        <!-- What the session cost, and only that. No average, no best, nothing
-             to beat: a personal record turns a slow evening into a failure. It
-             is here rather than on the writing screen because a number of
-             minutes is worth knowing afterwards and a ticking clock is not. -->
-        @if (spent(); as time) {
-          <p class="summary__spent">
-            {{ spentKey(time.unit) | translate: { value: time.value, seconds: time.seconds } }}
-            ·
-            @if (strokesWritten() === 1) {
-              {{ 'kanji.review.strokes-one' | translate }}
-            } @else {
-              {{ 'kanji.review.strokes' | translate: { count: strokesWritten() } }}
-            }
-          </p>
-        }
-
-        <!-- The rarest thing that can happen in a session, and it used to pass
-             without a word: a kanji that will not come back. -->
-        @if (mastered() > 0) {
-          <p class="summary__mastered">
-            <ion-icon name="ribbon" aria-hidden="true"></ion-icon>
-            @if (mastered() === 1) {
-              {{ 'kanji.review.mastered-one' | translate }}
-            } @else {
-              {{ 'kanji.review.mastered-count' | translate: { count: mastered() } }}
-            }
-          </p>
-        }
-
-        <!-- Why the session stopped where it did. The way to carry on is on
-             the kanji home, so the decision to overrun a session's cap is made
-             in one place rather than offered at the end of every session. -->
-        @if (stillWaiting() > 0) {
-          <p class="summary__waiting">
-            {{ 'kanji.review.still-waiting' | translate: { count: stillWaiting() } }}
-          </p>
-        }
+          @if (spent(); as time) {
+            <li>
+              {{ spentKey(time.unit) | translate: { value: time.value, seconds: time.seconds } }}
+              ·
+              @if (strokesWritten() === 1) {
+                {{ 'kanji.review.strokes-one' | translate }}
+              } @else {
+                {{ 'kanji.review.strokes' | translate: { count: strokesWritten() } }}
+              }
+            </li>
+          }
+          @if (mastered() > 0) {
+            <li class="facts__mastered">
+              <ion-icon name="ribbon" aria-hidden="true"></ion-icon>
+              @if (mastered() === 1) {
+                {{ 'kanji.review.mastered-one' | translate }}
+              } @else {
+                {{ 'kanji.review.mastered-count' | translate: { count: mastered() } }}
+              }
+            </li>
+          }
+          @if (stillWaiting() > 0) {
+            <li>{{ 'kanji.review.still-waiting' | translate: { count: stillWaiting() } }}</li>
+          }
+        </ul>
       }
       <ion-button expand="block" class="flow-cta" routerLink="/kanji" routerDirection="back">
         {{ 'kanji.review.back' | translate }}
@@ -207,6 +218,8 @@
                 class="ladder__pip"
                 [class.ladder__pip--filled]="result.mastered || step < result.stage"
                 [class.ladder__pip--current]="!result.mastered && step === result.stage"
+                [class.ladder__pip--gained]="step === result.stage && result.stage > result.previousStage"
+                [class.ladder__pip--fading]="!result.mastered && step === result.previousStage && result.stage < result.previousStage"
               ></span>
             }
           </span>

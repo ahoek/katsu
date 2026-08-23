@@ -93,6 +93,15 @@
     border-radius: 2px;
     background: var(--ion-color-success);
 
+    // The two phases of the bar: guided rungs muted, free-writing rungs full.
+    &--learning {
+      background: color-mix(in srgb, var(--ion-color-success) 55%, transparent);
+    }
+
+    &--free {
+      background: var(--ion-color-success);
+    }
+
     &--mastered {
       background: var(--ion-color-secondary);
     }
@@ -141,21 +150,38 @@
   }
 
   // How far up the ladder this kanji has come. The tint says it is in the
-  // schedule; only the bar says how well it is going.
+  // schedule; only the bar says how well it is going. The notch marks the
+  // ladder's one real threshold: past it, a kanji is written whole and judged
+  // at the end, and the fill turns from muted to full to say it crossed.
   &__bar {
+    position: relative;
     width: 80%;
     height: 3px;
     margin-top: 2px;
     border-radius: 2px;
     background: color-mix(in srgb, var(--ion-color-medium) 30%, transparent);
     overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(var(--free-at, 50%) - 1px);
+      width: 2px;
+      background: color-mix(in srgb, var(--app-color-surface) 85%, var(--ion-color-medium));
+    }
   }
 
   &__climbed {
     display: block;
     height: 100%;
     border-radius: 2px;
-    background: var(--ion-color-success);
+    background: color-mix(in srgb, var(--ion-color-success) 55%, transparent);
+
+    &--free {
+      background: var(--ion-color-success);
+    }
   }
 
   // In the schedule, and out of it again once mastered

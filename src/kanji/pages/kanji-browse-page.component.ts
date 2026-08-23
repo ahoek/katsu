@@ -17,7 +17,7 @@ import { KanjiCharacter, KanjiDataService } from '../kanji-data.service';
 import { KANJI_ORDERS, KanjiOrder, groupCharacters } from '../kanji-order';
 import { KanjiOrderService } from '../kanji-order.service';
 import { KanjiSrsService } from '../kanji-srs.service';
-import { FIRST_STAGE, MASTERED_STAGE } from '../srs/srs';
+import { FIRST_STAGE, MASTERED_STAGE, MATURE_STAGE } from '../srs/srs';
 
 import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
 
@@ -67,6 +67,16 @@ export class KanjiBrowsePageComponent implements OnInit {
   /** The rungs a kanji climbs, for the bar under each tile. */
   protected readonly rungs = MASTERED_STAGE - FIRST_STAGE;
 
+  /** The rung where guided writing ends, as stage numbers for the legend. */
+  protected readonly guidedTo = MATURE_STAGE - 1;
+
+  /**
+   * Where on the bar the guided rungs end, as a percentage of its width. Past
+   * this mark a kanji is written whole and judged at the end - the ladder's one
+   * real threshold, so the bar shows it rather than filling uniformly.
+   */
+  protected readonly freeAt = ((MATURE_STAGE - FIRST_STAGE) / (MASTERED_STAGE - FIRST_STAGE)) * 100;
+
   /** The deck cut into sections by the chosen order. */
   readonly groups = computed(() => groupCharacters(this.characters(), this.order()));
 
@@ -104,6 +114,11 @@ export class KanjiBrowsePageComponent implements OnInit {
   climbedOf(kanji: string): number {
     const stage = this.stageOf(kanji);
     return Math.min(stage / this.rungs, 1) * 100;
+  }
+
+  /** Past the threshold: this kanji is now written whole, unguided. */
+  writesFreely(kanji: string): boolean {
+    return this.stageOf(kanji) >= MATURE_STAGE;
   }
 
   /**

@@ -82,25 +82,53 @@
     margin: 0 0 24px;
     color: var(--ion-color-medium);
   }
+}
 
-  // Right under the counts, in the same quiet voice as what is still waiting:
-  // a fact about the session, not a score for it.
-  &__spent {
-    margin: -16px 0 20px;
-    font-size: .8rem;
-    color: var(--ion-color-medium);
+// The facts of the session: one size, one colour, one voice. Only two rows may
+// differ - the counts wear the tiles' grade colours as dots, so the list also
+// reads as the recap's legend, and a kanji finished for good keeps the ribbon.
+.facts {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+  font-size: .85rem;
+  color: var(--ion-color-medium);
+
+  &__counts {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
   }
 
-  &__waiting {
-    margin: -12px 0 20px;
-    font-size: .8rem;
-    color: var(--ion-color-medium);
+  &__grade {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+
+    &::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    &--clean::before {
+      background: var(--ion-color-success);
+    }
+
+    &--shaky::before {
+      background: color-mix(in srgb, var(--ion-color-medium) 65%, transparent);
+    }
+
+    &--poor::before {
+      background: var(--ion-color-danger);
+    }
   }
 
-  // The one line that has earned a colour: a kanji that will not come back.
   &__mastered {
-    margin: -12px 0 20px;
-    font-size: .85rem;
     color: var(--ion-color-secondary);
 
     ion-icon {
@@ -221,10 +249,11 @@
     border-radius: 2px;
     background: color-mix(in srgb, var(--ion-color-medium) 22%, transparent);
 
-    // The rungs already behind it: filled, and darker than the one it stands
-    // on, so eight rungs read as a position rather than a row of lights.
+    // The rungs already behind it: filled, quieter than the one it stands on
+    // but plainly lit, so eight rungs read as a position rather than a row of
+    // lights with most of them broken.
     &--filled {
-      background: color-mix(in srgb, var(--ion-color-success) 32%, transparent);
+      background: color-mix(in srgb, var(--ion-color-success) 48%, transparent);
     }
 
     // Where the kanji stands now. It keeps beating for as long as the verdict
@@ -235,6 +264,19 @@
     &--current {
       background: var(--ion-color-success);
       animation: pip-now 1.8s ease-out infinite;
+    }
+
+    // A rung that was just won arrives: it fills in from empty before it
+    // starts to breathe, so a step forward is something seen, not deduced.
+    &--current.ladder__pip--gained {
+      animation: pip-in .5s ease-out backwards, pip-now 1.8s ease-out .5s infinite;
+    }
+
+    // And a rung just lost goes out: filled a moment ago, empty when the eye
+    // arrives. It ends as any unfilled rung - the loss is the going out, not
+    // a mark that stays.
+    &--fading {
+      animation: pip-out 1.6s ease-out both;
     }
   }
 
@@ -264,6 +306,23 @@
 // A halo is too quiet on a bar four pixels tall - it was running and nobody
 // could see it. The bar itself swells and brightens instead, which is legible
 // at that size, with the ring left in as the softer half of the beat.
+@keyframes pip-in {
+  from {
+    background: color-mix(in srgb, var(--ion-color-medium) 22%, transparent);
+    transform: scaleY(.6);
+  }
+}
+
+@keyframes pip-out {
+  from {
+    background: color-mix(in srgb, var(--ion-color-success) 48%, transparent);
+  }
+
+  to {
+    background: color-mix(in srgb, var(--ion-color-medium) 22%, transparent);
+  }
+}
+
 @keyframes pip-now {
   0% {
     transform: scale(1);
@@ -294,9 +353,14 @@
     animation: none;
   }
 
-  // No beat, so the rung says where it is with a ring that simply stays.
-  .ladder__pip--current {
+  // No beat, so the rung says where it is with a ring that simply stays; the
+  // arriving and departing rungs simply stand in their final state.
+  .ladder__pip--current,
+  .ladder__pip--fading {
     animation: none;
+  }
+
+  .ladder__pip--current {
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--ion-color-success) 30%, transparent);
   }
 }

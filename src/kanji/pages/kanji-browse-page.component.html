@@ -36,7 +36,11 @@
     <p class="legend">
       <span class="legend__item">
         <span class="legend__swatch legend__swatch--learning"></span>
-        {{ 'kanji.browse.legend-stage' | translate: { total: rungs } }}
+        {{ 'kanji.browse.legend-guided' | translate: { to: guidedTo } }}
+      </span>
+      <span class="legend__item">
+        <span class="legend__swatch legend__swatch--free"></span>
+        {{ 'kanji.browse.legend-free' | translate: { from: guidedTo + 1, total: rungs } }}
       </span>
       <span class="legend__item">
         <span class="legend__swatch legend__swatch--mastered"></span>
@@ -75,8 +79,12 @@
               <small>{{ meaningOf(entry) }}</small>
 
               @if (stageOf(entry.kanji); as stage) {
-                <span class="tile__bar" aria-hidden="true">
-                  <span class="tile__climbed" [style.width.%]="climbedOf(entry.kanji)"></span>
+                <span class="tile__bar" aria-hidden="true" [style.--free-at.%]="freeAt">
+                  <span
+                    class="tile__climbed"
+                    [class.tile__climbed--free]="writesFreely(entry.kanji)"
+                    [style.width.%]="climbedOf(entry.kanji)"
+                  ></span>
                 </span>
                 <span class="sr-only">
                   {{ stateKeyOf(entry.kanji) | translate: { stage: stage, total: rungs } }}
