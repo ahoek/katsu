@@ -90,8 +90,8 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       },
       browse: {
         title: 'All kanji',
-        'legend-guided': 'Stage 1-{{to}}: stroke by stroke',
-        'legend-free': 'Stage {{from}}-{{total}}: in one go',
+        'legend-guided': 'Known',
+        'legend-free': 'Familiar',
         'legend-due': '{{count}} ready now',
         sort: 'Order',
         'sort-grade': 'School year',
@@ -299,8 +299,8 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       },
       browse: {
         title: 'Alle kanji',
-        'legend-guided': 'Stap 1-{{to}}: streek voor streek',
-        'legend-free': 'Stap {{from}}-{{total}}: in één keer',
+        'legend-guided': 'Bekend',
+        'legend-free': 'Vertrouwd',
         'legend-due': '{{count}} nu klaar',
         sort: 'Volgorde',
         'sort-grade': 'Schooljaar',

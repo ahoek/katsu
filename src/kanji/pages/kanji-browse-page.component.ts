@@ -67,9 +67,6 @@ export class KanjiBrowsePageComponent implements OnInit {
   /** The rungs a kanji climbs, for the bar under each tile. */
   protected readonly rungs = MASTERED_STAGE - FIRST_STAGE;
 
-  /** The rung where guided writing ends, as stage numbers for the legend. */
-  protected readonly guidedTo = MATURE_STAGE - 1;
-
   /**
    * Where on the bar the guided rungs end, as a percentage of its width. Past
    * this mark a kanji is written whole and judged at the end - the ladder's one
