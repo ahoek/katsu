@@ -413,7 +413,12 @@ export class WritingExerciseComponent implements OnDestroy {
   // Per-exercise state, reset by linkedSignal as soon as another kanji arrives.
   readonly written = linkedSignal({ source: this.strokes, computation: () => 0 });
   private readonly misses = linkedSignal({ source: this.strokes, computation: () => 0 });
-  private readonly mistakes = linkedSignal({ source: this.strokes, computation: () => 0 });
+
+  /**
+   * Strokes the pad turned down, which is a guided writing's whole tally: a
+   * rejected stroke never lands, so nothing on the paper remembers it.
+   */
+  private readonly rejections = linkedSignal({ source: this.strokes, computation: () => 0 });
   private readonly hintsUsed = linkedSignal({ source: this.strokes, computation: () => this.example() });
 
   /**
@@ -464,7 +469,34 @@ export class WritingExerciseComponent implements OnDestroy {
     ['wrong', 'reversed', 'out-of-order'].includes(this.feedback().kind));
 
   /** Written straight through, no stroke turned down and nothing shown. */
-  protected readonly flawless = computed(() => this.mistakes() === 0 && !this.hintsUsed());
+  /**
+   * What the review is graded on. Where the writing is judged at the end, the
+   * ink on the paper *is* the record - so the count is read off it rather than
+   * kept beside it. A second counter drifted from the ink the moment a stroke
+   * was rubbed out: the mistake stayed counted, the reveal listed one fewer
+   * reason than it announced, and a learner who spotted their own bad stroke
+   * and wrote it again was marked down for the one they had erased. The gum
+   * exists in this mode precisely so the writing can be put right before it is
+   * judged.
+   *
+   * A guided writing has no such record, because a wrong stroke never lands.
+   * There the rejections are the count, and rubbing out a stroke that *was*
+   * accepted cannot unmake the misses that came before it.
+   */
+  private readonly mistakes = computed(() =>
+    this.deferred()
+      ? this.drawnInk().filter(stroke => !stroke.correct).length
+      : this.rejections());
+
+  /**
+   * Whether the writing has been rubbed out at any point. Not a mistake and not
+   * counted as one - the paper is what gets judged - but it is what keeps
+   * "every stroke first time" honest, since a stroke written twice was not.
+   */
+  private readonly erased = linkedSignal({ source: this.strokes, computation: () => false });
+
+  protected readonly flawless = computed(() =>
+    this.mistakes() === 0 && !this.hintsUsed() && !this.erased());
 
   /** Strokes that went differently, for the reveal after a deferred writing. */
   protected readonly offCount = computed(() => (this.deferred() ? this.mistakes() : 0));
@@ -606,9 +638,6 @@ export class WritingExerciseComponent implements OnDestroy {
    */
   private judgeQuietly(points: Point[], result: StrokeResult): void {
     const correct = result.result === 'correct';
-    if (!correct) {
-      this.mistakes.update(mistakes => mistakes + 1);
-    }
     this.drawnInk.update(ink =>
       [...ink, { path: inkPath(points), points, correct, fault: faultOf(result) }]);
     const written = this.written() + 1;
@@ -639,19 +668,25 @@ export class WritingExerciseComponent implements OnDestroy {
   }
 
   /**
-   * Undo and restart take strokes off the pad but leave the mistake count
-   * alone: rubbing out a wrong stroke does not unwrite it.
+   * Undo and restart take strokes off the paper. Where the writing is judged at
+   * the end that undoes their verdict with them, because the paper is the
+   * record; where it is judged as it goes, a rejected stroke was never on the
+   * paper to begin with and the misses behind it stand.
    */
   undo(): void {
     if (this.written() === 0) {
       return;
     }
+    this.erased.set(true);
     this.written.update(written => written - 1);
     this.drawnInk.update(ink => ink.slice(0, -1));
     this.clearStrokeState();
   }
 
   restart(): void {
+    if (this.written() > 0) {
+      this.erased.set(true);
+    }
     this.written.set(0);
     this.drawnInk.set([]);
     this.clearStrokeState();
@@ -659,7 +694,7 @@ export class WritingExerciseComponent implements OnDestroy {
 
   private reject(feedback: Feedback): void {
     this.misses.update(misses => misses + 1);
-    this.mistakes.update(mistakes => mistakes + 1);
+    this.rejections.update(rejections => rejections + 1);
     this.run.set(0);
     this.feedback.set(feedback);
     this.rejected.set(true);
