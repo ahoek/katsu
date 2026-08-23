@@ -134,7 +134,7 @@
   }
 
   &__mastered {
-    color: var(--ion-color-secondary);
+    color: var(--ion-color-tertiary);
 
     ion-icon {
       vertical-align: -2px;
@@ -288,7 +288,7 @@
   }
 
   &--mastered &__pip {
-    background: var(--ion-color-secondary);
+    background: var(--ion-color-tertiary);
   }
 }
 

@@ -103,18 +103,19 @@
     }
 
     &--mastered {
-      background: var(--ion-color-secondary);
+      background: var(--ion-color-tertiary);
     }
 
     // Matches the dot on a due tile rather than its bar, so it is recognisable
-    // as the same mark. Ama-iro, where mastered is yu-yake: one says there is
-    // nothing left to do here, the other asks for something now, and they
-    // should not have to be told apart by shape alone.
+    // as the same mark. Yu-yake, where mastered is ama-iro: the dot asks for
+    // something now and wears the attention colour; mastered asks for nothing
+    // ever again and wears the calm one. They should not have to be told apart
+    // by shape alone.
     &--due {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--ion-color-tertiary);
+      background: var(--ion-color-secondary);
     }
   }
 }
@@ -199,11 +200,11 @@
   }
 
   &--mastered {
-    border-color: var(--ion-color-secondary-shade);
-    background: color-mix(in srgb, var(--ion-color-secondary) 16%, var(--app-color-surface));
+    border-color: var(--ion-color-tertiary-shade);
+    background: color-mix(in srgb, var(--ion-color-tertiary) 16%, var(--app-color-surface));
 
     .tile__climbed {
-      background: var(--ion-color-secondary);
+      background: var(--ion-color-tertiary);
     }
   }
 
@@ -216,7 +217,7 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--ion-color-tertiary);
+    background: var(--ion-color-secondary);
     animation: waiting 2s ease-in-out infinite;
   }
 }
