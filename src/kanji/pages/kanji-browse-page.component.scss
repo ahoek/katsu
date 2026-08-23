@@ -93,13 +93,13 @@
     border-radius: 2px;
     background: var(--ion-color-success);
 
-    // The two phases of the bar: guided rungs muted, free-writing rungs full.
+    // The levels as bamboo: a fresh shoot bright, an established stalk deep.
     &--learning {
-      background: color-mix(in srgb, var(--ion-color-success) 55%, transparent);
+      background: var(--app-color-level-known);
     }
 
     &--free {
-      background: var(--ion-color-success);
+      background: var(--app-color-level-familiar);
     }
 
     &--mastered {
@@ -178,25 +178,25 @@
     display: block;
     height: 100%;
     border-radius: 2px;
-    background: color-mix(in srgb, var(--ion-color-success) 55%, transparent);
+    background: var(--app-color-level-known);
 
     &--free {
-      background: var(--ion-color-success);
+      background: var(--app-color-level-familiar);
     }
   }
 
   // In the schedule, and out of it again once mastered. The border tells the
-  // phases apart the same way the bar does: muted while writing is guided,
-  // full once the kanji is written whole - so a wall of learned tiles shows
-  // which ones have crossed without reading forty tiny bars.
+  // levels apart the same way the bar does - fresh bright green while newly
+  // known, deep green once familiar - so a wall of learned tiles shows which
+  // ones have settled without reading forty tiny bars.
   &--learned {
-    border-color: color-mix(in srgb, var(--ion-color-success) 55%, transparent);
-    background: color-mix(in srgb, var(--ion-color-success) 8%, var(--app-color-surface));
+    border-color: var(--app-color-level-known);
+    background: color-mix(in srgb, var(--app-color-level-known) 10%, var(--app-color-surface));
   }
 
   &--free {
-    border-color: var(--ion-color-success);
-    background: color-mix(in srgb, var(--ion-color-success) 14%, var(--app-color-surface));
+    border-color: var(--app-color-level-familiar);
+    background: color-mix(in srgb, var(--app-color-level-familiar) 20%, var(--app-color-surface));
   }
 
   &--mastered {

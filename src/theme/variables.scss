@@ -148,6 +148,16 @@
   /** Readings: what a page says a character sounds like. */
   --app-color-reading: var(--ink-ama-iro-deep);
 
+  /**
+   * The levels a kanji climbs through, as the bamboo the green is named after:
+   * a fresh shoot is bright, an established stalk is deep. So bekend wears the
+   * brighter green and vertrouwd the deeper one - freshness fades as the kanji
+   * settles in, and the row ends in ama-iro's calm once it is mastered. One
+   * step of lightness apart in both themes, so they stay tellable side by side.
+   */
+  --app-color-level-known: var(--ink-chiku-rin);
+  --app-color-level-familiar: var(--ink-chiku-rin-deep);
+
   // Answer field state colours; amber needs dark text for legibility.
   --app-answer-correct-background: var(--ion-color-success);
   --app-answer-correct-color: oklch(1 0 0);
@@ -179,6 +189,10 @@
     --ion-color-secondary-shade: oklch(0.681 0.147 68.8);
     --app-color-link: var(--ink-chiku-rin-pale);
     --app-color-reading: var(--ink-ama-iro-pale);
+    // Fresh stays bright; settled keeps the same deep green as by day. One
+    // step apart was not tellable side by side - the full spread is.
+    --app-color-level-known: var(--ink-chiku-rin-pale);
+    --app-color-level-familiar: var(--ink-chiku-rin-deep);
 
     --ion-border-color: var(--ion-color-dark-shade);
     --ion-background-color: var(--ion-color-dark);

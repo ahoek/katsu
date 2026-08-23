@@ -111,11 +111,11 @@
     }
 
     &--familiar {
-      background: var(--ion-color-success);
+      background: var(--app-color-level-familiar);
     }
 
     &--known {
-      background: color-mix(in srgb, var(--ion-color-success) 55%, transparent);
+      background: var(--app-color-level-known);
     }
   }
 }
