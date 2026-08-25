@@ -102,10 +102,18 @@
   font-size: .85rem;
   color: var(--ion-color-medium);
 
+  // Three grades side by side ran out of line the moment one of them read
+  // "2 om aan te werken", so they stack. Left-aligned inside a block that is
+  // centred, which lines the dots up under each other: a legend, not a
+  // sentence.
   &__counts {
     display: flex;
-    justify-content: center;
-    gap: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    width: fit-content;
+    margin-inline: auto;
+    text-align: left;
   }
 
   &__grade {

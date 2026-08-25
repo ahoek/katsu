@@ -121,16 +121,20 @@
 }
 
 .counts {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   margin: 0;
   text-align: center;
 
   dt {
-    font-size: .7rem;
+    // Four labels on one line only just fit at 320px, and "Te leren" broke in
+    // half on the first font that measured a hair wider. They scale with the
+    // screen instead of wrapping, so the row stays the bar's legend.
+    font-size: clamp(.58rem, 2.6vw, .7rem);
+    white-space: nowrap;
     text-transform: uppercase;
-    letter-spacing: .04em;
+    letter-spacing: .03em;
     color: var(--ion-color-medium);
   }
 
