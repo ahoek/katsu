@@ -217,7 +217,7 @@ export const deck = [
   { kanji: '太', grade: 2, meaning: { en: 'thick (girth), fat', nl: 'dik (omvang)' }, on: 'タイ', kun: 'ふと.い' },
   { kanji: '万', grade: 2, meaning: { en: '10,000', nl: 'tienduizend' }, on: 'マン', kun: '' },
   { kanji: '楽', grade: 2, meaning: { en: 'fun, music', nl: 'plezier, muziek' }, on: 'ガク', kun: 'たの.しい' },
-  { kanji: '直', grade: 2, meaning: { en: 'straight, fix', nl: 'recht, herstellen' }, on: 'チョク', kun: 'なお.す' },
+  { kanji: '直', grade: 2, meaning: { en: 'straight, fix', nl: 'rechtstreeks, herstellen' }, on: 'チョク', kun: 'なお.す' },
   { kanji: '店', grade: 2, meaning: { en: 'shop', nl: 'winkel' }, on: 'テン', kun: 'みせ' },
   { kanji: '声', grade: 2, meaning: { en: 'voice', nl: 'stem' }, on: 'セイ', kun: 'こえ' },
   { kanji: '計', grade: 2, meaning: { en: 'measure, plan', nl: 'meten, plan' }, on: 'ケイ', kun: 'はか.る' },
