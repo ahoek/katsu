@@ -467,10 +467,20 @@ positions, and merges them with the deck above. It fails loudly when a character
 is missing, its stroke numbering has a gap, or it ends up with a different count
 of numbers and strokes. `stroke-data.spec.ts` guards the file that ships.
 
-At 835 characters the run takes a few minutes, so a dropped connection retries
-rather than throwing the whole thing away - a 404 still stops it, since that
-character really is not in KanjiVG. Watch its exit code rather than its last
-line: piping the output to `tail` hides a crash behind the pipe's own success.
+At 835 characters the first run takes a few minutes, so a dropped connection
+retries rather than throwing the whole thing away - a 404 still stops it, since
+that character really is not in KanjiVG. Watch its exit code rather than its
+last line: piping the output to `tail` hides a crash behind the pipe's own
+success.
+
+Every run after that takes under a second, because every URL the tools fetch
+carries the ref it is pinned at, and `pinned-cache.mjs` files what comes back
+under that URL's own path in `.cache/pinned/` (gitignored, 10 MB). What cannot
+change is worth keeping: a deck edit - a gloss, a reading, a new grade - is
+then a local merge rather than 835 sequential requests, which is what it always
+was in substance. Bumping a ref invalidates its own files, since the ref is
+part of the path, so there is no flag to pass and nothing to clear by hand.
+Delete the directory to prove a run from scratch.
 
 The same run merges in the two sortable ranks, from `kanji-ranks.mjs` and its
 own pinned fetches: the JLPT level per kanji from Jonathan Waller's lists -

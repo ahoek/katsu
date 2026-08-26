@@ -17,6 +17,8 @@
  * KANJIDIC2's rank, which counted one newspaper's 1998 print run.
  */
 
+import { cached } from './pinned-cache.mjs';
+
 export const KANJI_DATA_REF = '00fd7079c3890f430759536f91aa5e854ec0ca4f';
 
 const KANJI_DATA_URL =
@@ -40,11 +42,14 @@ export const CORPORA = [
  */
 async function fetchShares(corpus) {
   const url = `${KANJI_FREQUENCY_BASE}/${corpus}_characters.csv`;
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`kanji-frequency: ${response.status} ${url}`);
-  }
-  const rows = (await response.text()).trim().split('\n').slice(1)
+  const csv = await cached(url, async () => {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`kanji-frequency: ${response.status} ${url}`);
+    }
+    return response.text();
+  });
+  const rows = csv.trim().split('\n').slice(1)
     .map(line => line.split(','))
     .filter(row => row.length === 4);
   const total = Number(rows.find(([, , char]) => char === 'all')?.[3]);
@@ -76,11 +81,17 @@ async function blendedRanks() {
  * has never heard of stops the tool.
  */
 export async function fetchRanks(deck) {
-  const [response, freq] = await Promise.all([fetch(KANJI_DATA_URL), blendedRanks()]);
-  if (!response.ok) {
-    throw new Error(`kanji-data: ${response.status} ${KANJI_DATA_URL}`);
-  }
-  const entries = await response.json();
+  const [json, freq] = await Promise.all([
+    cached(KANJI_DATA_URL, async () => {
+      const response = await fetch(KANJI_DATA_URL);
+      if (!response.ok) {
+        throw new Error(`kanji-data: ${response.status} ${KANJI_DATA_URL}`);
+      }
+      return response.text();
+    }),
+    blendedRanks(),
+  ]);
+  const entries = JSON.parse(json);
   return new Map(
     deck.map(({ kanji }) => {
       const entry = entries[kanji];

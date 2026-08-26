@@ -4,6 +4,8 @@
  * build-stroke-data.mjs, which writes the file the app ships.
  */
 
+import { cached } from './pinned-cache.mjs';
+
 export const KANJIVG_REF = 'r20260714';
 
 const BASE_URL = `https://raw.githubusercontent.com/KanjiVG/kanjivg/${KANJIVG_REF}/kanji`;
@@ -15,23 +17,28 @@ const fileName = kanji => `${kanji.codePointAt(0).toString(16).padStart(5, '0')}
  * One SVG per kanji, and the deck asks for hundreds in a row: a single dropped
  * connection used to throw away the whole run, so a failed read waits and asks
  * again. A 404 is not retried - that character is simply not in KanjiVG.
+ *
+ * Read through the cache, since the ref is pinned: the second run over the
+ * deck asks the network for nothing.
  */
 export async function fetchSvg(kanji, attempts = 4) {
   const url = `${BASE_URL}/${fileName(kanji)}`;
-  for (let attempt = 1; ; attempt++) {
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw Object.assign(new Error(`${kanji}: ${response.status} ${url}`), { final: true });
+  return cached(url, async () => {
+    for (let attempt = 1; ; attempt++) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw Object.assign(new Error(`${kanji}: ${response.status} ${url}`), { final: true });
+        }
+        return await response.text();
+      } catch (error) {
+        if (error.final || attempt >= attempts) {
+          throw error;
+        }
+        await new Promise(resolve => setTimeout(resolve, 500 * attempt));
       }
-      return await response.text();
-    } catch (error) {
-      if (error.final || attempt >= attempts) {
-        throw error;
-      }
-      await new Promise(resolve => setTimeout(resolve, 500 * attempt));
     }
-  }
+  });
 }
 
 /**
