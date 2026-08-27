@@ -5,9 +5,9 @@
  * cannot change while the ref does not - which makes it worth keeping. The
  * ref is part of the path a file is cached under, so bumping one invalidates
  * its files by itself: there is no flag to remember and nothing to clear by
- * hand. Without this, editing a gloss in the deck cost 835 sequential SVG
- * fetches, because the tool that merges the deck with KanjiVG has one path -
- * fetch everything, write the file.
+ * hand. Without this, editing a gloss in the deck cost one sequential SVG
+ * fetch per character in it, because the tool that merges the deck with KanjiVG
+ * has one path - fetch everything, write the file.
  *
  * The cache lives in `.cache/pinned/` at the repo root and is gitignored: it
  * is a copy of someone else's data, reproducible from the refs in the source.

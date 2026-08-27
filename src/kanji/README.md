@@ -1,7 +1,7 @@
 # Kanji writing (proof of concept)
 
-Learn to write the 642 kanji Japanese children learn in their first four years
-at school: a lesson per character, then written reviews on a spaced repetition
+Learn to write the 1026 kanji Japanese children learn in their six years of
+primary school: a lesson per character, then written reviews on a spaced repetition
 schedule. Every stroke is
 checked as you draw it, so you find out at once when a stroke is in the wrong
 place, drawn backwards, or out of order.
@@ -123,13 +123,13 @@ of those lines pass every test a spine passes while belonging to the other
 part. Where the deck teaches a shape it also says how many strokes it is, and a
 count beats a measurement.
 
-579 of the 642 divide. The other 63 are left alone on purpose:
+952 of the 1026 divide. The other 74 are left alone on purpose:
 
-- 46 have no groups at all - the pictographs, where "it is a picture of a tree"
+- 59 have no groups at all - the pictographs, where "it is a picture of a tree"
   is the explanation and there is no composition to show. 女 is one of them: the
   くノ一 trick people remember it by is about its three strokes, which the pad
   above already writes out, and not about anything the character is made of.
-- 17 come out as more tiles than half their strokes with a nameless shape among
+- 15 come out as more tiles than half their strokes with a nameless shape among
   them. 飛 is six tiles across nine strokes, four of them shapes nothing can
   name, and 不 is a 一, a 丿, a 丨 and a dot - which is the stroke order told a
   second time. Every tile named is a different matter: 上 is 卜 and 一, and 三 is
@@ -190,7 +190,7 @@ recap of every kanji it asked for with the way each one went.
 
 ## How much at a time
 
-At 642 kanji a week away builds a pile nobody wants to start, and a pile nobody
+At 1026 kanji a week away builds a pile nobody wants to start, and a pile nobody
 starts is how a schedule dies. Two caps hold the pace, and they are different in
 kind. `srs/pace.ts` holds both as pure functions; `kanji-pace.service.ts` holds
 nothing but the two settings, in localStorage.
@@ -337,7 +337,7 @@ is answered by the Worker and everything else carries on to GitHub Pages, which
 means the app calls it **same-origin**: no CORS, no allowed-origin list, and
 `SYNC_ENDPOINT` is just `/api/sync`. Route and binding live in `wrangler.toml`.
 
-A schedule is about 9 kB at 642 kanji and would be around 32 kB at 2500, so the
+A schedule is about 12 kB at 1026 kanji and would be around 30 kB at 2500, so the
 storage and traffic are negligible; the reason to think twice is the moving part,
 not the bill.
 
@@ -454,7 +454,7 @@ node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON \
 
 ## Regenerating the stroke data
 
-`src/assets/data/kanji/strokes.json` (1.0 MB, 7641 strokes) is generated, not
+`src/assets/data/kanji/strokes.json` (1.4 MB, 9662 strokes) is generated, not
 edited by hand:
 
 ```bash
@@ -467,7 +467,7 @@ positions, and merges them with the deck above. It fails loudly when a character
 is missing, its stroke numbering has a gap, or it ends up with a different count
 of numbers and strokes. `stroke-data.spec.ts` guards the file that ships.
 
-At 835 characters the first run takes a few minutes, so a dropped connection
+At 1026 characters the first run takes a few minutes, so a dropped connection
 retries rather than throwing the whole thing away - a 404 still stops it, since
 that character really is not in KanjiVG. Watch its exit code rather than its
 last line: piping the output to `tail` hides a crash behind the pipe's own
@@ -477,7 +477,7 @@ Every run after that takes under a second, because every URL the tools fetch
 carries the ref it is pinned at, and `pinned-cache.mjs` files what comes back
 under that URL's own path in `.cache/pinned/` (gitignored, 10 MB). What cannot
 change is worth keeping: a deck edit - a gloss, a reading, a new grade - is
-then a local merge rather than 835 sequential requests, which is what it always
+then a local merge rather than a thousand sequential requests, which is what it always
 was in substance. Bumping a ref invalidates its own files, since the ref is
 part of the path, so there is no flag to pass and nothing to clear by hand.
 Delete the directory to prove a run from scratch.

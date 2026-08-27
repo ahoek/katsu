@@ -7,9 +7,9 @@ import type { Card } from '../srs/srs';
  * The packing is deliberate rather than JSON, because this travels: cards are
  * sorted by code point and only the difference from the previous one is written,
  * every number is base 36, and times are minutes relative to one timestamp in
- * the header. Deflate then does the rest, bringing a card to roughly thirteen
- * characters - a schedule of 642 kanji comes to about 9 kB, and 2500 would be
- * around 32 kB.
+ * the header. Deflate then does the rest, bringing a card to roughly a dozen
+ * characters - a schedule of 1026 kanji comes to about 12 kB, and 2500 would be
+ * around 30 kB.
  */
 
 /**
