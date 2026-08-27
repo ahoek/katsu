@@ -40,7 +40,8 @@ export interface Collision {
 export const DISTINGUISHED = [
   'zeker', 'beschermen', 'verzorgen', 'houden', 'boom', 'tree',
   'toevertrouwen', 'entrust', 'basis', 'beeld', 'image', 'rest', 'verlies', 'loss', 'provide', 'pure', 'part',
-  'grond', 'uur', 'hour', 'turn',
+  'grond', 'uur', 'hour', 'turn', 'dry', 'save', 'storehouse', 'kaartje',
+  'bureau', 'gevaarlijk', 'oorsprong', 'origin', 'exist',
 ];
 
 /**
