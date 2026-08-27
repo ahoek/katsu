@@ -39,7 +39,7 @@ export interface Collision {
 /** Words more than one kanji may hold, when their other words separate them. */
 export const DISTINGUISHED = [
   'zeker', 'beschermen', 'verzorgen', 'houden', 'boom', 'tree',
-  'toevertrouwen', 'entrust', 'basis', 'beeld', 'image', 'rest', 'verlies', 'loss', 'provide', 'pure',
+  'toevertrouwen', 'entrust', 'basis', 'beeld', 'image', 'rest', 'verlies', 'loss', 'provide', 'pure', 'part',
   'grond', 'uur', 'hour', 'turn',
 ];
 

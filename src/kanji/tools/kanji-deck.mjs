@@ -947,7 +947,7 @@ export const deck = [
   { kanji: '宅', grade: 6, meaning: { en: 'residence', nl: 'woning (thuis)' }, on: 'タク', kun: '' },
   { kanji: '創', grade: 6, meaning: { en: 'originate, found', nl: 'scheppen' }, on: 'ソウ', kun: '' },
   { kanji: '諸', grade: 6, meaning: { en: 'various, several', nl: 'meerdere, diverse' }, on: 'ショ', kun: '' },
-  { kanji: '詞', grade: 6, meaning: { en: 'lyrics', nl: 'liedtekst' }, on: 'シ', kun: '' },
+  { kanji: '詞', grade: 6, meaning: { en: 'lyrics, part of speech', nl: 'liedtekst, woordsoort' }, on: 'シ', kun: '' },
   { kanji: '割', grade: 6, meaning: { en: 'split, percentage', nl: 'splijten, verhouding' }, on: 'カツ', kun: 'わ.る' },
   { kanji: '宗', grade: 6, meaning: { en: 'religious sect', nl: 'geloofsrichting' }, on: 'シュウ', kun: '' },
   { kanji: '策', grade: 6, meaning: { en: 'policy, tactic', nl: 'maatregel, list' }, on: 'サク', kun: '' },
