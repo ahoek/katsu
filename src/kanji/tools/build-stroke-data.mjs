@@ -115,6 +115,17 @@ async function fetchKanji(entry, ranks) {
  * kanji the deck teaches, since it is shown as a link to that kanji's page.
  */
 async function fetchRadical(radical, characters) {
+  // Ten of these shapes are standalone kanji in a dictionary (斤 is even
+  // jouyou), but none is in this deck - and that is what makes them parts
+  // here. The day the deck grows to teach one, its tiles will link to the
+  // kanji page and the part page has to retire; stop loudly so that is a
+  // decision instead of two pages claiming one shape.
+  if (deckKanji.has(radical.shape)) {
+    throw new Error(
+      `Radical ${radical.shape} is now a kanji the deck teaches: ` +
+        `remove it from kanji-radicals.mjs, its tiles link to the kanji page`,
+    );
+  }
   const tiles = characters.reduce(
     (total, character) =>
       total + (character.parts?.filter(part => part.element === radical.shape).length ?? 0),
