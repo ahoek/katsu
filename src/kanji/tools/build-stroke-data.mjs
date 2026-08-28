@@ -128,7 +128,10 @@ async function fetchRadical(radical, characters) {
   }
   const tiles = characters.reduce(
     (total, character) =>
-      total + (character.parts?.filter(part => part.element === radical.shape).length ?? 0),
+      total +
+      (character.parts?.filter(
+        part => (part.radical ?? part.element) === radical.shape,
+      ).length ?? 0),
     0,
   );
   if (tiles === 0) {

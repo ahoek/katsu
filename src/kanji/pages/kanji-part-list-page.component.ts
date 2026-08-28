@@ -63,9 +63,9 @@ export class KanjiPartListPageComponent implements OnInit {
   protected readonly counts = computed(() => {
     const counts = new Map<string, number>();
     for (const character of this.data.data()?.characters ?? []) {
-      for (const element of new Set(character.parts?.map(part => part.element) ?? [])) {
-        if (element) {
-          counts.set(element, (counts.get(element) ?? 0) + 1);
+      for (const shape of new Set(character.parts?.map(part => part.radical ?? part.element) ?? [])) {
+        if (shape) {
+          counts.set(shape, (counts.get(shape) ?? 0) + 1);
         }
       }
     }

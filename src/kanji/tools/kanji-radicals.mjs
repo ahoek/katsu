@@ -73,4 +73,8 @@ export const RADICALS = [
   { shape: '卜', alsoKanji: true, name: { en: 'divination', nl: 'waarzeggerij' } },
   { shape: '聿', alsoKanji: true, name: { en: 'brush (in hand)', nl: 'penseel (in de hand)' } },
   { shape: '罒', name: { en: 'net', nl: 'net' } },
+  // The meat-moon: written exactly as 月 (so the strokes are 月's own file),
+  // but KanjiVG says original 肉 on every body kanji. The part tiles keep
+  // 月's look and link here instead of to the moon.
+  { shape: '⺼', fetchAs: '月', formOf: '肉', name: { en: 'meat', nl: 'vlees' } },
 ];

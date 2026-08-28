@@ -232,7 +232,19 @@ describe('the shipped stroke data', () => {
         strokes: string[]; numbers: unknown[] }[];
     }).radicals;
 
-    expect(radicals.length).toBe(33);
+    // The meat-moon: written as 月, filed under ⺼, never linked as the moon.
+    const flesh = strokeData.characters.filter(character =>
+      (character as { parts?: { radical?: string }[] }).parts?.some(part => part.radical === '⺼'));
+    expect(flesh.length).toBeGreaterThanOrEqual(17);
+    for (const character of flesh) {
+      const parts = (character as { parts?: { radical?: string; kanji?: string; element?: string }[] }).parts ?? [];
+      for (const part of parts.filter(part => part.radical === '⺼')) {
+        expect(part.kanji).toBeUndefined();
+        expect(part.element).toBe('月');
+      }
+    }
+
+    expect(radicals.length).toBe(34);
     expect(new Set(radicals.map(radical => radical.shape)).size).toBe(radicals.length);
 
     const deck = new Set(strokeData.characters.map(character => character.kanji));
@@ -247,8 +259,8 @@ describe('the shipped stroke data', () => {
       const tiles = strokeData.characters.reduce(
         (total, character) =>
           total +
-          ((character as { parts?: { element?: string }[] }).parts?.filter(
-            part => part.element === radical.shape,
+          ((character as { parts?: { element?: string; radical?: string }[] }).parts?.filter(
+            part => (part.radical ?? part.element) === radical.shape,
           ).length ?? 0),
         0,
       );

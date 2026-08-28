@@ -51,12 +51,14 @@ const VIEW_BOX = 109;
                 >
                   <ng-container [ngTemplateOutlet]="glyph" [ngTemplateOutletContext]="{ part }" />
                 </a>
-              } @else if (part.element && shapesWithPages().has(part.element)) {
+              } @else if (pageFor(part); as shape) {
                 <!-- Not a kanji, but a shape frequent enough to have a
-                     reference page: the same lifted card, going there. -->
+                     reference page: the same lifted card, going there. The
+                     page's shape can differ from what the tile shows - the
+                     meat-moon looks like 月 and goes to ⺼. -->
                 <a
                   class="part part--linked"
-                  [routerLink]="['/kanji/part', part.element]"
+                  [routerLink]="['/kanji/part', shape]"
                   routerDirection="forward"
                   [attr.aria-label]="label(part)"
                 >
@@ -102,7 +104,7 @@ const VIEW_BOX = 109;
           <ion-icon name="chevron-forward"></ion-icon>
         } @else if (part.element) {
           <span lang="ja">{{ part.element }}</span>
-          @if (shapesWithPages().has(part.element)) {
+          @if (pageFor(part)) {
             <ion-icon name="chevron-forward"></ion-icon>
           }
         }
@@ -315,6 +317,12 @@ export class KanjiPartsComponent {
     }
     return groups;
   });
+
+  /** The part page a tile opens, when there is one: ⺼ for the meat-moon. */
+  protected pageFor(part: KanjiPart): string | undefined {
+    const shape = part.radical ?? part.element;
+    return shape && this.shapesWithPages().has(shape) ? shape : undefined;
+  }
 
   protected inPart(part: KanjiPart, index: number): boolean {
     return part.strokes.includes(index + 1);

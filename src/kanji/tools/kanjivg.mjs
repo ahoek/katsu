@@ -276,7 +276,10 @@ export function partsOf(svg, kanji, deckKanji, deckStrokes = new Map()) {
     // The shape as it is written here - 亻 rather than 人 - and, when the deck
     // teaches it, the kanji it is, so a part can be linked to its own page.
     ...(part.element ? { element: part.element } : {}),
-    ...(deckPart(part, deckKanji) ? { kanji: deckPart(part, deckKanji) } : {}),
+    ...(!fleshRadical(part) && deckPart(part, deckKanji)
+      ? { kanji: deckPart(part, deckKanji) }
+      : {}),
+    ...(fleshRadical(part) ? { radical: fleshRadical(part) } : {}),
     ...(part.position ? { position: part.position } : {}),
     ...(part.phon ? { sound: true } : {}),
     ...(part.unit ? { unit: part.unit } : {}),
@@ -468,6 +471,17 @@ function nameOf(attrs) {
   return element && /^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\u2E80-\u2FFF\u31C0-\u31EF\u3005\u303B]+$/u.test(element)
     ? element
     : undefined;
+}
+
+/**
+ * The meat-moon. KanjiVG writes the flesh radical as element 月 - it is
+ * written exactly as 月, all four strokes - but marks original="肉" on every
+ * body kanji, unanimously. The tile keeps 月's look (the hand test: this is
+ * the shape being written), but it links to the ⺼ part page instead of the
+ * kanji page for the moon, so 腹 stops sending its learner to the moon.
+ */
+function fleshRadical(part) {
+  return part.element === '月' && part.original === '肉' ? '⺼' : undefined;
 }
 
 /** A shape the deck teaches, either as itself or as a radical form of one. */

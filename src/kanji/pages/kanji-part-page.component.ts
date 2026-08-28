@@ -68,7 +68,7 @@ export class KanjiPartPageComponent implements OnInit {
   /** What the deck writes with this shape, in lesson order. */
   protected readonly writtenWith = computed(() =>
     (this.data.data()?.characters ?? []).filter(character =>
-      character.parts?.some(part => part.element === this.shape()),
+      character.parts?.some(part => (part.radical ?? part.element) === this.shape()),
     ),
   );
 

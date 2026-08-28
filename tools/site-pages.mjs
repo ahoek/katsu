@@ -349,7 +349,7 @@ export function sitePages(translations, strokeData) {
     },
     ...(strokeData.radicals ?? []).map(radical => {
       const withIt = characters.filter(character =>
-        character.parts?.some(part => part.element === radical.shape));
+        character.parts?.some(part => (part.radical ?? part.element) === radical.shape));
       const sample = withIt.slice(0, 5).map(character => character.kanji).join(', ');
       return {
         path: `kanji/part/${radical.shape}`,

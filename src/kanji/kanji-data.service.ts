@@ -11,6 +11,12 @@ import { firstValueFrom } from 'rxjs';
 export interface KanjiPart {
   element?: string;
   kanji?: string;
+  /**
+   * The part page this shape belongs to when that is not simply `element`:
+   * the meat-moon is written as 月 but is ⺼, so its tile keeps 月's look and
+   * links to the meat page instead of the kanji page for the moon.
+   */
+  radical?: string;
   position?: string;
   /**
    * KanjiVG's mark for the piece that carries the reading rather than the
