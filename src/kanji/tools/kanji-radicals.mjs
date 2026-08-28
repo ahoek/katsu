@@ -46,8 +46,8 @@ export const RADICALS = [
   { shape: '厂', name: { en: 'cliff', nl: 'klif' } },
   { shape: '灬', formOf: '火', name: { en: 'fire (below)', nl: 'vuur (onder)' } },
   { shape: '又', name: { en: 'right hand', nl: 'rechterhand' } },
-  // ふゆがしら, the settled Japanese name: named after the kanji it tops,
-  // which reads the same in any language - and 冬 is taught in grade 2.
-  { shape: '夂', name: { en: 'top of 冬', nl: 'kop van 冬' } },
+  // The Kangxi name. ふゆがしら names the kanji it tops, but a name should
+  // not need a kanji inside it to be read; and winterkop read as a cold head.
+  { shape: '夂', name: { en: 'go', nl: 'gaan' } },
   { shape: '囗', name: { en: 'enclosure', nl: 'omheining' } },
 ];
