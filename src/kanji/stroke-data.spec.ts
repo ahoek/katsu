@@ -235,7 +235,10 @@ describe('the shipped stroke data', () => {
     // The meat-moon: written as 月, filed under ⺼, never linked as the moon.
     const flesh = strokeData.characters.filter(character =>
       (character as { parts?: { radical?: string }[] }).parts?.some(part => part.radical === '⺼'));
-    expect(flesh.length).toBeGreaterThanOrEqual(17);
+    // 16, not 17: 朝's 月 carries KanjiVG's own phon mark 舟V, which
+    // contradicts its 肉 filing, so it stays with the moon.
+    expect(flesh.length).toBeGreaterThanOrEqual(16);
+    expect(flesh.map(character => character.kanji)).not.toContain('朝');
     for (const character of flesh) {
       const parts = (character as { parts?: { radical?: string; kanji?: string; element?: string }[] }).parts ?? [];
       for (const part of parts.filter(part => part.radical === '⺼')) {

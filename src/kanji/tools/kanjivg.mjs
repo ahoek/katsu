@@ -481,6 +481,13 @@ function nameOf(attrs) {
  * kanji page for the moon, so 腹 stops sending its learner to the moon.
  */
 function fleshRadical(part) {
+  // Where the same group carries a phon mark naming another kanji, the source
+  // contradicts its own 肉 filing: 朝's right is marked 舟V - a worn-down boat
+  // lending its sound - and 肉 there is glyph filing, not history. The one
+  // kanji in the deck where that happens, and it stays with the moon.
+  if (part.phon) {
+    return undefined;
+  }
   return part.element === '月' && part.original === '肉' ? '⺼' : undefined;
 }
 
