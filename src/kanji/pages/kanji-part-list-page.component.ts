@@ -43,7 +43,18 @@ export class KanjiPartListPageComponent implements OnInit {
   private readonly translate = inject(TranslateService);
   private readonly page = inject(PageMetaService);
 
-  protected readonly radicals = computed(() => this.data.data()?.radicals ?? []);
+  /**
+   * Most-written first: the order says which shapes pay off soonest, the way
+   * the browse page leads with what is due. Ties break by stroke count, the
+   * order a radical index in a dictionary would use.
+   */
+  protected readonly radicals = computed(() =>
+    [...(this.data.data()?.radicals ?? [])].sort(
+      (a, b) =>
+        (this.counts().get(b.shape) ?? 0) - (this.counts().get(a.shape) ?? 0) ||
+        a.strokes.length - b.strokes.length,
+    ),
+  );
 
   /** The square every KanjiVG glyph is drawn in. */
   protected readonly viewBox = 109;
