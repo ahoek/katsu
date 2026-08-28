@@ -222,17 +222,17 @@ describe('the shipped stroke data', () => {
 
   /**
    * The radical pages: recurring shapes with strokes, a name in both
-   * languages, and enough tiles to be worth a page. The ten-tile line is the
-   * policy, not an accident of the data - a shape appearing twice does not
-   * need a page, and this is where that decision is held.
+   * languages, and enough tiles to be worth a page. The four-tile floor is
+   * the policy, not an accident of the data - a shape appearing twice does
+   * not need a page, and this is where that decision is held.
    */
-  it('gives every radical strokes, both names, and ten tiles to link from', () => {
+  it('gives every radical strokes, both names, and four tiles to link from', () => {
     const radicals = (strokeData as unknown as {
       radicals: { shape: string; name: { en: string; nl: string }; formOf?: string;
         strokes: string[]; numbers: unknown[] }[];
     }).radicals;
 
-    expect(radicals.length).toBe(18);
+    expect(radicals.length).toBe(33);
     expect(new Set(radicals.map(radical => radical.shape)).size).toBe(radicals.length);
 
     const deck = new Set(strokeData.characters.map(character => character.kanji));
@@ -252,7 +252,7 @@ describe('the shipped stroke data', () => {
           ).length ?? 0),
         0,
       );
-      expect(tiles, `${radical.shape} carries ${tiles} tiles`).toBeGreaterThanOrEqual(10);
+      expect(tiles, `${radical.shape} carries ${tiles} tiles`).toBeGreaterThanOrEqual(4);
     }
   });
 

@@ -7,10 +7,11 @@
  * deck kanji written with it - which is the useful half: 氵 is worth a page
  * mostly because it lists 海, 池, 活 and the rest.
  *
- * The list is the frequent head, not the long tail: every shape here carries
- * ten or more tiles across the deck (measured 2026-08-28 at 1026 kanji), and
- * stroke-data.spec.ts holds that line. Bare strokes (丿, 丶) stay out however
- * often they appear - the pad already teaches strokes. The names are the
+ * The list is the decision: a shape earns a page when it has a real name and
+ * carries at least four tiles across the deck (measured 2026-08-28 at 1026
+ * kanji), and stroke-data.spec.ts holds that floor. Bare strokes (丿, 丶, 丨,
+ * 亅, 乙) stay out however often they appear - the pad already teaches
+ * strokes - and so do the fragments no source names (𠂉, マ, 龶). The names are the
  * settled radical names (water, roof, cliff), not glosses: nothing ever asks a
  * learner to write 氵 from a prompt, so the collision rules have no say here.
  *
@@ -50,4 +51,21 @@ export const RADICALS = [
   // not need a kanji inside it to be read; and winterkop read as a cold head.
   { shape: '夂', name: { en: 'go', nl: 'gaan' } },
   { shape: '囗', name: { en: 'enclosure', nl: 'omheining' } },
+  { shape: '頁', name: { en: 'head', nl: 'hoofd' } },
+  { shape: '匕', name: { en: 'spoon', nl: 'lepel' } },
+  { shape: '尸', name: { en: 'seated body', nl: 'zittend lichaam' } },
+  // KanjiVG splits 冫's origin between 氷 and 二, so it names no formOf.
+  { shape: '冫', name: { en: 'ice', nl: 'ijs' } },
+  { shape: '礻', formOf: '示', name: { en: 'altar', nl: 'altaar' } },
+  { shape: '隹', name: { en: 'short-tailed bird', nl: 'vogel (korte staart)' } },
+  { shape: '斤', name: { en: 'axe', nl: 'bijl' } },
+  // The other 阝: same three strokes as ⻖, on the right side, from 邑.
+  { shape: '⻏', fetchAs: '阝', name: { en: 'city', nl: 'stad' } },
+  { shape: '忄', formOf: '心', name: { en: 'heart', nl: 'hart' } },
+  { shape: '巾', name: { en: 'hanging cloth', nl: 'doek (hangend)' } },
+  { shape: '殳', name: { en: 'weapon', nl: 'wapen' } },
+  { shape: '艮', name: { en: 'stopping', nl: 'stilhouden' } },
+  { shape: '卜', name: { en: 'divination', nl: 'waarzeggerij' } },
+  { shape: '聿', name: { en: 'brush (in hand)', nl: 'penseel (in de hand)' } },
+  { shape: '罒', name: { en: 'net', nl: 'net' } },
 ];
