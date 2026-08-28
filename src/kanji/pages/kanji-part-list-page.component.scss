@@ -1,0 +1,51 @@
+@use 'page-shared' as *;
+
+.detail {
+  @include page-frame;
+}
+
+// One shape per row: the glyph large enough to tell 夂 from 攵, the name and
+// the count beside it. Two columns where the width allows - sized so that
+// rechterhand, the longest name, keeps to one piece.
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 6px;
+}
+
+.row {
+  @include glyph-tile;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 8px 12px;
+
+  &__glyph {
+    font-size: 1.9rem;
+    line-height: 1.1;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__name {
+    font-size: .9rem;
+    font-weight: 600;
+    line-height: 1.2;
+    // Wrap between words only: rechterhan-d is not a name.
+    overflow-wrap: normal;
+    word-break: keep-all;
+  }
+
+  &__count {
+    font-size: .7rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+.loading {
+  @include loading-line;
+}

@@ -38,6 +38,15 @@ export const kanjiRoutes: Routes = [
       import('./pages/kanji-browse-page.component').then(m => m.KanjiBrowsePageComponent),
   },
   {
+    // Every shape on one page, mostly so the set of names can be looked over.
+    // Not linked from any menu; the shapes are reached from the kanji pages.
+    path: 'part',
+    title: 'title.kanji-practice',
+    data: { description: 'description.kanji-practice' },
+    loadComponent: () =>
+      import('./pages/kanji-part-list-page.component').then(m => m.KanjiPartListPageComponent),
+  },
+  {
     // The shape itself is the parameter, like the kanji pages below. Kept off
     // /kanji/practice/... so the pager and the deck orders never have to
     // answer for shapes that are not in the deck.

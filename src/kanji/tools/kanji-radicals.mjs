@@ -37,6 +37,8 @@ export const RADICALS = [
   { shape: '厂', name: { en: 'cliff', nl: 'klif' } },
   { shape: '灬', formOf: '火', name: { en: 'fire (below)', nl: 'vuur (onder)' } },
   { shape: '又', name: { en: 'right hand', nl: 'rechterhand' } },
-  { shape: '夂', name: { en: 'trailing legs', nl: 'slepende benen' } },
+  // ふゆがしら, the settled Japanese name: named after the kanji it tops,
+  // which reads the same in any language - and 冬 is taught in grade 2.
+  { shape: '夂', name: { en: 'top of 冬', nl: 'kop van 冬' } },
   { shape: '囗', name: { en: 'enclosure', nl: 'omheining' } },
 ];

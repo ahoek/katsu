@@ -1,0 +1,31 @@
+<ion-header class="app-chrome">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/kanji/practice"></ion-back-button>
+    </ion-buttons>
+    <ion-title><h1 class="toolbar-heading">{{ 'kanji.part.list-title' | translate }}</h1></ion-title>
+    <ion-buttons slot="end">
+      <app-menu-button></app-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="patterned" [fullscreen]="true">
+  <div class="detail">
+    <div class="list">
+      @for (radical of radicals(); track radical.shape) {
+        <a class="row" [routerLink]="['/kanji/part', radical.shape]" routerDirection="forward">
+          <span class="row__glyph" lang="ja">{{ radical.shape }}</span>
+          <span class="row__text">
+            <span class="row__name">{{ nameOf(radical) }}</span>
+            <small class="row__count">
+              {{ 'kanji.part.count' | translate: { count: counts().get(radical.shape) ?? 0 } }}
+            </small>
+          </span>
+        </a>
+      } @empty {
+        <p class="loading">{{ 'kanji.loading' | translate }}</p>
+      }
+    </div>
+  </div>
+</ion-content>

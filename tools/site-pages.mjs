@@ -324,6 +324,29 @@ export function sitePages(translations, strokeData) {
         ]),
       ],
     },
+    {
+      path: 'kanji/part',
+      title: 'Kanji radicals and parts with stroke order - Katsu',
+      description:
+        'The recurring shapes kanji are written with: each radical with its stroke order, ' +
+        'its name, and the kanji it appears in.',
+      shell: shell(
+        `<h1 class="boot-shell__title">Kanji radicals</h1>` +
+          `<p class="boot-shell__deck">` +
+          (strokeData.radicals ?? [])
+            .map(radical =>
+              `<a href="${pathFor(`kanji/part/${radical.shape}`)}" lang="ja">${escapeHtml(radical.shape)}</a>`)
+            .join(' ') +
+          `</p>`,
+      ),
+      linkedData: [
+        breadcrumb([
+          ['Katsu', urlFor('')],
+          ['Write kanji', urlFor('kanji')],
+          ['Radicals', urlFor('kanji/part')],
+        ]),
+      ],
+    },
     ...(strokeData.radicals ?? []).map(radical => {
       const withIt = characters.filter(character =>
         character.parts?.some(part => part.element === radical.shape));

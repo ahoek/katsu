@@ -108,7 +108,13 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       // same thing into the file (tools/site-pages.mjs); this keeps it right
       // for the reader, in their language, once the router takes over.
       part: {
-        'form-of': '{{kanji}} as a part',
+        'list-title': 'Parts',
+        'count': '{{count}} kanji',
+        'list-seo-title': 'Kanji radicals and parts with stroke order - Katsu',
+        'list-seo-description':
+          'The recurring shapes kanji are written with: each radical with its ' +
+          'stroke order, its name, and the kanji it appears in.',
+        'form-of': 'How {{kanji}} is written in a kanji',
         'written-with': 'Written with this part',
         'seo-title': '{{shape}} - the {{name}} radical in kanji - Katsu',
         'seo-description':
@@ -322,7 +328,13 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'freq-none': 'Niet gezien in de getelde teksten',
       },
       part: {
-        'form-of': '{{kanji}} als onderdeel',
+        'list-title': 'Onderdelen',
+        'count': '{{count}} kanji',
+        'list-seo-title': 'Kanji-radicalen en onderdelen met streekvolgorde - Katsu',
+        'list-seo-description':
+          'De terugkerende vormen waarmee kanji geschreven worden: elk radicaal ' +
+          'met zijn streekvolgorde, zijn naam en de kanji waarin het voorkomt.',
+        'form-of': 'Zo schrijf je {{kanji}} in een kanji',
         'written-with': 'Geschreven met dit onderdeel',
         'seo-title': '{{shape}} - het radicaal ‘{{name}}’ in kanji - Katsu',
         'seo-description':
