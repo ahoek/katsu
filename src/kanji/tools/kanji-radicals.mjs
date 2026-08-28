@@ -23,7 +23,8 @@
  * The names themselves have sources, and only two are allowed: the Japanese
  * 部首名 where it translates or names a kanji the deck teaches (さんずい is
  * water, ふゆがしら is the top of 冬), and the Kangxi radical names as Unicode
- * standardises them otherwise (private, lid, again, dotted cliff). NEVER a
+ * standardises them otherwise (private, lid, dotted cliff) - and real
+ * etymology, which is truth: 又 is a right hand, and may say so. NEVER a
  * name from Heisig, WaniKani or any other learner course - those are
  * mnemonics somebody made up, exactly the invented naming the parts pipeline
  * exists to keep out.
@@ -44,7 +45,7 @@ export const RADICALS = [
   { shape: '彳', name: { en: 'step', nl: 'stap' } },
   { shape: '厂', name: { en: 'cliff', nl: 'klif' } },
   { shape: '灬', formOf: '火', name: { en: 'fire (below)', nl: 'vuur (onder)' } },
-  { shape: '又', name: { en: 'again', nl: 'opnieuw' } },
+  { shape: '又', name: { en: 'right hand', nl: 'rechterhand' } },
   // ふゆがしら, the settled Japanese name: named after the kanji it tops,
   // which reads the same in any language - and 冬 is taught in grade 2.
   { shape: '夂', name: { en: 'top of 冬', nl: 'kop van 冬' } },
