@@ -12,16 +12,22 @@
 
 <ion-content class="patterned" [fullscreen]="true">
   <div class="detail">
-    <div class="list">
+    <div class="cards">
+      <!-- The same paper cards a kanji page shows its parts on, so this page
+           reads as "all of those, gathered". Drawn from the shapes' own
+           strokes rather than set in a font: several of these codepoints
+           render differently per font, and the ink is the app's own. -->
       @for (radical of radicals(); track radical.shape) {
-        <a class="row" [routerLink]="['/kanji/part', radical.shape]" routerDirection="forward">
-          <span class="row__glyph" lang="ja">{{ radical.shape }}</span>
-          <span class="row__text">
-            <span class="row__name">{{ nameOf(radical) }}</span>
-            <small class="row__count">
-              {{ 'kanji.part.count' | translate: { count: counts().get(radical.shape) ?? 0 } }}
-            </small>
-          </span>
+        <a class="card" [routerLink]="['/kanji/part', radical.shape]" routerDirection="forward">
+          <svg class="card__glyph" [attr.viewBox]="'0 0 ' + viewBox + ' ' + viewBox" aria-hidden="true">
+            @for (stroke of radical.strokes; track $index) {
+              <path [attr.d]="stroke" />
+            }
+          </svg>
+          <span class="card__name">{{ nameOf(radical) }}</span>
+          <small class="card__count">
+            {{ 'kanji.part.count' | translate: { count: counts().get(radical.shape) ?? 0 } }}
+          </small>
         </a>
       } @empty {
         <p class="loading">{{ 'kanji.loading' | translate }}</p>

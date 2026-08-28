@@ -45,6 +45,9 @@ export class KanjiPartListPageComponent implements OnInit {
 
   protected readonly radicals = computed(() => this.data.data()?.radicals ?? []);
 
+  /** The square every KanjiVG glyph is drawn in. */
+  protected readonly viewBox = 109;
+
   /** How many kanji each shape is written in, for the line under its name. */
   protected readonly counts = computed(() => {
     const counts = new Map<string, number>();

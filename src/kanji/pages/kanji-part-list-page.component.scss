@@ -4,45 +4,78 @@
   @include page-frame;
 }
 
-// One shape per row: the glyph large enough to tell 夂 from 攵, the name and
-// the count beside it. Two columns where the width allows - sized so that
-// rechterhand, the longest name, keeps to one piece.
-.list {
+.cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 6px;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 8px;
 }
 
-.row {
-  @include glyph-tile;
-  flex-direction: row;
-  justify-content: flex-start;
-  gap: 12px;
-  padding: 8px 12px;
+// The part cards from the kanji pages, gathered: paper, the shape in ink, and
+// the name where a part tile carries its caption. Every one of these goes
+// somewhere, so they all wear the lifted, link-coloured dress of a tile that
+// responds.
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 6px 6px;
+  background: var(--app-color-paper);
+  border: 1px solid color-mix(in srgb, var(--app-color-paper-link) 45%, transparent);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / .16);
+  text-decoration: none;
+  transition: box-shadow 120ms ease-out, transform 120ms ease-out;
+
+  &:hover {
+    box-shadow: 0 3px 6px rgb(0 0 0 / .22);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    box-shadow: 0 1px 2px rgb(0 0 0 / .2);
+    transform: none;
+  }
 
   &__glyph {
-    font-size: 1.9rem;
-    line-height: 1.1;
+    width: 64%;
+    aspect-ratio: 1;
+
+    path {
+      fill: none;
+      stroke: var(--app-color-ink);
+      stroke-width: 7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
   }
 
-  &__text {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-
+  // Room for two lines, so gestipte klif and omgekeerde doos do not push
+  // their cards taller than the row.
   &__name {
-    font-size: .9rem;
+    display: flex;
+    align-items: center;
+    min-height: 2.1em;
+    margin-top: 2px;
+    font-size: .72rem;
     font-weight: 600;
-    line-height: 1.2;
-    // Wrap between words only: rechterhan-d is not a name.
-    overflow-wrap: normal;
-    word-break: keep-all;
+    line-height: 1.15;
+    text-align: center;
+    color: var(--app-color-paper-link);
   }
 
   &__count {
-    font-size: .7rem;
-    color: var(--ion-color-medium);
+    font-size: .6rem;
+    color: var(--app-color-paper-rule);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
   }
 }
 
