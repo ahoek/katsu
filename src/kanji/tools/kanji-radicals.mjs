@@ -21,6 +21,11 @@
  * the page may say 氵 is how 水 is written on a left side, because the source
  * says so. That is the whole etymology this app will ever claim.
  *
+ * `alsoKanji` marks the shapes that stand in dictionaries as characters of
+ * their own (斤 is even jouyou) - none is in this deck, which is what makes
+ * them parts here, and the page says so. The builder stops the build the day
+ * one of them joins the deck.
+ *
  * The names themselves have sources, and only two are allowed: the Japanese
  * 部首名 where it translates or names a kanji the deck teaches (さんずい is
  * water, ふゆがしら is the top of 冬), and the Kangxi radical names as Unicode
@@ -46,26 +51,26 @@ export const RADICALS = [
   { shape: '彳', name: { en: 'step', nl: 'stap' } },
   { shape: '厂', name: { en: 'cliff', nl: 'klif' } },
   { shape: '灬', formOf: '火', name: { en: 'fire (below)', nl: 'vuur (onder)' } },
-  { shape: '又', name: { en: 'right hand', nl: 'rechterhand' } },
+  { shape: '又', alsoKanji: true, name: { en: 'right hand', nl: 'rechterhand' } },
   // The Kangxi name. ふゆがしら names the kanji it tops, but a name should
   // not need a kanji inside it to be read; and winterkop read as a cold head.
   { shape: '夂', name: { en: 'go', nl: 'gaan' } },
   { shape: '囗', name: { en: 'enclosure', nl: 'omheining' } },
-  { shape: '頁', name: { en: 'head', nl: 'hoofd' } },
-  { shape: '匕', name: { en: 'spoon', nl: 'lepel' } },
-  { shape: '尸', name: { en: 'seated body', nl: 'zittend lichaam' } },
+  { shape: '頁', alsoKanji: true, name: { en: 'head', nl: 'hoofd' } },
+  { shape: '匕', alsoKanji: true, name: { en: 'spoon', nl: 'lepel' } },
+  { shape: '尸', alsoKanji: true, name: { en: 'seated body', nl: 'zittend lichaam' } },
   // KanjiVG splits 冫's origin between 氷 and 二, so it names no formOf.
   { shape: '冫', name: { en: 'ice', nl: 'ijs' } },
   { shape: '礻', formOf: '示', name: { en: 'altar', nl: 'altaar' } },
-  { shape: '隹', name: { en: 'short-tailed bird', nl: 'vogel (korte staart)' } },
-  { shape: '斤', name: { en: 'axe', nl: 'bijl' } },
+  { shape: '隹', alsoKanji: true, name: { en: 'short-tailed bird', nl: 'vogel (korte staart)' } },
+  { shape: '斤', alsoKanji: true, name: { en: 'axe', nl: 'bijl' } },
   // The other 阝: same three strokes as ⻖, on the right side, from 邑.
   { shape: '⻏', fetchAs: '阝', name: { en: 'city', nl: 'stad' } },
   { shape: '忄', formOf: '心', name: { en: 'heart', nl: 'hart' } },
-  { shape: '巾', name: { en: 'hanging cloth', nl: 'doek (hangend)' } },
+  { shape: '巾', alsoKanji: true, name: { en: 'hanging cloth', nl: 'doek (hangend)' } },
   { shape: '殳', name: { en: 'weapon', nl: 'wapen' } },
-  { shape: '艮', name: { en: 'stopping', nl: 'stilhouden' } },
-  { shape: '卜', name: { en: 'divination', nl: 'waarzeggerij' } },
-  { shape: '聿', name: { en: 'brush (in hand)', nl: 'penseel (in de hand)' } },
+  { shape: '艮', alsoKanji: true, name: { en: 'stopping', nl: 'stilhouden' } },
+  { shape: '卜', alsoKanji: true, name: { en: 'divination', nl: 'waarzeggerij' } },
+  { shape: '聿', alsoKanji: true, name: { en: 'brush (in hand)', nl: 'penseel (in de hand)' } },
   { shape: '罒', name: { en: 'net', nl: 'net' } },
 ];

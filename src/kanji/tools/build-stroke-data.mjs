@@ -143,6 +143,7 @@ async function fetchRadical(radical, characters) {
     shape: radical.shape,
     name: radical.name,
     ...(radical.formOf ? { formOf: radical.formOf } : {}),
+    ...(radical.alsoKanji ? { alsoKanji: true } : {}),
     strokes,
     numbers: strokeNumbers(svg, radical.shape, strokes.length),
   };

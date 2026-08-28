@@ -114,6 +114,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'list-seo-description':
           'The recurring shapes kanji are written with: each radical with its ' +
           'stroke order, its name, and the kanji it appears in.',
+        'also-kanji': 'Also a kanji of its own, outside this deck',
         'form-of': 'A variant of {{kanji}}',
         'written-with': 'Written with this part',
         'seo-title': '{{shape}} - the {{name}} radical in kanji - Katsu',
@@ -334,6 +335,7 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'list-seo-description':
           'De terugkerende vormen waarmee kanji geschreven worden: elk radicaal ' +
           'met zijn streekvolgorde, zijn naam en de kanji waarin het voorkomt.',
+        'also-kanji': 'Ook een zelfstandig kanji, buiten dit deck',
         'form-of': 'Variant van {{kanji}}',
         'written-with': 'Geschreven met dit onderdeel',
         'seo-title': '{{shape}} - het radicaal ‘{{name}}’ in kanji - Katsu',

@@ -24,6 +24,13 @@
               {{ 'kanji.strokes' | translate: { count: radical.strokes.length } }}
             }
           </p>
+          @if (radical.alsoKanji) {
+            <!-- Ten of these shapes are dictionary kanji of their own; the
+                 deck does not teach them, which is what makes them parts
+                 here. Said, so the page does not deny what a reader with a
+                 dictionary can see. -->
+            <p class="meet__note">{{ 'kanji.part.also-kanji' | translate }}</p>
+          }
           <!-- KanjiVG's own word, and the only etymology this page will ever
                claim: the source files 氵 under 水, so the page may say so. -->
           @if (radical.formOf; as kanji) {

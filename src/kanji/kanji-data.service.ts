@@ -78,6 +78,8 @@ export interface KanjiRadical {
   /** Conventional radical name per language code, always including `en`. */
   name: Record<string, string>;
   formOf?: string;
+  /** A dictionary kanji in its own right, outside this deck (斤, 又). */
+  alsoKanji?: boolean;
   strokes: string[];
   numbers: { x: number; y: number }[];
 }
