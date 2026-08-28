@@ -24,7 +24,7 @@ import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { decodeSchedule } from '../sync/schedule-code.ts';
+import { decodeSchedule, decodeScheduleBase } from '../sync/schedule-code.ts';
 import { MASTERED_STAGE, STAGES } from '../srs/srs.ts';
 import { learningDayStart } from '../srs/pace.ts';
 import {
@@ -49,11 +49,18 @@ if (!file) {
   process.exit(1);
 }
 
-const cards = await decodeSchedule((await readFile(file, 'utf8')).trim());
+const code = (await readFile(file, 'utf8')).trim();
+const cards = await decodeSchedule(code);
 const deck = JSON.parse(await readFile(STROKE_DATA, 'utf8')).characters;
 const byKanji = new Map(deck.map(character => [character.kanji, character]));
 const known = new Set(cards.map(card => card.kanji));
-const now = Date.now();
+// The export's own moment, not today's: an old file read under today's clock
+// grows phantom due cards for every day it sat on disk. Arthur caught this
+// when a six-day-old export "had" 179 due that never stood in the app.
+const now = await decodeScheduleBase(code);
+if (Date.now() - now > DAY) {
+  console.log(`(read as of the export itself, ${new Date(now).toISOString().slice(0, 10)})\n`);
+}
 
 const active = cards.filter(card => card.stage < MASTERED_STAGE);
 const reviews = cards.reduce((total, card) => total + card.reviews, 0);

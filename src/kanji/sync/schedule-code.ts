@@ -72,6 +72,30 @@ export async function encodeSchedule(cards: readonly Card[], now = Date.now()): 
   return base64url(await deflate(new TextEncoder().encode(text)));
 }
 
+/**
+ * The moment the code was written, from its own header - the clock every time
+ * in it is relative to. The analysis tool anchors on this, so a six-day-old
+ * export reads as it stood when it was made instead of accruing six days of
+ * phantom due cards under today's clock.
+ */
+export async function decodeScheduleBase(code: string): Promise<number> {
+  let text: string;
+  try {
+    text = new TextDecoder().decode(await inflate(fromBase64url(code.trim())));
+  } catch {
+    throw new ScheduleCodeError('This is not a Katsu schedule.');
+  }
+  const [marker, baseText] = text.split('|');
+  if (marker !== MARKER) {
+    throw new ScheduleCodeError('This schedule comes from a different version of Katsu.');
+  }
+  const base = parseInt(baseText, 36);
+  if (!Number.isFinite(base)) {
+    throw new ScheduleCodeError('This schedule is damaged.');
+  }
+  return base * MINUTE;
+}
+
 export async function decodeSchedule(code: string): Promise<Card[]> {
   let text: string;
   try {
