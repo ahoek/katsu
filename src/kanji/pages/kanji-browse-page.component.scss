@@ -1,3 +1,5 @@
+@use 'page-shared' as *;
+
 .browse {
   max-width: 720px;
   margin: 0 auto;
@@ -121,34 +123,8 @@
 }
 
 .tile {
+  @include glyph-tile;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-  padding: 6px 2px;
-  // The surface token, not Ionic's background: the light theme leaves that one
-  // unset, which made every tile fall through to the waves behind it.
-  background: var(--app-color-surface);
-  border: 1px solid var(--ion-color-medium);
-  border-radius: 8px;
-  color: var(--ion-text-color);
-  text-decoration: none;
-
-  span {
-    font-size: 1.5rem;
-    line-height: 1.1;
-  }
-
-  small {
-    font-size: .6rem;
-    color: var(--ion-color-medium);
-    // Long meanings must not stretch the grid cell
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 100%;
-  }
 
   // How far up the ladder this kanji has come. The tint says it is in the
   // schedule; only the bar says how well it is going. The notch marks the

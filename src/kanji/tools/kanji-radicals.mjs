@@ -37,6 +37,6 @@ export const RADICALS = [
   { shape: '厂', name: { en: 'cliff', nl: 'klif' } },
   { shape: '灬', formOf: '火', name: { en: 'fire (below)', nl: 'vuur (onder)' } },
   { shape: '又', name: { en: 'right hand', nl: 'rechterhand' } },
-  { shape: '夂', name: { en: 'winter top', nl: 'winterkop' } },
+  { shape: '夂', name: { en: 'trailing legs', nl: 'slepende benen' } },
   { shape: '囗', name: { en: 'enclosure', nl: 'omheining' } },
 ];

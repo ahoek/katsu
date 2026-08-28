@@ -1,0 +1,75 @@
+// The pieces the kanji pages share, as mixins: Angular scopes component
+// styles, so what pages have in common travels by inclusion rather than by a
+// global class. Three pages use these - the kanji detail page, the radical
+// part page, and the browse grid's tile.
+
+// The page frame: one centred column at the pad's width.
+@mixin page-frame {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 8px 16px calc(16px + env(safe-area-inset-bottom));
+}
+
+// The glyph-and-facts header above the pad. Include inside the block's own
+// class; the elements nest off it.
+@mixin meet-block {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+
+  &__glyph {
+    font-size: 3.4rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  &__facts {
+    min-width: 0;
+  }
+
+  &__note {
+    margin: 2px 0 0;
+    font-size: .75rem;
+    color: var(--ion-color-medium);
+  }
+}
+
+@mixin loading-line {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--ion-color-medium);
+}
+
+// A kanji as a tappable tile: the glyph with its meaning under it. The browse
+// grid dresses this up with the schedule (tint, bar, due dot); the part page
+// uses it bare, because what it says there is only "written with this shape".
+@mixin glyph-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 2px;
+  // The surface token, not Ionic's background: the light theme leaves that one
+  // unset, which made every tile fall through to the waves behind it.
+  background: var(--app-color-surface);
+  border: 1px solid var(--ion-color-medium);
+  border-radius: 8px;
+  color: var(--ion-text-color);
+  text-decoration: none;
+
+  span {
+    font-size: 1.5rem;
+    line-height: 1.1;
+  }
+
+  small {
+    // Long meanings must not stretch the grid cell
+    max-width: 100%;
+    overflow: hidden;
+    font-size: .6rem;
+    color: var(--ion-color-medium);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

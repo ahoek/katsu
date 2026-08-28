@@ -1,7 +1,7 @@
+@use 'page-shared' as *;
+
 .detail {
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 8px 16px calc(16px + env(safe-area-inset-bottom));
+  @include page-frame;
   // A page written on, not read from: no long press should pop the
   // select/copy balloon over the pad.
   -webkit-user-select: none;
@@ -9,20 +9,7 @@
 }
 
 .meet {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 14px;
-
-  &__glyph {
-    font-size: 3.4rem;
-    font-weight: 600;
-    line-height: 1;
-  }
-
-  &__facts {
-    min-width: 0;
-  }
+  @include meet-block;
 
   &__meaning {
     margin: 0;
@@ -38,12 +25,6 @@
     margin: 2px 0 0;
     font-size: .85rem;
     color: var(--app-color-reading);
-  }
-
-  &__note {
-    margin: 2px 0 0;
-    font-size: .75rem;
-    color: var(--ion-color-medium);
   }
 
   // Where the kanji stands in the schedule, said in the schedule's own colour
@@ -89,9 +70,7 @@
 }
 
 .loading {
-  padding: 32px 16px;
-  text-align: center;
-  color: var(--ion-color-medium);
+  @include loading-line;
 }
 
 .deck-nav {
