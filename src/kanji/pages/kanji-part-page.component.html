@@ -1,0 +1,63 @@
+<ion-header class="app-chrome">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/kanji/practice"></ion-back-button>
+    </ion-buttons>
+    <ion-title><h1 class="toolbar-heading">{{ name() }}</h1></ion-title>
+    <ion-buttons slot="end">
+      <app-menu-button></app-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="patterned" [fullscreen]="true">
+  @if (radical(); as radical) {
+    <div class="detail">
+      <div class="meet">
+        <span class="meet__glyph" lang="ja">{{ radical.shape }}</span>
+        <div class="meet__facts">
+          <p class="meet__name">{{ name() }}</p>
+          <p class="meet__note">
+            @if (radical.strokes.length === 1) {
+              {{ 'kanji.strokes-one' | translate }}
+            } @else {
+              {{ 'kanji.strokes' | translate: { count: radical.strokes.length } }}
+            }
+          </p>
+          <!-- KanjiVG's own word, and the only etymology this page will ever
+               claim: the source files 氵 under 水, so the page may say so. -->
+          @if (radical.formOf; as kanji) {
+            <a class="meet__form-of" [routerLink]="['/kanji/practice', kanji]" routerDirection="forward">
+              {{ 'kanji.part.form-of' | translate: { kanji } }}
+            </a>
+          }
+        </div>
+      </div>
+
+      <app-kanji-stroke-demo
+        [strokes]="radical.strokes"
+        [numbers]="radical.numbers"
+        [label]="'kanji.pad-label' | translate: { meaning: name() }"
+      ></app-kanji-stroke-demo>
+
+      <!-- The useful half of the page: 氵 is worth one mostly because it
+           lists 海, 池, 活 and the rest. Lesson order, like everything. -->
+      <section class="with" [attr.aria-label]="'kanji.part.written-with' | translate">
+        <p class="with__title">
+          {{ 'kanji.part.written-with' | translate }}
+          <span class="with__count">{{ writtenWith().length }}</span>
+        </p>
+        <div class="with__grid">
+          @for (character of writtenWith(); track character.kanji) {
+            <a class="with__tile" [routerLink]="['/kanji/practice', character.kanji]" routerDirection="forward">
+              <span lang="ja">{{ character.kanji }}</span>
+              <small>{{ meaningOf(character) }}</small>
+            </a>
+          }
+        </div>
+      </section>
+    </div>
+  } @else {
+    <p class="loading">{{ 'kanji.loading' | translate }}</p>
+  }
+</ion-content>

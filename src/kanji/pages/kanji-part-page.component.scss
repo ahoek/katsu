@@ -1,0 +1,97 @@
+// The detail page's own frame, at the detail page's own width: a part page is
+// the same kind of page as a kanji page, one step to the side of it.
+.detail {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 8px 16px calc(16px + env(safe-area-inset-bottom));
+}
+
+.meet {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+
+  &__glyph {
+    font-size: 3.4rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  &__name {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  &__note {
+    margin: 2px 0 0;
+    font-size: .75rem;
+    color: var(--ion-color-medium);
+  }
+
+  &__form-of {
+    display: inline-block;
+    margin: 3px 0 0;
+    font-size: .75rem;
+    font-weight: 600;
+  }
+}
+
+.with {
+  margin-top: 16px;
+
+  &__title {
+    margin: 0 0 8px;
+    font-size: .7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--ion-color-medium);
+  }
+
+  &__count {
+    font-weight: 400;
+  }
+
+  // The overview's tiles, without their schedule dress: what this page says
+  // about a kanji is that it is written with the shape, not how it is going.
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+    gap: 6px;
+  }
+
+  &__tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 2px;
+    background: var(--app-color-surface);
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 8px;
+    color: var(--ion-text-color);
+    text-decoration: none;
+
+    span {
+      font-size: 1.5rem;
+      line-height: 1.1;
+    }
+
+    small {
+      max-width: 100%;
+      overflow: hidden;
+      font-size: .6rem;
+      color: var(--ion-color-medium);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+.loading {
+  padding: 32px 16px;
+  text-align: center;
+  color: var(--ion-color-medium);
+}

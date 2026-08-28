@@ -220,6 +220,42 @@ describe('the shipped stroke data', () => {
     }
   });
 
+  /**
+   * The radical pages: recurring shapes with strokes, a name in both
+   * languages, and enough tiles to be worth a page. The ten-tile line is the
+   * policy, not an accident of the data - a shape appearing twice does not
+   * need a page, and this is where that decision is held.
+   */
+  it('gives every radical strokes, both names, and ten tiles to link from', () => {
+    const radicals = (strokeData as unknown as {
+      radicals: { shape: string; name: { en: string; nl: string }; formOf?: string;
+        strokes: string[]; numbers: unknown[] }[];
+    }).radicals;
+
+    expect(radicals.length).toBe(18);
+    expect(new Set(radicals.map(radical => radical.shape)).size).toBe(radicals.length);
+
+    const deck = new Set(strokeData.characters.map(character => character.kanji));
+    for (const radical of radicals) {
+      expect(radical.strokes.length).toBeGreaterThan(0);
+      expect(radical.numbers.length).toBe(radical.strokes.length);
+      expect(radical.name.en).toBeTruthy();
+      expect(radical.name.nl).toBeTruthy();
+      if (radical.formOf) {
+        expect(deck.has(radical.formOf)).toBe(true);
+      }
+      const tiles = strokeData.characters.reduce(
+        (total, character) =>
+          total +
+          ((character as { parts?: { element?: string }[] }).parts?.filter(
+            part => part.element === radical.shape,
+          ).length ?? 0),
+        0,
+      );
+      expect(tiles, `${radical.shape} carries ${tiles} tiles`).toBeGreaterThanOrEqual(10);
+    }
+  });
+
   it('credits KanjiVG, whose licence asks for it', () => {
     expect(strokeData.source).toBe('KanjiVG');
     expect(strokeData.license).toBe('CC BY-SA 3.0');

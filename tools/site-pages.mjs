@@ -96,6 +96,34 @@ function shell(inner) {
   );
 }
 
+/**
+ * The shell for a radical page: the shape, its name, its strokes, and the
+ * kanji written with it - the last part being what the page is really for.
+ */
+function radicalShell(radical, withIt, viewBox) {
+  const diagram = strokeDiagram(
+    { kanji: radical.shape, meaning: { en: radical.name.en }, strokes: radical.strokes, numbers: radical.numbers },
+    viewBox,
+  );
+  return shell(
+    `<h1 class="boot-shell__title">` +
+      `<span class="boot-shell__glyph" lang="ja">${escapeHtml(radical.shape)}</span>` +
+      `<span>${escapeHtml(radical.name.en)}</span>` +
+      `</h1>` +
+      `<div class="boot-shell__diagram">${diagram}</div>` +
+      `<p>The kanji radical ${escapeHtml(radical.shape)} (${escapeHtml(radical.name.en)}): ` +
+      `${strokeCount(radical)}. Written in ${withIt.length} kanji of the first six school years:</p>` +
+      `<p class="boot-shell__deck">` +
+      withIt
+        .map(character =>
+          `<a href="${pathFor(`kanji/practice/${character.kanji}`)}" lang="ja">${escapeHtml(character.kanji)}</a>`)
+        .join(' ') +
+      `</p>` +
+      `<p><a href="${pathFor('kanji/practice')}">All kanji</a> · ` +
+      `<a href="${pathFor('kanji')}">Kanji writing practice</a></p>`,
+  );
+}
+
 function kanjiShell(character, viewBox) {
   const readings = readingsOf(character);
 
@@ -296,6 +324,27 @@ export function sitePages(translations, strokeData) {
         ]),
       ],
     },
+    ...(strokeData.radicals ?? []).map(radical => {
+      const withIt = characters.filter(character =>
+        character.parts?.some(part => part.element === radical.shape));
+      const sample = withIt.slice(0, 5).map(character => character.kanji).join(', ');
+      return {
+        path: `kanji/part/${radical.shape}`,
+        title: `${radical.shape} - the ${radical.name.en} radical in kanji - Katsu`,
+        description:
+          `The kanji radical ${radical.shape} (${radical.name.en}): its stroke order, and the ` +
+          `${withIt.length} kanji written with it, such as ${sample}.`,
+        shell: radicalShell(radical, withIt, strokeData.viewBox),
+        linkedData: [
+          breadcrumb([
+            ['Katsu', urlFor('')],
+            ['Write kanji', urlFor('kanji')],
+            ['All kanji', urlFor('kanji/practice')],
+            [`${radical.shape} (${radical.name.en})`, urlFor(`kanji/part/${radical.shape}`)],
+          ]),
+        ],
+      };
+    }),
     ...characters.map(character => ({
       path: `kanji/practice/${character.kanji}`,
       title: `${character.kanji} stroke order - write the kanji for ‘${meaningOf(character)}’ - Katsu`,

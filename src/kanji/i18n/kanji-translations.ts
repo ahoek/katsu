@@ -107,6 +107,14 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
       // What a page about one character calls itself. The build writes the
       // same thing into the file (tools/site-pages.mjs); this keeps it right
       // for the reader, in their language, once the router takes over.
+      part: {
+        'form-of': 'A form of {{kanji}}',
+        'written-with': 'Written with this shape',
+        'seo-title': '{{shape}} - the {{name}} radical in kanji - Katsu',
+        'seo-description':
+          'The kanji radical {{shape}} ({{name}}): its stroke order, and the ' +
+          '{{count}} kanji of the first six school years written with it.',
+      },
       seo: {
         title: '{{kanji}} stroke order - write the kanji for ‘{{meaning}}’ - Katsu',
         description:
@@ -312,6 +320,14 @@ export const kanjiTranslations: Record<string, TranslationObject> = {
         'freq-band': 'Plaats {{from}}–{{to}}',
         'freq-rest': 'Plaats {{from}} en verder',
         'freq-none': 'Niet gezien in de getelde teksten',
+      },
+      part: {
+        'form-of': 'Vorm van {{kanji}}',
+        'written-with': 'Geschreven met dit deel',
+        'seo-title': '{{shape}} - het radicaal ‘{{name}}’ in kanji - Katsu',
+        'seo-description':
+          'Het kanji-radicaal {{shape}} ({{name}}): de streekvolgorde, en de ' +
+          '{{count}} kanji van de eerste zes schooljaren die ermee geschreven worden.',
       },
       seo: {
         title: '{{kanji}} streekvolgorde - schrijf de kanji voor ‘{{meaning}}’ - Katsu',

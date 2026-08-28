@@ -83,6 +83,21 @@ kanji and a chevron under it in the link colour; a part that goes nowhere lies
 flat and spends the same line on its own name. Without that they look
 identical, and tapping tiles to find out which respond is not an answer.
 
+The frequent shapes go somewhere too. A part the deck never teaches as a kanji
+- 海's 氵, 家's 宀 - used to lie flat by definition; the eighteen that carry
+ten or more tiles across the deck now link to a reference page of their own
+(`/kanji/part/氵`): the shape's strokes from the same KanjiVG files, its
+conventional radical name (water, dak, klif - hand-written in
+`tools/kanji-radicals.mjs`, the one list that is words rather than data), and
+the deck kanji written with it, which is the useful half. Where KanjiVG files
+the shape under a kanji the deck teaches, the page says so - 氵 is a form of
+水 - and that is the whole etymology this app will ever claim. Never review
+items: nothing ever asks anyone to write 氵 from a Dutch prompt, so the gloss
+collision rules have no say over the names. The bare strokes (丿, 丶) stay
+flat however often they appear - the pad already teaches strokes - and so does
+the long tail of shapes seen once or twice; stroke-data.spec.ts holds the
+ten-tile line.
+
 KanjiVG's mark for the piece that carries the reading is kept in the data and
 not shown. It reads well on 海 - water and *a sound*, rather than water and
 "every" - and badly the moment an unknown phonetic shape divides into the

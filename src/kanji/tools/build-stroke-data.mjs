@@ -26,6 +26,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { deck } from './kanji-deck.mjs';
+import { RADICALS } from './kanji-radicals.mjs';
 import { KANJI_DATA_REF, KANJI_FREQUENCY_REF, fetchRanks } from './kanji-ranks.mjs';
 import { KANJIVG_REF, componentsOf, fetchSvg, partsOf } from './kanjivg.mjs';
 
@@ -107,6 +108,35 @@ async function fetchKanji(entry, ranks) {
   };
 }
 
+/**
+ * The radical pages' own strokes, from the same source under the same licence.
+ * Each shape must actually be carried by tiles in the deck - a page nothing
+ * links to is a typo in the list, not a page - and a `formOf` may only name a
+ * kanji the deck teaches, since it is shown as a link to that kanji's page.
+ */
+async function fetchRadical(radical, characters) {
+  const tiles = characters.reduce(
+    (total, character) =>
+      total + (character.parts?.filter(part => part.element === radical.shape).length ?? 0),
+    0,
+  );
+  if (tiles === 0) {
+    throw new Error(`Radical ${radical.shape} is not written in any kanji of the deck`);
+  }
+  if (radical.formOf && !deckKanji.has(radical.formOf)) {
+    throw new Error(`Radical ${radical.shape} names ${radical.formOf}, which the deck does not teach`);
+  }
+  const svg = await fetchSvg(radical.fetchAs ?? radical.shape);
+  const strokes = strokePaths(svg, radical.shape);
+  return {
+    shape: radical.shape,
+    name: radical.name,
+    ...(radical.formOf ? { formOf: radical.formOf } : {}),
+    strokes,
+    numbers: strokeNumbers(svg, radical.shape, strokes.length),
+  };
+}
+
 const ranks = await fetchRanks(deck);
 
 const characters = [];
@@ -115,6 +145,11 @@ for (const [index, entry] of deck.entries()) {
   process.stdout.write(`\r${index + 1}/${deck.length} ${entry.kanji}   `);
 }
 process.stdout.write('\n');
+
+const radicals = [];
+for (const radical of RADICALS) {
+  radicals.push(await fetchRadical(radical, characters));
+}
 
 const data = {
   source: 'KanjiVG',
@@ -140,6 +175,7 @@ const data = {
   // Every KanjiVG glyph is drawn in this square; the app scales it to the pad.
   viewBox: 109,
   characters,
+  radicals,
 };
 
 await mkdir(dirname(OUT_FILE), { recursive: true });

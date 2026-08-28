@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IonIcon } from '@ionic/angular/standalone';
@@ -6,7 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { addIcons } from 'ionicons';
 import { chevronForward } from 'ionicons/icons';
 
-import { KanjiPart } from '../kanji-data.service';
+import { KanjiDataService, KanjiPart } from '../kanji-data.service';
 
 /** The square every KanjiVG glyph is drawn in. */
 const VIEW_BOX = 109;
@@ -46,6 +46,17 @@ const VIEW_BOX = 109;
                 <a
                   class="part part--linked"
                   [routerLink]="['/kanji/practice', part.kanji]"
+                  routerDirection="forward"
+                  [attr.aria-label]="label(part)"
+                >
+                  <ng-container [ngTemplateOutlet]="glyph" [ngTemplateOutletContext]="{ part }" />
+                </a>
+              } @else if (part.element && shapesWithPages().has(part.element)) {
+                <!-- Not a kanji, but a shape frequent enough to have a
+                     reference page: the same lifted card, going there. -->
+                <a
+                  class="part part--linked"
+                  [routerLink]="['/kanji/part', part.element]"
                   routerDirection="forward"
                   [attr.aria-label]="label(part)"
                 >
@@ -91,6 +102,9 @@ const VIEW_BOX = 109;
           <ion-icon name="chevron-forward"></ion-icon>
         } @else if (part.element) {
           <span lang="ja">{{ part.element }}</span>
+          @if (shapesWithPages().has(part.element)) {
+            <ion-icon name="chevron-forward"></ion-icon>
+          }
         }
       </span>
     </ng-template>
@@ -256,6 +270,11 @@ const VIEW_BOX = 109;
   `,
 })
 export class KanjiPartsComponent {
+  private readonly data = inject(KanjiDataService);
+
+  /** The shapes that have a reference page, so their tiles can lift and link. */
+  protected readonly shapesWithPages = computed(() => new Set(this.data.byShape().keys()));
+
   constructor() {
     // Registered here rather than in the root component, so a card can point
     // somewhere without the icon landing in the main bundle.

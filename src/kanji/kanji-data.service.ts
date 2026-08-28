@@ -66,6 +66,22 @@ export interface KanjiCharacter {
   numbers: { x: number; y: number }[];
 }
 
+/**
+ * A recurring shape with a reference page of its own: the parts a kanji page
+ * shows but the deck never teaches as a kanji (氵, 宀). `formOf` names the
+ * deck kanji KanjiVG files the shape under, where it does - 氵 under 水 - so
+ * the page can say so and link there. Never a review item: nothing asks a
+ * learner to write 氵 from a prompt.
+ */
+export interface KanjiRadical {
+  shape: string;
+  /** Conventional radical name per language code, always including `en`. */
+  name: Record<string, string>;
+  formOf?: string;
+  strokes: string[];
+  numbers: { x: number; y: number }[];
+}
+
 export interface KanjiStrokeData {
   source: string;
   sourceUrl: string;
@@ -73,6 +89,7 @@ export interface KanjiStrokeData {
   licenseUrl: string;
   viewBox: number;
   characters: KanjiCharacter[];
+  radicals: KanjiRadical[];
 }
 
 /**
@@ -92,9 +109,19 @@ export class KanjiDataService {
     () => new Map((this.data()?.characters ?? []).map(character => [character.kanji, character])),
   );
 
+  /** Radicals by shape: the parts that have a reference page to link to. */
+  readonly byShape = computed(
+    () => new Map((this.data()?.radicals ?? []).map(radical => [radical.shape, radical])),
+  );
+
   /** The meaning in the given language, falling back to English. */
   meaningOf(character: KanjiCharacter, language: string | null | undefined): string {
     return character.meaning[language ?? 'en'] ?? character.meaning['en'];
+  }
+
+  /** The radical's conventional name in the given language, like meaningOf. */
+  nameOf(radical: KanjiRadical, language: string | null | undefined): string {
+    return radical.name[language ?? 'en'] ?? radical.name['en'];
   }
 
   async load(): Promise<KanjiStrokeData> {
