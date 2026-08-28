@@ -276,10 +276,10 @@ export function partsOf(svg, kanji, deckKanji, deckStrokes = new Map()) {
     // The shape as it is written here - 亻 rather than 人 - and, when the deck
     // teaches it, the kanji it is, so a part can be linked to its own page.
     ...(part.element ? { element: part.element } : {}),
-    ...(!fleshRadical(part) && deckPart(part, deckKanji)
+    ...(!fleshRadical(part, kanji) && deckPart(part, deckKanji)
       ? { kanji: deckPart(part, deckKanji) }
       : {}),
-    ...(fleshRadical(part) ? { radical: fleshRadical(part) } : {}),
+    ...(fleshRadical(part, kanji) ? { radical: fleshRadical(part, kanji) } : {}),
     ...(part.position ? { position: part.position } : {}),
     ...(part.phon ? { sound: true } : {}),
     ...(part.unit ? { unit: part.unit } : {}),
@@ -474,18 +474,29 @@ function nameOf(attrs) {
 }
 
 /**
- * The meat-moon. KanjiVG writes the flesh radical as element 月 - it is
- * written exactly as 月, all four strokes - but marks original="肉" on every
- * body kanji, unanimously. The tile keeps 月's look (the hand test: this is
- * the shape being written), but it links to the ⺼ part page instead of the
- * kanji page for the moon, so 腹 stops sending its learner to the moon.
+ * The kanji whose 月 KanjiVG files under 肉 against the written record, each
+ * with the record that outvotes it. The Shuowen Jiezi defines 朗 as 明也 -
+ * brightness - from 月 the moon with 良 as sound; a flesh semantic in a
+ * moonlight word is a filing error. 服 it files under 舟: the left was a
+ * boat, worn down to 月 in the regular script. 勝 is 力 with 朕 as sound,
+ * and 朕 is 舟-derived the same way. Truth beats the source's filing, the
+ * 士/土 rule - their tiles keep the 月 the hand writes.
  */
-function fleshRadical(part) {
+const NOT_FLESH = new Set(['朗', '服', '勝']);
+
+/**
+ * The meat-moon. KanjiVG writes the flesh radical as element 月 - it is
+ * written exactly as 月, all four strokes - but marks original="肉" on the
+ * body kanji. The tile keeps 月's look (the hand test: this is the shape
+ * being written), but it links to the ⺼ part page instead of the kanji page
+ * for the moon, so 腹 stops sending its learner to the moon.
+ */
+function fleshRadical(part, kanji) {
   // Where the same group carries a phon mark naming another kanji, the source
   // contradicts its own 肉 filing: 朝's right is marked 舟V - a worn-down boat
   // lending its sound - and 肉 there is glyph filing, not history. The one
   // kanji in the deck where that happens, and it stays with the moon.
-  if (part.phon) {
+  if (part.phon || NOT_FLESH.has(kanji)) {
     return undefined;
   }
   return part.element === '月' && part.original === '肉' ? '⺼' : undefined;

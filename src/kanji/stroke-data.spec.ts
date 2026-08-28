@@ -233,12 +233,17 @@ describe('the shipped stroke data', () => {
     }).radicals;
 
     // The meat-moon: written as 月, filed under ⺼, never linked as the moon.
-    const flesh = strokeData.characters.filter(character =>
-      (character as { parts?: { radical?: string }[] }).parts?.some(part => part.radical === '⺼'));
-    // 16, not 17: 朝's 月 carries KanjiVG's own phon mark 舟V, which
-    // contradicts its 肉 filing, so it stays with the moon.
-    expect(flesh.length).toBeGreaterThanOrEqual(16);
-    expect(flesh.map(character => character.kanji)).not.toContain('朝');
+    // The exact set, because every member and every exile was decided by hand:
+    // 朝 falls to KanjiVG's own phon mark (舟V), and 朗, 服, 勝 fall to the
+    // written record - moonlight, a boat, and a boat lending its sound
+    // (NOT_FLESH in tools/kanjivg.mjs has the citations).
+    const flesh = strokeData.characters
+      .filter(character =>
+        (character as { parts?: { radical?: string }[] }).parts?.some(part => part.radical === '⺼'))
+      .map(character => character.kanji);
+    expect(flesh.sort()).toEqual(
+      ['有', '育', '能', '脈', '肥', '背', '胸', '腹', '脳', '臓', '肺', '腸', '胃'].sort(),
+    );
     for (const character of flesh) {
       const parts = (character as { parts?: { radical?: string; kanji?: string; element?: string }[] }).parts ?? [];
       for (const part of parts.filter(part => part.radical === '⺼')) {
