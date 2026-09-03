@@ -92,6 +92,16 @@
 // The facts of the session: one size, one colour, one voice. Only two rows may
 // differ - the counts wear the tiles' grade colours as dots, so the list also
 // reads as the recap's legend, and a kanji finished for good keeps the ribbon.
+// Sticky rather than pinned: in the page flow where the decision belongs, and
+// held against the bottom edge of the scroll for as long as the page is taller
+// than the screen. Nothing to hunt for on a phone, nothing marooned at the
+// window's foot on a desktop.
+ion-button.flow-cta--sticky {
+  position: sticky;
+  bottom: calc(12px + env(safe-area-inset-bottom));
+  z-index: 2;
+}
+
 .facts {
   display: flex;
   flex-direction: column;

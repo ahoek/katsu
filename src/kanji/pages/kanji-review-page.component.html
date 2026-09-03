@@ -241,11 +241,24 @@
                  | translate: { interval: result.intervalKey | translate } }}
             </p>
           }
-          <ion-button expand="block" class="flow-cta" (click)="next()">
-            {{ 'kanji.review.continue' | translate }}
-            <ion-icon slot="end" name="arrow-forward"></ion-icon>
-          </ion-button>
         </div>
+
+        <!-- The way on, and the one button that must never be hunted for: a
+             verdict on a long review - the ink, the model, the parts - used to
+             push it off the bottom of a small screen. It keeps its place under
+             the verdict, where its siblings are, and sticks to the bottom edge
+             only while the page is taller than the screen. A pinned bar would
+             have solved the phone and left the button a hand's width below the
+             last line on a desktop window.
+
+             A child of the column rather than of the verdict block: a sticky
+             element can only travel inside its containing block, and the
+             verdict block is a hundred pixels tall - not enough to pull the
+             button into view from the top of a long page. -->
+        <ion-button expand="block" class="flow-cta flow-cta--sticky" (click)="next()">
+          {{ 'kanji.review.continue' | translate }}
+          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        </ion-button>
       }
     </div>
   }
