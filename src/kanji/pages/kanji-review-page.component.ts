@@ -8,6 +8,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   IonBackButton,
@@ -43,6 +44,7 @@ import { KanjiSyncService } from '../sync/kanji-sync.service';
 import { Attempt, Grade, MASTERED_STAGE, MATURE_STAGE, stageLabel } from '../srs/srs';
 import { Spent, sessionSize, spentLabel, spentSince } from '../srs/pace';
 
+import { LayoutService } from '../../app/shared/layout.service';
 import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
 
 /** What a finished review turned into, for the line under the pad. */
@@ -76,6 +78,7 @@ const STREAK_WORTH_SHOWING = 2;
   templateUrl: 'kanji-review-page.component.html',
   styleUrls: ['kanji-review-page.component.scss'],
   imports: [
+    NgTemplateOutlet,
     RouterLink,
     IonBackButton,
     IonButton,
@@ -99,6 +102,9 @@ export class KanjiReviewPageComponent implements OnInit {
   private readonly srs = inject(KanjiSrsService);
   private readonly sync = inject(KanjiSyncService);
   private readonly translate = inject(TranslateService);
+
+  /** Phone or not decides where the primary action is rendered. */
+  protected readonly layout = inject(LayoutService);
 
   /**
    * The queue is taken once, when the session starts: a kanji that becomes due
@@ -124,6 +130,17 @@ export class KanjiReviewPageComponent implements OnInit {
   readonly mastered = computed(() => this.results().filter(result => result.mastered).length);
 
   readonly ready = signal(false);
+
+  /**
+   * Whether the primary action is pinned to the foot of the content: only on a
+   * phone, and only once there is a verdict or a summary to move on from. The
+   * column reserves room for it exactly when it is there, so the pad keeps the
+   * whole screen while a kanji is being written.
+   */
+  protected readonly actionBar = computed(
+    () => this.layout.phone() && (this.finished() || this.outcome() !== undefined),
+  );
+
 
   /** This session was asked for past the cap, so it holds everything due. */
   readonly beyondCap = signal(false);

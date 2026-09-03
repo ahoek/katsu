@@ -15,6 +15,18 @@
   }
 }
 
+// Room at the foot for the pinned action bar, which floats over the content
+// rather than reserving space of its own. Only while the bar is there: during
+// writing there is none, and the pad should have the whole screen.
+$action-bar: 72px;
+
+.with-action-bar {
+  .review,
+  .summary {
+    padding-bottom: calc(#{$action-bar} + env(safe-area-inset-bottom));
+  }
+}
+
 .review {
   max-width: 420px;
   margin: 0 auto;
@@ -92,14 +104,32 @@
 // The facts of the session: one size, one colour, one voice. Only two rows may
 // differ - the counts wear the tiles' grade colours as dots, so the list also
 // reads as the recap's legend, and a kanji finished for good keeps the ribbon.
-// Sticky rather than pinned: in the page flow where the decision belongs, and
-// held against the bottom edge of the scroll for as long as the page is taller
-// than the screen. Nothing to hunt for on a phone, nothing marooned at the
-// window's foot on a desktop.
-ion-button.flow-cta--sticky {
-  position: sticky;
-  bottom: calc(12px + env(safe-area-inset-bottom));
-  z-index: 2;
+// The primary action on a phone: pinned to the foot of the content, the same
+// pixel on every card, so a session is tapped through rather than searched.
+// On wider screens the button is rendered in the column instead - the
+// template decides, because this is about where the button *is*.
+//
+// The same glass as the app chrome, over the same canvas: the pattern is
+// painted on ion-content, so a bar inside it reads exactly like the header,
+// where an ion-footer sat past the pattern's edge and came out lighter.
+.action-bar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--app-color-surface) 55%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  // Written on, not read from: a long press on the way on should not offer to
+  // copy the word.
+  -webkit-user-select: none;
+  user-select: none;
+
+  ion-button.flow-cta {
+    max-width: 420px;
+    margin: 0 auto;
+  }
 }
 
 .facts {
@@ -223,11 +253,10 @@ ion-button.flow-cta--sticky {
 // than either the pad's furniture or part of the verdict.
 .divided {
   display: block;
-  margin: 14px 0 18px;
+  margin: 18px 0 0;
 }
 
-// Its own band, well clear of whatever it follows. Pressed against the parts
-// above it, the ladder read as a progress bar belonging to those tiles.
+// Its own band, well clear of the writing above it.
 .outcome {
   margin-top: 22px;
 

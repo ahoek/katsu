@@ -36,7 +36,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="patterned" [fullscreen]="true">
+<ion-content class="patterned" [class.with-action-bar]="actionBar()" [fullscreen]="true">
   <h1 class="sr-only">{{ 'kanji.review.title' | translate }}</h1>
   @if (!ready()) {
     <p class="loading">{{ 'kanji.loading' | translate }}</p>
@@ -138,9 +138,11 @@
           }
         </ul>
       }
-      <ion-button expand="block" class="flow-cta" routerLink="/kanji" routerDirection="back">
-        {{ 'kanji.review.back' | translate }}
-      </ion-button>
+      <!-- On a phone this is rendered in the footer instead, with every other
+           primary action, so the way on is always in the same place. -->
+      @if (!layout.phone()) {
+        <ng-container [ngTemplateOutlet]="doneAction" />
+      }
     </div>
   } @else if (character(); as kanji) {
     <div class="review">
@@ -174,27 +176,6 @@
       <!-- What the review did to the schedule, in the flow under the writing
            it judges, with the one decision left - carrying on - right below. -->
       @if (outcome(); as result) {
-        <!-- After any review that did not come out clean - a stage dropped or
-             a stage held with mistakes in it. The learner has just shown they
-             do not have this character, and 休 being 亻 and 木 is the thing
-             that would have helped. It gives nothing away: the answer is
-             already on the pad above it.
-
-             Above the ladder rather than below the line, so that the ladder,
-             the line and the way on stay the same three things in the same
-             order however the review went. -->
-        @if (result.grade !== 'clean') {
-          @if (kanji.parts; as divided) {
-            <app-kanji-parts
-              class="divided"
-              [parts]="divided"
-              [strokes]="strokes()"
-              [kanji]="kanji.kanji"
-              [centred]="true"
-            ></app-kanji-parts>
-          }
-        }
-
         <div class="outcome" [class]="'outcome--' + result.grade">
           <!-- The ladder the stage numbers refer to. A line saying "stage 3
                to 4" is a fact; eight pips with four of them lit is a position.
@@ -243,23 +224,68 @@
           }
         </div>
 
-        <!-- The way on, and the one button that must never be hunted for: a
-             verdict on a long review - the ink, the model, the parts - used to
-             push it off the bottom of a small screen. It keeps its place under
-             the verdict, where its siblings are, and sticks to the bottom edge
-             only while the page is taller than the screen. A pinned bar would
-             have solved the phone and left the button a hand's width below the
-             last line on a desktop window.
+        <!-- After any review that did not come out clean - a stage dropped or
+             a stage held with mistakes in it. The learner has just shown they
+             do not have this character, and 休 being 亻 and 木 is the thing
+             that would have helped. It gives nothing away: the answer is
+             already on the pad above it.
 
-             A child of the column rather than of the verdict block: a sticky
-             element can only travel inside its containing block, and the
-             verdict block is a hundred pixels tall - not enough to pull the
-             button into view from the top of a long page. -->
-        <ion-button expand="block" class="flow-cta flow-cta--sticky" (click)="next()">
-          {{ 'kanji.review.continue' | translate }}
-          <ion-icon slot="end" name="arrow-forward"></ion-icon>
-        </ion-button>
+             Under the verdict, not above it: what the review did to the
+             schedule is what the learner came for, and how the character
+             divides is the footnote that explains it. -->
+        @if (result.grade !== 'clean') {
+          @if (kanji.parts; as divided) {
+            <app-kanji-parts
+              class="divided"
+              [parts]="divided"
+              [strokes]="strokes()"
+              [kanji]="kanji.kanji"
+              [centred]="true"
+            ></app-kanji-parts>
+          }
+        }
+
+        <!-- The way on. On a wide screen it belongs here, under the verdict
+             with the rest of the column; on a phone it is rendered in the
+             footer below instead - the same pixel for every card, so a
+             session can be tapped through without looking for it. -->
+        @if (!layout.phone()) {
+          <ng-container [ngTemplateOutlet]="nextAction" />
+        }
+      }
+    </div>
+  }
+
+  <!-- The primary action of a phone-sized page: pinned, and always in the same
+       place - the point is a session tapped through by thumb rather than a
+       button hunted for at the end of every card. Nothing while writing, so
+       the pad keeps the room.
+
+       Inside the content, in Ionic's fixed slot, rather than in an ion-footer:
+       the patterned canvas is painted on the content and stops where a footer
+       starts, so the same glass over the same colours came out lighter down
+       there. Over the waves it is the header's own bar. -->
+  @if (actionBar()) {
+    <div slot="fixed" class="action-bar">
+      @if (finished()) {
+        <ng-container [ngTemplateOutlet]="doneAction" />
+      } @else {
+        <ng-container [ngTemplateOutlet]="nextAction" />
       }
     </div>
   }
 </ion-content>
+
+<!-- Written once, rendered in the column or in the footer. -->
+<ng-template #nextAction>
+  <ion-button expand="block" class="flow-cta" (click)="next()">
+    {{ 'kanji.review.continue' | translate }}
+    <ion-icon slot="end" name="arrow-forward"></ion-icon>
+  </ion-button>
+</ng-template>
+
+<ng-template #doneAction>
+  <ion-button expand="block" class="flow-cta" routerLink="/kanji" routerDirection="back">
+    {{ 'kanji.review.back' | translate }}
+  </ion-button>
+</ng-template>
