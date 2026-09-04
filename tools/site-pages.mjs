@@ -12,6 +12,14 @@
 
 export const SITE = 'https://katsu.arthurhoek.nl';
 
+/**
+ * Where the app fetches its stroke data from - the literal path, not one built
+ * by pathFor, which is for pages and would leave a trailing slash on a file.
+ * It has to match the URL the app asks for character by character, or the
+ * browser downloads it twice.
+ */
+const STROKE_DATA_PATH = '/assets/data/kanji/strokes.json';
+
 /** Where the deck's stroke data sits, relative to the repository root. */
 export const STROKE_DATA = 'src/assets/data/kanji/strokes.json';
 
@@ -436,6 +444,14 @@ export function renderPage(template, page, builtAt = Date.now()) {
       /<link rel="canonical" href="[^"]*">/,
       `<link rel="canonical" href="${page.canonical}">` +
         `\n  <meta name="katsu-build" content="${stamp}">` +
+        // The kanji pages all need the stroke data, and the app can only ask
+        // for it once its lazy chunks have loaded - a chain of round trips
+        // that used to finish before the 480 kB download even started.
+        // Announced here instead, so the two happen at once. as="fetch" with
+        // no crossorigin, which is what a same-origin XHR reuses.
+        (page.path.startsWith('kanji')
+          ? `\n  <link rel="preload" as="fetch" href="${STROKE_DATA_PATH}">`
+          : '') +
         (page.indexable ? '' : `\n  <meta name="robots" content="noindex, follow">`),
     )
     .replace(

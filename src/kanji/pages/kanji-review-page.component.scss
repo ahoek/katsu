@@ -214,6 +214,68 @@ $action-bar: 72px;
   }
 }
 
+// What the review looks like before its data arrives: the paper where the
+// paper goes, a bar where the question goes. Both hold their real size, so
+// nothing moves when the kanji lands.
+.waiting {
+  // Nothing for the first 200ms: a warm start beats that, and a flash of
+  // scaffolding reads worse than a moment of nothing.
+  opacity: 0;
+  animation: waiting-in 240ms ease-out 200ms forwards;
+
+  // Faint on purpose: the shape of what is coming, not a filled block. At
+  // half the paper's opacity it read as a grey slab shouting over the waves.
+  &__line {
+    width: 58%;
+    height: .95rem;
+    margin: 12px auto 16px;
+    background: color-mix(in srgb, var(--ion-color-medium) 22%, transparent);
+    border-radius: 999px;
+  }
+
+  &__pad {
+    width: 100%;
+    aspect-ratio: 1;
+    background: color-mix(in srgb, var(--app-color-paper) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--app-color-paper) 18%, transparent);
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+
+  // One slow breath, so the page reads as waiting rather than broken.
+  &__line,
+  &__pad {
+    animation: waiting-breathe 1.8s ease-in-out infinite;
+  }
+
+  .loading {
+    padding: 18px 0 0;
+  }
+}
+
+@keyframes waiting-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes waiting-breathe {
+  50% {
+    opacity: .55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waiting {
+    animation-duration: 1ms;
+  }
+
+  .waiting__line,
+  .waiting__pad {
+    animation: none;
+  }
+}
+
 .loading {
   padding: 32px 16px;
   text-align: center;

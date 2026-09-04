@@ -13,6 +13,21 @@
       }
     },
     {
+      "comment": [
+        "The kanji stroke data, prefetched on install: 480 kB the app cannot",
+        "start a lesson or a review without, and lazily it was fetched at the",
+        "end of a chain of chunk round trips, on the connection the learner",
+        "happened to have. updateMode was already prefetch, so this costs one",
+        "background download on a first install and none after."
+      ],
+      "name": "kanji-data",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+        "files": ["/assets/data/kanji/strokes.json"]
+      }
+    },
+    {
       "name": "assets",
       "installMode": "lazy",
       "updateMode": "prefetch",

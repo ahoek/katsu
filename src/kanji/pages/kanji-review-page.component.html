@@ -39,7 +39,16 @@
 <ion-content class="patterned" [class.with-action-bar]="actionBar()" [fullscreen]="true">
   <h1 class="sr-only">{{ 'kanji.review.title' | translate }}</h1>
   @if (!ready()) {
-    <p class="loading">{{ 'kanji.loading' | translate }}</p>
+    <!-- The screen it is about to be, rather than a line of text where the
+         page should be: the paper is the same square in the same place, so
+         the question and the pad fill in instead of arriving. It fades in
+         after 200ms, so a warm start - which is most of them - shows nothing
+         at all rather than a flash of scaffolding. -->
+    <div class="review waiting" aria-busy="true">
+      <p class="waiting__line"></p>
+      <div class="waiting__pad"></div>
+      <p class="loading">{{ 'kanji.loading' | translate }}</p>
+    </div>
   } @else if (finished()) {
     <div class="summary">
       @if (queue().length === 0) {
