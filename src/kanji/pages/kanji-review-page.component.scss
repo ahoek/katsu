@@ -104,34 +104,6 @@ $action-bar: 72px;
 // The facts of the session: one size, one colour, one voice. Only two rows may
 // differ - the counts wear the tiles' grade colours as dots, so the list also
 // reads as the recap's legend, and a kanji finished for good keeps the ribbon.
-// The primary action on a phone: pinned to the foot of the content, the same
-// pixel on every card, so a session is tapped through rather than searched.
-// On wider screens the button is rendered in the column instead - the
-// template decides, because this is about where the button *is*.
-//
-// The same glass as the app chrome, over the same canvas: the pattern is
-// painted on ion-content, so a bar inside it reads exactly like the header,
-// where an ion-footer sat past the pattern's edge and came out lighter.
-.action-bar {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-  background: color-mix(in srgb, var(--app-color-surface) 55%, transparent);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  // Written on, not read from: a long press on the way on should not offer to
-  // copy the word.
-  -webkit-user-select: none;
-  user-select: none;
-
-  ion-button.flow-cta {
-    max-width: 420px;
-    margin: 0 auto;
-  }
-}
-
 .facts {
   display: flex;
   flex-direction: column;

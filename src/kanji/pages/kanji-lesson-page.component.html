@@ -11,7 +11,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="patterned" [fullscreen]="true">
+<ion-content class="patterned" [class.with-action-bar]="actionBar()" [fullscreen]="true">
   @if (character(); as kanji) {
     <div class="lesson">
       <div class="meet">
@@ -64,10 +64,11 @@
             ></app-kanji-parts>
           }
 
-          <ion-button expand="block" class="flow-cta" (click)="startTracing()">
-            {{ 'kanji.lesson.trace' | translate }}
-            <ion-icon slot="end" name="arrow-forward"></ion-icon>
-          </ion-button>
+          <!-- On a phone this is rendered in the pinned bar instead, where
+               every step of the flow keeps its way on. -->
+          @if (!layout.phone()) {
+            <ng-container [ngTemplateOutlet]="traceAction" />
+          }
         }
 
         @case ('trace') {
@@ -127,21 +128,54 @@
             }
           </p>
 
-          <!-- What to do next is one choice, so the two ways stand together:
-               the way on first, another go as the quieter second. -->
-          <ion-button expand="block" class="flow-cta" (click)="addToReviews()">
-            {{ 'kanji.lesson.add' | translate }}
-            <ion-icon slot="end" name="arrow-forward"></ion-icon>
-          </ion-button>
-
-          <ion-button expand="block" fill="outline" class="flow-cta" (click)="practiseAgain()">
-            <ion-icon slot="start" name="refresh-outline"></ion-icon>
-            {{ 'kanji.lesson.again' | translate }}
-          </ion-button>
+          <!-- On a wide screen the two ways stand together, the way on first
+               and another go as the quieter second. On a phone the way on is
+               pinned below with every other primary action - the bar is where
+               the one thing to do next lives, not a rack for both - and the
+               second way stays here, where a second thought belongs. -->
+          @if (!layout.phone()) {
+            <ng-container [ngTemplateOutlet]="addAction" />
+          }
+          <ng-container [ngTemplateOutlet]="againAction" />
         }
       }
     </div>
   } @else {
     <p class="loading">{{ 'kanji.loading' | translate }}</p>
   }
+
+  <!-- The way on, in the same place on every step of the lesson. Nothing
+       during the two writing steps: those finish themselves, and the pad
+       should have the whole screen. -->
+  @if (actionBar()) {
+    <div slot="fixed" class="action-bar">
+      @if (phase() === 'done') {
+        <ng-container [ngTemplateOutlet]="addAction" />
+      } @else {
+        <ng-container [ngTemplateOutlet]="traceAction" />
+      }
+    </div>
+  }
 </ion-content>
+
+<!-- Written once, rendered in the column or in the bar. -->
+<ng-template #traceAction>
+  <ion-button expand="block" class="flow-cta" (click)="startTracing()">
+    {{ 'kanji.lesson.trace' | translate }}
+    <ion-icon slot="end" name="arrow-forward"></ion-icon>
+  </ion-button>
+</ng-template>
+
+<ng-template #addAction>
+  <ion-button expand="block" class="flow-cta" (click)="addToReviews()">
+    {{ 'kanji.lesson.add' | translate }}
+    <ion-icon slot="end" name="arrow-forward"></ion-icon>
+  </ion-button>
+</ng-template>
+
+<ng-template #againAction>
+  <ion-button expand="block" fill="outline" class="flow-cta" (click)="practiseAgain()">
+    <ion-icon slot="start" name="refresh-outline"></ion-icon>
+    {{ 'kanji.lesson.again' | translate }}
+  </ion-button>
+</ng-template>

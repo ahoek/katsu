@@ -8,6 +8,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonBackButton,
@@ -36,6 +37,7 @@ import { FIRST_STAGE, stageLabel } from '../srs/srs';
 
 type Phase = 'watch' | 'trace' | 'recall' | 'done';
 
+import { LayoutService } from '../../app/shared/layout.service';
 import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button.component';
 
 /**
@@ -49,6 +51,7 @@ import { MenuButtonComponent } from '../../app/components/nav-drawer/menu-button
   templateUrl: 'kanji-lesson-page.component.html',
   styleUrls: ['kanji-lesson-page.component.scss'],
   imports: [
+    NgTemplateOutlet,
     IonBackButton,
     IonButton,
     IonButtons,
@@ -73,9 +76,22 @@ export class KanjiLessonPageComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
+  /** Phone or not decides where the way on is rendered. */
+  protected readonly layout = inject(LayoutService);
+
   readonly character = signal<KanjiCharacter | undefined>(undefined);
 
   readonly phase = signal<Phase>('watch');
+
+  /**
+   * Whether the primary action is pinned to the foot of the content: on a phone,
+   * at the steps that have one - start tracing, and hand it to the schedule.
+   * Nothing during the two writing steps: they finish themselves, and the pad
+   * wants the whole screen.
+   */
+  protected readonly actionBar = computed(
+    () => this.layout.phone() && (this.phase() === 'watch' || this.phase() === 'done'),
+  );
 
   /** Times it has been written from memory, the trace not counted. */
   readonly recalls = signal(0);

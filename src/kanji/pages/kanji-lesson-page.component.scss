@@ -1,3 +1,10 @@
+// Room at the foot for the pinned action bar, which floats over the content
+// rather than reserving space of its own. Only while it is there: the two
+// writing steps have no bar, and the pad should have the whole screen.
+.with-action-bar .lesson {
+  padding-bottom: calc(72px + env(safe-area-inset-bottom));
+}
+
 .lesson {
   max-width: 420px;
   margin: 0 auto;

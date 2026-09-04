@@ -184,6 +184,39 @@ ion-button.flow-cta {
   }
 }
 
+// The primary action of a phone-sized page, pinned to the foot of the content
+// so it stands in the same place on every screen of a flow - a session tapped
+// through by thumb rather than a button hunted for at the end of each card.
+//
+// Inside ion-content, in Ionic's fixed slot, and never an ion-footer: the
+// patterned canvas is painted on the content and stops where a footer starts,
+// so the same glass came out a flat lighter slab down there with nothing to
+// blur. Over the waves it is the header's own bar. Pages set it up with
+// [class.with-action-bar] on the content, which reserves the room.
+.action-bar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--app-color-surface) 55%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  // The writing screens are written on, not read from: a long press on the way
+  // on should not offer to copy the word.
+  -webkit-user-select: none;
+  user-select: none;
+
+  ion-button.flow-cta {
+    max-width: 420px;
+    margin: 0 auto;
+
+    & + & {
+      margin-top: 8px;
+    }
+  }
+}
+
 ion-footer.app-footer {
   box-shadow: none;
   background: color-mix(in srgb, var(--app-color-surface) 55%, transparent);
