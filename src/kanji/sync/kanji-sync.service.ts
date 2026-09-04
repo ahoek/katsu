@@ -14,6 +14,14 @@ const AUTO_TIMEOUT_MS = 8000;
 /** How stale an automatic sync may be before a screen bothers to repeat it. */
 const AUTO_INTERVAL_MS = 60 * 1000;
 
+/**
+ * The longest a screen may hold still for a sync nobody asked for. The request
+ * itself gets eight seconds, which is right for a sync and far too long for a
+ * learner looking at a loading line: the session about to start matters more
+ * than a schedule that might be one review out of date.
+ */
+const SCREEN_WAIT_MS = 600;
+
 interface StoredSync {
   code: string;
   syncedAt?: number;
@@ -98,6 +106,27 @@ export class KanjiSyncService {
 
   /** The interval a screen should use when syncing on the way in. */
   readonly autoInterval = AUTO_INTERVAL_MS;
+
+  /**
+   * A sync on the way into a screen that is about to take a queue: pulling
+   * first means not reviewing what another device already did today, which is
+   * worth a moment - and only a moment. Throttled like every other automatic
+   * sync, so arriving from a screen that just synced costs nothing at all, and
+   * bounded, so a slow network cannot hold the session shut. The sync itself
+   * carries on either way; what it brings lands on the next screen.
+   */
+  async syncBeforeSession(): Promise<void> {
+    const sync = this.autoSync(AUTO_INTERVAL_MS);
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const deadline = new Promise<void>(resolve => {
+      timer = setTimeout(resolve, SCREEN_WAIT_MS);
+    });
+    try {
+      await Promise.race([sync.then(() => undefined), deadline]);
+    } finally {
+      clearTimeout(timer);
+    }
+  }
 
   /** Sync again under the code this device already uses. */
   async syncNow(): Promise<SyncOutcome> {

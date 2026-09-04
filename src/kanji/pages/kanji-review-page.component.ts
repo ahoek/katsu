@@ -246,9 +246,12 @@ export class KanjiReviewPageComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.srs.tick();
     await this.srs.load();
-    // Worth waiting for: reviewing a card another device already reviewed today
-    // is wasted work, and the queue is taken once.
-    await this.sync.autoSync();
+    // Worth a moment, not a wait: reviewing a card another device already did
+    // today is wasted work and the queue is taken once, but this used to be an
+    // unthrottled sync with an eight-second deadline in front of the session -
+    // arriving from the kanji home, which had just synced, it went to the
+    // network again and the screen said "Kanji laden..." until it answered.
+    await this.sync.syncBeforeSession();
     this.srs.tick();
     const data = await this.data.load();
     const characters = new Map(data.characters.map(character => [character.kanji, character]));
